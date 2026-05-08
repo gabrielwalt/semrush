@@ -1,0 +1,47 @@
+.footer-links {
+  padding: 32px 0 40px;
+}
+
+.footer-links > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.footer-links > div > div {
+  /* individual column cells */
+}
+
+.footer-links p {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(24, 30, 21);
+  margin: 0 0 8px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.footer-links li {
+  margin: 0 0 6px;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: rgb(24, 30, 21);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .footer-links > div {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+}

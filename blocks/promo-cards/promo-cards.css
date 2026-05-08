@@ -1,0 +1,163 @@
+/* Promo Cards Block — Semrush One variant */
+.promo-cards {
+  --promo-bg: linear-gradient(182deg, rgb(193, 144, 255) -4.72%, rgb(220, 238, 235) 68.72%, rgb(255, 255, 255) 152.44%);
+  --promo-text: rgb(24, 30, 21);
+  --promo-radius: 5px;
+  --promo-padding: 32px 12px;
+
+  background: var(--promo-bg);
+  color: var(--promo-text);
+  border-radius: var(--promo-radius);
+  padding: var(--promo-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.promo-cards > div:first-child {
+  padding: 0;
+}
+
+.promo-cards h2 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.promo-cards p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 0.8em;
+}
+
+/* Button — secondary outline style */
+main .promo-cards .button-wrapper {
+  margin: 16px 0 0;
+}
+
+main .promo-cards a.button:any-link {
+  background: transparent;
+  border: 1px solid rgb(24, 30, 21);
+  border-radius: 100px;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(24, 30, 21);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+main .promo-cards a.button:any-link:hover {
+  background: rgba(24, 30, 21, 0.05);
+}
+
+/* Video/image wrapper — glass effect */
+.promo-cards > div:last-child {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.promo-cards > div:last-child > div {
+  background: linear-gradient(91deg, rgba(5, 5, 5, 0.04) 11.45%, rgba(255, 255, 255, 0.04) 88.55%);
+  backdrop-filter: blur(5px);
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.promo-cards > div:last-child img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  aspect-ratio: 565 / 350;
+  object-fit: cover;
+}
+
+/* Full-width override */
+.promo-cards-wrapper {
+  max-width: 100% !important;
+  padding: 0 12px !important;
+}
+
+@media (width >= 900px) {
+  .promo-cards {
+    --promo-padding: 40px 24px;
+  }
+
+  .promo-cards h2 {
+    font-size: 32px;
+  }
+
+  .promo-cards > div:last-child {
+    margin-top: 32px;
+  }
+}
+
+/* =============================================
+   Enterprise Variant — dark background
+   ============================================= */
+.promo-cards.enterprise {
+  --promo-bg: #000;
+  --promo-text: #fff;
+  --promo-padding: 32px 12px;
+
+  background: var(--promo-bg);
+  color: var(--promo-text);
+  text-align: center;
+  align-items: center;
+}
+
+.promo-cards.enterprise h2 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.promo-cards.enterprise p {
+  color: #fff;
+}
+
+/* Enterprise button — white outlined pill */
+main .promo-cards.enterprise a.button:any-link {
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 100px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+}
+
+main .promo-cards.enterprise a.button:any-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Enterprise glass wrapper */
+.promo-cards.enterprise > div:last-child > div {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 7px;
+}
+
+.promo-cards.enterprise > div:last-child img {
+  border-radius: 4px;
+}
+
+@media (width >= 900px) {
+  .promo-cards.enterprise {
+    --promo-padding: 48px 32px;
+  }
+
+  .promo-cards.enterprise h2 {
+    font-size: 40px;
+  }
+}

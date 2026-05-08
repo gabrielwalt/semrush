@@ -1,0 +1,12 @@
+:root {
+  --heading-font-family: "Lazzer", "Inter", sans-serif;
+  --body-font-family: "Lazzer", "Inter", sans-serif;
+  --background-color: rgb(255, 255, 255);
+  --text-color: rgb(51, 51, 51);
+  --link-color: rgb(24, 30, 21);
+  --link-hover-color: rgb(24, 30, 21);
+  --section-padding: 64px;
+  --nav-height: 70px;
+}
+
+html, body { overflow: auto !important; }

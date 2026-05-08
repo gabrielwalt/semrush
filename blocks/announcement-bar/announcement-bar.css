@@ -1,0 +1,49 @@
+.announcement-bar-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.announcement-bar {
+  --bar-bg: rgb(193, 144, 255);
+  --bar-text: rgb(24, 30, 21);
+  --bar-font-size: 14px;
+  --bar-padding: 8px 16px;
+
+  background: var(--bar-bg);
+  color: var(--bar-text);
+  padding: var(--bar-padding);
+  text-align: center;
+  font-size: var(--bar-font-size);
+  font-weight: 600;
+  line-height: 14px;
+}
+
+main .announcement-bar .button-container {
+  display: inline;
+}
+
+main .announcement-bar a.button:any-link {
+  background: none;
+  border: none;
+  color: var(--bar-text);
+  font-size: var(--bar-font-size);
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+}
+
+main .announcement-bar a.button:any-link:hover {
+  text-decoration: underline;
+}
+
+.announcement-bar > div {
+  margin: 0;
+}
+
+.announcement-bar p {
+  margin: 0;
+}

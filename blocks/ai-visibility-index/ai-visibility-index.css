@@ -1,0 +1,194 @@
+/* AI Visibility Index block */
+.ai-visibility-index {
+  --block-bg: rgb(24, 30, 21);
+  --block-text: #fff;
+  --block-accent: rgb(193, 144, 255);
+  --block-bar-color: rgb(24, 240, 191);
+  --table-bg: #fff;
+  --table-text: rgb(24, 30, 21);
+  --table-muted: rgb(108, 110, 121);
+
+  background: var(--block-bg);
+  color: var(--block-text);
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.ai-visibility-index-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+/* Section wrapper override for full-width dark bg */
+main .section:has(.ai-visibility-index) {
+  margin: 0;
+}
+
+main .section:has(.ai-visibility-index) > div {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Header row (icon + text) */
+.ai-visibility-index .ai-visibility-index-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.ai-visibility-index .ai-visibility-index-header img {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 24px;
+}
+
+.ai-visibility-index .ai-visibility-index-header h2 {
+  font-size: 56px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--block-text);
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+
+.ai-visibility-index .ai-visibility-index-header p {
+  font-size: 18px;
+  color: var(--block-text);
+  max-width: 500px;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+/* CTA button */
+main .ai-visibility-index .ai-visibility-index-header a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--block-accent);
+  color: var(--block-bg);
+  border: none;
+  border-radius: 100px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
+  opacity: 0.9;
+}
+
+/* Table area */
+.ai-visibility-index .ai-visibility-index-table {
+  background: var(--table-bg);
+  border-radius: 16px;
+  padding: 32px 32px 52px;
+  max-width: 900px;
+  margin: 40px auto 0;
+  text-align: left;
+}
+
+/* Table header */
+.ai-visibility-index .ai-visibility-index-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 16px;
+  border-bottom: none;
+  margin-bottom: 8px;
+}
+
+.ai-visibility-index .ai-visibility-index-table-header .table-labels {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--table-text);
+}
+
+.ai-visibility-index .ai-visibility-index-table-header .table-labels span:last-child {
+  margin-right: 0;
+}
+
+.ai-visibility-index .ai-visibility-index-table-header .table-platform {
+  font-size: 14px;
+  color: var(--table-muted);
+  white-space: nowrap;
+  margin-left: 24px;
+}
+
+/* Data rows */
+.ai-visibility-index .ai-visibility-index-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: none;
+}
+
+.ai-visibility-index .ai-visibility-index-row:last-child {
+  border-bottom: none;
+}
+
+.ai-visibility-index .ai-visibility-index-row .brand-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--table-text);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.ai-visibility-index .ai-visibility-index-row .sov-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.ai-visibility-index .ai-visibility-index-row .sov-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--table-text);
+  min-width: 50px;
+}
+
+.ai-visibility-index .ai-visibility-index-row .bar-track {
+  flex: 1;
+  height: 10px;
+  background: transparent;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.ai-visibility-index .ai-visibility-index-row .bar-fill {
+  height: 100%;
+  background: var(--block-bar-color);
+  border-radius: 0;
+  transition: width 0.3s ease;
+}
+
+@media (width >= 900px) {
+  .ai-visibility-index {
+    padding: 60px 0;
+  }
+
+  .ai-visibility-index .ai-visibility-index-header h2 {
+    font-size: 56px;
+  }
+}
+
+@media (width < 600px) {
+  .ai-visibility-index .ai-visibility-index-header h2 {
+    font-size: 36px;
+  }
+
+  .ai-visibility-index .ai-visibility-index-table {
+    padding: 20px 16px 32px;
+  }
+
+  .ai-visibility-index .ai-visibility-index-row .brand-name {
+    min-width: 90px;
+  }
+}
