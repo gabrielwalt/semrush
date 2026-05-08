@@ -5,10 +5,10 @@
 }
 
 .hero {
-  --hero-gradient-start: rgb(220, 238, 235);
-  --hero-gradient-mid: rgb(232, 225, 255);
-  --hero-gradient-end: rgb(255, 255, 255);
-  --hero-text: rgb(24, 30, 21);
+  --hero-gradient-start: rgb(220 238 235);
+  --hero-gradient-mid: rgb(232 225 255);
+  --hero-gradient-end: rgb(255 255 255);
+  --hero-text: rgb(24 30 21);
   --hero-padding-top: 48px;
   --hero-padding-bottom: 48px;
 
@@ -45,90 +45,30 @@
 
 /* CTA button */
 main .hero a.button.primary:any-link {
-  background-color: #ff642d;
-  border-color: #ff642d;
-  color: #fff;
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--dark-color);
   font-size: 16px;
   font-weight: 600;
-  padding: 14px 32px;
+  padding: 16px 32px;
   border-radius: 100px;
   text-decoration: none;
 }
 
 main .hero a.button.primary:any-link:hover {
-  background-color: #e0521e;
-  border-color: #e0521e;
-}
-
-/* Row 2: video/image */
-.hero > div:nth-child(2) {
-  max-width: 950px;
-  margin: 48px auto 0;
-}
-
-.hero > div:nth-child(2) img {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  display: block;
-}
-
-/* Row 3: logo marquee */
-.hero > div:nth-child(3) {
-  margin-top: 40px;
-  overflow: hidden;
-  padding: 24px 0 0;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero > div:nth-child(3) > div,
-.hero > div:nth-child(3) p {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 0;
-}
-
-.hero > div:nth-child(3) img {
-  height: 18px;
-  width: auto;
-  opacity: 0.35;
+  background-color: color-mix(in srgb, var(--accent-color) 85%, black);
+  border-color: color-mix(in srgb, var(--accent-color) 85%, black);
 }
 
 @media (width >= 900px) {
-  .hero h1 {
-    font-size: 56px;
-  }
-
-  .hero > div:nth-child(3) > div,
-  .hero > div:nth-child(3) p {
-    gap: 40px;
-  }
-
-  .hero > div:nth-child(3) img {
-    height: 22px;
+  .hero {
+    --hero-padding-top: 80px;
+    --hero-padding-bottom: 80px;
   }
 }
 
 @media (width < 600px) {
   .hero h1 {
     font-size: 36px;
-  }
-
-  .hero > div:nth-child(2) {
-    margin-top: 32px;
-  }
-
-  .hero > div:nth-child(3) > div,
-  .hero > div:nth-child(3) p {
-    gap: 20px;
-  }
-
-  .hero > div:nth-child(3) img {
-    height: 16px;
   }
 }

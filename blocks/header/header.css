@@ -252,7 +252,7 @@ header nav .nav-sections ul > li > ul > li {
     background-color: #fff;
     white-space: initial;
     border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
@@ -288,11 +288,11 @@ header nav .nav-tools a:any-link {
 }
 
 header nav .nav-tools a:last-of-type {
-  background-color: #ff642d;
+  background-color: var(--dark-color);
   color: #fff;
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-weight: 600;
 }
 
 header nav .nav-tools a:first-of-type {

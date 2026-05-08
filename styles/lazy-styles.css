@@ -1,1 +1,14 @@
 /* add global styles that can be loaded post LCP here */
+
+/* Section eyebrow: a <p> that immediately precedes an <h2> */
+main > .section > .default-content-wrapper > p + h2 {
+  margin-top: 0;
+}
+
+main > .section > .default-content-wrapper > p:first-child:has(+ h2) {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+}

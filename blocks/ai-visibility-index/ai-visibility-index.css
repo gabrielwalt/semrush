@@ -1,12 +1,12 @@
 /* AI Visibility Index block */
 .ai-visibility-index {
-  --block-bg: rgb(24, 30, 21);
+  --block-bg: var(--dark-color);
   --block-text: #fff;
-  --block-accent: rgb(193, 144, 255);
-  --block-bar-color: rgb(24, 240, 191);
+  --block-accent: var(--accent-color);
+  --block-bar-color: rgb(24 240 191);
   --table-bg: #fff;
-  --table-text: rgb(24, 30, 21);
-  --table-muted: rgb(108, 110, 121);
+  --table-text: rgb(24 30 21);
+  --table-muted: rgb(108 110 121);
 
   background: var(--block-bg);
   color: var(--block-text);

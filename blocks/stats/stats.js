@@ -1,10 +1,12 @@
 export default async function decorate(block) {
   const rows = [...block.children];
   const headerRow = rows[0];
-  const ctaRow = rows[rows.length - 1];
 
-  // Stat rows are between header and CTA
-  const statRows = rows.slice(1, rows.length - 1);
+  // Mark header row
+  headerRow.classList.add('stat-header');
+
+  // Stat rows are everything after the header
+  const statRows = rows.slice(1);
 
   // Restructure stat rows
   statRows.forEach((row, index) => {
@@ -14,7 +16,6 @@ export default async function decorate(block) {
     const cell = row.querySelector(':scope > div');
     const paragraphs = [...cell.querySelectorAll('p')];
 
-    // Extract content: first p has the count (in <strong>), second is title, third is description
     const countP = paragraphs[0];
     const titleP = paragraphs[1];
     const descP = paragraphs[2];
@@ -23,10 +24,8 @@ export default async function decorate(block) {
     const titleText = titleP?.textContent?.trim() || '';
     const descText = descP?.textContent?.trim() || '';
 
-    // Rebuild the cell structure
     cell.innerHTML = '';
 
-    // Number area with arrow
     const numberDiv = document.createElement('div');
     numberDiv.className = 'stat-number';
 
@@ -50,19 +49,14 @@ export default async function decorate(block) {
     numberDiv.appendChild(countWrapper);
     cell.appendChild(numberDiv);
 
-    // Description
     const descEl = document.createElement('p');
     descEl.className = 'stat-description';
     descEl.textContent = descText;
     cell.appendChild(descEl);
 
-    // Click handler to toggle active state
     row.addEventListener('click', () => {
       statRows.forEach((r) => r.classList.remove('active'));
       row.classList.add('active');
     });
   });
-
-  // Mark CTA row
-  ctaRow.classList.add('stat-cta');
 }

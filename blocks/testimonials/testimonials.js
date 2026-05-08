@@ -1,47 +1,29 @@
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Row 0: heading (keep as-is)
-  // Row 1: logo image
-  // Row 2: quote text
-  // Row 3: author image + info
-  // Row 4: stats
+  // Row 0: heading (eyebrow + h2)
+  // Row 1: logo + blockquote (single cell)
+  // Row 2: author image + name + title (single cell)
+  // Row 3: stat number + label (single cell)
 
   const headingRow = rows[0];
-  const logoRow = rows[1];
-  const quoteRow = rows[2]; // contains blockquote in cell 1
-  const authorRow = rows[3];
-  const statsRow = rows[4]; // not present in original, row 3 has stats
+  const quoteRow = rows[1];
+  const authorRow = rows[2];
+  const statsRow = rows[3];
 
-  // Get logo image
-  const logoImg = logoRow ? logoRow.querySelector('img') : null;
+  const logoImgEl = quoteRow ? quoteRow.querySelector('img') : null;
+  const blockquoteEl = quoteRow ? quoteRow.querySelector('blockquote') : null;
+  const authorImgEl = authorRow ? authorRow.querySelector('img') : null;
+  const authorParagraphs = authorRow ? [...authorRow.querySelectorAll('p')] : [];
+  const statsCell = statsRow ? statsRow.querySelector(':scope > div') : null;
 
-  // Get quote
-  const quoteCell = logoRow ? logoRow.querySelector('blockquote') || (rows[1] && rows[1].children[1]) : null;
-
-  // Restructure: we have 4 rows from the plain.html
-  // Row 0: heading subtitle + h2
-  // Row 1: logo image cell | blockquote cell
-  // Row 2: author image cell | author info cell
-  // Row 3: stats cell
-
-  const logoImgEl = rows[1] ? rows[1].querySelector('img') : null;
-  const blockquoteEl = rows[1] ? rows[1].querySelector('blockquote') : null;
-  const authorImgEl = rows[2] ? rows[2].querySelector('img') : null;
-  const authorInfoCell = rows[2] ? rows[2].children[1] : null;
-  const statsCell = rows[3] ? rows[3].children[0] : null;
-
-  // Clear block and rebuild
   block.innerHTML = '';
 
-  // Re-add heading row
   block.appendChild(headingRow);
 
-  // Create layout container
   const layout = document.createElement('div');
   layout.className = 'testimonials-layout';
 
-  // Quote card
   const quoteCard = document.createElement('div');
   quoteCard.className = 'quote-card';
 
@@ -55,8 +37,7 @@ export default async function decorate(block) {
     quoteCard.appendChild(blockquoteEl);
   }
 
-  // Author section
-  if (authorImgEl || authorInfoCell) {
+  if (authorImgEl || authorParagraphs.length) {
     const authorDiv = document.createElement('div');
     authorDiv.className = 'author';
 
@@ -64,10 +45,10 @@ export default async function decorate(block) {
       authorDiv.appendChild(authorImgEl);
     }
 
-    if (authorInfoCell) {
+    if (authorParagraphs.length) {
       const authorInfo = document.createElement('div');
       authorInfo.className = 'author-info';
-      authorInfo.innerHTML = authorInfoCell.innerHTML;
+      authorParagraphs.forEach((p) => authorInfo.appendChild(p));
       authorDiv.appendChild(authorInfo);
     }
 
@@ -76,7 +57,6 @@ export default async function decorate(block) {
 
   layout.appendChild(quoteCard);
 
-  // Stats card
   if (statsCell) {
     const statsCard = document.createElement('div');
     statsCard.className = 'stats-card';
