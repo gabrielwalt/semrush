@@ -1,7 +1,7 @@
 .testimonials {
-  --testimonials-dark: rgb(24, 30, 21);
+  --testimonials-dark: rgb(24 30 21);
   --testimonials-light: #fff;
-  --testimonials-stats-bg: rgb(240, 241, 242);
+  --testimonials-stats-bg: rgb(240 241 242);
   --testimonials-padding: 60px 0;
   --testimonials-gap: 12px;
 
@@ -40,7 +40,7 @@
   background: var(--testimonials-dark);
   color: var(--testimonials-light);
   border-radius: 8px;
-  padding: 32px;
+  padding: 24px;
   flex: 2;
   display: flex;
   flex-direction: column;

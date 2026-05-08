@@ -12,6 +12,15 @@ import {
   loadCSS,
 } from './aem.js';
 
+export function getContentRoot() {
+  const { pathname } = window.location;
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length > 1) {
+    return `/${segments.slice(0, -1).join('/')}`;
+  }
+  return '';
+}
+
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -136,6 +145,15 @@ async function loadEager(doc) {
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
+
+    // move announcement-bar above the header
+    const announcementSection = main.querySelector('.announcement-bar-container');
+    if (announcementSection) {
+      const header = doc.querySelector('header');
+      if (header) header.before(announcementSection);
+      await loadSection(announcementSection);
+    }
+
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }

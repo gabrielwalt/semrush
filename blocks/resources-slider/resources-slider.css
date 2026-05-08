@@ -20,19 +20,19 @@
   margin-right: auto;
 }
 
-.resources-slider-headings h2 {
+.resources-slider-headings p {
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
-  color: rgb(24, 30, 21);
+  color: rgb(24 30 21);
   margin: 0 0 4px;
   letter-spacing: 0.02em;
 }
 
-.resources-slider-headings h3 {
+.resources-slider-headings h2 {
   font-size: 32px;
   font-weight: 600;
-  color: rgb(24, 30, 21);
+  color: rgb(24 30 21);
   margin: 0;
   line-height: 1.2;
 }
@@ -47,29 +47,29 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid rgb(24, 30, 21);
+  border: 1px solid rgb(24 30 21);
   background: transparent;
   font-size: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(24, 30, 21);
+  color: rgb(24 30 21);
   transition: background 0.2s;
 }
 
 .resources-slider-nav button:hover {
-  background: rgba(24, 30, 21, 0.05);
+  background: rgb(24 30 21 / 5%);
 }
 
 .resources-slider {
   --slider-gap: 12px;
-  --card-width: 268px;
+  --card-width: 430px;
   --card-radius: 5px;
   --img-height: 178px;
   --title-size: 16px;
   --tag-size: 14px;
-  --text-color: rgb(24, 30, 21);
+  --text-color: rgb(24 30 21);
 
   display: flex;
   gap: var(--slider-gap);
@@ -77,15 +77,12 @@
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   padding: 0 32px 16px;
+  scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
 
 .resources-slider::-webkit-scrollbar {
   display: none;
-}
-
-.resources-slider {
-  scrollbar-width: none;
 }
 
 /* Each row = a card */

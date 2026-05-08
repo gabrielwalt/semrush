@@ -1,3 +1,9 @@
+.announcement-bar-container {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 .announcement-bar-wrapper {
   max-width: 100% !important;
   padding: 0 !important;
@@ -5,8 +11,8 @@
 }
 
 .announcement-bar {
-  --bar-bg: rgb(193, 144, 255);
-  --bar-text: rgb(24, 30, 21);
+  --bar-bg: rgb(193 144 255);
+  --bar-text: rgb(24 30 21);
   --bar-font-size: 14px;
   --bar-padding: 8px 16px;
 
@@ -19,11 +25,11 @@
   line-height: 14px;
 }
 
-main .announcement-bar .button-container {
+.announcement-bar .button-wrapper {
   display: inline;
 }
 
-main .announcement-bar a.button:any-link {
+.announcement-bar a.button:any-link {
   background: none;
   border: none;
   color: var(--bar-text);
@@ -34,9 +40,10 @@ main .announcement-bar a.button:any-link {
   text-align: center;
   text-decoration: none;
   white-space: normal;
+  border-radius: 0;
 }
 
-main .announcement-bar a.button:any-link:hover {
+.announcement-bar a.button:any-link:hover {
   text-decoration: underline;
 }
 

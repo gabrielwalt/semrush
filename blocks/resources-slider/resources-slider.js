@@ -10,12 +10,12 @@ export default async function decorate(block) {
   const headings = document.createElement('div');
   headings.className = 'resources-slider-headings';
 
-  // Get the h2 and h3 that are siblings before the wrapper
+  // Get the eyebrow (p) and title (h2) that are siblings before the wrapper
   const sectionDiv = section.querySelector(':scope > div');
+  const eyebrow = sectionDiv.querySelector(':scope > p');
   const h2 = sectionDiv.querySelector(':scope > h2');
-  const h3 = sectionDiv.querySelector(':scope > h3');
+  if (eyebrow) headings.append(eyebrow);
   if (h2) headings.append(h2);
-  if (h3) headings.append(h3);
 
   // Add navigation buttons
   const nav = document.createElement('div');

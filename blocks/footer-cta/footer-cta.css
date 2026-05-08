@@ -1,8 +1,8 @@
 .footer-cta {
-  --cta-bg: #fff;
-  --cta-text: rgb(24, 30, 21);
-  --cta-button-bg: rgb(193, 144, 255);
-  --cta-button-color: rgb(24, 30, 21);
+  --cta-bg: var(--background-color);
+  --cta-text: var(--dark-color);
+  --cta-button-bg: var(--accent-color);
+  --cta-button-color: var(--dark-color);
 
   text-align: center;
   padding: 0 0 34px;
@@ -28,7 +28,7 @@ footer .footer-cta a.button.primary:any-link {
   display: inline-block;
   background: var(--cta-button-bg);
   color: var(--cta-button-color);
-  padding: 18px 30px;
+  padding: 21px 30px;
   border-radius: 100px;
   font-size: 16px;
   font-weight: 600;

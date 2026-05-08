@@ -1,18 +1,18 @@
 /* Stats block */
 .stats {
-  --stats-bg: rgb(255, 255, 255);
-  --stats-text: rgb(24, 30, 21);
-  --stats-active-bg: rgb(24, 30, 21);
-  --stats-active-text: rgb(255, 255, 255);
-  --stats-inactive-text: rgb(209, 210, 213);
-  --stats-accent: rgb(24, 240, 191);
+  --stats-bg: rgb(255 255 255);
+  --stats-text: rgb(24 30 21);
+  --stats-active-bg: rgb(24 30 21);
+  --stats-active-text: rgb(255 255 255);
+  --stats-inactive-text: rgb(209 210 213);
+  --stats-accent: rgb(24 240 191);
 
   padding: 60px 0;
   color: var(--stats-text);
 }
 
 /* Header row */
-.stats > div:first-child h2 {
+.stats .stat-header > div > p:first-child {
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
@@ -21,7 +21,7 @@
   color: var(--stats-text);
 }
 
-.stats > div:first-child h3 {
+.stats .stat-header h2 {
   font-size: 32px;
   font-weight: 600;
   line-height: 1;
@@ -111,12 +111,8 @@
   display: block;
 }
 
-/* CTA row */
-.stats > div.stat-cta {
-  margin-top: 40px;
-}
-
-main .stats a.button:any-link {
+/* Header CTA link */
+main .stats .stat-header a.button:any-link {
   background: transparent;
   border: 1px solid var(--stats-text);
   border-radius: 100px;
@@ -130,7 +126,7 @@ main .stats a.button:any-link {
   text-decoration: none;
 }
 
-main .stats a.button:any-link:hover {
+main .stats .stat-header a.button:any-link:hover {
   background: var(--stats-text);
   color: var(--stats-active-text);
 }
