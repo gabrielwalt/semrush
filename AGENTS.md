@@ -10,6 +10,10 @@ All project-specific details live in `PROJECT.md` and the `PROJECT-*.md` files. 
 
 ## Rules — Non-Negotiable
 
+**Concluding answer.** End every substantive reply with:
+1. **Summary** — State what you did or decided. If an EDS concept or Console step might be unfamiliar, add one sentence of context (**Educate as you go**, under **Migration Process**).
+2. **Next step** — Close with one concrete **question** that proposes the logical follow-up from this thread, **Migration Process**, and `PROJECT-STATUS.md`. No vague sign-offs (e.g. “anything else?”).
+
 **Keep the PROJECT files current.** This is your project memory. Any meaningful change — block, variant, token, section style, import script, page — updates the relevant file immediately. Don't defer it. See the Learning Loop for the full checklist.
 
 **Code is the source of truth for implementation details.** Don't copy selectors, token values, DOM structures, or CSS patterns into PROJECT-*.md files — read the code when you need those. PROJECT-*.md holds what code can't tell you: inventory, intent, decisions, non-obvious gotchas, migration status.
