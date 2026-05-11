@@ -204,9 +204,8 @@ pre {
 }
 
 main > div {
-  margin: var(--section-padding) auto;
+  margin: var(--section-padding) 0;
   padding: 0 var(--container-padding);
-  max-width: var(--container-max-width);
 }
 
 input,
@@ -339,32 +338,24 @@ main {
 }
 
 /* homepage hero pattern — only on pages with insights-widget (homepage) */
-main:has(.insights-widget) {
+body.homepage main {
   background:
-    url('/content/images/pattern-hero.svg') 2px calc(50% - 20px) / auto repeat-x,
+    url('/icons/pattern-hero.svg') 2px 680px / auto repeat-x,
     linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
 }
 
-@media (width < 1440px) and (width >= 1024px) {
-  main:has(.insights-widget) {
-    background:
-      url('/content/images/pattern-hero.svg') 2px calc(50% - 100px) / auto repeat-x,
-      linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
-  }
-}
-
 @media (width < 1024px) and (width >= 768px) {
-  main:has(.insights-widget) {
+  body.homepage main {
     background:
-      url('/content/images/pattern-hero.svg') 2px calc(50% + 100px) / auto repeat-x,
+      url('/icons/pattern-hero.svg') 2px 580px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
   }
 }
 
 @media (width < 768px) {
-  main:has(.insights-widget) {
+  body.homepage main {
     background:
-      url('/content/images/pattern-hero.svg') -2px 100% / auto repeat-x,
+      url('/icons/pattern-hero.svg') -2px 500px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
   }
 }
@@ -429,11 +420,6 @@ main .section.centered:first-of-type {
   padding-bottom: 0;
 }
 
-@media (width >= 1440px) {
-  main .section.centered:first-of-type {
-    background: url('/icons/pattern-hero.svg') 2px calc(50% + 100px) repeat-x;
-  }
-}
 
 main .section.centered h1 {
   margin-top: 0;

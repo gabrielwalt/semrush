@@ -236,6 +236,7 @@ export default async function decorate(block) {
   function openDropdown() {
     dropdown.hidden = false;
     countryBtn.setAttribute('aria-expanded', 'true');
+    cursor.style.display = 'none';
     searchInput.value = '';
     renderOptions(list, '', selectedCountry.id);
     requestAnimationFrame(() => searchInput.focus());
@@ -244,6 +245,9 @@ export default async function decorate(block) {
   function closeDropdown() {
     dropdown.hidden = true;
     countryBtn.setAttribute('aria-expanded', 'false');
+    if (!input.value && document.activeElement !== input) {
+      cursor.style.display = '';
+    }
   }
 
   function selectCountry(id) {

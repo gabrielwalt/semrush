@@ -6,7 +6,6 @@ export default function parse(element, { document }) {
   const subtitle = element.querySelector('.mp-hero__subtitle');
   const wrapper = document.createElement('div');
 
-  // Default content: heading + subtitle
   const heading = document.createElement('h1');
   heading.textContent = h1.textContent.trim();
   wrapper.appendChild(heading);
@@ -17,7 +16,7 @@ export default function parse(element, { document }) {
     wrapper.appendChild(p);
   }
 
-  // Insights Widget block — placeholder with text strings as paragraphs
+  // Insights Widget block
   const widgetContent = document.createElement('div');
   const p1 = document.createElement('p');
   p1.textContent = 'Enter your website';
@@ -28,31 +27,50 @@ export default function parse(element, { document }) {
   const insightsTable = WebImporter.DOMUtils.createTable([['Insights Widget'], [widgetContent]], document);
   wrapper.appendChild(insightsTable);
 
-  // Hero Video block with video element if present
+  // Hero Video block — output as link (video URL) + picture (poster)
   const video = element.querySelector('video');
   const videoCell = document.createElement('div');
+
   if (video) {
-    const videoEl = document.createElement('video');
-    videoEl.setAttribute('playsinline', '');
-    videoEl.setAttribute('muted', '');
-    videoEl.setAttribute('loop', '');
-    videoEl.setAttribute('autoplay', '');
-    if (video.poster) videoEl.setAttribute('poster', video.poster);
-    const source = video.querySelector('source');
-    if (source) {
-      videoEl.setAttribute('src', source.src || source.getAttribute('src'));
-    } else if (video.src) {
-      videoEl.setAttribute('src', video.src);
+    const source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
+    const videoUrl = source?.src || source?.getAttribute('src') || video.src;
+    if (videoUrl) {
+      const p = document.createElement('p');
+      const a = document.createElement('a');
+      a.href = videoUrl;
+      a.textContent = videoUrl;
+      p.appendChild(a);
+      videoCell.appendChild(p);
     }
-    videoCell.appendChild(videoEl);
+    if (video.poster) {
+      const p = document.createElement('p');
+      const pic = document.createElement('picture');
+      const img = document.createElement('img');
+      img.src = video.poster;
+      img.alt = video.getAttribute('aria-label') || 'Semrush platform toolkits overview';
+      pic.appendChild(img);
+      p.appendChild(pic);
+      videoCell.appendChild(p);
+    }
   } else {
+    const posterImg = element.querySelector('.mp-hero__video-wrapper img');
+    const p = document.createElement('p');
+    const a = document.createElement('a');
+    a.href = 'https://www.semrush.com/static/index/videos/plg_toolkits_with_pr.mp4';
+    a.textContent = 'https://www.semrush.com/static/index/videos/plg_toolkits_with_pr.mp4';
+    p.appendChild(a);
+    videoCell.appendChild(p);
+
+    const p2el = document.createElement('p');
     const pic = document.createElement('picture');
     const img = document.createElement('img');
-    img.src = 'https://www.semrush.com/static/plg_toolkits.webp';
-    img.alt = 'Semrush platform toolkits overview';
+    img.src = posterImg?.src || 'https://www.semrush.com/static/plg_toolkits.webp';
+    img.alt = posterImg?.alt || 'Semrush platform toolkits overview';
     pic.appendChild(img);
-    videoCell.appendChild(pic);
+    p2el.appendChild(pic);
+    videoCell.appendChild(p2el);
   }
+
   const heroVideoTable = WebImporter.DOMUtils.createTable([['Hero Video'], [videoCell]], document);
   wrapper.appendChild(heroVideoTable);
 

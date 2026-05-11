@@ -33,14 +33,13 @@
 .stats > div.stat-row {
   padding: 0;
   cursor: pointer;
-  margin-bottom: var(--space-xs);
+  margin-bottom: 0;
   transition: color var(--transition-duration) var(--transition-easing);
   color: var(--stats-inactive-text);
 }
 
 .stats > div.stat-row > div {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 0;
 }
@@ -54,7 +53,10 @@
   height: 140px;
   background: transparent;
   padding-right: 0;
-  transition: height var(--transition-duration) var(--transition-easing), background-color var(--transition-duration) var(--transition-easing), padding-right var(--transition-duration) var(--transition-easing);
+  border-radius: var(--radius-s);
+  transition: height var(--transition-duration) var(--transition-easing),
+    background-color var(--transition-duration) var(--transition-easing),
+    padding-right var(--transition-duration) var(--transition-easing);
 }
 
 /* Arrow indicator */
@@ -63,7 +65,16 @@
   height: 100%;
   background: rgb(240 241 242);
   flex-shrink: 0;
-  transition: background-color var(--transition-duration) var(--transition-easing), width var(--transition-duration) var(--transition-easing);
+  border-radius: var(--radius-s) 0 0 var(--radius-s);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgb(0 0 0 / 5%) 4px,
+    rgb(0 0 0 / 5%) 5px
+  );
+  transition: background-color var(--transition-duration) var(--transition-easing),
+    width var(--transition-duration) var(--transition-easing);
 }
 
 .stats > div.stat-row .stat-count-wrapper {
@@ -76,29 +87,32 @@
 .stats > div.stat-row .stat-count {
   font-size: 96px;
   font-weight: 500;
+  font-family: var(--heading-font-family);
   color: var(--stats-inactive-text);
   line-height: 1;
+  letter-spacing: -0.06em;
   display: block;
-  transition: font-size var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
+  transition: font-size var(--transition-duration) var(--transition-easing),
+    color var(--transition-duration) var(--transition-easing);
 }
 
 .stats > div.stat-row .stat-title {
-  font-size: var(--font-size-body-m);
+  font-size: var(--font-size-heading-m);
   font-weight: 500;
   color: var(--stats-inactive-text);
   margin: 4px 0 0;
-  transition: color var(--transition-duration) var(--transition-easing);
+  transition: color var(--transition-duration) var(--transition-easing),
+    font-size var(--transition-duration) var(--transition-easing);
 }
 
+/* Description — always visible, right side */
 .stats > div.stat-row .stat-description {
-  font-size: var(--font-size-body-m);
+  font-size: var(--font-size-heading-m);
   color: var(--stats-inactive-text);
-  margin: var(--space-xs) 0 0;
-  width: 100%;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity var(--transition-duration) var(--transition-easing), max-height var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
+  margin: 0;
+  margin-left: auto;
+  max-width: 360px;
+  transition: color var(--transition-duration) var(--transition-easing);
 }
 
 /* Active state */
@@ -110,10 +124,11 @@
   background: var(--stats-active-bg);
   height: 180px;
   padding-right: var(--space-l);
+  border-radius: var(--radius-s);
 }
 
 .stats > div.stat-row.active .stat-arrow {
-  background: var(--stats-accent);
+  background-color: var(--stats-accent);
   width: 140px;
 }
 
@@ -127,15 +142,13 @@
 }
 
 .stats > div.stat-row.active .stat-description {
-  opacity: 1;
-  max-height: 60px;
   color: var(--stats-text);
 }
 
 /* Header CTA — compact secondary button */
 main .stats .stat-header a.button:any-link {
-  height: 48px;
-  padding: 0 var(--space-m);
+  height: var(--cta-height);
+  padding: 0 var(--space-l);
 }
 
 @media (width >= 1024px) {
@@ -184,8 +197,13 @@ main .stats .stat-header a.button:any-link {
 }
 
 @media (width < 768px) {
+  .stats > div.stat-row > div {
+    flex-wrap: wrap;
+  }
+
   .stats > div.stat-row .stat-number {
     height: 100px;
+    width: 100%;
   }
 
   .stats > div.stat-row .stat-count {
@@ -194,6 +212,13 @@ main .stats .stat-header a.button:any-link {
 
   .stats > div.stat-row .stat-arrow {
     width: 60px;
+  }
+
+  .stats > div.stat-row .stat-description {
+    max-width: 100%;
+    margin-left: 0;
+    margin-top: var(--space-xs);
+    font-size: var(--font-size-body-m);
   }
 
   .stats > div.stat-row.active .stat-number {

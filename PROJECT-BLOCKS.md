@@ -10,19 +10,23 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 | Block | Variants | Used on | Notes |
 |-------|----------|---------|-------|
 | `announcement-bar` | — | Homepage | Dismissible top banner |
-| `insights-widget` | — | Homepage | Search form; UI strings ("Enter your website", "Get insights") authored in cells — not hardcoded in JS |
-| `hero-video` | — | Homepage | Glass-framed; carries real `<video>` element (source+poster from origin), not `<picture>` pretending to be video |
-| `marquee` | — | Homepage | Infinite-scroll logo strip; own section (sibling to hero, not nested) |
-| `promo-cards` | `promo-cards-semrush-one`, `promo-cards-enterprise` | Homepage | Enterprise variant: standard `<strong><a>` CTA, white-outline via CSS |
-| `solutions-slider` | — | Homepage | Tab-style slider; each slide = `h3` + `p` (no h4/h5) |
-| `stats` | — | Homepage | Click-to-expand; row 1 = header, rows 2+ = stats |
-| `resources-slider` | — | Homepage | Horizontal card slider with arrows |
-| `testimonials` | — | Homepage | Quote + author + stat |
-| `ai-visibility-index` | — | Homepage | Table visualization |
+| `insights-widget` | — | Homepage | Search form with searchable country dropdown (115 countries), blinking cursor, glass surface |
+| `hero-video` | — | Homepage | Glass-framed; detects video URLs in link text (EDS pattern for external media) |
+| `marquee` | — | Homepage | Infinite-scroll logo strip with edge fade mask |
+| `promo-cards` | `promo-cards-semrush-one`, `promo-cards-enterprise` | Homepage | 64px padding, grid layout, video in glass frame on right half |
+| `carousel-slider` | — | Homepage | Expandable card carousel with + button; extends to right viewport edge |
+| `solutions-slider` | — | (alias) | Thin redirect to `carousel-slider` for backward compat with remote content |
+| `stats` | — | Homepage | Click/scroll-to-expand; diagonal-line arrow pattern, 180px numbers |
+| `ai-visibility-index` | — | Homepage | Dark section, bar chart with purple-to-teal gradient, 84px heading |
+| `testimonials` | — | Homepage | Quote card (dark) + stat card (grey), 2-column layout |
+| `resources-slider` | — | Homepage | Horizontal card slider with arrows, category tags |
 | `cards` | — | — | Standard card grid |
 | `columns` | — | — | Multi-column layout |
-| `header` | — | All | Sticky nav; nested `<ul>` mega menu from nav fragment (not flat lists) |
+| `header` | — | All | Sticky nav; nested `<ul>` mega menu from nav fragment |
 | `footer` | — | All | Fragment: `footer-cta`, `footer-links`, `footer-bottom` |
+| `footer-cta` | — | All | "Get started" CTA section with purple button |
+| `footer-links` | — | All | 4-column link grid |
+| `footer-bottom` | — | All | Copyright, legal links, large SEMRUSH wordmark |
 | `fragment` | — | — | Utility — `loadFragment()` used by header/footer |
 
 ---
@@ -31,9 +35,15 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 
 | Style | Effect |
 |-------|--------|
-| `centered` | Flex column + center-align (hero section: default h1+subtitle + insights-widget + hero-video) |
+| `centered` | Flex column + center-align (hero section) |
 
-**Hero section model:** Section Metadata `centered` + default content (h1 + subtitle only) + `insights-widget` block + `hero-video` block. No synthetic `hero` block injection when this model is present.
+---
+
+## Page Templates
+
+| Template | Body class | Effect |
+|----------|-----------|--------|
+| `homepage` | `body.homepage` | Applies gradient background + pattern-hero.svg to `main` |
 
 ---
 
@@ -42,3 +52,12 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 | Module | Purpose |
 |--------|---------|
 | `scripts/glass.js` | `applyGlassSurface(el)` — glass effect for hero-video |
+
+---
+
+## Key Implementation Patterns
+
+- **Video detection**: Links whose text content contains a video URL (`.mp4`, `.webm`) are detected as video sources — EDS rewrites external media hrefs.
+- **Glass frame**: `linear-gradient(91deg, rgba(5,5,5,0.04), rgba(255,255,255,0.04))` + `backdrop-filter: blur(5px)` + `border: 1px solid rgba(255,255,255,0.6)` + `border-radius: 12px` + `padding: 12px`.
+- **Carousel edge-bleed**: Block has `padding-left` only; track scrolls to right viewport edge.
+- **Pattern-hero positioning**: Fixed `680px` from top of `main` (not percentage-based, since `main` is very tall).

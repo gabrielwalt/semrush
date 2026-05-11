@@ -12,6 +12,7 @@ export default function parse(element, { document }) {
     const img = slide.querySelector('img');
     const cta = slide.querySelector('a.mp-button');
 
+    // Column 1: eyebrow + title + small image
     const col1 = document.createElement('div');
     if (title) {
       const h3 = document.createElement('h3');
@@ -32,6 +33,7 @@ export default function parse(element, { document }) {
       col1.appendChild(pic);
     }
 
+    // Column 2: large image + description + CTA
     const col2 = document.createElement('div');
     if (img) {
       const pic = document.createElement('picture');

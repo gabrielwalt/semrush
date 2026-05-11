@@ -143,6 +143,9 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  if (doc.querySelector('.insights-widget, main .insights-widget')) {
+    document.body.classList.add('homepage');
+  }
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
