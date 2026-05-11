@@ -1,30 +1,38 @@
-/* Promo Cards Block — Semrush One variant */
-.promo-cards {
-  --promo-bg: linear-gradient(182deg, rgb(193 144 255) -4.72%, rgb(220 238 235) 68.72%, rgb(255 255 255) 152.44%);
-  --promo-text: var(--dark-color);
-  --promo-radius: var(--radius-s);
-  --promo-padding: var(--space-l) 12px;
-
-  background:
-    url('/content/images/semrush-one-bg.svg') no-repeat 50% 50%,
-    var(--promo-bg);
-  color: var(--promo-text);
-  border-radius: var(--promo-radius);
-  padding: var(--promo-padding);
-  box-sizing: border-box;
+/* Promo Cards Section — stacked vertically */
+.section.promo-cards-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 64px;
+  padding: 32px 0;
 }
 
-.promo-cards > div:first-child {
-  padding: 0;
+.promo-cards-wrapper {
+  max-width: 100% !important;
+  padding: 0 32px !important;
+}
+
+/* Base card layout */
+.promo-cards .promo-cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 620px;
+  border-radius: var(--radius-s);
+  overflow: hidden;
+}
+
+/* Text column */
+.promo-cards .promo-cards-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--block-padding);
 }
 
 .promo-cards h2 {
   font-size: var(--font-size-heading-l);
   font-weight: 600;
   line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
   margin-top: 0;
   margin-bottom: 0.5em;
 }
@@ -36,96 +44,51 @@
   margin-bottom: 0.8em;
 }
 
-/* Button inherits global .button.secondary styles */
 main .promo-cards .button-wrapper {
   margin: var(--space-s) 0 0;
 }
 
-/* Video/image wrapper — glass effect */
-.promo-cards > div:last-child {
-  width: 100%;
-  margin-top: var(--space-m);
-}
-
-.promo-cards > div:last-child > div {
+/* Media column — glass wrapper */
+.promo-cards .promo-cards-media {
+  display: flex;
+  align-items: stretch;
+  padding: 12px 0 12px 12px;
   background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
   backdrop-filter: blur(5px);
-  border-radius: 6px;
-  padding: 6px;
+  border-radius: 12px 0 0 12px;
 }
 
-.promo-cards > div:last-child img {
+.promo-cards .promo-cards-media .promo-cards-video,
+.promo-cards .promo-cards-media picture,
+.promo-cards .promo-cards-media img {
   width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 4px;
-  aspect-ratio: 565 / 350;
+  height: 100%;
   object-fit: cover;
+  border-radius: 8px 0 0 8px;
+  display: block;
 }
 
-/* Full-width override */
-.promo-cards-wrapper {
-  max-width: 100% !important;
-  padding: 0 12px !important;
-}
-
-/* Side-by-side layout when two promo cards share a section */
-.section.promo-cards-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
-}
-
-@media (width >= 1024px) {
-  .section.promo-cards-container {
-    flex-flow: row nowrap;
-    gap: 12px;
-  }
-
-  /* stylelint-disable-next-line declaration-no-important */
-  .section.promo-cards-container > .promo-cards-wrapper {
-    flex: 1 !important;
-    min-width: 0;
-    max-width: 50% !important;
-    margin-top: 0 !important;
-  }
-}
-
-@media (width >= 1024px) {
-  .promo-cards {
-    --promo-padding: var(--block-padding);
-  }
-
-  .promo-cards h2 {
-    font-size: var(--font-size-heading-l);
-  }
-
-  .promo-cards > div:last-child {
-    margin-top: var(--space-l);
-  }
+/* =============================================
+   Semrush One Variant
+   ============================================= */
+.promo-cards.promo-cards-semrush-one .promo-cards-container {
+  background:
+    url('/content/images/semrush-one-bg.svg') no-repeat 50% 50%,
+    linear-gradient(182deg, rgb(193 144 255) -4.72%, rgb(220 238 235) 68.72%, rgb(255 255 255) 152.44%);
+  color: var(--dark-color);
 }
 
 /* =============================================
    Enterprise Variant — dark background
    ============================================= */
-.promo-cards.promo-cards-enterprise {
-  --promo-bg: rgb(0 0 0);
-  --promo-text: #fff;
-  --promo-padding: var(--space-l) 12px;
-
+.promo-cards.promo-cards-enterprise .promo-cards-container {
   background:
     url('/content/images/enterprise-bg.webp') no-repeat 100% 100% / contain,
-    var(--promo-bg);
-  color: var(--promo-text);
-  text-align: center;
-  align-items: center;
+    rgb(0 0 0);
+  color: #fff;
 }
 
 .promo-cards.promo-cards-enterprise h2 {
-  font-size: var(--font-size-heading-l);
-  font-weight: 600;
-  line-height: var(--line-height-snug);
-  letter-spacing: var(--tracking-tight);
   color: #fff;
 }
 
@@ -146,24 +109,49 @@ main .promo-cards.promo-cards-enterprise a.button:any-link:focus-visible {
   background: rgb(255 255 255 / 10%);
 }
 
-/* Enterprise glass wrapper */
-.promo-cards.promo-cards-enterprise > div:last-child > div {
+/* Enterprise glass wrapper — inverted */
+.promo-cards.promo-cards-enterprise .promo-cards-media {
   background: rgb(255 255 255 / 5%);
   border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: 6px;
-  padding: 7px;
 }
 
-.promo-cards.promo-cards-enterprise > div:last-child img {
-  border-radius: 4px;
+/* =============================================
+   Responsive
+   ============================================= */
+@media (width < 768px) {
+  .section.promo-cards-container {
+    gap: 32px;
+    padding: 16px 0;
+  }
+
+  .promo-cards-wrapper {
+    padding: 0 16px !important;
+  }
+
+  .promo-cards .promo-cards-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .promo-cards .promo-cards-text {
+    padding: var(--space-l) var(--space-m);
+  }
+
+  .promo-cards .promo-cards-media {
+    border-radius: 0 0 12px 12px;
+    padding: 12px;
+    min-height: 250px;
+  }
+
+  .promo-cards .promo-cards-media .promo-cards-video,
+  .promo-cards .promo-cards-media picture,
+  .promo-cards .promo-cards-media img {
+    border-radius: 8px;
+  }
 }
 
 @media (width >= 1024px) {
-  .promo-cards.promo-cards-enterprise {
-    --promo-padding: var(--block-padding);
-  }
-
-  .promo-cards.promo-cards-enterprise h2 {
+  .promo-cards h2 {
     font-size: var(--font-size-heading-xl);
   }
 }

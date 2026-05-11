@@ -1,3 +1,25 @@
+function getVideoSources(cell) {
+  const sources = [];
+
+  // 1. Links with explicit video extension in href
+  cell.querySelectorAll('a[href$=".mp4"], a[href$=".webm"], a[href$=".ogg"]').forEach((link) => {
+    sources.push({ src: link.href, type: `video/${link.href.split('.').pop()}` });
+  });
+
+  if (sources.length) return sources;
+
+  // 2. Links whose text content is a video URL (EDS rewrites hrefs for external media)
+  cell.querySelectorAll('a').forEach((link) => {
+    const text = link.textContent.trim();
+    const match = text.match(/\.(mp4|webm|ogg)(\?|$)/);
+    if (match) {
+      sources.push({ src: text, type: `video/${match[1]}` });
+    }
+  });
+
+  return sources;
+}
+
 export default async function decorate(block) {
   const row = block.querySelector(':scope > div');
   if (!row) return;
@@ -5,9 +27,9 @@ export default async function decorate(block) {
   const cell = row.querySelector(':scope > div');
   if (!cell) return;
 
-  const links = cell.querySelectorAll('a[href$=".mp4"], a[href$=".webm"], a[href$=".ogg"]');
   const img = cell.querySelector('img');
   const existingVideo = cell.querySelector('video');
+  const sources = getVideoSources(cell);
 
   const wrapper = document.createElement('div');
   wrapper.className = 'hero-video-frame glass-surface';
@@ -19,7 +41,7 @@ export default async function decorate(block) {
     existingVideo.autoplay = true;
     existingVideo.className = 'hero-video-player';
     wrapper.appendChild(existingVideo);
-  } else if (links.length > 0) {
+  } else if (sources.length > 0) {
     // Show poster image immediately for performance
     if (img) {
       img.loading = 'eager';
@@ -28,7 +50,6 @@ export default async function decorate(block) {
       wrapper.appendChild(picture);
     }
 
-    // Build and swap in video after page load
     const buildVideo = () => {
       const video = document.createElement('video');
       video.setAttribute('playsinline', '');
@@ -41,11 +62,10 @@ export default async function decorate(block) {
         if (img.alt) video.setAttribute('aria-label', img.alt);
       }
 
-      links.forEach((link) => {
+      sources.forEach(({ src, type }) => {
         const source = document.createElement('source');
-        source.src = link.href;
-        const ext = link.href.split('.').pop();
-        source.type = `video/${ext}`;
+        source.src = src;
+        source.type = type;
         video.appendChild(source);
       });
 

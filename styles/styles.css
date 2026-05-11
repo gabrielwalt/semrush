@@ -427,6 +427,12 @@ main .section.centered:first-of-type {
   padding-bottom: 0;
 }
 
+@media (width >= 1440px) {
+  main .section.centered:first-of-type {
+    background: url('/icons/pattern-hero.svg') 2px calc(50% + 100px) repeat-x;
+  }
+}
+
 main .section.centered h1 {
   margin-top: 0;
   margin-bottom: 0;
