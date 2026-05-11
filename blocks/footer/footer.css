@@ -3,6 +3,12 @@ footer {
   font-size: var(--body-font-size-xs);
 }
 
+footer .footer {
+  position: relative;
+  z-index: 1;
+  background: var(--background-color);
+}
+
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
@@ -20,6 +26,32 @@ footer .footer > div > .section > div {
 
 footer .footer p {
   margin: 0;
+}
+
+/* Footer reveal — large SEMRUSH text behind footer */
+footer .footer .footer-reveal {
+  position: sticky;
+  bottom: 0;
+  z-index: -1;
+  height: 450px;
+  background:
+    url('/content/images/pattern-hero.svg') repeat-x 0 100%,
+    rgb(220 238 235);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  padding-bottom: 40px;
+}
+
+footer .footer .footer-reveal span {
+  font-family: var(--heading-font-family);
+  font-size: clamp(120px, 15vw, 220px);
+  font-weight: 700;
+  color: var(--dark-color);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 @media (width >= 1024px) {

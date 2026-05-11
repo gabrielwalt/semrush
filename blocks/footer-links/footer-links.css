@@ -39,6 +39,39 @@
   text-decoration: underline;
 }
 
+@media (width < 768px) {
+  .footer-links .footer-links-heading {
+    cursor: pointer;
+    position: relative;
+    padding-right: 24px;
+  }
+
+  .footer-links .footer-links-heading::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border: 2px solid currentcolor;
+    border-width: 2px 2px 0 0;
+    transition: transform var(--transition-fast);
+  }
+
+  .footer-links .footer-links-heading.footer-links-expanded::after {
+    transform: translateY(-50%) rotate(135deg);
+  }
+
+  .footer-links ul {
+    display: none;
+  }
+
+  .footer-links ul.footer-links-visible {
+    display: block;
+  }
+}
+
 @media (width >= 1024px) {
   .footer-links > div {
     grid-template-columns: repeat(4, 1fr);

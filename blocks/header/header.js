@@ -149,45 +149,50 @@ export default async function decorate(block) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
           toggleAllNavSections(navSections);
           navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        } else if (navSection.classList.contains('nav-drop')) {
+          e.preventDefault();
+          navSection.classList.toggle('nav-mobile-expanded');
         }
       });
     });
   }
 
-  // Mega-menu: split sub-lists into columns on desktop
+  // Mega-menu: restructure nested lists into columns on desktop
   function buildMegaColumns() {
     if (!navSections) return;
     navSections.querySelectorAll('.nav-drop > ul').forEach((subList) => {
-      // Skip if already processed
       if (subList.classList.contains('nav-mega-panel')) return;
 
       const items = [...subList.children];
-      const columns = [];
-      let currentCol = [];
+      const hasNestedLists = items.some((li) => li.querySelector('ul'));
+      if (!hasNestedLists) return;
 
-      items.forEach((item) => {
-        if (item.textContent.trim() === '---') {
-          if (currentCol.length) columns.push(currentCol);
-          currentCol = [];
-          item.remove();
-        } else {
-          currentCol.push(item);
-        }
-      });
-      if (currentCol.length) columns.push(currentCol);
+      subList.classList.add('nav-mega-panel');
+      subList.innerHTML = '';
 
-      if (columns.length > 1) {
-        subList.innerHTML = '';
-        subList.classList.add('nav-mega-panel');
-        columns.forEach((col) => {
+      items.forEach((li) => {
+        const childList = li.querySelector('ul');
+        const hasImage = li.querySelector('picture');
+
+        if (hasImage) {
+          const promoDiv = document.createElement('div');
+          promoDiv.className = 'nav-mega-promo';
+          promoDiv.appendChild(li.querySelector('a').cloneNode(true));
+          subList.appendChild(promoDiv);
+        } else if (childList) {
           const colDiv = document.createElement('div');
           colDiv.className = 'nav-mega-column';
-          const colList = document.createElement('ul');
-          col.forEach((li) => colList.appendChild(li));
-          colDiv.appendChild(colList);
+          const heading = document.createElement('p');
+          heading.className = 'nav-mega-heading';
+          const textNodes = [...li.childNodes]
+            .filter((n) => n.nodeType === 3 && n.textContent.trim());
+          heading.textContent = textNodes.length
+            ? textNodes[0].textContent.trim() : '';
+          colDiv.appendChild(heading);
+          colDiv.appendChild(childList);
           subList.appendChild(colDiv);
-        });
-      }
+        }
+      });
     });
   }
 

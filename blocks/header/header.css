@@ -207,27 +207,25 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections .nav-drop {
     position: relative;
-    padding-right: 16px;
     cursor: pointer;
   }
 
   header nav .nav-sections .nav-drop::after {
     content: '';
     display: inline-block;
-    position: absolute;
-    top: 0.5em;
-    right: 2px;
+    position: relative;
+    top: 0;
+    margin-left: 6px;
     transform: rotate(135deg);
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border: 2px solid currentcolor;
     border-radius: 0 1px 0 0;
     border-width: 2px 2px 0 0;
+    vertical-align: middle;
   }
 
   header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    top: unset;
-    bottom: 0.5em;
     transform: rotate(315deg);
   }
 
@@ -239,7 +237,7 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections .default-content-wrapper > ul > li {
     flex: 0 1 auto;
-    position: relative;
+    position: static;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
@@ -255,15 +253,14 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
     display: flex;
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
-    top: 84px;
+    top: 100%;
     padding: 40px 32px;
     background-color: #fff;
     white-space: initial;
     box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
-    max-width: 100%;
     gap: 0;
     z-index: 10;
   }
@@ -271,7 +268,7 @@ header nav .nav-sections ul > li > ul > li {
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul.nav-mega-panel {
     display: flex;
     gap: 40px;
-    padding: 40px calc((100vw - 1440px) / 2 + 32px);
+    padding: 40px max(32px, calc((100vw - 1440px) / 2 + 32px));
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-column {
@@ -299,6 +296,33 @@ header nav .nav-sections ul > li > ul > li {
     text-decoration: underline;
   }
 
+  header nav .nav-sections .nav-mega-heading {
+    font-size: var(--font-size-body-m);
+    font-weight: 700;
+    margin: 0 0 var(--space-xs);
+  }
+
+  header nav .nav-sections .nav-mega-promo {
+    flex: 0 0 280px;
+    margin-left: auto;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-promo a {
+    display: block;
+    text-decoration: none;
+    border-radius: var(--radius-m);
+    overflow: hidden;
+  }
+
+  header nav .nav-sections .nav-mega-promo img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-m);
+    display: block;
+    margin-bottom: var(--space-xs);
+  }
+
   header nav .nav-sections .default-content-wrapper > ul > li:last-child > a::after {
     content: '';
     display: inline-block;
@@ -312,14 +336,55 @@ header nav .nav-sections ul > li > ul > li {
   }
 }
 
+/* mobile accordion */
+@media (width < 1024px) {
+  header nav[aria-expanded='true'] .nav-sections .nav-drop > ul {
+    display: none;
+    padding-left: 0;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .nav-drop.nav-mobile-expanded > ul {
+    display: block;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.nav-drop {
+    position: relative;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.nav-drop::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    border: 2px solid currentcolor;
+    border-width: 2px 2px 0 0;
+    transition: transform var(--transition-fast);
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.nav-drop.nav-mobile-expanded::after {
+    transform: translateY(-50%) rotate(135deg);
+  }
+}
+
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
   display: none;
   visibility: hidden;
   align-items: center;
-  gap: var(--space-xs);
   font-size: 0;
+}
+
+header nav .nav-tools p {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: 0;
+  font-size: 0;
+  line-height: 0;
 }
 
 header nav[aria-expanded='true'] .nav-tools {

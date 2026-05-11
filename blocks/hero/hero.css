@@ -47,6 +47,107 @@
 
 /* CTA button inherits global .button.primary styles */
 
+/* Hero search form */
+.hero .hero-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.hero .hero-search-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: #fff;
+  border-radius: var(--radius-pill);
+  padding: 0 var(--space-s);
+  height: 60px;
+  border: 1px solid transparent;
+}
+
+.hero .hero-search-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: var(--font-size-body-m);
+  font-family: var(--body-font-family);
+  background: transparent;
+  padding: 0 var(--space-xs);
+  height: 100%;
+  min-width: 0;
+}
+
+.hero .hero-search-input input::placeholder {
+  color: rgb(108 110 121);
+}
+
+.hero .hero-search-country {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--font-size-body-m);
+  font-weight: 500;
+  color: var(--dark-color);
+  padding: 0 var(--space-xs);
+  white-space: nowrap;
+}
+
+.hero .hero-search-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: #fff;
+  border-radius: var(--radius-m);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+  padding: var(--space-xs);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  z-index: 10;
+  max-width: 200px;
+}
+
+.hero .hero-search-dropdown button {
+  border: none;
+  background: transparent;
+  padding: 6px 12px;
+  font-size: var(--font-size-body-s);
+  cursor: pointer;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.hero .hero-search-dropdown button:hover {
+  background: var(--light-color);
+}
+
+.hero .hero-search-submit {
+  background: var(--accent-color);
+  color: var(--dark-color);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 0 var(--space-l);
+  height: 60px;
+  font-size: var(--font-size-body-m);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: var(--space-xs);
+}
+
+.hero .hero-search-submit:hover {
+  background: color-mix(in srgb, var(--accent-color) 85%, black);
+}
+
 @media (width >= 1024px) {
   .hero {
     --hero-padding-top: 80px;
@@ -57,5 +158,19 @@
 @media (width < 768px) {
   .hero h1 {
     font-size: var(--font-size-heading-xl);
+  }
+
+  .hero .hero-search {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .hero .hero-search-input {
+    width: 100%;
+  }
+
+  .hero .hero-search-submit {
+    width: 100%;
+    margin-left: 0;
   }
 }

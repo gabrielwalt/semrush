@@ -127,6 +127,33 @@ main .solutions-slider .button-wrapper {
   color: var(--slider-text);
 }
 
+@media (width >= 768px) and (width < 1024px) {
+  .solutions-slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-s);
+    padding: 60px var(--container-padding);
+    scrollbar-width: none;
+  }
+
+  .solutions-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .solutions-slider > div {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 320px;
+    scroll-snap-align: start;
+  }
+
+  .solutions-slider .slider-nav {
+    display: none;
+  }
+}
+
 @media (width >= 1024px) {
   .solutions-slider > div.active {
     flex-direction: row;
