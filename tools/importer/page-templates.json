@@ -1,0 +1,53 @@
+{
+  "templates": [
+    {
+      "name": "homepage",
+      "description": "Semrush homepage with hero, promo cards, solutions slider, stats, AI visibility index, testimonials, and resources",
+      "urls": [
+        "https://www.semrush.com/"
+      ],
+      "blocks": [
+        {
+          "name": "announcement-bar",
+          "instances": [".srf_announcement_banner"]
+        },
+        {
+          "name": "hero",
+          "instances": [".mp-hero"]
+        },
+        {
+          "name": "logo-marquee",
+          "instances": [".mp-logo-marquee"]
+        },
+        {
+          "name": "promo-cards-semrush-one",
+          "instances": [".mp-promo-cards.mp-semrush-one"]
+        },
+        {
+          "name": "promo-cards-enterprise",
+          "instances": [".mp-promo-cards.mp-enterprise"]
+        },
+        {
+          "name": "solutions-slider",
+          "instances": [".mp-section.mp-toolkits"]
+        },
+        {
+          "name": "stats",
+          "instances": [".mp-section.mp-stats"]
+        },
+        {
+          "name": "ai-visibility-index",
+          "instances": [".mp-section.mp-ai-visibility-index"]
+        },
+        {
+          "name": "testimonials",
+          "instances": [".mp-section.mp-client-testimonials"]
+        },
+        {
+          "name": "resources-slider",
+          "instances": [".mp-section.mp-resources"]
+        }
+      ]
+    }
+  ]
+}
