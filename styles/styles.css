@@ -367,9 +367,20 @@ main:has(.insights-widget) {
   }
 }
 
-/* sections */
+/*
+ * Vertical Spacing Design System
+ * --------------------------------
+ * Sections have NO margin. Vertical rhythm comes from section padding.
+ * Each section gets padding-top and padding-bottom equal to --section-padding (120px desktop).
+ * Blocks inside a section are siblings (EDS wraps each block in a -wrapper div).
+ * Spacing between blocks comes from margin-top on each wrapper after the first.
+ * The first child in a section has no margin-top; the last has no margin-bottom.
+ * Sections sit flush against each other — the visual gap between content areas
+ * is the sum of one section's padding-bottom + the next's padding-top.
+ */
 main > .section {
-  margin: var(--section-padding) 0;
+  margin: 0;
+  padding: var(--section-padding) 0;
 }
 
 main > .section > div {
@@ -378,16 +389,29 @@ main > .section > div {
   padding: 0 var(--container-padding);
 }
 
-main > .section:first-of-type {
+/* Block spacing: each wrapper/block after the first gets a top margin */
+main > .section > .default-content-wrapper + *,
+main > .section > [class$="-wrapper"] + [class$="-wrapper"],
+main > .section > [class$="-wrapper"] + .default-content-wrapper {
+  margin-top: var(--block-padding);
+}
+
+main > .section > *:first-child {
   margin-top: 0;
+}
+
+main > .section > *:last-child {
+  margin-bottom: 0;
+}
+
+main > .section:first-of-type {
+  padding-top: 0;
 }
 
 /* section metadata */
 main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
-  margin: 0;
-  padding: var(--section-padding) 0;
 }
 
 /* centered section variant */
@@ -401,7 +425,6 @@ main .section.centered > div {
 main .section.centered:first-of-type {
   padding-top: 64px;
   padding-bottom: 0;
-  margin-bottom: 0;
 }
 
 main .section.centered h1 {
@@ -415,11 +438,6 @@ main .section.centered p {
   max-width: 540px;
 }
 
-/* Hero flow: remove gap between centered hero and marquee */
-main .section.logo-marquee-container {
-  margin-top: 0;
-  margin-bottom: 0;
-}
 
 /* glass surface utility */
 .glass-surface {

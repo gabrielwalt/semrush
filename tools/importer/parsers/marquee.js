@@ -17,7 +17,7 @@ export default function parse(element, { document }) {
     content.appendChild(picture);
   });
 
-  const cells = [['Logo Marquee'], [content]];
+  const cells = [['Marquee'], [content]];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

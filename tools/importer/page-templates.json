@@ -16,7 +16,7 @@
           "instances": [".mp-hero"]
         },
         {
-          "name": "logo-marquee",
+          "name": "marquee",
           "instances": [".mp-logo-marquee"]
         },
         {

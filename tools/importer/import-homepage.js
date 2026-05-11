@@ -82,8 +82,8 @@
     element.replaceWith(wrapper);
   }
 
-  function logoMarqueeParser(element, { document }) {
-    const firstGroup = element.querySelector('.mp-logo-marquee__group');
+  function marqueeParser(element, { document }) {
+    const firstGroup = element.querySelector('.mp-marquee__group');
     if (!firstGroup) return;
     const logos = firstGroup.querySelectorAll('img');
     if (logos.length === 0) return;
@@ -96,7 +96,7 @@
       picture.appendChild(imgEl);
       content.appendChild(picture);
     });
-    const cells = [['Logo Marquee'], [content]];
+    const cells = [['Marquee'], [content]];
     const table = WebImporter.DOMUtils.createTable(cells, document);
     element.replaceWith(table);
   }
@@ -492,7 +492,7 @@
     element.querySelectorAll('header, footer, nav[class*="menu"]').forEach((el) => el.remove());
     element.querySelectorAll('[aria-hidden="true"], .mp-visually-hidden').forEach((el) => el.remove());
 
-    const marquee = element.querySelector('.mp-logo-marquee');
+    const marquee = element.querySelector('.mp-marquee');
     if (marquee) {
       const lists = marquee.querySelectorAll('ul');
       if (lists.length > 1) {
@@ -509,7 +509,7 @@
   const parsers = {
     'announcement-bar': announcementBarParser,
     'hero': heroParser,
-    'logo-marquee': logoMarqueeParser,
+    'marquee': marqueeParser,
     'promo-cards-semrush-one': promoCardsSemrushOneParser,
     'promo-cards-enterprise': promoCardsEnterpriseParser,
     'solutions-slider': solutionsSliderParser,
@@ -524,7 +524,7 @@
     blocks: [
       { name: 'announcement-bar', instances: ['.srf_announcement_banner'] },
       { name: 'hero', instances: ['.mp-hero'] },
-      { name: 'logo-marquee', instances: ['.mp-logo-marquee'] },
+      { name: 'marquee', instances: ['.mp-marquee'] },
       { name: 'promo-cards-semrush-one', instances: ['.mp-promo-cards.mp-semrush-one'] },
       { name: 'promo-cards-enterprise', instances: ['.mp-promo-cards.mp-enterprise'] },
       { name: 'solutions-slider', instances: ['.mp-section.mp-toolkits'] },

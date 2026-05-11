@@ -174,21 +174,24 @@ header nav[aria-expanded='true'] .nav-sections {
   align-self: start;
 }
 
-header nav .nav-sections ul {
+header nav .nav-sections .nav-items {
   list-style: none;
   padding-left: 0;
   font-size: var(--font-size-body-m);
+  margin: 0;
 }
 
-header nav .nav-sections ul > li {
+header nav .nav-sections .nav-item {
   font-weight: 600;
 }
 
-header nav .nav-sections ul > li > ul {
-  margin-top: 0;
+header nav .nav-sections .nav-mega-panel ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
 }
 
-header nav .nav-sections ul > li > ul > li {
+header nav .nav-sections .nav-mega-panel ul li {
   font-weight: 400;
 }
 
@@ -225,72 +228,72 @@ header nav .nav-sections ul > li > ul > li {
     transform: rotate(180deg);
   }
 
-  header nav .nav-sections ul {
+  header nav .nav-sections .nav-items {
     display: flex;
     gap: 24px;
     margin: 0;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li {
+  header nav .nav-sections .nav-items > .nav-item {
     flex: 0 1 auto;
     position: static;
     display: inline-flex;
     align-items: center;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: relative;
+  header nav .nav-sections .nav-items > .nav-item > .nav-mega-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: 40px max(32px, calc((100vw - 1440px) / 2 + 32px));
+    background-color: #fff;
+    white-space: initial;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+    gap: 40px;
+    z-index: 10;
+    border-radius: 0 0 12px 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s;
+    display: flex;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
+  header nav .nav-sections .nav-items > .nav-item > .nav-mega-panel li {
     padding: 6px 0;
     font-weight: 400;
     font-size: 14px;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    display: flex;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    padding: 40px 32px;
-    background-color: #fff;
-    white-space: initial;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
-    gap: 0;
-    z-index: 10;
+  header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul.nav-mega-panel {
-    display: flex;
-    gap: 40px;
-    padding: 40px max(32px, calc((100vw - 1440px) / 2 + 32px));
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-column {
+  header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-column {
     flex: 1;
     min-width: 0;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-column ul {
+  header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-column ul {
     display: block;
     margin: 0;
     padding: 0;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-column ul li {
+  header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-column ul li {
     padding: 6px 0;
     font-weight: 400;
     font-size: 14px;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-column ul li a {
+  header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-column ul li a {
     text-decoration: none;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-column ul li a:hover {
+  header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-column ul li a:hover {
     text-decoration: underline;
   }
 
@@ -306,7 +309,7 @@ header nav .nav-sections ul > li > ul > li {
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul .nav-mega-promo a {
+  header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-promo a {
     display: block;
     text-decoration: none;
     border-radius: var(--radius-m);
@@ -344,7 +347,7 @@ header nav .nav-sections ul > li > ul > li {
     margin-top: var(--space-xs);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li:last-child a::after {
+  header nav .nav-sections .nav-items > .nav-item:last-child a::after {
     content: '';
     display: inline-block;
     vertical-align: middle;
@@ -359,20 +362,20 @@ header nav .nav-sections ul > li > ul > li {
 
 /* mobile accordion */
 @media (width < 1024px) {
-  header nav[aria-expanded='true'] .nav-sections .nav-drop > ul {
+  header nav[aria-expanded='true'] .nav-sections .nav-drop > .nav-mega-panel {
     display: none;
     padding-left: 0;
   }
 
-  header nav[aria-expanded='true'] .nav-sections .nav-drop.nav-mobile-expanded > ul {
+  header nav[aria-expanded='true'] .nav-sections .nav-drop.nav-mobile-expanded > .nav-mega-panel {
     display: block;
   }
 
-  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.nav-drop {
+  header nav[aria-expanded='true'] .nav-sections .nav-items > .nav-item.nav-drop {
     position: relative;
   }
 
-  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.nav-drop::after {
+  header nav[aria-expanded='true'] .nav-sections .nav-items > .nav-item.nav-drop::after {
     content: '';
     position: absolute;
     right: 0;
@@ -385,7 +388,7 @@ header nav .nav-sections ul > li > ul > li {
     transition: transform var(--transition-fast);
   }
 
-  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.nav-drop.nav-mobile-expanded::after {
+  header nav[aria-expanded='true'] .nav-sections .nav-items > .nav-item.nav-drop.nav-mobile-expanded::after {
     transform: translateY(-50%) rotate(135deg);
   }
 }
