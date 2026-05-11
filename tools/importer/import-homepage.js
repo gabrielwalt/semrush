@@ -1,8 +1,7 @@
 /* eslint-disable */
 /* global WebImporter */
 
-(function() {
-  // PARSERS
+// PARSERS
 
   function announcementBarParser(element, { document }) {
     const text = element.querySelector('.srf_announcement_banner__long')?.textContent
@@ -79,26 +78,17 @@
     );
     wrapper.appendChild(sectionMetaTable);
 
+    // Section break — marquee is a sibling section
+    wrapper.appendChild(document.createElement('hr'));
+
     element.replaceWith(wrapper);
   }
 
   function marqueeParser(element, { document }) {
-    const firstGroup = element.querySelector('.mp-marquee__group');
-    if (!firstGroup) return;
-    const logos = firstGroup.querySelectorAll('img');
-    if (logos.length === 0) return;
-    const content = document.createElement('div');
-    logos.forEach((img) => {
-      const picture = document.createElement('picture');
-      const imgEl = document.createElement('img');
-      imgEl.src = img.src;
-      imgEl.alt = img.alt || '';
-      picture.appendChild(imgEl);
-      content.appendChild(picture);
-    });
-    const cells = [['Marquee'], [content]];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    element.replaceWith(table);
+    // SVG images are stripped by the Helix Importer html2md pipeline.
+    // Remove the source element to keep it clean — marquee content will be
+    // injected as a post-processing step after import.
+    element.remove();
   }
 
   function promoCardsSemrushOneParser(element, { document }) {
@@ -489,10 +479,10 @@
       main.prepend(announcement);
     }
 
-    element.querySelectorAll('header, footer, nav[class*="menu"]').forEach((el) => el.remove());
+    element.querySelectorAll('header, footer, nav[class*="menu"], srf-header-menu, srf-header-dropdown-items, [class*="srf-header"], [class*="srf-footer"], [class*="srf-layout__footer"]').forEach((el) => el.remove());
     element.querySelectorAll('[aria-hidden="true"], .mp-visually-hidden').forEach((el) => el.remove());
 
-    const marquee = element.querySelector('.mp-marquee');
+    const marquee = element.querySelector('.mp-logo-marquee, .mp-marquee');
     if (marquee) {
       const lists = marquee.querySelectorAll('ul');
       if (lists.length > 1) {
@@ -503,6 +493,10 @@
     element.querySelectorAll('.swiper-button-next, .swiper-button-prev, .swiper-pagination').forEach((el) => el.remove());
     element.querySelectorAll('.mp-search, form').forEach((el) => el.remove());
     element.querySelectorAll('[class*="outdated"], [class*="skip-to"]').forEach((el) => el.remove());
+    element.querySelectorAll('img[src*="analytics"], img[src*="bat.bing"], img[src*="pixel"], img[class*="ywa"]').forEach((el) => {
+      const parent = el.closest('p') || el.closest('picture') || el;
+      parent.remove();
+    });
   }
 
   // CONFIGURATION
@@ -524,7 +518,7 @@
     blocks: [
       { name: 'announcement-bar', instances: ['.srf_announcement_banner'] },
       { name: 'hero', instances: ['.mp-hero'] },
-      { name: 'marquee', instances: ['.mp-marquee'] },
+      { name: 'marquee', instances: ['.mp-logo-marquee'] },
       { name: 'promo-cards-semrush-one', instances: ['.mp-promo-cards.mp-semrush-one'] },
       { name: 'promo-cards-enterprise', instances: ['.mp-promo-cards.mp-enterprise'] },
       { name: 'solutions-slider', instances: ['.mp-section.mp-toolkits'] },
@@ -548,43 +542,40 @@
     return pageBlocks;
   }
 
-  window.CustomImportScript = {
-    default: {
-      transform: (payload) => {
-        const { document, url, params } = payload;
-        const main = document.body;
+export default {
+  transform: (payload) => {
+    const { document, url, params } = payload;
+    const main = document.body;
 
-        cleanupTransformer('beforeTransform', main, payload);
+    cleanupTransformer('beforeTransform', main, payload);
 
-        const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
-        pageBlocks.forEach((block) => {
-          const parser = parsers[block.name];
-          if (parser) {
-            try {
-              parser(block.element, { document, url, params });
-            } catch (e) {
-              console.error('Failed to parse ' + block.name + ':', e);
-            }
-          }
-        });
+    const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
+    pageBlocks.forEach((block) => {
+      const parser = parsers[block.name];
+      if (parser) {
+        try {
+          parser(block.element, { document, url, params });
+        } catch (e) {
+          console.error('Failed to parse ' + block.name + ':', e);
+        }
+      }
+    });
 
-        WebImporter.rules.transformBackgroundImages(main, document);
-        WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+    WebImporter.rules.transformBackgroundImages(main, document);
+    WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
-        const path = WebImporter.FileUtils.sanitizePath(
-          new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html$/, '') || '/index'
-        );
+    const path = WebImporter.FileUtils.sanitizePath(
+      new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html$/, '') || '/index'
+    );
 
-        return [{
-          element: main,
-          path,
-          report: {
-            title: document.title,
-            template: PAGE_TEMPLATE.name,
-            blocks: pageBlocks.map((b) => b.name),
-          },
-        }];
+    return [{
+      element: main,
+      path,
+      report: {
+        title: document.title,
+        template: PAGE_TEMPLATE.name,
+        blocks: pageBlocks.map((b) => b.name),
       },
-    },
-  };
-})();
+    }];
+  },
+};

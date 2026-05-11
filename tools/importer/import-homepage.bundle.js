@@ -1,0 +1,548 @@
+/* eslint-disable */
+var CustomImportScript = (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+  // tools/importer/import-homepage.js
+  var import_homepage_exports = {};
+  __export(import_homepage_exports, {
+    default: () => import_homepage_default
+  });
+  function announcementBarParser(element, { document }) {
+    var _a, _b;
+    const text = ((_a = element.querySelector(".srf_announcement_banner__long")) == null ? void 0 : _a.textContent) || element.textContent.trim();
+    const a = document.createElement("a");
+    a.href = element.href || ((_b = element.querySelector("a")) == null ? void 0 : _b.href) || "";
+    a.textContent = text;
+    const p = document.createElement("p");
+    p.appendChild(a);
+    const cells = [["Announcement Bar"], [p]];
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    element.replaceWith(table);
+  }
+  function heroParser(element, { document }) {
+    const h1 = element.querySelector("h1");
+    if (!h1) return;
+    const subtitle = element.querySelector(".mp-hero__subtitle");
+    const wrapper = document.createElement("div");
+    const heading = document.createElement("h1");
+    heading.textContent = h1.textContent.trim();
+    wrapper.appendChild(heading);
+    if (subtitle) {
+      const p = document.createElement("p");
+      p.textContent = subtitle.textContent.trim();
+      wrapper.appendChild(p);
+    }
+    var widgetContent = document.createElement("div");
+    var wp1 = document.createElement("p");
+    wp1.textContent = "Enter your website";
+    widgetContent.appendChild(wp1);
+    var wp2 = document.createElement("p");
+    wp2.textContent = "Get insights";
+    widgetContent.appendChild(wp2);
+    var insightsTable = WebImporter.DOMUtils.createTable([["Insights Widget"], [widgetContent]], document);
+    wrapper.appendChild(insightsTable);
+    var video = element.querySelector("video");
+    var videoCell = document.createElement("div");
+    if (video) {
+      var videoEl = document.createElement("video");
+      videoEl.setAttribute("playsinline", "");
+      videoEl.setAttribute("muted", "");
+      videoEl.setAttribute("loop", "");
+      videoEl.setAttribute("autoplay", "");
+      if (video.poster) videoEl.setAttribute("poster", video.poster);
+      var source = video.querySelector("source");
+      if (source) {
+        videoEl.setAttribute("src", source.src || source.getAttribute("src"));
+      } else if (video.src) {
+        videoEl.setAttribute("src", video.src);
+      }
+      videoCell.appendChild(videoEl);
+    } else {
+      var pic = document.createElement("picture");
+      var img = document.createElement("img");
+      img.src = "https://www.semrush.com/static/plg_toolkits.webp";
+      img.alt = "Semrush platform toolkits overview";
+      pic.appendChild(img);
+      videoCell.appendChild(pic);
+    }
+    var heroVideoTable = WebImporter.DOMUtils.createTable([["Hero Video"], [videoCell]], document);
+    wrapper.appendChild(heroVideoTable);
+    var sectionMetaTable = WebImporter.DOMUtils.createTable(
+      [["Section Metadata"], ["Style", "centered"]],
+      document
+    );
+    wrapper.appendChild(sectionMetaTable);
+    wrapper.appendChild(document.createElement("hr"));
+    element.replaceWith(wrapper);
+  }
+  function marqueeParser(element, { document }) {
+    element.remove();
+  }
+  function promoCardsSemrushOneParser(element, { document }) {
+    const h2 = element.querySelector("h2");
+    const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
+    const ctaLink = element.querySelector("a.mp-button");
+    const textContent = document.createElement("div");
+    if (h2) {
+      const heading = document.createElement("h2");
+      heading.innerHTML = h2.innerHTML;
+      textContent.appendChild(heading);
+    }
+    if (description) {
+      const p = document.createElement("p");
+      p.textContent = description.textContent.trim();
+      textContent.appendChild(p);
+    }
+    if (ctaLink) {
+      const p = document.createElement("p");
+      const em = document.createElement("em");
+      const a = document.createElement("a");
+      a.href = ctaLink.href;
+      a.textContent = ctaLink.textContent.trim();
+      em.appendChild(a);
+      p.appendChild(em);
+      textContent.appendChild(p);
+    }
+    const rows = [["Promo Cards (promo-cards-semrush-one)"], [textContent]];
+    const table = WebImporter.DOMUtils.createTable(rows, document);
+    element.replaceWith(table);
+  }
+  function promoCardsEnterpriseParser(element, { document }) {
+    const h2 = element.querySelector("h2");
+    const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
+    const ctaLink = element.querySelector("a.mp-button");
+    const headingContent = document.createElement("div");
+    if (h2) {
+      const heading = document.createElement("h2");
+      heading.innerHTML = h2.innerHTML;
+      headingContent.appendChild(heading);
+    }
+    const bodyContent = document.createElement("div");
+    if (description) {
+      const p = document.createElement("p");
+      p.textContent = description.textContent.trim();
+      bodyContent.appendChild(p);
+    }
+    if (ctaLink) {
+      const p = document.createElement("p");
+      const strong = document.createElement("strong");
+      const a = document.createElement("a");
+      a.href = ctaLink.href;
+      a.textContent = ctaLink.textContent.trim();
+      strong.appendChild(a);
+      p.appendChild(strong);
+      bodyContent.appendChild(p);
+    }
+    const rows = [["Promo Cards (promo-cards-enterprise)"], [headingContent], [bodyContent]];
+    const table = WebImporter.DOMUtils.createTable(rows, document);
+    element.replaceWith(table);
+  }
+  function solutionsSliderParser(element, { document }) {
+    const sectionSubtitle = element.querySelector("h3");
+    const wrapper = document.createElement("div");
+    const eyebrow = document.createElement("p");
+    eyebrow.textContent = "Solutions";
+    wrapper.appendChild(eyebrow);
+    if (sectionSubtitle) {
+      const h2 = document.createElement("h2");
+      h2.textContent = sectionSubtitle.textContent.trim();
+      wrapper.appendChild(h2);
+    }
+    const slides = element.querySelectorAll(".mp-toolkit.swiper-slide");
+    const rows = [["Solutions Slider"]];
+    slides.forEach((slide) => {
+      const title = slide.querySelector("h3");
+      const subtitle = slide.querySelector("h4");
+      const img = slide.querySelector("img");
+      const textCell = document.createElement("div");
+      if (title) {
+        const h3 = document.createElement("h3");
+        h3.textContent = title.textContent.trim();
+        textCell.appendChild(h3);
+      }
+      if (subtitle) {
+        const p = document.createElement("p");
+        p.textContent = subtitle.textContent.trim();
+        textCell.appendChild(p);
+      }
+      const desc = slide.querySelector(".mp-toolkit__description");
+      if (desc) {
+        const p = document.createElement("p");
+        p.textContent = desc.textContent.trim();
+        textCell.appendChild(p);
+      }
+      const cta = slide.querySelector("a.mp-button");
+      if (cta) {
+        const p = document.createElement("p");
+        const strong = document.createElement("strong");
+        const a = document.createElement("a");
+        a.href = cta.href;
+        a.textContent = cta.textContent.trim();
+        strong.appendChild(a);
+        p.appendChild(strong);
+        textCell.appendChild(p);
+      }
+      const imgCell = document.createElement("div");
+      if (img) {
+        const pic = document.createElement("picture");
+        const imgEl = document.createElement("img");
+        imgEl.src = img.src;
+        imgEl.alt = img.alt || "";
+        pic.appendChild(imgEl);
+        imgCell.appendChild(pic);
+      }
+      rows.push([textCell, imgCell]);
+    });
+    const table = WebImporter.DOMUtils.createTable(rows, document);
+    wrapper.appendChild(table);
+    element.replaceWith(wrapper);
+  }
+  function statsParser(element, { document }) {
+    const sectionSubtitle = element.querySelector("h3");
+    const learnMoreLink = element.querySelector('a[href*="/stats/"]');
+    const statItems = element.querySelectorAll("li");
+    const headerContent = document.createElement("div");
+    const eyebrow = document.createElement("p");
+    eyebrow.textContent = "Stats and facts";
+    headerContent.appendChild(eyebrow);
+    if (sectionSubtitle) {
+      const h2 = document.createElement("h2");
+      h2.textContent = sectionSubtitle.textContent.trim();
+      headerContent.appendChild(h2);
+    }
+    if (learnMoreLink) {
+      const p = document.createElement("p");
+      const em = document.createElement("em");
+      const a = document.createElement("a");
+      a.href = learnMoreLink.href;
+      a.textContent = learnMoreLink.textContent.trim();
+      em.appendChild(a);
+      p.appendChild(em);
+      headerContent.appendChild(p);
+    }
+    const rows = [["Stats"], [headerContent]];
+    statItems.forEach((item) => {
+      const countEl = item.querySelector(".mp-stats__item-count, b");
+      const titleEl = item.querySelector(".mp-stats__item-title");
+      const descEl = item.querySelector(".mp-stats__item-description");
+      const value = countEl ? countEl.textContent.trim() : "";
+      const title = titleEl ? titleEl.textContent.trim() : "";
+      const desc = descEl ? descEl.textContent.trim() : "";
+      if (value) {
+        const cell = document.createElement("div");
+        const pVal = document.createElement("p");
+        const strong = document.createElement("strong");
+        strong.textContent = value;
+        pVal.appendChild(strong);
+        cell.appendChild(pVal);
+        const pTitle = document.createElement("p");
+        pTitle.textContent = title;
+        cell.appendChild(pTitle);
+        const pDesc = document.createElement("p");
+        pDesc.textContent = desc;
+        cell.appendChild(pDesc);
+        rows.push([cell]);
+      }
+    });
+    const table = WebImporter.DOMUtils.createTable(rows, document);
+    element.replaceWith(table);
+  }
+  function aiVisibilityIndexParser(element, { document }) {
+    const h2 = element.querySelector("h2");
+    const subtitle = element.querySelector(".mp-ai-visibility-index__subtitle, h2 + p");
+    const ctaLink = element.querySelector('a.mp-button, a[href*="ai-visibility-index"]');
+    const iconImg = element.querySelector(".mp-ai-visibility-index__img img");
+    const tableRows = element.querySelectorAll("tbody tr");
+    const rows = [["AI Visibility Index"]];
+    const headerRow = document.createElement("div");
+    const headerText = document.createElement("div");
+    if (iconImg) {
+      const iconDiv = document.createElement("div");
+      const pic = document.createElement("picture");
+      const img = document.createElement("img");
+      img.src = iconImg.src;
+      img.alt = "";
+      pic.appendChild(img);
+      iconDiv.appendChild(pic);
+      headerRow.appendChild(iconDiv);
+    }
+    if (h2) {
+      const heading = document.createElement("h2");
+      heading.textContent = h2.textContent.trim();
+      headerText.appendChild(heading);
+    }
+    if (subtitle) {
+      const p = document.createElement("p");
+      p.textContent = subtitle.textContent.trim();
+      headerText.appendChild(p);
+    }
+    if (ctaLink) {
+      const p = document.createElement("p");
+      const strong = document.createElement("strong");
+      const a = document.createElement("a");
+      a.href = ctaLink.href;
+      a.textContent = ctaLink.textContent.trim();
+      strong.appendChild(a);
+      p.appendChild(strong);
+      headerText.appendChild(p);
+    }
+    rows.push([headerRow, headerText]);
+    const hBrand = document.createElement("div");
+    hBrand.textContent = "Brand";
+    const hSov = document.createElement("div");
+    hSov.textContent = "% Share of Voice";
+    rows.push([hBrand, hSov]);
+    tableRows.forEach((tr) => {
+      const cells = tr.querySelectorAll("td");
+      if (cells.length >= 2) {
+        const brand = cells[0].textContent.trim();
+        const valueEl = cells[1].querySelector('[class*="value"]');
+        const value = valueEl ? valueEl.textContent.trim() : cells[1].textContent.trim();
+        const brandCell = document.createElement("div");
+        brandCell.textContent = brand;
+        const valueCell = document.createElement("div");
+        valueCell.textContent = value;
+        rows.push([brandCell, valueCell]);
+      }
+    });
+    const table = WebImporter.DOMUtils.createTable(rows, document);
+    element.replaceWith(table);
+  }
+  function testimonialsParser(element, { document }) {
+    const sectionSubtitle = element.querySelector("h3");
+    const logoImg = element.querySelector(".mp-client-testimonials__logo-img img");
+    const quote = element.querySelector("blockquote, .mp-client-testimonials__quote");
+    const authorImg = element.querySelector(".mp-client-testimonials__author-img");
+    const authorCite = element.querySelector(".mp-client-testimonials__quote-author cite");
+    const authorName = authorCite ? authorCite.querySelector("b") : null;
+    const authorRole = authorCite ? authorCite.querySelector("span") : null;
+    const statNumber = element.querySelector(".mp-client-testimonials__stats-block-number");
+    const statText = element.querySelector(".mp-client-testimonials__stats-block-text");
+    const rows = [["Testimonials"]];
+    const headingCell = document.createElement("div");
+    const eyebrow = document.createElement("p");
+    eyebrow.textContent = "Our customers";
+    headingCell.appendChild(eyebrow);
+    if (sectionSubtitle) {
+      const h2el = document.createElement("h2");
+      h2el.textContent = sectionSubtitle.textContent.trim();
+      headingCell.appendChild(h2el);
+    }
+    rows.push([headingCell]);
+    const quoteCell = document.createElement("div");
+    if (logoImg) {
+      const pic = document.createElement("picture");
+      const img = document.createElement("img");
+      img.src = logoImg.src;
+      img.alt = logoImg.alt || "Zoominfo";
+      pic.appendChild(img);
+      quoteCell.appendChild(pic);
+    }
+    if (quote) {
+      const bq = document.createElement("blockquote");
+      bq.textContent = quote.textContent.trim();
+      quoteCell.appendChild(bq);
+    }
+    rows.push([quoteCell]);
+    const authorCell = document.createElement("div");
+    if (authorImg) {
+      const pic = document.createElement("picture");
+      const img = document.createElement("img");
+      img.src = authorImg.src || "";
+      img.alt = authorName ? authorName.textContent.trim() : "James Roth";
+      pic.appendChild(img);
+      authorCell.appendChild(pic);
+    }
+    if (authorName) {
+      const p = document.createElement("p");
+      const strong = document.createElement("strong");
+      strong.textContent = authorName.textContent.trim();
+      p.appendChild(strong);
+      authorCell.appendChild(p);
+    }
+    if (authorRole) {
+      const p = document.createElement("p");
+      p.textContent = authorRole.textContent.trim();
+      authorCell.appendChild(p);
+    }
+    rows.push([authorCell]);
+    if (statNumber || statText) {
+      const statCell = document.createElement("div");
+      if (statNumber) {
+        const p = document.createElement("p");
+        p.textContent = statNumber.textContent.trim();
+        statCell.appendChild(p);
+      }
+      if (statText) {
+        const p = document.createElement("p");
+        p.textContent = statText.textContent.trim();
+        statCell.appendChild(p);
+      }
+      rows.push([statCell]);
+    }
+    const table = WebImporter.DOMUtils.createTable(rows, document);
+    element.replaceWith(table);
+  }
+  function resourcesSliderParser(element, { document }) {
+    const sectionSubtitle = element.querySelector("h3");
+    const wrapper = document.createElement("div");
+    const articles = element.querySelectorAll("article");
+    const eyebrow = document.createElement("p");
+    eyebrow.textContent = "Resources ( " + articles.length + " )";
+    wrapper.appendChild(eyebrow);
+    if (sectionSubtitle) {
+      const h2 = document.createElement("h2");
+      h2.textContent = sectionSubtitle.textContent.trim();
+      wrapper.appendChild(h2);
+    }
+    const rows = [["Resources Slider"]];
+    articles.forEach((article) => {
+      const img = article.querySelector("img");
+      const titleLink = article.querySelector("h3 a");
+      const tags = article.querySelectorAll('.mp-resources__item-info-tag, [class*="tag"]');
+      const imgCell = document.createElement("div");
+      if (img) {
+        const pic = document.createElement("picture");
+        const imgEl = document.createElement("img");
+        imgEl.src = img.src;
+        imgEl.alt = img.alt || "";
+        pic.appendChild(imgEl);
+        imgCell.appendChild(pic);
+      }
+      const textCell = document.createElement("div");
+      if (titleLink) {
+        const h3 = document.createElement("h3");
+        const a = document.createElement("a");
+        a.href = titleLink.href;
+        a.textContent = titleLink.textContent.trim();
+        h3.appendChild(a);
+        textCell.appendChild(h3);
+      }
+      const tagText = [...tags].map((t) => t.textContent.trim()).join(" \xB7 ");
+      if (tagText) {
+        const p = document.createElement("p");
+        p.textContent = tagText;
+        textCell.appendChild(p);
+      }
+      rows.push([imgCell, textCell]);
+    });
+    const table = WebImporter.DOMUtils.createTable(rows, document);
+    wrapper.appendChild(table);
+    element.replaceWith(wrapper);
+  }
+  function cleanupTransformer(hookName, element, payload) {
+    if (hookName !== "beforeTransform") return;
+    const { document } = payload;
+    element.querySelectorAll('script, style, noscript, iframe, link[rel="stylesheet"]').forEach((el) => el.remove());
+    element.querySelectorAll('[class*="cookie"], [class*="consent"], [class*="ch2-"]').forEach((el) => el.remove());
+    const announcement = element.querySelector(".srf_announcement_banner");
+    if (announcement) {
+      const main = element.querySelector("main") || element;
+      main.prepend(announcement);
+    }
+    element.querySelectorAll('header, footer, nav[class*="menu"], srf-header-menu, srf-header-dropdown-items, [class*="srf-header"], [class*="srf-footer"], [class*="srf-layout__footer"]').forEach((el) => el.remove());
+    element.querySelectorAll('[aria-hidden="true"], .mp-visually-hidden').forEach((el) => el.remove());
+    const marquee = element.querySelector(".mp-logo-marquee, .mp-marquee");
+    if (marquee) {
+      const lists = marquee.querySelectorAll("ul");
+      if (lists.length > 1) {
+        for (let i = 1; i < lists.length; i++) lists[i].remove();
+      }
+    }
+    element.querySelectorAll(".swiper-button-next, .swiper-button-prev, .swiper-pagination").forEach((el) => el.remove());
+    element.querySelectorAll(".mp-search, form").forEach((el) => el.remove());
+    element.querySelectorAll('[class*="outdated"], [class*="skip-to"]').forEach((el) => el.remove());
+    element.querySelectorAll('img[src*="analytics"], img[src*="bat.bing"], img[src*="pixel"], img[class*="ywa"]').forEach((el) => {
+      const parent = el.closest("p") || el.closest("picture") || el;
+      parent.remove();
+    });
+  }
+  var parsers = {
+    "announcement-bar": announcementBarParser,
+    "hero": heroParser,
+    "marquee": marqueeParser,
+    "promo-cards-semrush-one": promoCardsSemrushOneParser,
+    "promo-cards-enterprise": promoCardsEnterpriseParser,
+    "solutions-slider": solutionsSliderParser,
+    "stats": statsParser,
+    "ai-visibility-index": aiVisibilityIndexParser,
+    "testimonials": testimonialsParser,
+    "resources-slider": resourcesSliderParser
+  };
+  var PAGE_TEMPLATE = {
+    name: "homepage",
+    blocks: [
+      { name: "announcement-bar", instances: [".srf_announcement_banner"] },
+      { name: "hero", instances: [".mp-hero"] },
+      { name: "marquee", instances: [".mp-logo-marquee"] },
+      { name: "promo-cards-semrush-one", instances: [".mp-promo-cards.mp-semrush-one"] },
+      { name: "promo-cards-enterprise", instances: [".mp-promo-cards.mp-enterprise"] },
+      { name: "solutions-slider", instances: [".mp-section.mp-toolkits"] },
+      { name: "stats", instances: [".mp-section.mp-stats"] },
+      { name: "ai-visibility-index", instances: [".mp-section.mp-ai-visibility-index"] },
+      { name: "testimonials", instances: [".mp-section.mp-client-testimonials"] },
+      { name: "resources-slider", instances: [".mp-section.mp-resources"] }
+    ]
+  };
+  function findBlocksOnPage(document, template) {
+    const pageBlocks = [];
+    template.blocks.forEach((blockDef) => {
+      blockDef.instances.forEach((selector) => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach((el) => {
+          pageBlocks.push({ name: blockDef.name, selector, element: el });
+        });
+      });
+    });
+    return pageBlocks;
+  }
+  var import_homepage_default = {
+    transform: (payload) => {
+      const { document, url, params } = payload;
+      const main = document.body;
+      cleanupTransformer("beforeTransform", main, payload);
+      const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
+      pageBlocks.forEach((block) => {
+        const parser = parsers[block.name];
+        if (parser) {
+          try {
+            parser(block.element, { document, url, params });
+          } catch (e) {
+            console.error("Failed to parse " + block.name + ":", e);
+          }
+        }
+      });
+      WebImporter.rules.transformBackgroundImages(main, document);
+      WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+      const path = WebImporter.FileUtils.sanitizePath(
+        new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html$/, "") || "/index"
+      );
+      return [{
+        element: main,
+        path,
+        report: {
+          title: document.title,
+          template: PAGE_TEMPLATE.name,
+          blocks: pageBlocks.map((b) => b.name)
+        }
+      }];
+    }
+  };
+  return __toCommonJS(import_homepage_exports);
+})();

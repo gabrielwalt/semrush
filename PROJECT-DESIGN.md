@@ -1,7 +1,6 @@
-# PROJECT-DESIGN.md — Design System Overview
+# PROJECT-DESIGN.md — Design System
 
-Design intent, token inventory, and where to find things.  
-For actual values read `styles/brand.css` and `styles/styles.css` directly.  
+Design intent and token inventory. For actual values read `styles/brand.css` and `styles/styles.css`.  
 **Update when tokens are added, renamed, or removed.**
 
 ---
@@ -10,8 +9,8 @@ For actual values read `styles/brand.css` and `styles/styles.css` directly.
 
 | File | Purpose |
 |------|---------|
-| `styles/brand.css` | Brand-level tokens — colors, fonts. Imported first. |
-| `styles/styles.css` | Imports brand.css; adds type scale, spacing, layout tokens, global resets |
+| `styles/brand.css` | Brand colors, fonts |
+| `styles/styles.css` | Type scale, spacing, layout tokens, global resets |
 | `styles/fonts.css` | `@font-face` declarations |
 | `styles/lazy-styles.css` | Below-the-fold and section styles |
 
@@ -19,202 +18,64 @@ For actual values read `styles/brand.css` and `styles/styles.css` directly.
 
 ## Colors
 
-| Token | Value | Purpose |
-|-------|-------|---------|
-| `--background-color` | `rgb(255 255 255)` | White page background |
-| `--light-color` | `#f8f8f8` | Light gray section backgrounds |
-| `--dark-color` | `rgb(24 30 21)` | Near-black — dark section bgs, primary text |
-| `--text-color` | `rgb(24 30 21)` | Default body text color |
-| `--link-color` | `rgb(24 30 21)` | Link color |
-| `--link-hover-color` | `rgb(24 30 21)` | Link hover color |
-| `--accent-color` | `rgb(193 144 255)` | Brand purple — primary CTAs, highlights |
-| `--accent-cyan` | `rgb(24 240 191)` | Mint/cyan accent — stats, data viz |
-
-Block-scoped colors (defined inside their own CSS files, not global tokens):
-- `stats`: mint green accent (`--stats-accent`) for the active-state arrow
-- `hero`, `promo-cards`: gradient stops as local custom properties
-
----
-
-## Typography Scale
-
-Two font families:
-- **Heading:** `--heading-font-family`: Lazzer with Inter fallback
-- **Body:** `--body-font-family`: Inter
-
-### Size Tokens
-
-| Token | Desktop | Mobile (<768px) | Role |
-|-------|---------|-----------------|------|
-| `--font-size-display` | 84px | 56px | Hero h1 |
-| `--font-size-heading-xl` | 64px | 48px | Promo h2 |
-| `--font-size-heading-l` | 48px | 32px | Section headings h3 |
-| `--font-size-heading-m` | 24px | 18px | Card subtitles h4 |
-| `--font-size-body-l` | 18px | 18px | Large body text |
-| `--font-size-body-m` | 16px | 16px | Default body / buttons |
-| `--font-size-body-s` | 14px | 14px | Small body text |
-| `--font-size-caption` | 14px | 14px | Eyebrows, captions |
-| `--font-size-label` | 12px | 12px | Card labels, tags |
-
-### Line Heights
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--line-height-tight` | 1.0 | Eyebrows, labels, compressed headings |
-| `--line-height-snug` | 1.1 | Display + large headings |
-| `--line-height-normal` | 1.2 | Medium headings, buttons |
-| `--line-height-relaxed` | 1.5 | Body text, paragraphs |
-
-### Letter Spacing
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--tracking-tight` | -0.04em | Display, large headings |
-| `--tracking-snug` | -0.02em | Medium headings, body |
-| `--tracking-wide` | 0.02em | Eyebrows, captions |
-
-### Backward-Compat Aliases
-
-Older tokens still work — they reference the new scale:
-
-| Alias | Maps to |
+| Token | Purpose |
 |-------|---------|
-| `--heading-font-size-xxl` | `var(--font-size-display)` |
-| `--heading-font-size-xl` | `var(--font-size-heading-xl)` |
-| `--heading-font-size-l` | `var(--font-size-heading-l)` |
-| `--heading-font-size-m` | `var(--font-size-heading-m)` |
-| `--heading-font-size-s` | `var(--font-size-body-m)` |
-| `--heading-font-size-xs` | `var(--font-size-body-m)` |
-| `--body-font-size-m` | `var(--font-size-body-l)` |
-| `--body-font-size-s` | `var(--font-size-body-m)` |
-| `--body-font-size-xs` | `var(--font-size-body-s)` |
+| `--background-color` | White page background |
+| `--dark-color` / `--text-color` | Near-black text and dark sections |
+| `--light-color` | Light gray section backgrounds |
+| `--accent-color` | Brand purple — primary CTAs |
+| `--accent-cyan` | Mint/cyan — stats, data viz |
+| `--accent-hover` | Darker lavender — universal CTA hover |
 
 ---
 
-## Spacing Scale
+## Typography
 
-| Token | Value (desktop) | Value (mobile) | Usage |
-|-------|-----------------|----------------|-------|
-| `--space-xs` | 8px | 8px | Tight gaps, minor margins |
-| `--space-s` | 16px | 16px | Button padding, list gaps |
-| `--space-m` | 24px | 24px | Element spacing, card padding |
-| `--space-l` | 32px | 32px | Section inner margins |
-| `--space-xl` | 40px | 40px | Medium separations |
-| `--space-2xl` | 64px | 64px | Block inner padding (desktop) |
-| `--space-3xl` | 120px | 120px | Section-level spacing |
+- **Heading font:** Lazzer (Inter fallback)
+- **Body font:** Inter
 
-### Layout Spacing
+Key size tokens: `--font-size-display` (84/56px), `--font-size-heading-xl` (64/48px), `--font-size-heading-l` (48/32px), `--font-size-body-l` (18px), `--font-size-body-m` (16px).
+
+---
+
+## Spacing
 
 | Token | Desktop | Mobile | Usage |
 |-------|---------|--------|-------|
-| `--section-padding` | 120px | 60px | Vertical padding between sections |
-| `--block-padding` | 64px | 32px | Internal padding within blocks |
-| `--container-padding` | 32px | 16px | Horizontal page edge padding |
-
-### Layout Dimensions
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--container-max-width` | 1440px | Outermost container cap |
-| `--nav-height` | 84px | Fixed nav bar height |
-| `--cta-height` | 60px | Standard button height |
-| `--accent-hover` | #b072ff | Universal CTA hover color (darker lavender) |
-
----
-
-## Border Radii
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--radius-s` | 5px | Cards, small containers |
-| `--radius-m` | 8px | Dropdowns, inputs, quote cards |
-| `--radius-pill` | 100px | Buttons (pill shape) |
+| `--section-padding` | 120px | 60px | Between sections |
+| `--block-padding` | 64px | 32px | Within blocks |
+| `--container-padding` | 32px | 16px | Page edge |
+| `--container-max-width` | 1440px | — | Outermost cap |
+| `--nav-height` | 84px | — | Fixed nav bar |
+| `--cta-height` | 60px | — | Standard button height |
 
 ---
 
 ## Breakpoints
 
-| Name | Value | Usage |
-|------|-------|-------|
-| Mobile | < 768px | Single-column, stacked, hamburger nav |
-| Tablet | 768px–1023px | Wider content, sliders active, still hamburger |
-| Desktop | >= 1024px | Full nav, multi-column, max-width content |
+- Mobile: < 768px (single-column, hamburger)
+- Tablet: 768–1023px
+- Desktop: >= 1024px (full nav, multi-column)
 
-Write mobile-first: base styles are mobile, `@media (width >= 768px)` for tablet, `@media (width >= 1024px)` for desktop.
+Write mobile-first.
 
 ---
 
-## Button System
+## Buttons
 
-Buttons are styled globally in `styles.css`. Blocks inherit the global styles and only override when context demands it (e.g. inverted colors on dark backgrounds, compact sizing).
+All buttons: pill shape (`--radius-pill: 100px`), 60px height, `padding: 0 32px`, 16px/600 font.
 
-### Base (all buttons)
+| Variant | Markup | Style |
+|---------|--------|-------|
+| Primary | `<strong><a>` | Purple bg, dark text |
+| Secondary | `<em><a>` | Transparent bg, dark border |
 
-All `a.button` and `button.button` elements share: pill shape, 16px/600 font, -0.02em tracking, 60px height, `padding: 0 32px`, inline-flex centered.
-
-### Variants
-
-| Variant | EDS markup | Background | Border | Text | Usage |
-|---------|-----------|-----------|--------|------|-------|
-| **Primary** | `<strong><a>` | Purple accent | transparent | Dark | Hero CTA, Footer CTA, AI Viz CTA |
-| **Secondary** | `<em><a>` | Transparent | 1px solid dark | Dark | Promo "Try for free", Stats "Learn more" |
-| **Accent** | Both `<strong>` + `<em>` | Dark solid | dark | White | N/A (reserved for special emphasis) |
-
-### Context overrides (block CSS)
-
-| Block | Override | Reason |
-|-------|---------|--------|
-| Header nav-tools | `padding: 16px 24px; line-height: 1` | Compact header buttons, 50/48px height |
-| Enterprise promo | `border-color: #fff; background: transparent; color: #fff` | White outline on dark bg |
-| Solutions slider | `background: dark; color: #fff; height: var(--cta-height)` | Dark pill on teal cards |
-| Insights-widget submit | `padding: 0 32px; height: 60px` | Matches search form height |
-
-### Hover states
-
-All CTAs transition with `background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out`.
-
-| Variant | Hover bg | Hover border | Hover text |
-|---------|----------|-------------|-----------|
-| Primary | `var(--accent-hover)` (#b072ff) | same | dark |
-| Secondary | `var(--accent-hover)` | transparent | dark |
-| Accent | `var(--accent-hover)` | same | dark |
-| Nav "Log In" | `var(--accent-hover)` | transparent | dark |
-| Nav "Sign Up" | `var(--accent-hover)` | — | dark |
-
----
-
-## Vertical Spacing System
-
-Sections have NO margin — vertical rhythm comes from section padding. Blocks within a section use margin-top for spacing between sibling wrappers.
-
-| Rule | Value | Notes |
-|------|-------|-------|
-| Section padding | `var(--section-padding)` (120px / 60px mobile) | Top and bottom |
-| Section margin | 0 | Sections sit flush |
-| Block spacing | `var(--block-padding)` (64px / 32px mobile) | margin-top on adjacent wrappers |
-| First section | padding-top: 0 | Starts at header bottom |
-| Full-bleed blocks | Override section padding to 0 | Marquee controls own 40px padding |
-
-The CSS selector for block spacing: `main > .section > .default-content-wrapper + *` and `[class$="-wrapper"] + [class$="-wrapper"]`.
-
-### Responsive
-
-No breakpoint changes to button sizing — same dimensions at all viewports. Header buttons hide on mobile (visibility controlled by nav state).
-
----
-
-## Section Styles
-
-| Class | Effect |
-|-------|--------|
-| `.section.light` / `.section.highlight` | Light gray background (`--light-color`) |
-
-Section padding uses `var(--section-padding)` which responds to breakpoints (120px desktop, 60px mobile).
+Hover: all transition to `--accent-hover` (#b072ff), 0.2s ease.
 
 ---
 
 ## Adding a Token
 
-1. Add to `styles/brand.css` (brand) or `styles/styles.css` `:root` (layout/type)
-2. Add a row to the relevant table above
-3. Use `var(--token-name)` everywhere — never hardcode the raw value
+1. Add to `styles/brand.css` or `styles/styles.css` `:root`
+2. Update this file
+3. Use `var(--token-name)` everywhere

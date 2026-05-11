@@ -110,6 +110,7 @@ function buildNavFromHeadings(container) {
     if (link) label.dataset.href = link.href;
     li.appendChild(label);
 
+    // Collect siblings between this H2 and the next H2
     const panelContent = [];
     let sibling = h2.nextElementSibling;
     while (sibling && sibling.tagName !== 'H2') {
@@ -138,22 +139,25 @@ function buildNavFromHeadings(container) {
           } else {
             panel.appendChild(el.cloneNode(true));
           }
-        } else if (el.tagName === 'P' && el.querySelector('picture')) {
-          const promoDiv = document.createElement('div');
-          promoDiv.className = 'nav-mega-promo';
-          const promoLink = el.querySelector('a');
-          if (promoLink) {
-            const a = promoLink.cloneNode(true);
-            promoDiv.appendChild(a);
-          } else {
-            promoDiv.appendChild(el.cloneNode(true));
-          }
-          // Collect following <p> elements as promo text (title, desc, meta)
-          let next = el.nextElementSibling;
-          while (next && next.tagName === 'P' && !next.querySelector('picture') && next.tagName !== 'H2' && next.tagName !== 'H3') {
-            if (!panelContent.includes(next)) break;
-            const strong = next.querySelector('strong');
-            if (strong) {
+        } else if (el.tagName === 'P') {
+          const pic = el.querySelector('picture');
+          const strong = el.querySelector('strong');
+          if (pic || strong || !currentColumn) {
+            // Promo content — start promo section
+            if (!panel.querySelector('.nav-mega-promo')) {
+              currentColumn = null;
+            }
+            let promoDiv = panel.querySelector('.nav-mega-promo');
+            if (!promoDiv) {
+              promoDiv = document.createElement('div');
+              promoDiv.className = 'nav-mega-promo';
+              panel.appendChild(promoDiv);
+            }
+            if (pic) {
+              const promoLink = el.querySelector('a');
+              if (promoLink) promoDiv.appendChild(promoLink.cloneNode(true));
+              else promoDiv.appendChild(el.cloneNode(true));
+            } else if (strong) {
               const titleSpan = document.createElement('span');
               titleSpan.className = 'nav-mega-promo-title';
               titleSpan.textContent = strong.textContent;
@@ -161,13 +165,10 @@ function buildNavFromHeadings(container) {
             } else {
               const descSpan = document.createElement('span');
               descSpan.className = 'nav-mega-promo-desc';
-              descSpan.textContent = next.textContent;
+              descSpan.textContent = el.textContent;
               promoDiv.appendChild(descSpan);
             }
-            next = next.nextElementSibling;
           }
-          panel.appendChild(promoDiv);
-          currentColumn = null;
         }
       });
 

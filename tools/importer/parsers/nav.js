@@ -1,10 +1,10 @@
 export default function parse(element, { document }) {
   const wrapper = document.createElement('div');
 
-  // Brand / logo section
+  // Brand div (logo)
+  const brandDiv = document.createElement('div');
   const logoImg = element.querySelector('a[href="/"] img, [class*="logo"] img');
   if (logoImg) {
-    const brandDiv = document.createElement('div');
     const p = document.createElement('p');
     const a = document.createElement('a');
     a.href = '/';
@@ -16,13 +16,12 @@ export default function parse(element, { document }) {
     a.appendChild(pic);
     p.appendChild(a);
     brandDiv.appendChild(p);
-    wrapper.appendChild(brandDiv);
   }
+  wrapper.appendChild(brandDiv);
 
-  // Nav sections — output as H2/H3/UL structure
-  const navDiv = document.createElement('div');
+  // Sections div (H2/H3/UL structure)
+  const sectionsDiv = document.createElement('div');
 
-  // Find all top-level menu items (buttons or links in the main nav)
   const menuItems = element.querySelectorAll(
     '[class*="menu-item"], header nav > ul > li, [class*="header"] ul[class*="menu"] > li',
   );
@@ -35,20 +34,20 @@ export default function parse(element, { document }) {
     const link = item.querySelector(':scope > a');
     const href = link ? link.href : `/${label.toLowerCase()}/`;
 
-    // Create H2 for this top-level item
+    // H2 for top-level item
     const h2 = document.createElement('h2');
     const h2Link = document.createElement('a');
     h2Link.href = href;
     h2Link.textContent = label;
     h2.appendChild(h2Link);
-    navDiv.appendChild(h2);
+    sectionsDiv.appendChild(h2);
 
-    // Find the dropdown panel for this item
+    // Find dropdown panel
     const dropdown = item.querySelector('[class*="dropdown"]')
       || item.nextElementSibling;
     if (!dropdown || !dropdown.querySelector('h3, [class*="heading"], [class*="column"]')) return;
 
-    // Find all columns/groups in the dropdown
+    // Columns → H3 + UL
     const columns = dropdown.querySelectorAll(
       '[class*="column"], [class*="group"]:not([class*="promo"])',
     );
@@ -60,7 +59,7 @@ export default function parse(element, { document }) {
       if (heading && links.length > 0) {
         const h3 = document.createElement('h3');
         h3.textContent = heading.textContent.trim();
-        navDiv.appendChild(h3);
+        sectionsDiv.appendChild(h3);
 
         const ul = document.createElement('ul');
         links.forEach((a) => {
@@ -71,11 +70,11 @@ export default function parse(element, { document }) {
           li.appendChild(newA);
           ul.appendChild(li);
         });
-        navDiv.appendChild(ul);
+        sectionsDiv.appendChild(ul);
       }
     });
 
-    // Find promo tile in this dropdown
+    // Promo tile → P elements (picture + strong + text)
     const promo = dropdown.querySelector('[class*="promo"]');
     if (promo) {
       const promoLink = promo.querySelector('a');
@@ -85,7 +84,6 @@ export default function parse(element, { document }) {
       const promoMeta = promo.querySelectorAll('[class*="meta"] > *, [class*="date"], [class*="location"]');
 
       if (promoImg && promoLink) {
-        // Image paragraph
         const imgP = document.createElement('p');
         const imgA = document.createElement('a');
         imgA.href = promoLink.href;
@@ -96,41 +94,38 @@ export default function parse(element, { document }) {
         pic.appendChild(img);
         imgA.appendChild(pic);
         imgP.appendChild(imgA);
-        navDiv.appendChild(imgP);
+        sectionsDiv.appendChild(imgP);
+      }
 
-        // Title paragraph (bold)
-        if (promoTitle) {
-          const titleP = document.createElement('p');
-          const strong = document.createElement('strong');
-          strong.textContent = promoTitle.textContent.trim();
-          titleP.appendChild(strong);
-          navDiv.appendChild(titleP);
-        }
+      if (promoTitle) {
+        const titleP = document.createElement('p');
+        const strong = document.createElement('strong');
+        strong.textContent = promoTitle.textContent.trim();
+        titleP.appendChild(strong);
+        sectionsDiv.appendChild(titleP);
+      }
 
-        // Description paragraph
-        if (promoDesc) {
-          const descP = document.createElement('p');
-          descP.textContent = promoDesc.textContent.trim();
-          navDiv.appendChild(descP);
-        }
+      if (promoDesc) {
+        const descP = document.createElement('p');
+        descP.textContent = promoDesc.textContent.trim();
+        sectionsDiv.appendChild(descP);
+      }
 
-        // Meta (date/location)
-        if (promoMeta.length > 0) {
-          const metaP = document.createElement('p');
-          metaP.textContent = Array.from(promoMeta).map((m) => m.textContent.trim()).join(' · ');
-          navDiv.appendChild(metaP);
-        }
+      if (promoMeta.length > 0) {
+        const metaP = document.createElement('p');
+        metaP.textContent = Array.from(promoMeta).map((m) => m.textContent.trim()).join(' · ');
+        sectionsDiv.appendChild(metaP);
       }
     }
   });
 
-  wrapper.appendChild(navDiv);
+  wrapper.appendChild(sectionsDiv);
 
-  // Tools section (Log In / Sign Up)
+  // Tools div (Log In / Sign Up)
+  const toolsDiv = document.createElement('div');
   const loginLink = element.querySelector('a[href*="/login"]');
   const signupLink = element.querySelector('a[href*="/signup"]');
   if (loginLink || signupLink) {
-    const toolsDiv = document.createElement('div');
     const p = document.createElement('p');
     if (loginLink) {
       const a = document.createElement('a');
@@ -148,8 +143,8 @@ export default function parse(element, { document }) {
       p.appendChild(a);
     }
     toolsDiv.appendChild(p);
-    wrapper.appendChild(toolsDiv);
   }
+  wrapper.appendChild(toolsDiv);
 
   element.replaceWith(wrapper);
 }

@@ -1,89 +1,78 @@
 # PROJECT-IMPORT.md — Import Infrastructure
 
-Import pipeline status, architecture decisions, and operational commands.  
-For parser/transformer implementation details, read the files in `tools/importer/` directly.  
-**Update when scripts, parsers, transformers, or the URL list change.**
+Import pipeline status and commands. For parser/transformer implementation, read `tools/importer/` directly.  
+**Update when scripts, parsers, or URL lists change.**
 
 ---
 
-## Current State
-
-**Homepage import script operational.** `tools/importer/import-homepage.js` contains all parsers inline.
-
-### Files
+## Files
 
 | File | Purpose |
 |------|---------|
-| `tools/importer/import-homepage.js` | Main import script (IIFE, all parsers inline) |
-| `tools/importer/page-templates.json` | Template + block selector mapping |
-| `tools/importer/parsers/hero.js` | Standalone hero parser (h1 + insights-widget + hero-video + section-metadata) |
-| `tools/importer/parsers/marquee.js` | Standalone marquee parser |
-| `tools/importer/parsers/nav.js` | Nav fragment parser (for re-import consistency) |
-| `tools/importer/parsers/*.js` | Other block parsers (solutions-slider, stats, etc.) |
+| `tools/importer/import-homepage.js` | Main import script (all homepage parsers inline, ES module export) |
+| `tools/importer/import-nav.js` | Nav fragment import (parses `srf-header` structure) |
+| `tools/importer/import-footer.js` | Footer fragment import (parses `srf-footer` structure) |
+| `tools/importer/parsers/*.js` | Standalone parsers (11 total) |
 | `tools/importer/transformers/cleanup.js` | DOM cleanup transformer |
 | `tools/importer/urls-homepage.txt` | Homepage URL |
 
-### Parser Registry (import-homepage.js)
-
-| Parser | Selector | Output block |
-|--------|----------|-------------|
-| `heroParser` | `.mp-hero` | Default content + Insights Widget + Hero Video + Section Metadata (centered) |
-| `marqueeParser` | `.mp-logo-marquee` | Marquee |
-| `promoCardsSemrushOneParser` | `.mp-promo-cards.mp-semrush-one` | Promo Cards (promo-cards-semrush-one) |
-| `promoCardsEnterpriseParser` | `.mp-promo-cards.mp-enterprise` | Promo Cards (promo-cards-enterprise) |
-| `solutionsSliderParser` | `.mp-section.mp-toolkits` | Solutions Slider |
-| `statsParser` | `.mp-section.mp-stats` | Stats |
-| `aiVisibilityIndexParser` | `.mp-section.mp-ai-visibility-index` | AI Visibility Index |
-| `testimonialsParser` | `.mp-section.mp-client-testimonials` | Testimonials |
-| `resourcesSliderParser` | `.mp-section.mp-resources` | Resources Slider |
-| `announcementBarParser` | `.srf_announcement_banner` | Announcement Bar |
-
 ---
 
-## Content Structure (homepage)
+## Architecture
 
-The importer produces this section layout:
-
-1. **Section 1** (announcement-bar)
-2. **Section 2** (centered): h1 + subtitle + Insights Widget + Hero Video + Section Metadata
-3. **Section 3**: Marquee
-4. **Section 4**: Promo Cards (both variants in same section)
-5. **Section 5**: Solutions Slider
-6. **Section 6**: Stats
-7. **Section 7**: AI Visibility Index
-8. **Section 8**: Testimonials
-9. **Section 9**: Resources Slider
+1. **One script per page type.** Homepage, nav, and footer each have their own (different DOM sources).
+2. **Parsers detect blocks by DOM selector.** Each parser is self-contained.
+3. **Cleanup runs first** (removes header, footer, scripts, tracking, consent banners).
+4. **SVG images are stripped by Helix Importer's html2md pipeline.** Marquee logos must be injected post-import.
+5. **ES module export format** required for esbuild bundling (`export default { transform }` pattern).
 
 ---
 
 ## Nav Content Model
 
-The nav fragment (`content/nav.plain.html`) uses H2/H3/UL heading hierarchy:
-- H2 with link = top-level nav item
-- H3 = mega menu column heading
-- UL = column links
-- P with picture + P with strong + P plain = promo tile
-- H2 with external link only = simple nav item (no dropdown)
+Three divs (brand / sections / tools). Sections div uses H2/H3/UL heading hierarchy:
 
----
+```
+div (brand): p > a > picture > img
+div (sections):
+  H2 "Products"        ← top nav item (has dropdown: H3/UL content follows)
+    H3 "Start Here"    ← column heading
+    UL                 ← column links
+    H3 "Find the Right Tools"
+    UL
+    ...
+    P > picture        ← promo image
+    P > strong         ← promo title
+    P                  ← promo description
+  H2 "Pricing"        ← top nav item (no content after = no dropdown)
+  H2 "Resources"      ← top nav item with dropdown
+    H3 / UL / ...
+    P promo
+  H2 "Enterprise"     ← external link, no dropdown
+div (tools): p (Log In | Sign Up)
+```
 
-## Import Architecture Principles
+Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P content between each H2. H2 with no following content = simple link (no dropdown).
 
-1. **One universal script for all pages.** No template branching.
-2. **Parsers detect blocks by DOM selector.** Each parser is self-contained.
-3. **Section boundaries in `beforeTransform`.** Must run before parsers.
-4. **Handle missing content gracefully.** No throws on missing selectors.
+`import-nav.js` must emit this same shape so re-import doesn't undo hand fixes.
 
 ---
 
 ## Commands
 
-### Bundle (run after any change to import scripts)
+### Bundle (required before running import)
 
 ```bash
-npx esbuild tools/importer/import-homepage.js \
-  --bundle --format=iife --global-name=CustomImportScript \
-  --platform=browser --outfile=tools/importer/import.bundle.js
+/home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/aem-import-bundle.sh \
+  --importjs tools/importer/import-homepage.js
 ```
 
-**⚠️ The `--format=iife --global-name=CustomImportScript` flags are mandatory.**
+### Run import
+
+```bash
+node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js \
+  --import-script tools/importer/import-homepage.bundle.js \
+  --urls tools/importer/urls-homepage.txt
+```
+
+Output: `content/*.plain.html`
