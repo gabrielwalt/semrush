@@ -8,32 +8,71 @@ For parser/transformer implementation details, read the files in `tools/importer
 
 ## Current State
 
-**No import scripts yet.** Content is hand-crafted in `drafts/` as `.plain.html` files.
+**Homepage import script operational.** `tools/importer/import-homepage.js` contains all parsers inline.
 
-When bulk import is set up, `tools/importer/` will contain:
-- `import.js` — single universal script (all pages, no template branching)
-- `import.bundle.js` — compiled output (never edit directly)
-- `urls.txt` — all page URLs
-- `parsers/` — one file per block, selector-based detection
-- `transformers/` — cleanup + section boundary scripts
+### Files
+
+| File | Purpose |
+|------|---------|
+| `tools/importer/import-homepage.js` | Main import script (IIFE, all parsers inline) |
+| `tools/importer/page-templates.json` | Template + block selector mapping |
+| `tools/importer/parsers/hero.js` | Standalone hero parser (h1 + insights-widget + hero-video + section-metadata) |
+| `tools/importer/parsers/marquee.js` | Standalone marquee parser |
+| `tools/importer/parsers/nav.js` | Nav fragment parser (for re-import consistency) |
+| `tools/importer/parsers/*.js` | Other block parsers (solutions-slider, stats, etc.) |
+| `tools/importer/transformers/cleanup.js` | DOM cleanup transformer |
+| `tools/importer/urls-homepage.txt` | Homepage URL |
+
+### Parser Registry (import-homepage.js)
+
+| Parser | Selector | Output block |
+|--------|----------|-------------|
+| `heroParser` | `.mp-hero` | Default content + Insights Widget + Hero Video + Section Metadata (centered) |
+| `marqueeParser` | `.mp-logo-marquee` | Marquee |
+| `promoCardsSemrushOneParser` | `.mp-promo-cards.mp-semrush-one` | Promo Cards (promo-cards-semrush-one) |
+| `promoCardsEnterpriseParser` | `.mp-promo-cards.mp-enterprise` | Promo Cards (promo-cards-enterprise) |
+| `solutionsSliderParser` | `.mp-section.mp-toolkits` | Solutions Slider |
+| `statsParser` | `.mp-section.mp-stats` | Stats |
+| `aiVisibilityIndexParser` | `.mp-section.mp-ai-visibility-index` | AI Visibility Index |
+| `testimonialsParser` | `.mp-section.mp-client-testimonials` | Testimonials |
+| `resourcesSliderParser` | `.mp-section.mp-resources` | Resources Slider |
+| `announcementBarParser` | `.srf_announcement_banner` | Announcement Bar |
 
 ---
 
-## Draft Content
+## Content Structure (homepage)
 
-Draft pages live in `drafts/`. Start the dev server with `--html-folder drafts` to serve them at `localhost:3000`.
+The importer produces this section layout:
 
-See `PROJECT-STATUS.md` for the list of which drafts exist.
+1. **Section 1** (announcement-bar)
+2. **Section 2** (centered): h1 + subtitle + Insights Widget + Hero Video + Section Metadata
+3. **Section 3**: Marquee
+4. **Section 4**: Promo Cards (both variants in same section)
+5. **Section 5**: Solutions Slider
+6. **Section 6**: Stats
+7. **Section 7**: AI Visibility Index
+8. **Section 8**: Testimonials
+9. **Section 9**: Resources Slider
+
+---
+
+## Nav Content Model
+
+The nav fragment (`content/nav.plain.html`) uses H2/H3/UL heading hierarchy:
+- H2 with link = top-level nav item
+- H3 = mega menu column heading
+- UL = column links
+- P with picture + P with strong + P plain = promo tile
+- H2 with external link only = simple nav item (no dropdown)
 
 ---
 
 ## Import Architecture Principles
 
-1. **One universal script for all pages.** No URL matching, no template branching, no page-type conditions.
-2. **Parsers detect blocks by DOM selector, not by page context.** Each parser is self-contained: it receives a matched element and returns a block table.
-3. **More specific selectors first** in the registry, to prevent false matches.
-4. **Section boundaries in `beforeTransform`.** The sections transformer must run before parsers, because parsers replace the wrapper elements used for boundary detection. Running it in `afterTransform` will silently fail.
-5. **Handle missing content gracefully.** If a parser's selector finds no match, it does nothing — never throw.
+1. **One universal script for all pages.** No template branching.
+2. **Parsers detect blocks by DOM selector.** Each parser is self-contained.
+3. **Section boundaries in `beforeTransform`.** Must run before parsers.
+4. **Handle missing content gracefully.** No throws on missing selectors.
 
 ---
 
@@ -42,44 +81,9 @@ See `PROJECT-STATUS.md` for the list of which drafts exist.
 ### Bundle (run after any change to import scripts)
 
 ```bash
-npx esbuild tools/importer/import.js \
+npx esbuild tools/importer/import-homepage.js \
   --bundle --format=iife --global-name=CustomImportScript \
   --platform=browser --outfile=tools/importer/import.bundle.js
 ```
 
-**⚠️ The `--format=iife --global-name=CustomImportScript` flags are mandatory.** ESM format silently fails because the bulk importer reads `window.CustomImportScript`. Never change these flags.
-
-### Run bulk import
-
-```bash
-node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js \
-  --import-script tools/importer/import.bundle.js \
-  --urls tools/importer/urls.txt
-```
-
-### Single page
-
-```bash
-echo "https://www.semrush.com/page-path/index.html" > /tmp/url.txt
-node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js \
-  --import-script tools/importer/import.bundle.js --urls /tmp/url.txt
-```
-
-**URL rule:** Always include an explicit file path (`/index.html`, `/about.html`). Bare trailing-slash URLs fail with a `cwd is not a function` error.
-
----
-
-## Adding a New Page
-
-1. Analyze the page DOM at the source URL
-2. Reuse existing parsers where selectors match
-3. Write new parsers only for genuinely new block patterns
-4. Register new parsers in `import.js`
-5. Re-bundle, then test against the new page AND all existing pages
-6. Update `PROJECT-BLOCKS.md` for any new blocks, `PROJECT-STATUS.md` for the new page
-
----
-
-## Nav and Footer
-
-Nav and footer are site-wide fragments — they need separate import scripts (`import-nav.js`, `import-footer.js`), bundled and run the same way as the main script.
+**⚠️ The `--format=iife --global-name=CustomImportScript` flags are mandatory.**

@@ -29,16 +29,71 @@ All project-specific details live in `PROJECT.md` and the `PROJECT-*.md` files. 
 
 ---
 
+## Skills System — Self-Learning
+
+You maintain a living skill library in `skills/`. Skills are your operational memory — they prevent you from re-solving the same problem twice. Managing them is not optional; it is part of every task.
+
+### Triggers — When to act on skills
+
+| Moment | Action |
+|--------|--------|
+| **Starting any task** | Scan `skills/README.md`. Load every skill whose "When to load" matches your situation. Follow recipes before inventing solutions. |
+| **You get stuck for >5 minutes** | Stop. Check if a skill exists. If yes, you missed it — load it. If no, that's a gap — note it for after. |
+| **You solve something non-obvious** | Immediately create or update a skill. Don't defer. The insight is freshest now. |
+| **The human corrects you** | The correction IS a missing skill. Write it before doing anything else. |
+| **You use a skill but it's incomplete** | Add the missing piece to Recipe or Pitfalls right now, before moving on. |
+| **You notice two skills overlap** | Merge them into one. Delete the redundant file. Update the index. |
+| **End of any multi-step task** | Review: did anything surprise you? Did you debug longer than expected? If yes → skill. |
+
+### Creating a skill
+
+1. Copy `skills/_template.md` → name it `{problem-domain}.md` in kebab-case
+2. Load `skills/writing-skills.md` for the quality bar and format rules
+3. Write all four sections (When to load / Key insight / Recipe / Pitfalls)
+4. Add one row to `skills/README.md` index with the filename and a trigger phrase
+5. Verify: would this have saved you 30 minutes if you'd had it at the start? If not, sharpen it.
+
+### Maintaining skills
+
+Skills rot if not maintained. Every time you load a skill, evaluate it:
+
+- **Trigger phrase didn't match your mental search?** → Rewrite "When to load" using the words you actually thought
+- **Recipe was right but hard to scan?** → Convert prose to a table or code block
+- **Skill had stale information?** → Update to match current implementation (selectors change, blocks get renamed)
+- **Skill was too long?** → Split into two focused skills, or cut to essentials
+- **New pitfall discovered?** → Add it immediately
+
+### Format (see `skills/_template.md`)
+
+```
+# {Name}
+## When to load — one sentence: the symptom you SEE
+## Key insight — the unlock that makes it trivial
+## Recipe — copy-pasteable action (code, commands, tables)
+## Pitfalls — what looks right but fails, one line each
+```
+
+### Quality bar
+
+- **Prescriptive**: "Do X" not "X happened"
+- **Concrete**: actual selectors, actual values, actual commands
+- **Scannable**: tables and code blocks beat paragraphs
+- **No history**: state what works now, not what was tried before
+- **Imperative tone**: "Use X", "Never Y", "Set Z to W" — not "you should consider"
+- **~20 lines max**: if longer, split
+
+---
+
 ## Learning Loop — Mandatory
 
 At the end of every task:
 
-1. **New pattern or pitfall?** → Add a `LEARN-NNNN` entry to `PROJECT-LEARNINGS.md`.
-2. **Human corrected my behavior?** → Capture it as a rule in `AGENTS.md`.
+1. **Struggled or discovered something?** → Create or update a skill in `skills/`. There is no separate learnings file — skills ARE the learnings, in actionable form.
+2. **Human corrected my behavior?** → Capture it as a rule in `AGENTS.md` AND as a skill if implementation-related.
 3. **Block, variant, token, or import script changed?** → Update `PROJECT-BLOCKS.md`, `PROJECT-DESIGN.md`, or `PROJECT-IMPORT.md`.
 4. **Migration status changed?** → Update `PROJECT-STATUS.md`.
 
-Every correction is a signal the docs are incomplete — fix them now.
+Every correction is a signal the skills are incomplete — fix them now.
 
 ---
 
@@ -65,6 +120,8 @@ Prefer reuse and variants over a new block whenever the steps above still allow 
 **Block variants.** Apply the same pattern also to block variants (e.g. `teaser-large` on `<div class="teaser teaser-large">`).
 
 **Selectors vs. DOM order.** Avoid CSS that assumes a fixed child or sibling order — for example `div:nth-child(3)`, `:nth-of-type(n)`, or deep `> *` / `> div` ladders keyed only by position. Prefer `decorate()`: add a `{block}-{part}` class on the element you need to style, then target that class so reordering rows or cells does not break the block.
+
+**No `!important`.** Avoid `!important` declarations. They signal a specificity problem that should be solved structurally instead. Preferred strategies: increase selector specificity by adding a parent class, use the cascade order, or add a class via JS to the element you need to override. The only acceptable exception is overriding EDS-generated wrapper styles (`.{block}-wrapper { max-width: 100% !important; padding: 0 !important }`) — and even there, consider whether `.section.{block}-container { padding: 0 }` on the section achieves the same without `!important`.
 
 ### JavaScript
 
@@ -148,7 +205,7 @@ curl http://localhost:3000/path.plain.html                   # inspect content
 | Style changes, design tokens | `PROJECT-DESIGN.md` |
 | Import scripts, bulk import | `PROJECT-IMPORT.md` |
 | Migration progress, next actions | `PROJECT-STATUS.md` |
-| Avoid repeating past mistakes | `PROJECT-LEARNINGS.md` |
+| Solve a problem you've seen before | `skills/README.md` (index) |
 
 ---
 

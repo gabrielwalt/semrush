@@ -70,24 +70,24 @@ main .promo-cards .button-wrapper {
 }
 
 /* Side-by-side layout when two promo cards share a section */
-/* stylelint-disable-next-line no-descending-specificity */
-.promo-cards-container > div {
+.section.promo-cards-container {
   display: flex;
   flex-direction: column;
   gap: var(--space-m);
 }
 
 @media (width >= 1024px) {
-  .promo-cards-container > div {
-    flex-direction: row;
+  .section.promo-cards-container {
+    flex-flow: row nowrap;
     gap: 12px;
   }
 
   /* stylelint-disable-next-line declaration-no-important */
-  .promo-cards-container > div > .promo-cards-wrapper {
+  .section.promo-cards-container > .promo-cards-wrapper {
     flex: 1 !important;
     min-width: 0;
     max-width: 50% !important;
+    margin-top: 0 !important;
   }
 }
 

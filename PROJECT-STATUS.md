@@ -22,22 +22,23 @@ Single source of truth for what has been built, what is in progress, and what re
 
 ## Blocks Status
 
-| Block | CSS | JS | Draft | Notes |
-|-------|-----|----|-------|-------|
+| Block | CSS | JS | Content | Notes |
+|-------|-----|----|---------|-------|
 | `announcement-bar` | ✅ | ✅ | ✅ | Complete |
-| `hero` | ✅ | ✅ | ✅ | Complete |
-| `hero-video` | ✅ | ✅ | — | CSS-only version; JS stub |
-| `promo-cards` | ✅ | ✅ | ✅ | Default + enterprise + semrush-one variants |
-| `solutions-slider` | ✅ | ✅ | ✅ | Slider/tab interactions |
-| `logo-marquee` | ✅ | ✅ | — | Infinite scroll animation |
+| `insights-widget` | ✅ | ✅ | ✅ | Search form with glass effect; reads strings from content paragraphs |
+| `hero-video` | ✅ | ✅ | ✅ | Glass-framed video/image with reduced-motion support |
+| `marquee` | ✅ | ✅ | ✅ | Generic infinite scroll; 30px items, 100px gap, 45s duration |
+| `promo-cards` | ✅ | ✅ | ✅ | Side-by-side on desktop (flex row) |
+| `solutions-slider` | ✅ | ✅ | ✅ | Slider/tab interactions with dots nav |
 | `stats` | ✅ | ✅ | ✅ | Click-to-expand interaction |
-| `resources-slider` | ✅ | ✅ | ✅ | Horizontal slider |
-| `testimonials` | ✅ | ✅ | ✅ | Quote carousel |
-| `cards` | ✅ | ✅ | — | Standard boilerplate cards |
-| `columns` | ✅ | ✅ | — | Standard boilerplate columns |
-| `ai-visibility-index` | ✅ | ✅ | ✅ | Custom visualization |
-| `header` | ✅ | ✅ | ✅ | Nav with fragment |
+| `resources-slider` | ✅ | ✅ | ✅ | Horizontal slider with arrows |
+| `testimonials` | ✅ | ✅ | ✅ | Quote with author and stat |
+| `ai-visibility-index` | ✅ | ✅ | ✅ | Custom table visualization |
+| `cards` | ✅ | ✅ | — | Standard boilerplate |
+| `columns` | ✅ | ✅ | — | Standard boilerplate |
+| `header` | ✅ | ✅ | ✅ | Mega menu from H2/H3/UL structure; animated dropdown |
 | `footer` | ✅ | ✅ | ✅ | Fragment with sub-blocks |
+| `hero` | ⚠️ | ⚠️ | — | Retired — no-op decorate; kept for backward compat |
 | `fragment` | — | ✅ | — | Utility (do not delete) |
 
 ---

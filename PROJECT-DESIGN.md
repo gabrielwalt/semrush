@@ -116,8 +116,9 @@ Older tokens still work — they reference the new scale:
 | Token | Value | Usage |
 |-------|-------|-------|
 | `--container-max-width` | 1440px | Outermost container cap |
-| `--content-max-width` | 1200px | Content area max-width |
-| `--nav-height` | 70px | Fixed nav bar height |
+| `--nav-height` | 84px | Fixed nav bar height |
+| `--cta-height` | 60px | Standard button height |
+| `--accent-hover` | #b072ff | Universal CTA hover color (darker lavender) |
 
 ---
 
@@ -163,15 +164,38 @@ All `a.button` and `button.button` elements share: pill shape, 16px/600 font, -0
 
 | Block | Override | Reason |
 |-------|---------|--------|
-| Header nav-tools | `height: auto; padding: 16px 24px` | Compact header buttons |
-| Enterprise promo | `border-color: #fff; color: #fff` | Light variant on dark bg |
-| Stats | `height: 48px; padding: 0 24px` | Compact inline CTA |
+| Header nav-tools | `padding: 16px 24px; line-height: 1` | Compact header buttons, 50/48px height |
+| Enterprise promo | `border-color: #fff; background: transparent; color: #fff` | White outline on dark bg |
+| Solutions slider | `background: dark; color: #fff; height: var(--cta-height)` | Dark pill on teal cards |
+| Insights-widget submit | `padding: 0 32px; height: 60px` | Matches search form height |
 
 ### Hover states
 
-- Primary: darkened accent (`color-mix 85% black`)
-- Secondary: subtle background fill (`rgb(24 30 21 / 5%)`)
-- Accent: switches to accent purple fill
+All CTAs transition with `background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out`.
+
+| Variant | Hover bg | Hover border | Hover text |
+|---------|----------|-------------|-----------|
+| Primary | `var(--accent-hover)` (#b072ff) | same | dark |
+| Secondary | `var(--accent-hover)` | transparent | dark |
+| Accent | `var(--accent-hover)` | same | dark |
+| Nav "Log In" | `var(--accent-hover)` | transparent | dark |
+| Nav "Sign Up" | `var(--accent-hover)` | — | dark |
+
+---
+
+## Vertical Spacing System
+
+Sections have NO margin — vertical rhythm comes from section padding. Blocks within a section use margin-top for spacing between sibling wrappers.
+
+| Rule | Value | Notes |
+|------|-------|-------|
+| Section padding | `var(--section-padding)` (120px / 60px mobile) | Top and bottom |
+| Section margin | 0 | Sections sit flush |
+| Block spacing | `var(--block-padding)` (64px / 32px mobile) | margin-top on adjacent wrappers |
+| First section | padding-top: 0 | Starts at header bottom |
+| Full-bleed blocks | Override section padding to 0 | Marquee controls own 40px padding |
+
+The CSS selector for block spacing: `main > .section > .default-content-wrapper + *` and `[class$="-wrapper"] + [class$="-wrapper"]`.
 
 ### Responsive
 

@@ -4,34 +4,40 @@ Inventory of all blocks, their variants, and non-obvious intent.
 For implementation details (selectors, DOM structure, CSS values) read the block files directly.  
 **Update whenever a block or variant is created, modified, or deleted — including its "Used on" column.**
 
-Knowing where each block, variant, and section style is used matters: it tells you what pages are affected by a change, and helps identify blocks that are ready to be retired or generalised into a shared pattern.
-
 ---
 
-## Blocks (15 total)
+## Blocks (16 total)
 
 | Block | Variants | Used on | Notes |
 |-------|----------|---------|-------|
 | `announcement-bar` | — | Homepage | Top-of-page dismissible banner |
-| `hero` | — | Homepage | Text-only hero (h1 + subtitle + CTA); image and logos are separate blocks |
-| `hero-video` | — | — | Subpage/campaign hero with video still below centered text |
+| `insights-widget` | — | Homepage | Search form with country switcher; reads placeholder/button text from content `<p>` elements |
+| `hero-video` | — | Homepage | Glass-framed video/image; supports `<video>` with reduced-motion respect |
+| `marquee` | — | Homepage | Generic infinite-scroll strip; works with any content (images, text) per line |
 | `promo-cards` | `promo-cards-semrush-one` | Homepage | Two-column promo with gradient bg |
-| `promo-cards` | `promo-cards-enterprise` | Homepage | Dark/black variant, centered layout |
+| `promo-cards` | `promo-cards-enterprise` | Homepage | Dark/black variant, centered layout, white outline CTA |
 | `solutions-slider` | — | Homepage | Tab-style product solutions slider; each row = one slide |
-| `logo-marquee` | — | — | Infinite-scroll logo strip; JS duplicates the set for the loop |
-| `stats` | — | Homepage | Interactive stats; **row 1 is the section header**, rows 2+ are individual stats |
+| `stats` | — | Homepage | Interactive stats; row 1 is the section header, rows 2+ are individual stats |
 | `resources-slider` | — | Homepage | Horizontal slider for content cards (blog/guides) |
-| `testimonials` | — | Homepage | Customer quote carousel |
+| `testimonials` | — | Homepage | Customer quote with author and stat |
+| `ai-visibility-index` | — | Homepage | AI-visibility metrics table visualization |
 | `cards` | — | — | Standard auto-fill card grid |
 | `columns` | — | — | Flexible multi-column layout |
-| `ai-visibility-index` | — | Homepage | Custom AI-visibility metrics visualization — do not simplify without verifying the full interaction model |
-| `header` | — | All pages | Sticky nav loaded as fragment from `/nav.plain.html` |
-| `footer` | — | All pages | Fragment composed of three sub-blocks (see below) |
-| `fragment` | — | — | **Utility — never delete.** Exports `loadFragment()` used by `header.js` and `footer.js` |
+| `header` | — | All pages | Sticky nav; reads H2/H3/UL structure from nav fragment |
+| `footer` | — | All pages | Fragment composed of three sub-blocks |
+| `fragment` | — | — | Utility — exports `loadFragment()` used by header and footer |
 
 ### Footer sub-blocks
 
-`footer-cta`, `footer-links`, `footer-bottom` are referenced by the footer fragment. Do not delete their folders even though no content page uses them directly.
+`footer-cta`, `footer-links`, `footer-bottom` are referenced by the footer fragment.
+
+### Retired blocks
+
+| Block | Replaced by | Reason |
+|-------|------------|--------|
+| `hero` | Default content in centered section | H1/subtitle are now default content, not a block |
+| `logo-marquee` | `marquee` | Renamed to generic marquee concept |
+| `hero-insights` | `insights-widget` | Renamed for clarity |
 
 ---
 
@@ -39,5 +45,12 @@ Knowing where each block, variant, and section style is used matters: it tells y
 
 | Style | Used on | Notes |
 |-------|---------|-------|
+| `centered` | Homepage (first section) | Flex column + center-align; contains h1, subtitle, insights-widget, hero-video |
 
-No section styles implemented yet — add rows here as they are introduced.
+---
+
+## Utility Modules
+
+| Module | Purpose |
+|--------|---------|
+| `scripts/glass.js` | `applyGlassSurface(el)` — adds `.glass-surface` class (used by hero-video) |

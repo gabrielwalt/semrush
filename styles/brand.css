@@ -15,5 +15,5 @@
 
 html,
 body {
-  overflow: auto !important;
+  overflow: hidden auto;
 }

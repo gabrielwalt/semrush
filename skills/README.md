@@ -1,23 +1,25 @@
 # Project Skills
 
-Operational micro-skills distilled from hard-won implementation experience. Each file is a self-contained reference for a specific class of problem.
+Operational micro-skills distilled from implementation experience. Each file is a self-contained reference for a specific class of problem.
 
 ## How to Use
 
-- **Before starting work**: Scan this index for relevant skills. Load any that match.
-- **After completing work**: If you struggled, create or update a skill.
-- **Skill format**: Problem → Key insight → Recipe → Pitfalls.
-- **Keep lean**: A skill should fit in ~20 lines. If it's longer, split it.
+- **Before starting work**: Scan this index. Load any skill whose trigger matches your situation.
+- **After completing work**: If you struggled or discovered something non-obvious, create or update a skill.
+- **To write a new skill**: Load [writing-skills.md](writing-skills.md) and copy [_template.md](_template.md).
 
 ## Index
 
-| Skill | When to load |
+| Skill | Load when... |
 |-------|-------------|
-| [css-specificity-eds.md](css-specificity-eds.md) | CSS rule not applying to EDS block wrappers or sections |
-| [eds-dom-structure.md](eds-dom-structure.md) | Need to target blocks inside sections, understand wrapper nesting |
-| [measure-then-implement.md](measure-then-implement.md) | Matching visual design from an original site |
-| [background-layering.md](background-layering.md) | Page-level gradients, SVG patterns, transparent blocks |
-| [mega-menu-content-model.md](mega-menu-content-model.md) | Nav content authoring, mega menu structure, promo tiles |
-| [vertical-spacing-system.md](vertical-spacing-system.md) | Section padding, block margins, spacing between elements |
-| [block-rename-checklist.md](block-rename-checklist.md) | Renaming a block across the full codebase |
-| [nav-header-eds.md](nav-header-eds.md) | Header/nav implementation patterns in EDS |
+| [css-specificity-eds.md](css-specificity-eds.md) | A CSS rule isn't applying; computed style shows wrong value |
+| [eds-dom-structure.md](eds-dom-structure.md) | Selector doesn't match; need to know where EDS puts blocks in the DOM |
+| [vertical-spacing-system.md](vertical-spacing-system.md) | Blocks touching with no gap; sections too far apart; page rhythm wrong |
+| [background-layering.md](background-layering.md) | Gradient not visible; background blocked by a block; need page-specific pattern |
+| [nav-header-eds.md](nav-header-eds.md) | Header broken; nav invisible; chevrons missing; mega menu won't animate |
+| [mega-menu-content-model.md](mega-menu-content-model.md) | Editing nav content; adding mega menu items; dropdown column not rendering |
+| [measure-then-implement.md](measure-then-implement.md) | Matching an original site's exact dimensions, colors, or hover states |
+| [responsive-verification.md](responsive-verification.md) | Checking a component at all breakpoints; layout differs per viewport |
+| [importer-parser-patterns.md](importer-parser-patterns.md) | Writing a block parser; parser validation failing; table format questions |
+| [eds-content-patterns.md](eds-content-patterns.md) | Link not becoming a button; borders doubling; lint failing on fonts |
+| [block-rename-checklist.md](block-rename-checklist.md) | Renaming a block; need to hit all 12+ locations that reference the name |
