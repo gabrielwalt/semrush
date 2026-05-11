@@ -78,15 +78,24 @@ export default async function decorate(block) {
     mediaCol.appendChild(picture);
   } else {
     const isSemrushOne = block.classList.contains('promo-cards-semrush-one');
+    const videoSrc = isSemrushOne
+      ? 'https://www.semrush.com/static/index/videos/semrush_one.mp4'
+      : 'https://www.semrush.com/static/index/videos/enterprise.mp4';
     const posterSrc = isSemrushOne
       ? '/content/images/semrush-one-poster.webp'
       : '/content/images/enterprise-poster.webp';
-    const img = document.createElement('img');
-    img.src = posterSrc;
-    img.alt = '';
-    img.className = 'promo-cards-video';
-    img.loading = 'lazy';
-    mediaCol.appendChild(img);
+    const video = document.createElement('video');
+    video.setAttribute('playsinline', '');
+    video.muted = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.poster = posterSrc;
+    video.className = 'promo-cards-video';
+    const source = document.createElement('source');
+    source.src = videoSrc;
+    source.type = 'video/mp4';
+    video.appendChild(source);
+    mediaCol.appendChild(video);
   }
 
   container.appendChild(mediaCol);

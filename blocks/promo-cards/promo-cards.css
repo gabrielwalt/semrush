@@ -56,6 +56,8 @@ main .promo-cards .button-wrapper {
   background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
   backdrop-filter: blur(5px);
   border-radius: 12px 0 0 12px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
 }
 
 .promo-cards .promo-cards-media .promo-cards-video,

@@ -204,7 +204,9 @@ pre {
 }
 
 main > div {
-  margin: var(--section-padding) var(--container-padding);
+  margin: var(--section-padding) auto;
+  padding: 0 var(--container-padding);
+  max-width: var(--container-max-width);
 }
 
 input,

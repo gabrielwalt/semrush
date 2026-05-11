@@ -60,9 +60,10 @@ export default async function decorate(block) {
     const expandBtn = document.createElement('button');
     expandBtn.className = 'carousel-slider-expand';
     expandBtn.setAttribute('aria-expanded', 'false');
-    expandBtn.innerHTML = '<span>Expand</span>';
-    header.appendChild(expandBtn);
+    expandBtn.setAttribute('aria-label', 'Expand');
+    expandBtn.textContent = '+';
     card.appendChild(header);
+    card.appendChild(expandBtn);
 
     if (item.smallPic) {
       const poster = createGlassFrame(item.smallPic.cloneNode(true), 'carousel-slider-poster');
@@ -98,12 +99,10 @@ export default async function decorate(block) {
       block.querySelectorAll('.carousel-slider-card-expanded').forEach((c) => {
         c.classList.remove('carousel-slider-card-expanded');
         c.querySelector('.carousel-slider-expand').setAttribute('aria-expanded', 'false');
-        c.querySelector('.carousel-slider-expand span').textContent = 'Expand';
       });
       if (!isExpanded) {
         card.classList.add('carousel-slider-card-expanded');
         expandBtn.setAttribute('aria-expanded', 'true');
-        expandBtn.querySelector('span').textContent = 'Minimize';
         card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
     });

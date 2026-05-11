@@ -1,10 +1,14 @@
 /* Carousel Slider Block */
-.carousel-slider-wrapper {
+.section.solutions-slider-container > .default-content-wrapper {
+  display: none;
+}
+
+.solutions-slider-wrapper {
   max-width: 100% !important;
   padding: 0 !important;
 }
 
-.carousel-slider {
+.solutions-slider {
   padding: 0 var(--container-padding);
   overflow: visible;
 }
@@ -15,16 +19,16 @@
 }
 
 .carousel-slider-section-header h2 {
-  font-size: var(--font-size-heading-xl);
-  font-weight: 600;
+  font-size: var(--font-size-body-m);
+  font-weight: 500;
+  font-family: var(--body-font-family);
   margin: 0 0 var(--space-xs);
-  letter-spacing: var(--tracking-snug);
+  letter-spacing: normal;
 }
 
 .carousel-slider-count {
   font-size: var(--font-size-body-s);
   font-weight: 400;
-  vertical-align: super;
   font-family: var(--body-font-family);
 }
 
@@ -33,6 +37,7 @@
   font-weight: 600;
   font-family: var(--heading-font-family);
   line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-snug);
   margin: 0;
 }
 
@@ -83,7 +88,7 @@
   width: 430px;
   height: 500px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
   background-color: rgb(220 238 235);
   background-image: url('/content/images/pattern-toolkit-card.svg');
@@ -92,7 +97,7 @@
   border-radius: var(--radius-s);
   padding: 24px;
   box-sizing: border-box;
-  overflow: clip;
+  overflow: hidden;
   cursor: pointer;
   scroll-snap-align: start;
   transition: width 0.4s ease;
@@ -101,20 +106,21 @@
 /* Card expanded */
 .carousel-slider-card-expanded {
   width: 798px;
+  grid-template-columns: 1fr 1fr;
   cursor: default;
 }
 
 /* Header — eyebrow + title + expand button */
 .carousel-slider-header {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  gap: 8px;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .carousel-slider-header h3 {
-  grid-column: 1 / -1;
-  font-size: var(--font-size-body-m);
+  font-size: var(--font-size-body-s);
   font-weight: 500;
   margin: 0;
   font-family: var(--body-font-family);
@@ -122,29 +128,38 @@
 }
 
 .carousel-slider-header h4 {
-  grid-column: 1 / 2;
   font-size: var(--font-size-heading-m);
   font-weight: 600;
   line-height: var(--line-height-snug);
   margin: 0;
 }
 
+/* Expand button — round + icon */
 .carousel-slider-expand {
   grid-column: 2 / 3;
-  grid-row: 2 / 3;
+  grid-row: 1 / 2;
+  place-self: start end;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--dark-color);
   background: transparent;
-  border-radius: var(--radius-pill);
-  padding: 8px 20px;
-  font-size: var(--font-size-body-s);
-  font-weight: 500;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 24px;
+  line-height: 1;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.3s;
 }
 
 .carousel-slider-expand:hover {
   background: rgb(0 0 0 / 5%);
+}
+
+.carousel-slider-card-expanded .carousel-slider-expand {
+  transform: rotate(45deg);
 }
 
 /* Glass frame (shared) */
@@ -153,21 +168,23 @@
   backdrop-filter: blur(5px);
   border-radius: 12px;
   padding: 12px;
+  border: 1px solid rgb(255 255 255 / 60%);
 }
 
 .carousel-slider-glass img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   border-radius: 8px;
   display: block;
 }
 
 /* Poster (small image — visible when collapsed) */
 .carousel-slider-poster {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
   align-self: end;
   max-width: 256px;
-  max-height: 210px;
   transition: opacity 0.3s, visibility 0.3s;
 }
 
@@ -180,9 +197,12 @@
 
 /* Content (visible when expanded) */
 .carousel-slider-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto auto;
+  gap: 16px;
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -195,29 +215,39 @@
   visibility: visible;
   position: relative;
   pointer-events: auto;
-  grid-column: 1 / -1;
 }
 
-/* Large image */
+/* Large image — spans right column, overflows card edge */
 .carousel-slider-large-img {
-  flex: 1;
-  min-height: 0;
+  grid-column: 2 / 3;
+  grid-row: 1 / -1;
+  align-self: stretch;
+  margin-right: -36px;
+  margin-bottom: -24px;
+  border-radius: 12px 0 0 12px;
+  border-right: none;
 }
 
 .carousel-slider-large-img img {
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px 0 0 8px;
 }
 
 /* Description */
 .carousel-slider-description {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
   font-size: var(--font-size-body-m);
   line-height: var(--line-height-relaxed);
   margin: 0;
-  max-width: 480px;
+  align-self: end;
 }
 
 /* CTA */
 .carousel-slider-cta {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -230,7 +260,7 @@
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
-  align-self: flex-start;
+  justify-self: start;
   transition: background-color 0.2s;
 }
 
@@ -250,9 +280,15 @@
 
   .carousel-slider-card-expanded {
     width: 320px;
+    grid-template-columns: 1fr;
   }
 
   .carousel-slider-header h4 {
     font-size: var(--font-size-body-l);
+  }
+
+  .carousel-slider-large-img {
+    margin-right: -20px;
+    margin-bottom: -20px;
   }
 }
