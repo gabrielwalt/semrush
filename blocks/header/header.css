@@ -4,11 +4,13 @@ header {
 }
 
 header .nav-wrapper {
+  position: fixed;
+  top: var(--nav-top-offset, 0);
+  left: 0;
+  right: 0;
+  z-index: 100;
   background-color: #fff;
   width: 100%;
-  z-index: 2;
-  position: sticky;
-  top: 0;
 }
 
 header nav {
@@ -37,8 +39,16 @@ header nav[aria-expanded='true'] {
 
 @media (width >= 1024px) {
   header .nav-wrapper {
-    position: sticky;
     background-color: rgb(220 238 235);
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  header.nav-open {
+    background-color: #fff;
+  }
+
+  header .nav-wrapper.nav-open {
+    background-color: #fff;
   }
 
   header nav {
@@ -252,7 +262,7 @@ header nav .nav-sections .nav-mega-panel ul li {
     box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
     gap: 40px;
     z-index: 10;
-    border-radius: 0 0 12px 12px;
+    border-radius: 0 0 24px 24px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);

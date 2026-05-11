@@ -11,27 +11,11 @@
   box-sizing: border-box;
 }
 
-.insights-widget-form {
-  position: relative;
+.insights-widget-form.glass-surface {
   box-sizing: border-box;
   width: 620px;
   max-width: 100%;
-  padding: 12px;
   border-radius: var(--radius-pill);
-  background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
-  border: 1px solid transparent;
-}
-
-.insights-widget-form::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(90deg, #fff -1.79%, rgb(255 255 255 / 40%) 50.16%, #fff 102.11%);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
 }
 
 .insights-widget-search {

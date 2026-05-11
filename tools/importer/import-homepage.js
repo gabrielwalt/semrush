@@ -43,30 +43,39 @@
     var insightsTable = WebImporter.DOMUtils.createTable([['Insights Widget'], [widgetContent]], document);
     wrapper.appendChild(insightsTable);
 
-    // Hero Video block with video element if present
+    // Hero Video block — links to video sources + poster image
     var video = element.querySelector('video');
     var videoCell = document.createElement('div');
     if (video) {
-      var videoEl = document.createElement('video');
-      videoEl.setAttribute('playsinline', '');
-      videoEl.setAttribute('muted', '');
-      videoEl.setAttribute('loop', '');
-      videoEl.setAttribute('autoplay', '');
-      if (video.poster) videoEl.setAttribute('poster', video.poster);
+      var videoSrc = video.src || '';
       var source = video.querySelector('source');
-      if (source) {
-        videoEl.setAttribute('src', source.src || source.getAttribute('src'));
-      } else if (video.src) {
-        videoEl.setAttribute('src', video.src);
+      if (source) videoSrc = source.src || source.getAttribute('src') || '';
+      if (videoSrc) {
+        var vp = document.createElement('p');
+        var va = document.createElement('a');
+        va.href = videoSrc;
+        va.textContent = videoSrc;
+        vp.appendChild(va);
+        videoCell.appendChild(vp);
       }
-      videoCell.appendChild(videoEl);
+      var posterSrc = video.poster || 'https://www.semrush.com/static/plg_toolkits.webp';
+      var pp = document.createElement('p');
+      var ppic = document.createElement('picture');
+      var pimg = document.createElement('img');
+      pimg.src = posterSrc;
+      pimg.alt = 'Semrush platform toolkits overview';
+      ppic.appendChild(pimg);
+      pp.appendChild(ppic);
+      videoCell.appendChild(pp);
     } else {
-      var pic = document.createElement('picture');
-      var img = document.createElement('img');
-      img.src = 'https://www.semrush.com/static/plg_toolkits.webp';
-      img.alt = 'Semrush platform toolkits overview';
-      pic.appendChild(img);
-      videoCell.appendChild(pic);
+      var fp = document.createElement('p');
+      var fpic = document.createElement('picture');
+      var fimg = document.createElement('img');
+      fimg.src = 'https://www.semrush.com/static/plg_toolkits.webp';
+      fimg.alt = 'Semrush platform toolkits overview';
+      fpic.appendChild(fimg);
+      fp.appendChild(fpic);
+      videoCell.appendChild(fp);
     }
     var heroVideoTable = WebImporter.DOMUtils.createTable([['Hero Video'], [videoCell]], document);
     wrapper.appendChild(heroVideoTable);

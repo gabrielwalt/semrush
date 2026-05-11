@@ -17,11 +17,6 @@
 .hero-video-frame {
   max-width: 1140px;
   width: 100%;
-  padding: var(--space-xs);
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgb(5 5 5 / 4%) 11%, rgb(255 255 255 / 4%) 89%);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 20px 60px rgb(0 0 0 / 8%), 0 4px 16px rgb(0 0 0 / 4%);
 }
 
 .hero-video-frame .hero-video-player,

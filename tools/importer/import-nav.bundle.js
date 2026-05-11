@@ -34,7 +34,7 @@ var CustomImportScript = (() => {
       logoA.href = "/";
       const logoPic = document.createElement("picture");
       const logoImg = document.createElement("img");
-      logoImg.src = "https://www.semrush.com/static/logos/semrush_logo.svg";
+      logoImg.src = "/content/images/semrush-logo.svg";
       logoImg.alt = "Semrush";
       logoPic.appendChild(logoImg);
       logoA.appendChild(logoPic);

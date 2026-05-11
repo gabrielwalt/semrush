@@ -5,7 +5,7 @@ export default async function decorate(block) {
   const buttonLabel = (paragraphs[1] ? paragraphs[1].textContent.trim() : '') || 'Get insights';
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'insights-widget-form';
+  wrapper.className = 'insights-widget-form glass-surface';
 
   const form = document.createElement('div');
   form.className = 'insights-widget-search';

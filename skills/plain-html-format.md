@@ -28,9 +28,17 @@ Each section must be a top-level `<div>` wrapper. The AEM CLI and EDS framework 
 ```
 Block name = folder name in `blocks/`. Variant: `class="block-name variant-name"`.
 
+## DA content limitations
+- `<video>` elements are NOT supported in Document Authoring. Use a link to the video file + a poster `<picture>` instead. Block JS builds the `<video>` at runtime.
+- SVG images get stripped by the `html2md` pipeline. Inject them manually or use external URLs that survive the roundtrip.
+
+## Re-import warning
+Running the importer overwrites `.plain.html` files and **flattens section boundaries** — all content ends up in 1–2 divs instead of the proper section-per-div structure. The canonical content files must be maintained by hand after initial import. Re-import is useful for updating block content but requires re-applying the section-div structure afterward.
+
 ## Pitfalls
 - NO outer wrapper div around all content — each section div is a direct child of `<main>`
 - NO `<hr>` as section separator — the div-per-section IS the separator
 - `section-metadata` must be the LAST element inside its section div
 - Removing the wrapping divs makes all blocks unstyled (EDS can't find sections)
 - The AEM import pipeline (`html2md` → `md2da`) produces this format automatically — only manual edits risk breaking it
+- AEM CLI renders `localhost:3000/` from the REMOTE AEM preview (not local files). Only `localhost:3000/path.plain.html` serves local content. You cannot verify rendered page behavior until content is pushed to AEM via "Upload content" in the Console UI.

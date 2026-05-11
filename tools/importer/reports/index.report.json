@@ -1,0 +1,20 @@
+{
+  "status": "success",
+  "url": "https://www.semrush.com/",
+  "path": "index",
+  "timestamp": "2026-05-11T21:56:21.453Z",
+  "title": "Semrush: Your Unfair Advantage for Growing Brand Visibility",
+  "template": "homepage",
+  "blocks": [
+    "announcement-bar",
+    "hero",
+    "marquee",
+    "promo-cards-semrush-one",
+    "promo-cards-enterprise",
+    "solutions-slider",
+    "stats",
+    "ai-visibility-index",
+    "testimonials",
+    "resources-slider"
+  ]
+}

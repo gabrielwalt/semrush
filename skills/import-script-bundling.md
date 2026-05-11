@@ -42,3 +42,5 @@ node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run
 - The `.bundle.js` file is what gets passed to `run-bulk-import.js`, NOT the source `.js`
 - SVG images are stripped by the `html2md` pipeline — marquee logos or icon-only blocks must be injected post-import
 - The `run-bulk-import.js` expects `window.CustomImportScript.default.transform` — if missing, import silently fails
+- Re-import flattens section boundaries — the `md2da` pipeline merges everything into 1–2 section divs. The canonical `.plain.html` with proper section-per-div structure must be maintained by hand
+- Emit video as `<a href="...mp4">` + `<picture><img poster>` — DA doesn't support `<video>` elements. Block JS constructs the player at runtime
