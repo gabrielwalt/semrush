@@ -43,7 +43,7 @@ footer .footer-cta a.button.primary:any-link:hover {
   color: var(--cta-button-color);
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   .footer-cta h2 {
     font-size: 48px;
   }

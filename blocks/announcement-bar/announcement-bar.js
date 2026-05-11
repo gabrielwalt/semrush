@@ -1,4 +1,4 @@
-export default async function decorate(block) {
+export default async function decorate() {
   // The announcement bar is a simple single-row block with centered link text.
   // No DOM restructuring needed — the CSS handles all styling.
 }

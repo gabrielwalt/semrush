@@ -27,7 +27,7 @@ export default function parse(element, { document }) {
     textContent.appendChild(p);
   }
 
-  const rows = [['Promo Cards (semrush-one)'], [textContent]];
+  const rows = [['Promo Cards (promo-cards-semrush-one)'], [textContent]];
 
   if (img) {
     const pic = document.createElement('picture');

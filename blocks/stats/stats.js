@@ -2,13 +2,10 @@ export default async function decorate(block) {
   const rows = [...block.children];
   const headerRow = rows[0];
 
-  // Mark header row
   headerRow.classList.add('stat-header');
 
-  // Stat rows are everything after the header
   const statRows = rows.slice(1);
 
-  // Restructure stat rows
   statRows.forEach((row, index) => {
     row.classList.add('stat-row');
     if (index === 0) row.classList.add('active');
@@ -59,4 +56,38 @@ export default async function decorate(block) {
       row.classList.add('active');
     });
   });
+
+  function activateStat(index) {
+    statRows.forEach((r) => r.classList.remove('active'));
+    if (statRows[index]) statRows[index].classList.add('active');
+  }
+
+  function onScroll() {
+    const rect = block.getBoundingClientRect();
+    const viewportH = window.innerHeight;
+    const triggerTop = viewportH * 0.3;
+    const sectionVisible = rect.top < triggerTop && rect.bottom > 0;
+
+    if (!sectionVisible) return;
+
+    const scrolled = triggerTop - rect.top;
+    const scrollableHeight = rect.height - viewportH * 0.5;
+    const progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
+    const index = Math.min(statRows.length - 1, Math.floor(progress * statRows.length));
+
+    activateStat(index);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      } else {
+        window.removeEventListener('scroll', onScroll);
+      }
+    });
+  }, { threshold: 0, rootMargin: '200px 0px 200px 0px' });
+
+  observer.observe(block);
 }

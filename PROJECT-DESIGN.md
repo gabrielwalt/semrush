@@ -43,12 +43,15 @@ Full type scale (sizes for xxl → xs, desktop and mobile breakpoints) is in `st
 
 ---
 
-## Responsive Breakpoints
+## Breakpoints
 
-Mobile-first. Three breakpoints used consistently across all blocks:
-- `min-width: 600px` — tablet
-- `min-width: 900px` — desktop (primary)
-- `min-width: 1200px` — large desktop
+| Token | Value | Usage |
+|-------|-------|-------|
+| Mobile | < 768px | Single-column, stacked, hamburger nav |
+| Tablet | 768px–1023px | Wider content, sliders active, still hamburger |
+| Desktop | ≥ 1024px | Full nav, multi-column, max-width 1200px |
+
+Write mobile-first: base styles are mobile, `@media (width >= 768px)` for tablet, `@media (width >= 1024px)` for desktop.
 
 ---
 

@@ -100,7 +100,7 @@
       p.appendChild(em);
       textContent.appendChild(p);
     }
-    const rows = [['Promo Cards (semrush-one)'], [textContent]];
+    const rows = [['Promo Cards (promo-cards-semrush-one)'], [textContent]];
     const table = WebImporter.DOMUtils.createTable(rows, document);
     element.replaceWith(table);
   }
@@ -132,7 +132,7 @@
       p.appendChild(strong);
       bodyContent.appendChild(p);
     }
-    const rows = [['Promo Cards (enterprise)'], [headingContent], [bodyContent]];
+    const rows = [['Promo Cards (promo-cards-enterprise)'], [headingContent], [bodyContent]];
     const table = WebImporter.DOMUtils.createTable(rows, document);
     element.replaceWith(table);
   }

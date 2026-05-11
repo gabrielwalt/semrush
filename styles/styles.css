@@ -65,7 +65,7 @@ main a.button:any-link {
   src: local('Arial');
 }
 
-@media (width < 900px) {
+@media (width < 768px) {
   :root {
     /* heading sizes – mobile */
     --heading-font-size-xxl: 48px;
@@ -295,7 +295,7 @@ main > .section:first-of-type {
   margin-top: 0;
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   main > .section > div {
     padding: 0 32px;
   }

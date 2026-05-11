@@ -12,7 +12,7 @@ Single source of truth for what has been built, what is in progress, and what re
 | Block development — homepage blocks | ✅ Done |
 | Design system (tokens, brand.css) | ✅ Done |
 | Draft content — homepage | ✅ Done |
-| Import scripts | ❌ Not started |
+| Import scripts | ✅ Done (homepage) |
 | Subpage templates | 🔲 Not started |
 | Bulk import | 🔲 Not started |
 | Performance validation (PageSpeed 100) | 🔲 Not started |
@@ -56,7 +56,7 @@ The following pages from semrush.com need to be analyzed and imported. URLs are 
 
 | Page | Source URL | Status | Priority |
 |------|-----------|--------|----------|
-| Homepage | https://www.semrush.com/ | 🔲 Draft done, import pending | P1 |
+| Homepage | https://www.semrush.com/ | ✅ Content + styles done | P1 |
 | Semrush One | https://www.semrush.com/semrush-one/ | 🔲 Not started | P1 |
 | Enterprise | https://www.semrush.com/enterprise/ | 🔲 Not started | P1 |
 | SEO | https://www.semrush.com/seo/ | 🔲 Not started | P2 |
@@ -72,7 +72,7 @@ The following pages from semrush.com need to be analyzed and imported. URLs are 
 
 | Issue | Block/Page | Severity | Status |
 |-------|-----------|----------|--------|
-| No import scripts yet | All pages | High | Open — needs tools/ setup |
+| Import script cleanup transformer leaves mega-menu remnants | Homepage | Medium | Known — needs additional cleanup selectors |
 | hero logo row: marquee behavior not final | `hero` | Low | Verify visual output |
 
 ---

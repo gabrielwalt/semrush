@@ -1,7 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 export default function transform(hookName, element, payload) {
   if (hookName !== 'beforeTransform') return;
-
-  const { document } = payload;
 
   // Remove scripts, styles, noscript, iframes
   element.querySelectorAll('script, style, noscript, iframe, link[rel="stylesheet"]').forEach((el) => el.remove());

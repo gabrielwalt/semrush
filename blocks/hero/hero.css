@@ -12,12 +12,14 @@
   --hero-padding-top: 48px;
   --hero-padding-bottom: 48px;
 
-  background: linear-gradient(
-    to bottom,
-    var(--hero-gradient-start) 0%,
-    var(--hero-gradient-mid) 75%,
-    var(--hero-gradient-end) 100%
-  );
+  background:
+    url('/content/images/pattern-hero.svg') repeat-x 2px calc(50% - 20px),
+    linear-gradient(
+      to bottom,
+      var(--hero-gradient-start) 0%,
+      var(--hero-gradient-mid) 75%,
+      var(--hero-gradient-end) 100%
+    );
   color: var(--hero-text);
   padding: var(--hero-padding-top) 24px var(--hero-padding-bottom);
   text-align: center;
@@ -60,14 +62,14 @@ main .hero a.button.primary:any-link:hover {
   border-color: color-mix(in srgb, var(--accent-color) 85%, black);
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   .hero {
     --hero-padding-top: 80px;
     --hero-padding-bottom: 80px;
   }
 }
 
-@media (width < 600px) {
+@media (width < 768px) {
   .hero h1 {
     font-size: 36px;
   }

@@ -5,7 +5,9 @@
   --promo-radius: 5px;
   --promo-padding: 32px 12px;
 
-  background: var(--promo-bg);
+  background:
+    url('/content/images/semrush-one-bg.svg') no-repeat 50% 50%,
+    var(--promo-bg);
   color: var(--promo-text);
   border-radius: var(--promo-radius);
   padding: var(--promo-padding);
@@ -86,7 +88,7 @@ main .promo-cards a.button:any-link:hover {
   padding: 0 12px !important;
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   .promo-cards {
     --promo-padding: 64px;
   }
@@ -103,18 +105,20 @@ main .promo-cards a.button:any-link:hover {
 /* =============================================
    Enterprise Variant — dark background
    ============================================= */
-.promo-cards.enterprise {
+.promo-cards.promo-cards-enterprise {
   --promo-bg: rgb(0 0 0);
   --promo-text: #fff;
   --promo-padding: 32px 12px;
 
-  background: var(--promo-bg);
+  background:
+    url('/content/images/enterprise-bg.webp') no-repeat 100% 100% / contain,
+    var(--promo-bg);
   color: var(--promo-text);
   text-align: center;
   align-items: center;
 }
 
-.promo-cards.enterprise h2 {
+.promo-cards.promo-cards-enterprise h2 {
   font-size: 32px;
   font-weight: 600;
   line-height: 1.1;
@@ -122,12 +126,12 @@ main .promo-cards a.button:any-link:hover {
   color: #fff;
 }
 
-.promo-cards.enterprise p {
+.promo-cards.promo-cards-enterprise p {
   color: #fff;
 }
 
 /* Enterprise button — white outlined pill */
-main .promo-cards.enterprise a.button:any-link {
+main .promo-cards.promo-cards-enterprise a.button:any-link {
   background: transparent;
   border: 1px solid #fff;
   border-radius: 100px;
@@ -138,28 +142,28 @@ main .promo-cards.enterprise a.button:any-link {
   text-decoration: none;
 }
 
-main .promo-cards.enterprise a.button:any-link:hover {
+main .promo-cards.promo-cards-enterprise a.button:any-link:hover {
   background: rgb(255 255 255 / 10%);
 }
 
 /* Enterprise glass wrapper */
-.promo-cards.enterprise > div:last-child > div {
+.promo-cards.promo-cards-enterprise > div:last-child > div {
   background: rgb(255 255 255 / 5%);
   border: 1px solid rgb(255 255 255 / 8%);
   border-radius: 6px;
   padding: 7px;
 }
 
-.promo-cards.enterprise > div:last-child img {
+.promo-cards.promo-cards-enterprise > div:last-child img {
   border-radius: 4px;
 }
 
-@media (width >= 900px) {
-  .promo-cards.enterprise {
+@media (width >= 1024px) {
+  .promo-cards.promo-cards-enterprise {
     --promo-padding: 64px;
   }
 
-  .promo-cards.enterprise h2 {
-    font-size: 40px;
+  .promo-cards.promo-cards-enterprise h2 {
+    font-size: 64px;
   }
 }

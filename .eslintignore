@@ -1,2 +1,7 @@
 helix-importer-ui
 *.min.js
+tools/importer/static
+tools/importer/import-processors
+tools/importer/run-bulk-import.js
+tools/importer/import-report.js
+tools/importer/import-homepage.js

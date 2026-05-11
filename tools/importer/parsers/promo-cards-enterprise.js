@@ -31,7 +31,7 @@ export default function parse(element, { document }) {
     bodyContent.appendChild(p);
   }
 
-  const rows = [['Promo Cards (enterprise)'], [headingContent], [bodyContent]];
+  const rows = [['Promo Cards (promo-cards-enterprise)'], [headingContent], [bodyContent]];
 
   if (img) {
     const pic = document.createElement('picture');

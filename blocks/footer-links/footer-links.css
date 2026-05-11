@@ -39,7 +39,7 @@
   text-decoration: underline;
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   .footer-links > div {
     grid-template-columns: repeat(4, 1fr);
     gap: 32px;

@@ -8,7 +8,9 @@
   --table-text: rgb(24 30 21);
   --table-muted: rgb(108 110 121);
 
-  background: var(--block-bg);
+  background:
+    url('/content/images/pattern-ai-vis-index.svg') repeat-x 0% 100%,
+    var(--block-bg);
   color: var(--block-text);
   padding: 60px 24px;
   text-align: center;
@@ -169,7 +171,7 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
   transition: width 0.3s ease;
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   .ai-visibility-index {
     padding: 60px 0;
   }
@@ -179,7 +181,7 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
   }
 }
 
-@media (width < 600px) {
+@media (width < 768px) {
   .ai-visibility-index .ai-visibility-index-header h2 {
     font-size: 36px;
   }

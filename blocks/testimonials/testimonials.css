@@ -117,7 +117,7 @@
 }
 
 /* Mobile */
-@media (width < 900px) {
+@media (width < 768px) {
   .testimonials .testimonials-layout {
     flex-direction: column;
   }

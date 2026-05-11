@@ -7,7 +7,7 @@
   --stats-inactive-text: rgb(209 210 213);
   --stats-accent: rgb(24 240 191);
 
-  padding: 60px 0;
+  padding: 80px 0;
   color: var(--stats-text);
 }
 
@@ -24,7 +24,7 @@
 .stats .stat-header h2 {
   font-size: 32px;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.1;
   margin: 0 0 40px;
   color: var(--stats-text);
 }
@@ -33,7 +33,9 @@
 .stats > div.stat-row {
   padding: 0;
   cursor: pointer;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  transition: color 0.42s ease-in-out;
+  color: var(--stats-inactive-text);
 }
 
 .stats > div.stat-row > div {
@@ -43,33 +45,41 @@
   gap: 0;
 }
 
+/* Number area */
 .stats > div.stat-row .stat-number {
   display: flex;
   align-items: center;
   gap: 0;
   position: relative;
+  height: 140px;
+  background: transparent;
+  padding-right: 0;
+  transition: height 0.42s ease-in-out, background-color 0.42s ease-in-out, padding-right 0.42s ease-in-out;
 }
 
-.stats > div.stat-row .stat-number .stat-arrow {
-  display: none;
-  width: 117px;
+/* Arrow indicator */
+.stats > div.stat-row .stat-arrow {
+  width: 100px;
   height: 100%;
-  background: var(--stats-accent);
+  background: rgb(240 241 242);
   flex-shrink: 0;
+  transition: background-color 0.42s ease-in-out, width 0.42s ease-in-out;
 }
 
 .stats > div.stat-row .stat-count-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 16px;
 }
 
 .stats > div.stat-row .stat-count {
-  font-size: 64px;
+  font-size: 96px;
   font-weight: 500;
   color: var(--stats-inactive-text);
   line-height: 1;
   display: block;
+  transition: font-size 0.42s ease-in-out, color 0.42s ease-in-out;
 }
 
 .stats > div.stat-row .stat-title {
@@ -77,29 +87,38 @@
   font-weight: 500;
   color: var(--stats-inactive-text);
   margin: 4px 0 0;
+  transition: color 0.42s ease-in-out;
 }
 
 .stats > div.stat-row .stat-description {
-  display: none;
   font-size: 16px;
-  color: var(--stats-text);
-  margin: 4px 0 0;
+  color: var(--stats-inactive-text);
+  margin: 8px 0 0;
   width: 100%;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.42s ease-in-out, max-height 0.42s ease-in-out, color 0.42s ease-in-out;
 }
 
 /* Active state */
-.stats > div.stat-row.active .stat-number {
-  background: var(--stats-active-bg);
-  height: 155px;
-  padding-right: 26px;
+.stats > div.stat-row.active {
+  color: var(--stats-active-text);
 }
 
-.stats > div.stat-row.active .stat-number .stat-arrow {
-  display: block;
+.stats > div.stat-row.active .stat-number {
+  background: var(--stats-active-bg);
+  height: 180px;
+  padding-right: 32px;
+}
+
+.stats > div.stat-row.active .stat-arrow {
+  background: var(--stats-accent);
+  width: 140px;
 }
 
 .stats > div.stat-row.active .stat-count {
-  font-size: 112px;
+  font-size: 130px;
   color: var(--stats-active-text);
 }
 
@@ -108,7 +127,9 @@
 }
 
 .stats > div.stat-row.active .stat-description {
-  display: block;
+  opacity: 1;
+  max-height: 60px;
+  color: var(--stats-text);
 }
 
 /* Header CTA link */
@@ -131,20 +152,73 @@ main .stats .stat-header a.button:any-link:hover {
   color: var(--stats-active-text);
 }
 
-@media (width < 900px) {
-  .stats > div.stat-row .stat-count {
-    font-size: 48px;
+@media (width >= 1024px) {
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 60px;
   }
 
-  .stats > div.stat-row.active .stat-count {
-    font-size: 72px;
+  .stats .stat-header {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    align-self: start;
+    position: sticky;
+    top: 100px;
+  }
+
+  .stats > div.stat-row {
+    grid-column: 2;
+  }
+
+  .stats > div.stat-row .stat-number {
+    height: 188px;
+  }
+
+  .stats > div.stat-row .stat-count {
+    font-size: 137px;
+  }
+
+  .stats > div.stat-row .stat-arrow {
+    width: 142px;
   }
 
   .stats > div.stat-row.active .stat-number {
-    height: 120px;
+    height: 250px;
+    padding-right: 42px;
   }
 
-  .stats > div.stat-row .stat-number .stat-arrow {
+  .stats > div.stat-row.active .stat-count {
+    font-size: 180px;
+  }
+
+  .stats > div.stat-row.active .stat-arrow {
+    width: 189px;
+  }
+}
+
+@media (width < 768px) {
+  .stats > div.stat-row .stat-number {
+    height: 100px;
+  }
+
+  .stats > div.stat-row .stat-count {
+    font-size: 56px;
+  }
+
+  .stats > div.stat-row .stat-arrow {
+    width: 60px;
+  }
+
+  .stats > div.stat-row.active .stat-number {
+    height: 130px;
+  }
+
+  .stats > div.stat-row.active .stat-count {
+    font-size: 80px;
+  }
+
+  .stats > div.stat-row.active .stat-arrow {
     width: 80px;
   }
 }

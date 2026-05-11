@@ -41,7 +41,7 @@
   margin: 0;
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   .footer-bottom > div {
     flex-direction: row;
     align-items: center;

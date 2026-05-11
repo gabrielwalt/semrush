@@ -13,10 +13,10 @@ Knowing where each block, variant, and section style is used matters: it tells y
 | Block | Variants | Used on | Notes |
 |-------|----------|---------|-------|
 | `announcement-bar` | — | Homepage | Top-of-page dismissible banner |
-| `hero` | — | Homepage | Full-width hero; 3 rows: text+CTA / product image / logo strip |
+| `hero` | — | Homepage | Text-only hero (h1 + subtitle + CTA); image and logos are separate blocks |
 | `hero-video` | — | — | Subpage/campaign hero with video still below centered text |
-| `promo-cards` | `semrush-one` | Homepage | Two-column promo |
-| `promo-cards` | `enterprise` | Homepage | Dark/black variant, centered layout |
+| `promo-cards` | `promo-cards-semrush-one` | Homepage | Two-column promo with gradient bg |
+| `promo-cards` | `promo-cards-enterprise` | Homepage | Dark/black variant, centered layout |
 | `solutions-slider` | — | Homepage | Tab-style product solutions slider; each row = one slide |
 | `logo-marquee` | — | — | Infinite-scroll logo strip; JS duplicates the set for the loop |
 | `stats` | — | Homepage | Interactive stats; **row 1 is the section header**, rows 2+ are individual stats |
