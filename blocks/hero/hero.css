@@ -8,7 +8,7 @@
   --hero-gradient-start: rgb(220 238 235);
   --hero-gradient-mid: rgb(232 225 255);
   --hero-gradient-end: rgb(255 255 255);
-  --hero-text: rgb(24 30 21);
+  --hero-text: var(--dark-color);
   --hero-padding-top: 48px;
   --hero-padding-bottom: 48px;
 

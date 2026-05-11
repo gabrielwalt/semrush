@@ -42,7 +42,7 @@
 }
 
 .solutions-slider > div > div:first-child p {
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-body-m);
   line-height: var(--line-height-relaxed);
   margin: 0 0 var(--space-s);
   color: #444;
@@ -61,7 +61,7 @@ main .solutions-slider a.button:any-link {
   color: #fff;
   border-radius: 24px;
   padding: 10px var(--space-m);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-body-m);
   font-weight: 600;
   text-decoration: none;
   display: inline-block;
@@ -103,7 +103,7 @@ main .solutions-slider .button-wrapper {
   background: rgb(0 0 0 / 20%);
   cursor: pointer;
   padding: 0;
-  transition: background 0.2s;
+  transition: background var(--transition-fast);
 }
 
 .solutions-slider .slider-nav button.active {

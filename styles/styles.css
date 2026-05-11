@@ -66,12 +66,17 @@
   /* layout */
   --container-max-width: 1440px;
   --content-max-width: 1200px;
-  --nav-height: 70px;
+  --nav-height: 84px;
 
   /* radii */
   --radius-s: 5px;
   --radius-m: 8px;
   --radius-pill: 100px;
+
+  /* transitions */
+  --transition-duration: 0.42s;
+  --transition-easing: ease-in-out;
+  --transition-fast: 0.2s;
 
   /* backward-compat aliases */
   --heading-font-size-xxl: var(--font-size-display);
@@ -85,14 +90,8 @@
   --body-font-size-xs: var(--font-size-body-s);
 }
 
-/* EDS button reset */
+/* EDS button container */
 main .button-container { display: inline; }
-
-main a.button:any-link {
-  background: none; border: none; border-radius: 0;
-  color: var(--link-color); font-size: inherit; font-weight: inherit;
-  padding: 0; margin: 0; text-decoration: underline; white-space: normal;
-}
 
 /* fallback fonts */
 @font-face {

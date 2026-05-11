@@ -1,7 +1,7 @@
 /* Promo Cards Block — Semrush One variant */
 .promo-cards {
   --promo-bg: linear-gradient(182deg, rgb(193 144 255) -4.72%, rgb(220 238 235) 68.72%, rgb(255 255 255) 152.44%);
-  --promo-text: rgb(24 30 21);
+  --promo-text: var(--dark-color);
   --promo-radius: var(--radius-s);
   --promo-padding: var(--space-l) 12px;
 

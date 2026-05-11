@@ -3,9 +3,9 @@
   --block-bg: var(--dark-color);
   --block-text: #fff;
   --block-accent: var(--accent-color);
-  --block-bar-color: rgb(24 240 191);
+  --block-bar-color: var(--accent-cyan);
   --table-bg: #fff;
-  --table-text: rgb(24 30 21);
+  --table-text: var(--dark-color);
   --table-muted: rgb(108 110 121);
 
   background:

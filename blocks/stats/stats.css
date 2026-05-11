@@ -1,11 +1,11 @@
 /* Stats block */
 .stats {
   --stats-bg: rgb(255 255 255);
-  --stats-text: rgb(24 30 21);
-  --stats-active-bg: rgb(24 30 21);
+  --stats-text: var(--dark-color);
+  --stats-active-bg: var(--dark-color);
   --stats-active-text: rgb(255 255 255);
   --stats-inactive-text: rgb(209 210 213);
-  --stats-accent: rgb(24 240 191);
+  --stats-accent: var(--accent-cyan);
 
   padding: 80px 0;
   color: var(--stats-text);
@@ -34,7 +34,7 @@
   padding: 0;
   cursor: pointer;
   margin-bottom: var(--space-xs);
-  transition: color 0.42s ease-in-out;
+  transition: color var(--transition-duration) var(--transition-easing);
   color: var(--stats-inactive-text);
 }
 
@@ -54,7 +54,7 @@
   height: 140px;
   background: transparent;
   padding-right: 0;
-  transition: height 0.42s ease-in-out, background-color 0.42s ease-in-out, padding-right 0.42s ease-in-out;
+  transition: height var(--transition-duration) var(--transition-easing), background-color var(--transition-duration) var(--transition-easing), padding-right var(--transition-duration) var(--transition-easing);
 }
 
 /* Arrow indicator */
@@ -63,7 +63,7 @@
   height: 100%;
   background: rgb(240 241 242);
   flex-shrink: 0;
-  transition: background-color 0.42s ease-in-out, width 0.42s ease-in-out;
+  transition: background-color var(--transition-duration) var(--transition-easing), width var(--transition-duration) var(--transition-easing);
 }
 
 .stats > div.stat-row .stat-count-wrapper {
@@ -79,7 +79,7 @@
   color: var(--stats-inactive-text);
   line-height: 1;
   display: block;
-  transition: font-size 0.42s ease-in-out, color 0.42s ease-in-out;
+  transition: font-size var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
 }
 
 .stats > div.stat-row .stat-title {
@@ -87,7 +87,7 @@
   font-weight: 500;
   color: var(--stats-inactive-text);
   margin: 4px 0 0;
-  transition: color 0.42s ease-in-out;
+  transition: color var(--transition-duration) var(--transition-easing);
 }
 
 .stats > div.stat-row .stat-description {
@@ -98,7 +98,7 @@
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: opacity 0.42s ease-in-out, max-height 0.42s ease-in-out, color 0.42s ease-in-out;
+  transition: opacity var(--transition-duration) var(--transition-easing), max-height var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
 }
 
 /* Active state */

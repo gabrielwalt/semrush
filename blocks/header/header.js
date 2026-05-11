@@ -153,6 +153,50 @@ export default async function decorate(block) {
     });
   }
 
+  // Mega-menu: split sub-lists into columns on desktop
+  function buildMegaColumns() {
+    if (!navSections) return;
+    navSections.querySelectorAll('.nav-drop > ul').forEach((subList) => {
+      // Skip if already processed
+      if (subList.classList.contains('nav-mega-panel')) return;
+
+      const items = [...subList.children];
+      const columns = [];
+      let currentCol = [];
+
+      items.forEach((item) => {
+        if (item.textContent.trim() === '---') {
+          if (currentCol.length) columns.push(currentCol);
+          currentCol = [];
+          item.remove();
+        } else {
+          currentCol.push(item);
+        }
+      });
+      if (currentCol.length) columns.push(currentCol);
+
+      if (columns.length > 1) {
+        subList.innerHTML = '';
+        subList.classList.add('nav-mega-panel');
+        columns.forEach((col) => {
+          const colDiv = document.createElement('div');
+          colDiv.className = 'nav-mega-column';
+          const colList = document.createElement('ul');
+          col.forEach((li) => colList.appendChild(li));
+          colDiv.appendChild(colList);
+          subList.appendChild(colDiv);
+        });
+      }
+    });
+  }
+
+  if (isDesktop.matches) {
+    buildMegaColumns();
+  }
+  isDesktop.addEventListener('change', () => {
+    if (isDesktop.matches) buildMegaColumns();
+  });
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');

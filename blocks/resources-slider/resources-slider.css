@@ -55,7 +55,7 @@
   align-items: center;
   justify-content: center;
   color: var(--dark-color);
-  transition: background 0.2s;
+  transition: background var(--transition-fast);
 }
 
 .resources-slider-nav button:hover {
