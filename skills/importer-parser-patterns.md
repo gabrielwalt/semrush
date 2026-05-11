@@ -43,4 +43,4 @@ Same logic but uses `var` instead of `const/let` (IIFE scope), and is registered
 - Section Metadata must come AFTER all blocks in that section — it marks the section boundary
 - Use `innerHTML` (not `textContent`) when constructing headings from source content that may contain `<em>`, `<strong>`, or `<span>` inline markup
 - Section boundaries (`<hr>`) and section-metadata must be inserted in `beforeTransform` — parsers run after and will have already replaced the wrapper elements
-- Bundle format must be `--format=iife --global-name=CustomImportScript` — ESM silently fails because the importer reads `window.CustomImportScript`
+- Import script must use `export default { transform }` — esbuild bundles it into the IIFE that exposes `window.CustomImportScript.default`. Old IIFE+window assignment pattern no longer works. See `import-script-bundling.md`.
