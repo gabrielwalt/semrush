@@ -10,11 +10,16 @@ Single source of truth for what has been built, what is in progress, and what re
 | Area | Status |
 |------|--------|
 | Block development — homepage blocks | ✅ Done |
-| Design system (tokens, brand.css) | ✅ Done |
-| Draft content — homepage | ✅ Done |
-| Import scripts | ✅ Done (homepage) |
+| Design system (tokens, spacing, CTAs, hover) | ✅ Done |
+| Content — homepage (content/index.plain.html) | ✅ Done |
+| Content — nav fragment (H2/H3/UL mega menu) | ✅ Done |
+| Import scripts — homepage parser | ✅ Done |
+| Import scripts — nav parser | ✅ Done |
+| Skills system (self-learning knowledge base) | ✅ Done (11 skills) |
+| Mobile QA (375px) | ✅ Done — no horizontal overflow |
+| Desktop QA (1440px) | ✅ Done — all blocks match original |
 | Subpage templates | 🔲 Not started |
-| Bulk import | 🔲 Not started |
+| Bulk import execution | 🔲 Not started |
 | Performance validation (PageSpeed 100) | 🔲 Not started |
 | Accessibility review (WCAG 2.1 AA) | 🔲 Not started |
 
@@ -25,67 +30,66 @@ Single source of truth for what has been built, what is in progress, and what re
 | Block | CSS | JS | Content | Notes |
 |-------|-----|----|---------|-------|
 | `announcement-bar` | ✅ | ✅ | ✅ | Complete |
-| `insights-widget` | ✅ | ✅ | ✅ | Search form with glass effect; reads strings from content paragraphs |
-| `hero-video` | ✅ | ✅ | ✅ | Glass-framed video/image with reduced-motion support |
-| `marquee` | ✅ | ✅ | ✅ | Generic infinite scroll; 30px items, 100px gap, 45s duration |
-| `promo-cards` | ✅ | ✅ | ✅ | Side-by-side on desktop (flex row) |
-| `solutions-slider` | ✅ | ✅ | ✅ | Slider/tab interactions with dots nav |
-| `stats` | ✅ | ✅ | ✅ | Click-to-expand interaction |
+| `insights-widget` | ✅ | ✅ | ✅ | Glass form 620px; reads placeholder/button from `<p>` elements |
+| `hero-video` | ✅ | ✅ | ✅ | Glass-framed; supports `<video>` with reduced-motion |
+| `marquee` | ✅ | ✅ | ✅ | Generic; 30px items, 100px gap, 45s duration, overflow hidden |
+| `promo-cards` | ✅ | ✅ | ✅ | Side-by-side on desktop (section flex-row) |
+| `solutions-slider` | ✅ | ✅ | ✅ | Slider with dots nav |
+| `stats` | ✅ | ✅ | ✅ | Click-to-expand |
 | `resources-slider` | ✅ | ✅ | ✅ | Horizontal slider with arrows |
-| `testimonials` | ✅ | ✅ | ✅ | Quote with author and stat |
-| `ai-visibility-index` | ✅ | ✅ | ✅ | Custom table visualization |
-| `cards` | ✅ | ✅ | — | Standard boilerplate |
-| `columns` | ✅ | ✅ | — | Standard boilerplate |
-| `header` | ✅ | ✅ | ✅ | Mega menu from H2/H3/UL structure; animated dropdown |
+| `testimonials` | ✅ | ✅ | ✅ | Quote + author + stat |
+| `ai-visibility-index` | ✅ | ✅ | ✅ | Table visualization |
+| `cards` | ✅ | ✅ | — | Boilerplate |
+| `columns` | ✅ | ✅ | — | Boilerplate |
+| `header` | ✅ | ✅ | ✅ | H2/H3/UL mega menu; animated dropdown with rounded corners; all columns complete |
 | `footer` | ✅ | ✅ | ✅ | Fragment with sub-blocks |
-| `hero` | ⚠️ | ⚠️ | — | Retired — no-op decorate; kept for backward compat |
+| `hero` | ⚠️ | ⚠️ | — | Retired no-op; kept for backward compat |
 | `fragment` | — | ✅ | — | Utility (do not delete) |
+
+---
+
+## Design System Status
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Page gradient + SVG pattern | ✅ | Scoped to homepage via `:has(.insights-widget)` |
+| Vertical spacing (sections/blocks) | ✅ | 120px section padding, 64px block margin |
+| CTA hover system | ✅ | `--accent-hover: #b072ff`, 0.2s transition |
+| Nav CTAs | ✅ | 16px 24px padding, 50/48px height, lavender hover |
+| Glass surface | ✅ | Used by hero-video; insights-widget has its own |
+| Responsive breakpoints | ✅ | 1440/1024/768/375 verified |
+| No horizontal overflow on mobile | ✅ | `overflow: hidden auto` on body |
 
 ---
 
 ## Pages Status
 
-### Completed Drafts
-
-| Page | Draft File | Status | Notes |
+| Page | Source URL | Status | Notes |
 |------|-----------|--------|-------|
-| Homepage | `drafts/index.plain.html` | ✅ Draft complete | All homepage blocks present |
-
-### Pages to Import
-
-The following pages from semrush.com need to be analyzed and imported. URLs are illustrative — validate against live site.
-
-| Page | Source URL | Status | Priority |
-|------|-----------|--------|----------|
-| Homepage | https://www.semrush.com/ | ✅ Content + styles done | P1 |
-| Semrush One | https://www.semrush.com/semrush-one/ | 🔲 Not started | P1 |
-| Enterprise | https://www.semrush.com/enterprise/ | 🔲 Not started | P1 |
+| Homepage | https://www.semrush.com/ | ✅ Complete | All blocks, styles, responsive |
+| Semrush One | https://www.semrush.com/one/ | 🔲 Not started | P1 |
+| Enterprise | https://enterprise.semrush.com/ | 🔲 Not started | P1 |
+| Pricing | https://www.semrush.com/pricing/ | 🔲 Not started | P2 |
 | SEO | https://www.semrush.com/seo/ | 🔲 Not started | P2 |
-| Content Marketing | https://www.semrush.com/content-marketing-platform/ | 🔲 Not started | P2 |
-| Market Research | https://www.semrush.com/market-research/ | 🔲 Not started | P2 |
-| Pricing | https://www.semrush.com/prices/ | 🔲 Not started | P2 |
-| Blog | https://www.semrush.com/blog/ | 🔲 Not started | P3 |
-| About | https://www.semrush.com/company/ | 🔲 Not started | P3 |
+| Features | https://www.semrush.com/features/ | 🔲 Not started | P2 |
 
 ---
 
-## Known Issues and Blockers
+## Known Issues
 
-| Issue | Block/Page | Severity | Status |
-|-------|-----------|----------|--------|
-| Import script cleanup transformer leaves mega-menu remnants | Homepage | Medium | Known — needs additional cleanup selectors |
-| hero logo row: marquee behavior not final | `hero` | Low | Verify visual output |
+| Issue | Severity | Notes |
+|-------|----------|-------|
+| 404 errors for missing media files | Low | Content references images not in local dev — expected when images aren't uploaded |
+| `scrollWidth` reports 382px at 375px viewport | Cosmetic | Marquee track extends beyond container but is clipped by overflow:hidden — no visible scrollbar |
 
 ---
 
 ## Next Actions (Prioritized)
 
-1. **Validate homepage draft** — open `localhost:3000/index` and verify all blocks render correctly
-2. **Audit blocks against live semrush.com** — compare draft output to the live page, identify gaps
-3. **Set up import infrastructure** — create `tools/importer/` with universal import script
-4. **Import homepage** — build parsers for all homepage blocks, run bulk import
-5. **Validate performance** — run PageSpeed Insights against feature branch preview URL
-6. **Import Semrush One and Enterprise pages** — highest-priority subpages
+1. **Run import script end-to-end** — verify full homepage import produces correct content structure
+2. **Import Semrush One page** — test block reuse on a subpage
+3. **Performance validation** — PageSpeed on feature branch
+4. **Accessibility audit** — WCAG 2.1 AA compliance check
 
 ---
 
@@ -97,16 +101,3 @@ The following pages from semrush.com need to be analyzed and imported. URLs are 
 | Feature preview | `https://{branch}--{repo}--{owner}.aem.page/` |
 | Production preview | `https://main--{repo}--{owner}.aem.page/` |
 | Production live | `https://main--{repo}--{owner}.aem.live/` |
-
-Get repo info: `gh repo view --json nameWithOwner` or `git remote -v`
-
----
-
-## Publishing Process
-
-1. Push changes to a feature branch
-2. AEM Code Sync processes changes → available at feature preview URL
-3. Run PageSpeed Insights at preview URL — must score 100
-4. Open PR to `main` — include preview URL in description (required, PR will be rejected without it)
-5. Human reviewer inspects URL and merges
-6. AEM Code Sync updates main for production
