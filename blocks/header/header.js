@@ -177,7 +177,31 @@ export default async function decorate(block) {
         if (hasImage) {
           const promoDiv = document.createElement('div');
           promoDiv.className = 'nav-mega-promo';
-          promoDiv.appendChild(li.querySelector('a').cloneNode(true));
+          const promoLink = li.querySelector('a').cloneNode(true);
+          const promoPic = promoLink.querySelector('picture');
+          const promoText = promoLink.textContent.trim();
+          promoLink.textContent = '';
+          if (promoPic) promoLink.appendChild(promoPic);
+          const [promoTitle, promoDesc, ...promoMeta] = promoText.split('|').map((s) => s.trim()).filter(Boolean);
+          if (promoTitle) {
+            const titleEl = document.createElement('span');
+            titleEl.className = 'nav-mega-promo-title';
+            titleEl.textContent = promoTitle;
+            promoLink.appendChild(titleEl);
+          }
+          if (promoDesc) {
+            const descEl = document.createElement('span');
+            descEl.className = 'nav-mega-promo-desc';
+            descEl.textContent = promoDesc;
+            promoLink.appendChild(descEl);
+          }
+          if (promoMeta.length > 0) {
+            const metaEl = document.createElement('span');
+            metaEl.className = 'nav-mega-promo-meta';
+            metaEl.textContent = promoMeta.join(' · ');
+            promoLink.appendChild(metaEl);
+          }
+          promoDiv.appendChild(promoLink);
           subList.appendChild(promoDiv);
         } else if (childList) {
           const colDiv = document.createElement('div');

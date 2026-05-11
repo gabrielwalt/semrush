@@ -68,6 +68,10 @@
   --content-max-width: 1200px;
   --nav-height: 84px;
 
+  /* CTA */
+  --cta-height: 60px;
+  --accent-hover: #b072ff;
+
   /* radii */
   --radius-s: 5px;
   --radius-m: 8px;
@@ -239,7 +243,7 @@ button.button {
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
   padding: 0 var(--space-l);
-  height: 60px;
+  height: var(--cta-height);
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-m);
   font-weight: 600;
@@ -250,6 +254,7 @@ button.button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 a.button[aria-disabled="true"],
@@ -270,8 +275,8 @@ a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: color-mix(in srgb, var(--accent-color) 85%, black);
-  background-color: color-mix(in srgb, var(--accent-color) 85%, black);
+  border-color: var(--accent-hover);
+  background-color: var(--accent-hover);
 }
 
 /* Secondary: outlined dark border, transparent bg — <em><a> */
@@ -286,7 +291,9 @@ a.button.secondary:hover,
 a.button.secondary:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
-  background-color: rgb(24 30 21 / 5%);
+  border-color: transparent;
+  background-color: var(--accent-hover);
+  color: var(--dark-color);
 }
 
 /* Accent: solid dark bg, white text — wrapping both <strong> and <em> */
@@ -301,8 +308,8 @@ a.button.accent:hover,
 a.button.accent:focus-visible,
 button.button.accent:hover,
 button.button.accent:focus-visible {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
+  border-color: var(--accent-hover);
+  background-color: var(--accent-hover);
   color: var(--dark-color);
 }
 /* stylelint-enable no-descending-specificity */
@@ -324,13 +331,49 @@ main img {
   width: 100%;
 }
 
+/* page gradient background (all pages) */
+main {
+  background: linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
+}
+
+/* homepage hero pattern — only on pages with insights-widget (homepage) */
+main:has(.insights-widget) {
+  background:
+    url('/content/images/pattern-hero.svg') 2px calc(50% - 20px) / auto repeat-x,
+    linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
+}
+
+@media (width < 1440px) and (width >= 1024px) {
+  main:has(.insights-widget) {
+    background:
+      url('/content/images/pattern-hero.svg') 2px calc(50% - 100px) / auto repeat-x,
+      linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
+  }
+}
+
+@media (width < 1024px) and (width >= 768px) {
+  main:has(.insights-widget) {
+    background:
+      url('/content/images/pattern-hero.svg') 2px calc(50% + 100px) / auto repeat-x,
+      linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
+  }
+}
+
+@media (width < 768px) {
+  main:has(.insights-widget) {
+    background:
+      url('/content/images/pattern-hero.svg') -2px 100% / auto repeat-x,
+      linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
+  }
+}
+
 /* sections */
 main > .section {
   margin: var(--section-padding) 0;
 }
 
 main > .section > div {
-  max-width: var(--content-max-width);
+  max-width: var(--container-max-width);
   margin: auto;
   padding: 0 var(--container-padding);
 }
@@ -345,4 +388,47 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: var(--section-padding) 0;
+}
+
+/* centered section variant */
+main .section.centered > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+main .section.centered:first-of-type {
+  padding-top: 64px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+main .section.centered h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+main .section.centered p {
+  margin-top: var(--space-s);
+  margin-bottom: var(--space-m);
+  max-width: 540px;
+}
+
+/* Hero flow: remove gap between centered hero and marquee */
+main .section.logo-marquee-container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* glass surface utility */
+.glass-surface {
+  background: linear-gradient(135deg, rgb(5 5 5 / 4%) 11%, rgb(255 255 255 / 4%) 89%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 10px;
+  box-shadow:
+    0 20px 60px rgb(0 0 0 / 8%),
+    0 4px 16px rgb(0 0 0 / 4%),
+    inset 0 1px 0 rgb(255 255 255 / 10%);
 }

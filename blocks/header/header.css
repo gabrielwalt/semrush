@@ -38,7 +38,7 @@ header nav[aria-expanded='true'] {
 @media (width >= 1024px) {
   header .nav-wrapper {
     position: relative;
-    background-color: rgb(220 238 235);
+    background-color: transparent;
   }
 
   header nav {
@@ -193,15 +193,13 @@ header nav .nav-sections ul > li > ul > li {
 }
 
 @media (width >= 1024px) {
-  header nav .nav-sections {
+  header nav .nav-sections,
+  header nav[aria-expanded='true'] .nav-sections {
     flex: 1;
     display: flex;
     visibility: visible;
     white-space: nowrap;
     justify-content: center;
-  }
-
-  header nav[aria-expanded='true'] .nav-sections {
     align-self: unset;
   }
 
@@ -213,20 +211,18 @@ header nav .nav-sections ul > li > ul > li {
   header nav .nav-sections .nav-drop::after {
     content: '';
     display: inline-block;
-    position: relative;
-    top: 0;
-    margin-left: 6px;
-    transform: rotate(135deg);
-    width: 5px;
-    height: 5px;
-    border: 2px solid currentcolor;
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
     vertical-align: middle;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none'%3E%3Cpath stroke='%23181e15' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m3 5 3 3 3-3'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform var(--transition-fast);
   }
 
   header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    transform: rotate(315deg);
+    transform: rotate(180deg);
   }
 
   header nav .nav-sections ul {
@@ -238,6 +234,8 @@ header nav .nav-sections ul > li > ul > li {
   header nav .nav-sections .default-content-wrapper > ul > li {
     flex: 0 1 auto;
     position: static;
+    display: inline-flex;
+    align-items: center;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
@@ -323,7 +321,30 @@ header nav .nav-sections ul > li > ul > li {
     margin-bottom: var(--space-xs);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li:last-child > a::after {
+  header nav .nav-sections .nav-mega-promo-title {
+    display: block;
+    font-size: var(--font-size-body-m);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  header nav .nav-sections .nav-mega-promo-desc {
+    display: block;
+    font-size: var(--font-size-body-s);
+    font-weight: 400;
+    color: rgb(108 110 121);
+    line-height: 1.4;
+  }
+
+  header nav .nav-sections .nav-mega-promo-meta {
+    display: block;
+    font-size: var(--font-size-body-s);
+    font-weight: 500;
+    color: var(--dark-color);
+    margin-top: var(--space-xs);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:last-child a::after {
     content: '';
     display: inline-block;
     vertical-align: middle;
@@ -381,7 +402,7 @@ header nav .nav-tools {
 header nav .nav-tools p {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: 6px;
   margin: 0;
   font-size: 0;
   line-height: 0;
@@ -400,14 +421,25 @@ header nav[aria-expanded='true'] .nav-tools {
 }
 
 header nav .nav-tools a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   font-size: var(--font-size-body-m);
   font-weight: 600;
   letter-spacing: var(--tracking-snug);
   text-decoration: none;
   white-space: nowrap;
   border-radius: var(--radius-pill);
-  padding: var(--space-s) var(--space-m);
-  height: auto;
+  padding: 16px 24px;
+  line-height: 1;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+header nav .nav-tools a:first-of-type {
+  border: 1px solid var(--dark-color);
+  background-color: transparent;
+  color: var(--dark-color);
 }
 
 header nav .nav-tools a:last-of-type {
@@ -415,7 +447,13 @@ header nav .nav-tools a:last-of-type {
   color: #fff;
 }
 
-header nav .nav-tools a:first-of-type {
-  border: 1px solid var(--dark-color);
+header nav .nav-tools a:first-of-type:hover {
+  background-color: var(--accent-hover);
+  border-color: transparent;
+  color: var(--dark-color);
+}
+
+header nav .nav-tools a:last-of-type:hover {
+  background-color: var(--accent-hover);
   color: var(--dark-color);
 }

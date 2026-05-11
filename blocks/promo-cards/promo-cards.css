@@ -69,6 +69,28 @@ main .promo-cards .button-wrapper {
   padding: 0 12px !important;
 }
 
+/* Side-by-side layout when two promo cards share a section */
+/* stylelint-disable-next-line no-descending-specificity */
+.promo-cards-container > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+@media (width >= 1024px) {
+  .promo-cards-container > div {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  /* stylelint-disable-next-line declaration-no-important */
+  .promo-cards-container > div > .promo-cards-wrapper {
+    flex: 1 !important;
+    min-width: 0;
+    max-width: 50% !important;
+  }
+}
+
 @media (width >= 1024px) {
   .promo-cards {
     --promo-padding: var(--block-padding);
@@ -111,13 +133,16 @@ main .promo-cards .button-wrapper {
   color: #fff;
 }
 
-/* Enterprise button — inverted for dark bg */
-main .promo-cards.promo-cards-enterprise a.button:any-link {
+/* Enterprise button — outline white on dark bg */
+main .promo-cards.promo-cards-enterprise a.button:any-link,
+main .promo-cards.promo-cards-enterprise a.button.primary:any-link {
   border-color: #fff;
+  background-color: transparent;
   color: #fff;
 }
 
-main .promo-cards.promo-cards-enterprise a.button:any-link:hover {
+main .promo-cards.promo-cards-enterprise a.button:any-link:hover,
+main .promo-cards.promo-cards-enterprise a.button:any-link:focus-visible {
   background: rgb(255 255 255 / 10%);
 }
 

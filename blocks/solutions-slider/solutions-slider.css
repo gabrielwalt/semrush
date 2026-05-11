@@ -57,14 +57,17 @@
 }
 
 main .solutions-slider a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--slider-text);
   color: #fff;
-  border-radius: 24px;
-  padding: 10px var(--space-m);
+  border-radius: var(--radius-pill);
+  padding: 0 var(--space-l);
+  height: var(--cta-height);
   font-size: var(--font-size-body-m);
   font-weight: 600;
   text-decoration: none;
-  display: inline-block;
 }
 
 main .solutions-slider .button-wrapper {

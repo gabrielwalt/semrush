@@ -11,18 +11,19 @@
 .logo-marquee {
   overflow: hidden;
   padding: var(--space-l) 0 48px;
-  background: var(--background-color);
+  background: transparent;
   display: flex;
   width: 100%;
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .logo-marquee .logo-marquee-track {
   display: flex;
   align-items: center;
-  gap: 48px;
+  gap: 12px;
   padding: 0 var(--space-m);
   flex-shrink: 0;
-  animation: marquee 25s linear infinite;
+  animation: marquee 45s linear infinite;
 }
 
 .logo-marquee .logo-marquee-track picture {
@@ -30,19 +31,19 @@
 }
 
 .logo-marquee .logo-marquee-track img {
-  height: 22px;
+  height: 100px;
   width: auto;
-  opacity: 0.3;
   display: block;
+  object-fit: contain;
 }
 
-@media (width >= 1024px) {
+@media (width < 768px) {
   .logo-marquee .logo-marquee-track img {
-    height: 28px;
+    height: 60px;
   }
 
   .logo-marquee .logo-marquee-track {
-    gap: 56px;
+    gap: 8px;
   }
 }
 
