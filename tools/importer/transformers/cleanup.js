@@ -15,8 +15,8 @@ export default function transform(hookName, element, payload) {
     main.prepend(announcement);
   }
 
-  // Remove header and footer (we have our own nav/footer content)
-  element.querySelectorAll('header, footer, nav[class*="menu"]').forEach((el) => el.remove());
+  // Remove header, footer, and mega-menu flyout panels
+  element.querySelectorAll('header, footer, nav[class*="menu"], srf-header-menu, [class*="srf-header"], [class*="srf-footer"], [class*="srf-layout__footer"]').forEach((el) => el.remove());
 
   // Remove hidden elements
   element.querySelectorAll('[aria-hidden="true"], .mp-visually-hidden').forEach((el) => el.remove());

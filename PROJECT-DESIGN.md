@@ -143,18 +143,39 @@ Write mobile-first: base styles are mobile, `@media (width >= 768px)` for tablet
 
 ---
 
-## Button Design Intent
+## Button System
 
-Buttons in this project are **not** styled globally — each block styles its own buttons. The consistent design intent is:
+Buttons are styled globally in `styles.css`. Blocks inherit the global styles and only override when context demands it (e.g. inverted colors on dark backgrounds, compact sizing).
 
-- **Shape:** Always pill (`border-radius: var(--radius-pill)`) — never square or rectangular
-- **Primary CTA:** Accent-color fill, dark text
-- **Secondary / default:** Outlined (transparent bg, dark border)
-- **On dark backgrounds:** White outlined
-- **Font:** `var(--font-size-body-m)`, weight 600
-- **Padding:** `var(--space-s) var(--space-l)` (16px 32px)
+### Base (all buttons)
 
-See individual block CSS files for the actual implementation.
+All `a.button` and `button.button` elements share: pill shape, 16px/600 font, -0.02em tracking, 60px height, `padding: 0 32px`, inline-flex centered.
+
+### Variants
+
+| Variant | EDS markup | Background | Border | Text | Usage |
+|---------|-----------|-----------|--------|------|-------|
+| **Primary** | `<strong><a>` | Purple accent | transparent | Dark | Hero CTA, Footer CTA, AI Viz CTA |
+| **Secondary** | `<em><a>` | Transparent | 1px solid dark | Dark | Promo "Try for free", Stats "Learn more" |
+| **Accent** | Both `<strong>` + `<em>` | Dark solid | dark | White | N/A (reserved for special emphasis) |
+
+### Context overrides (block CSS)
+
+| Block | Override | Reason |
+|-------|---------|--------|
+| Header nav-tools | `height: auto; padding: 16px 24px` | Compact header buttons |
+| Enterprise promo | `border-color: #fff; color: #fff` | Light variant on dark bg |
+| Stats | `height: 48px; padding: 0 24px` | Compact inline CTA |
+
+### Hover states
+
+- Primary: darkened accent (`color-mix 85% black`)
+- Secondary: subtle background fill (`rgb(24 30 21 / 5%)`)
+- Accent: switches to accent purple fill
+
+### Responsive
+
+No breakpoint changes to button sizing — same dimensions at all viewports. Header buttons hide on mobile (visibility controlled by nav state).
 
 ---
 

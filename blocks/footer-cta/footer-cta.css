@@ -1,9 +1,4 @@
 .footer-cta {
-  --cta-bg: var(--background-color);
-  --cta-text: var(--dark-color);
-  --cta-button-bg: var(--accent-color);
-  --cta-button-color: var(--dark-color);
-
   text-align: center;
   padding: 0 0 34px;
   border-bottom: 1px solid #e8e8e8;
@@ -12,35 +7,20 @@
 .footer-cta h2 {
   font-size: 36px;
   font-weight: 600;
-  color: var(--cta-text);
+  color: var(--dark-color);
   margin: 0 0 12px;
   line-height: var(--line-height-normal);
 }
 
 .footer-cta p {
   font-size: var(--font-size-body-m);
-  color: var(--cta-text);
+  color: var(--dark-color);
   margin: 0 0 var(--space-m);
 }
 
-footer .footer-cta a.button:any-link,
-footer .footer-cta a.button.primary:any-link {
-  display: inline-block;
-  background: var(--cta-button-bg);
-  color: var(--cta-button-color);
+footer .footer-cta a.button:any-link {
   padding: 21px 30px;
-  border-radius: var(--radius-pill);
-  font-size: var(--font-size-body-m);
-  font-weight: 600;
-  text-decoration: none;
-  border: none;
-}
-
-footer .footer-cta a.button:any-link:hover,
-footer .footer-cta a.button.primary:any-link:hover {
-  opacity: 0.9;
-  background: var(--cta-button-bg);
-  color: var(--cta-button-color);
+  height: auto;
 }
 
 @media (width >= 1024px) {

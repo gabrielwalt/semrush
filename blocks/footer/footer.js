@@ -18,4 +18,10 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
   block.append(footer);
+
+  // Create footer reveal element
+  const reveal = document.createElement('div');
+  reveal.className = 'footer-reveal';
+  reveal.innerHTML = '<span>SEMRUSH</span>';
+  block.append(reveal);
 }

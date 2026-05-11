@@ -1,5 +1,5 @@
 .testimonials {
-  --testimonials-dark: rgb(24 30 21);
+  --testimonials-dark: var(--dark-color);
   --testimonials-light: #fff;
   --testimonials-stats-bg: rgb(240 241 242);
   --testimonials-padding: 60px 0;

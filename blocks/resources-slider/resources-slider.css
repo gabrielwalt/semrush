@@ -55,7 +55,7 @@
   align-items: center;
   justify-content: center;
   color: var(--dark-color);
-  transition: background 0.2s;
+  transition: background var(--transition-fast);
 }
 
 .resources-slider-nav button:hover {
@@ -95,16 +95,23 @@
   overflow: hidden;
 }
 
-/* Image cell */
+/* Image cell — hidden by default, revealed on hover */
 .resources-slider > div > div:first-child {
   height: var(--img-height);
+  background: var(--light-color);
   border-radius: var(--card-radius);
   overflow: hidden;
 }
 
 .resources-slider > div > div:first-child picture {
   display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
   height: 100%;
+}
+
+.resources-slider > div:hover > div:first-child picture {
+  opacity: 1;
 }
 
 .resources-slider > div > div:first-child img {
