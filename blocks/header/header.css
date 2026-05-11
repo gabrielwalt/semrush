@@ -37,8 +37,8 @@ header nav[aria-expanded='true'] {
 
 @media (width >= 1024px) {
   header .nav-wrapper {
-    position: relative;
-    background-color: transparent;
+    position: sticky;
+    background-color: rgb(220 238 235);
   }
 
   header nav {
@@ -258,6 +258,7 @@ header nav .nav-sections .nav-mega-panel ul li {
     transform: translateY(-8px);
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s;
     display: flex;
+    overflow: hidden;
   }
 
   header nav .nav-sections .nav-items > .nav-item > .nav-mega-panel li {
@@ -306,6 +307,8 @@ header nav .nav-sections .nav-mega-panel ul li {
   header nav .nav-sections .nav-mega-promo {
     flex: 0 0 280px;
     margin-left: auto;
+    min-width: 0;
+    overflow: hidden;
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
