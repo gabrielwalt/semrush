@@ -1,5 +1,5 @@
 .footer-bottom {
-  padding: 24px 0 0;
+  padding: var(--space-m) 0 0;
   border-top: 1px solid #e8e8e8;
 }
 
@@ -13,7 +13,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 16px;
+  gap: var(--space-xs) var(--space-s);
 }
 
 .footer-bottom ul {
@@ -26,8 +26,8 @@
 }
 
 .footer-bottom a {
-  font-size: 14px;
-  color: rgb(24 30 21);
+  font-size: var(--font-size-caption);
+  color: var(--dark-color);
   text-decoration: none;
 }
 
@@ -36,8 +36,8 @@
 }
 
 .footer-bottom p {
-  font-size: 14px;
-  color: rgb(24 30 21);
+  font-size: var(--font-size-caption);
+  color: var(--dark-color);
   margin: 0;
 }
 

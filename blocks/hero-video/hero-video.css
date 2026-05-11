@@ -14,7 +14,7 @@
     rgb(232 225 255) 0%,
     rgb(255 255 255) 100%
   );
-  padding: 0 24px 48px;
+  padding: 0 var(--space-m) 48px;
   text-align: center;
 }
 
@@ -24,7 +24,7 @@
   background: linear-gradient(135deg, rgb(5 5 5 / 4%) 11%, rgb(255 255 255 / 4%) 89%);
   backdrop-filter: blur(5px);
   border-radius: 10px;
-  padding: 8px;
+  padding: var(--space-xs);
   box-shadow: 0 20px 60px rgb(0 0 0 / 8%), 0 4px 16px rgb(0 0 0 / 4%);
 }
 

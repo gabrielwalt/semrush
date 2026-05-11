@@ -1,11 +1,11 @@
 .footer-links {
-  padding: 32px 0 40px;
+  padding: var(--space-l) 0 var(--space-xl);
 }
 
 .footer-links > div {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: var(--space-m);
 }
 
 .footer-links > div > div {
@@ -13,16 +13,16 @@
 }
 
 .footer-links p {
-  font-size: 16px;
+  font-size: var(--font-size-body-m);
   font-weight: 600;
-  color: rgb(24 30 21);
-  margin: 0 0 8px;
+  color: var(--dark-color);
+  margin: 0 0 var(--space-xs);
 }
 
 .footer-links ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 16px;
+  margin: 0 0 var(--space-s);
 }
 
 .footer-links li {
@@ -30,8 +30,8 @@
 }
 
 .footer-links a {
-  font-size: 14px;
-  color: rgb(24 30 21);
+  font-size: var(--font-size-caption);
+  color: var(--dark-color);
   text-decoration: none;
 }
 
@@ -42,6 +42,6 @@
 @media (width >= 1024px) {
   .footer-links > div {
     grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
+    gap: var(--space-l);
   }
 }

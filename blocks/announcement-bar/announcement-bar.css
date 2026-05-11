@@ -11,10 +11,10 @@
 }
 
 .announcement-bar {
-  --bar-bg: rgb(193 144 255);
-  --bar-text: rgb(24 30 21);
-  --bar-font-size: 14px;
-  --bar-padding: 8px 16px;
+  --bar-bg: var(--accent-color);
+  --bar-text: var(--dark-color);
+  --bar-font-size: var(--font-size-caption);
+  --bar-padding: var(--space-xs) var(--space-s);
 
   background: var(--bar-bg);
   color: var(--bar-text);

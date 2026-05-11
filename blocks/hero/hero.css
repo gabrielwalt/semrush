@@ -21,7 +21,7 @@
       var(--hero-gradient-end) 100%
     );
   color: var(--hero-text);
-  padding: var(--hero-padding-top) 24px var(--hero-padding-bottom);
+  padding: var(--hero-padding-top) var(--space-m) var(--hero-padding-bottom);
   text-align: center;
 }
 
@@ -32,35 +32,20 @@
 }
 
 .hero h1 {
-  font-size: 56px;
+  font-size: var(--font-size-display);
   font-weight: 600;
-  line-height: 1.1;
-  margin: 0 0 24px;
+  line-height: var(--line-height-snug);
+  margin: 0 0 var(--space-m);
 }
 
 .hero p {
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: var(--font-size-body-l);
+  line-height: var(--line-height-relaxed);
   max-width: 540px;
-  margin: 0 auto 24px;
+  margin: 0 auto var(--space-m);
 }
 
-/* CTA button */
-main .hero a.button.primary:any-link {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-  color: var(--dark-color);
-  font-size: 16px;
-  font-weight: 600;
-  padding: 16px 32px;
-  border-radius: 100px;
-  text-decoration: none;
-}
-
-main .hero a.button.primary:any-link:hover {
-  background-color: color-mix(in srgb, var(--accent-color) 85%, black);
-  border-color: color-mix(in srgb, var(--accent-color) 85%, black);
-}
+/* CTA button inherits global .button.primary styles */
 
 @media (width >= 1024px) {
   .hero {
@@ -71,6 +56,6 @@ main .hero a.button.primary:any-link:hover {
 
 @media (width < 768px) {
   .hero h1 {
-    font-size: 36px;
+    font-size: var(--font-size-heading-xl);
   }
 }

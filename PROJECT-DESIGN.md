@@ -10,8 +10,8 @@ For actual values read `styles/brand.css` and `styles/styles.css` directly.
 
 | File | Purpose |
 |------|---------|
-| `styles/brand.css` | Brand-level tokens — colors, fonts, core spacing. Imported first. |
-| `styles/styles.css` | Imports brand.css; adds type scale, layout tokens, global resets |
+| `styles/brand.css` | Brand-level tokens — colors, fonts. Imported first. |
+| `styles/styles.css` | Imports brand.css; adds type scale, spacing, layout tokens, global resets |
 | `styles/fonts.css` | `@font-face` declarations |
 | `styles/lazy-styles.css` | Below-the-fold and section styles |
 
@@ -19,13 +19,16 @@ For actual values read `styles/brand.css` and `styles/styles.css` directly.
 
 ## Colors
 
-Global tokens live in `styles/brand.css`. Key ones:
-
-| Token | Purpose |
-|-------|---------|
-| `--accent-color` | Brand purple — used for primary CTAs and highlights |
-| `--text-color` / `--dark-color` | Near-black — primary text and dark section backgrounds |
-| `--background-color` | White page background |
+| Token | Value | Purpose |
+|-------|-------|---------|
+| `--background-color` | `rgb(255 255 255)` | White page background |
+| `--light-color` | `#f8f8f8` | Light gray section backgrounds |
+| `--dark-color` | `rgb(24 30 21)` | Near-black — dark section bgs, primary text |
+| `--text-color` | `rgb(24 30 21)` | Default body text color |
+| `--link-color` | `rgb(24 30 21)` | Link color |
+| `--link-hover-color` | `rgb(24 30 21)` | Link hover color |
+| `--accent-color` | `rgb(193 144 255)` | Brand purple — primary CTAs, highlights |
+| `--accent-cyan` | `rgb(24 240 191)` | Mint/cyan accent — stats, data viz |
 
 Block-scoped colors (defined inside their own CSS files, not global tokens):
 - `stats`: mint green accent (`--stats-accent`) for the active-state arrow
@@ -33,23 +36,108 @@ Block-scoped colors (defined inside their own CSS files, not global tokens):
 
 ---
 
-## Typography
+## Typography Scale
 
-Two font families, both defined as tokens in `brand.css`:
-- **Heading:** Lazzer (custom web font) with Inter fallback
-- **Body:** Inter
+Two font families:
+- **Heading:** `--heading-font-family`: Lazzer with Inter fallback
+- **Body:** `--body-font-family`: Inter
 
-Full type scale (sizes for xxl → xs, desktop and mobile breakpoints) is in `styles.css`. Read it directly — don't duplicate the values here.
+### Size Tokens
+
+| Token | Desktop | Mobile (<768px) | Role |
+|-------|---------|-----------------|------|
+| `--font-size-display` | 84px | 56px | Hero h1 |
+| `--font-size-heading-xl` | 64px | 48px | Promo h2 |
+| `--font-size-heading-l` | 48px | 32px | Section headings h3 |
+| `--font-size-heading-m` | 24px | 18px | Card subtitles h4 |
+| `--font-size-body-l` | 18px | 18px | Large body text |
+| `--font-size-body-m` | 16px | 16px | Default body / buttons |
+| `--font-size-body-s` | 14px | 14px | Small body text |
+| `--font-size-caption` | 14px | 14px | Eyebrows, captions |
+| `--font-size-label` | 12px | 12px | Card labels, tags |
+
+### Line Heights
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--line-height-tight` | 1.0 | Eyebrows, labels, compressed headings |
+| `--line-height-snug` | 1.1 | Display + large headings |
+| `--line-height-normal` | 1.2 | Medium headings, buttons |
+| `--line-height-relaxed` | 1.5 | Body text, paragraphs |
+
+### Letter Spacing
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--tracking-tight` | -0.04em | Display, large headings |
+| `--tracking-snug` | -0.02em | Medium headings, body |
+| `--tracking-wide` | 0.02em | Eyebrows, captions |
+
+### Backward-Compat Aliases
+
+Older tokens still work — they reference the new scale:
+
+| Alias | Maps to |
+|-------|---------|
+| `--heading-font-size-xxl` | `var(--font-size-display)` |
+| `--heading-font-size-xl` | `var(--font-size-heading-xl)` |
+| `--heading-font-size-l` | `var(--font-size-heading-l)` |
+| `--heading-font-size-m` | `var(--font-size-heading-m)` |
+| `--heading-font-size-s` | `var(--font-size-body-m)` |
+| `--heading-font-size-xs` | `var(--font-size-body-m)` |
+| `--body-font-size-m` | `var(--font-size-body-l)` |
+| `--body-font-size-s` | `var(--font-size-body-m)` |
+| `--body-font-size-xs` | `var(--font-size-body-s)` |
+
+---
+
+## Spacing Scale
+
+| Token | Value (desktop) | Value (mobile) | Usage |
+|-------|-----------------|----------------|-------|
+| `--space-xs` | 8px | 8px | Tight gaps, minor margins |
+| `--space-s` | 16px | 16px | Button padding, list gaps |
+| `--space-m` | 24px | 24px | Element spacing, card padding |
+| `--space-l` | 32px | 32px | Section inner margins |
+| `--space-xl` | 40px | 40px | Medium separations |
+| `--space-2xl` | 64px | 64px | Block inner padding (desktop) |
+| `--space-3xl` | 120px | 120px | Section-level spacing |
+
+### Layout Spacing
+
+| Token | Desktop | Mobile | Usage |
+|-------|---------|--------|-------|
+| `--section-padding` | 120px | 60px | Vertical padding between sections |
+| `--block-padding` | 64px | 32px | Internal padding within blocks |
+| `--container-padding` | 32px | 16px | Horizontal page edge padding |
+
+### Layout Dimensions
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--container-max-width` | 1440px | Outermost container cap |
+| `--content-max-width` | 1200px | Content area max-width |
+| `--nav-height` | 70px | Fixed nav bar height |
+
+---
+
+## Border Radii
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--radius-s` | 5px | Cards, small containers |
+| `--radius-m` | 8px | Dropdowns, inputs, quote cards |
+| `--radius-pill` | 100px | Buttons (pill shape) |
 
 ---
 
 ## Breakpoints
 
-| Token | Value | Usage |
-|-------|-------|-------|
+| Name | Value | Usage |
+|------|-------|-------|
 | Mobile | < 768px | Single-column, stacked, hamburger nav |
 | Tablet | 768px–1023px | Wider content, sliders active, still hamburger |
-| Desktop | ≥ 1024px | Full nav, multi-column, max-width 1200px |
+| Desktop | >= 1024px | Full nav, multi-column, max-width content |
 
 Write mobile-first: base styles are mobile, `@media (width >= 768px)` for tablet, `@media (width >= 1024px)` for desktop.
 
@@ -59,10 +147,12 @@ Write mobile-first: base styles are mobile, `@media (width >= 768px)` for tablet
 
 Buttons in this project are **not** styled globally — each block styles its own buttons. The consistent design intent is:
 
-- **Shape:** Always pill (`border-radius: 100px`) — never square or rectangular
+- **Shape:** Always pill (`border-radius: var(--radius-pill)`) — never square or rectangular
 - **Primary CTA:** Accent-color fill, dark text
 - **Secondary / default:** Outlined (transparent bg, dark border)
 - **On dark backgrounds:** White outlined
+- **Font:** `var(--font-size-body-m)`, weight 600
+- **Padding:** `var(--space-s) var(--space-l)` (16px 32px)
 
 See individual block CSS files for the actual implementation.
 
@@ -70,7 +160,11 @@ See individual block CSS files for the actual implementation.
 
 ## Section Styles
 
-Not yet implemented. Will be tracked here once added.
+| Class | Effect |
+|-------|--------|
+| `.section.light` / `.section.highlight` | Light gray background (`--light-color`) |
+
+Section padding uses `var(--section-padding)` which responds to breakpoints (120px desktop, 60px mobile).
 
 ---
 

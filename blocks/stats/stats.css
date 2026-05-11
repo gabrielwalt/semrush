@@ -13,7 +13,7 @@
 
 /* Header row */
 .stats .stat-header > div > p:first-child {
-  font-size: 14px;
+  font-size: var(--font-size-caption);
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.28px;
@@ -22,10 +22,10 @@
 }
 
 .stats .stat-header h2 {
-  font-size: 32px;
+  font-size: var(--font-size-heading-l);
   font-weight: 600;
-  line-height: 1.1;
-  margin: 0 0 40px;
+  line-height: var(--line-height-snug);
+  margin: 0 0 var(--space-xl);
   color: var(--stats-text);
 }
 
@@ -33,7 +33,7 @@
 .stats > div.stat-row {
   padding: 0;
   cursor: pointer;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-xs);
   transition: color 0.42s ease-in-out;
   color: var(--stats-inactive-text);
 }
@@ -70,7 +70,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 16px;
+  padding-left: var(--space-s);
 }
 
 .stats > div.stat-row .stat-count {
@@ -83,7 +83,7 @@
 }
 
 .stats > div.stat-row .stat-title {
-  font-size: 16px;
+  font-size: var(--font-size-body-m);
   font-weight: 500;
   color: var(--stats-inactive-text);
   margin: 4px 0 0;
@@ -91,9 +91,9 @@
 }
 
 .stats > div.stat-row .stat-description {
-  font-size: 16px;
+  font-size: var(--font-size-body-m);
   color: var(--stats-inactive-text);
-  margin: 8px 0 0;
+  margin: var(--space-xs) 0 0;
   width: 100%;
   opacity: 0;
   max-height: 0;
@@ -109,7 +109,7 @@
 .stats > div.stat-row.active .stat-number {
   background: var(--stats-active-bg);
   height: 180px;
-  padding-right: 32px;
+  padding-right: var(--space-l);
 }
 
 .stats > div.stat-row.active .stat-arrow {
@@ -132,24 +132,10 @@
   color: var(--stats-text);
 }
 
-/* Header CTA link */
+/* Header CTA — compact secondary button */
 main .stats .stat-header a.button:any-link {
-  background: transparent;
-  border: 1px solid var(--stats-text);
-  border-radius: 100px;
-  padding: 0 24px;
   height: 48px;
-  display: inline-flex;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--stats-text);
-  text-decoration: none;
-}
-
-main .stats .stat-header a.button:any-link:hover {
-  background: var(--stats-text);
-  color: var(--stats-active-text);
+  padding: 0 var(--space-m);
 }
 
 @media (width >= 1024px) {

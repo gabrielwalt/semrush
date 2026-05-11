@@ -296,20 +296,22 @@ header nav[aria-expanded='true'] .nav-tools {
 }
 
 header nav .nav-tools a:any-link {
-  font-size: 0.875rem;
+  font-size: var(--font-size-body-m);
   font-weight: 600;
+  letter-spacing: var(--tracking-snug);
   text-decoration: none;
   white-space: nowrap;
+  border-radius: var(--radius-pill);
+  padding: var(--space-s) var(--space-m);
+  height: auto;
 }
 
 header nav .nav-tools a:last-of-type {
   background-color: var(--dark-color);
   color: #fff;
-  padding: 10px 24px;
-  border-radius: 100px;
-  font-weight: 600;
 }
 
 header nav .nav-tools a:first-of-type {
-  color: #181e15;
+  border: 1px solid var(--dark-color);
+  color: var(--dark-color);
 }

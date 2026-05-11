@@ -12,7 +12,7 @@
     url('/content/images/pattern-ai-vis-index.svg') repeat-x 0% 100%,
     var(--block-bg);
   color: var(--block-text);
-  padding: 60px 24px;
+  padding: 60px var(--space-m);
   text-align: center;
 }
 
@@ -36,30 +36,30 @@ main .section:has(.ai-visibility-index) > div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: var(--space-xl);
 }
 
 .ai-visibility-index .ai-visibility-index-header img {
   width: 72px;
   height: 72px;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-m);
 }
 
 .ai-visibility-index .ai-visibility-index-header h2 {
-  font-size: 56px;
+  font-size: var(--font-size-heading-xl);
   font-weight: 600;
   text-transform: uppercase;
   color: var(--block-text);
-  margin: 0 0 16px;
-  line-height: 1.1;
+  margin: 0 0 var(--space-s);
+  line-height: var(--line-height-snug);
 }
 
 .ai-visibility-index .ai-visibility-index-header p {
-  font-size: 18px;
+  font-size: var(--font-size-body-l);
   color: var(--block-text);
   max-width: 500px;
-  margin: 0 0 24px;
-  line-height: 1.5;
+  margin: 0 0 var(--space-m);
+  line-height: var(--line-height-relaxed);
 }
 
 /* CTA button */
@@ -70,9 +70,9 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link {
   background: var(--block-accent);
   color: var(--block-bg);
   border: none;
-  border-radius: 100px;
-  padding: 12px 32px;
-  font-size: 16px;
+  border-radius: var(--radius-pill);
+  padding: 12px var(--space-l);
+  font-size: var(--font-size-body-m);
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -86,9 +86,9 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
 .ai-visibility-index .ai-visibility-index-table {
   background: var(--table-bg);
   border-radius: 16px;
-  padding: 32px 32px 52px;
+  padding: var(--space-l) var(--space-l) 52px;
   max-width: 900px;
-  margin: 40px auto 0;
+  margin: var(--space-xl) auto 0;
   text-align: left;
 }
 
@@ -97,16 +97,16 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-bottom: 16px;
+  padding-bottom: var(--space-s);
   border-bottom: none;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-xs);
 }
 
 .ai-visibility-index .ai-visibility-index-table-header .table-labels {
   display: flex;
   justify-content: space-between;
   flex: 1;
-  font-size: 18px;
+  font-size: var(--font-size-body-l);
   font-weight: 600;
   color: var(--table-text);
 }
@@ -116,10 +116,10 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
 }
 
 .ai-visibility-index .ai-visibility-index-table-header .table-platform {
-  font-size: 14px;
+  font-size: var(--font-size-caption);
   color: var(--table-muted);
   white-space: nowrap;
-  margin-left: 24px;
+  margin-left: var(--space-m);
 }
 
 /* Data rows */
@@ -135,7 +135,7 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
 }
 
 .ai-visibility-index .ai-visibility-index-row .brand-name {
-  font-size: 14px;
+  font-size: var(--font-size-caption);
   font-weight: 500;
   color: var(--table-text);
   min-width: 120px;
@@ -145,12 +145,12 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
 .ai-visibility-index .ai-visibility-index-row .sov-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
   flex: 1;
 }
 
 .ai-visibility-index .ai-visibility-index-row .sov-value {
-  font-size: 14px;
+  font-size: var(--font-size-caption);
   font-weight: 500;
   color: var(--table-text);
   min-width: 50px;
@@ -183,11 +183,11 @@ main .ai-visibility-index .ai-visibility-index-header a.button:any-link:hover {
 
 @media (width < 768px) {
   .ai-visibility-index .ai-visibility-index-header h2 {
-    font-size: 36px;
+    font-size: var(--font-size-heading-l);
   }
 
   .ai-visibility-index .ai-visibility-index-table {
-    padding: 20px 16px 32px;
+    padding: 20px var(--space-s) var(--space-l);
   }
 
   .ai-visibility-index .ai-visibility-index-row .brand-name {

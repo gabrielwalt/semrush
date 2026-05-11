@@ -21,26 +21,68 @@
   --link-color: rgb(24 30 21);
   --link-hover-color: rgb(24 30 21);
   --accent-color: rgb(193 144 255);
+  --accent-cyan: rgb(24 240 191);
 
   /* fonts */
   --body-font-family: "Inter", sans-serif;
   --heading-font-family: "Lazzer", "Inter", sans-serif;
 
-  /* body sizes */
-  --body-font-size-m: 18px;
-  --body-font-size-s: 16px;
-  --body-font-size-xs: 14px;
+  /* typography scale — desktop */
+  --font-size-display: 84px;
+  --font-size-heading-xl: 64px;
+  --font-size-heading-l: 48px;
+  --font-size-heading-m: 24px;
+  --font-size-body-l: 18px;
+  --font-size-body-m: 16px;
+  --font-size-body-s: 14px;
+  --font-size-caption: 14px;
+  --font-size-label: 12px;
 
-  /* heading sizes – desktop */
-  --heading-font-size-xxl: 84px;
-  --heading-font-size-xl: 64px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 18px;
-  --heading-font-size-xs: 16px;
+  /* line heights */
+  --line-height-tight: 1.0;
+  --line-height-snug: 1.1;
+  --line-height-normal: 1.2;
+  --line-height-relaxed: 1.5;
 
-  /* nav height */
+  /* letter spacing */
+  --tracking-tight: -0.04em;
+  --tracking-snug: -0.02em;
+  --tracking-wide: 0.02em;
+
+  /* spacing scale */
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 32px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 120px;
+
+  /* section spacing */
+  --section-padding: 120px;
+  --block-padding: 64px;
+  --container-padding: 32px;
+
+  /* layout */
+  --container-max-width: 1440px;
+  --content-max-width: 1200px;
   --nav-height: 70px;
+
+  /* radii */
+  --radius-s: 5px;
+  --radius-m: 8px;
+  --radius-pill: 100px;
+
+  /* backward-compat aliases */
+  --heading-font-size-xxl: var(--font-size-display);
+  --heading-font-size-xl: var(--font-size-heading-xl);
+  --heading-font-size-l: var(--font-size-heading-l);
+  --heading-font-size-m: var(--font-size-heading-m);
+  --heading-font-size-s: var(--font-size-body-m);
+  --heading-font-size-xs: var(--font-size-body-m);
+  --body-font-size-m: var(--font-size-body-l);
+  --body-font-size-s: var(--font-size-body-m);
+  --body-font-size-xs: var(--font-size-body-s);
 }
 
 /* EDS button reset */
@@ -67,13 +109,13 @@ main a.button:any-link {
 
 @media (width < 768px) {
   :root {
-    /* heading sizes – mobile */
-    --heading-font-size-xxl: 48px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 18px;
-    --heading-font-size-xs: 16px;
+    --font-size-display: 56px;
+    --font-size-heading-xl: 48px;
+    --font-size-heading-l: 32px;
+    --font-size-heading-m: 18px;
+    --section-padding: 60px;
+    --block-padding: 32px;
+    --container-padding: 16px;
   }
 }
 
@@ -122,12 +164,12 @@ h6 {
 
 h1 {
   font-size: var(--heading-font-size-xxl);
-  letter-spacing: -0.04em;
+  letter-spacing: var(--tracking-tight);
 }
 
 h2 {
   font-size: var(--heading-font-size-xl);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-snug);
 }
 
 h3 { font-size: var(--heading-font-size-l); }
@@ -151,15 +193,15 @@ pre {
 }
 
 pre {
-  padding: 16px;
-  border-radius: 8px;
+  padding: var(--space-s);
+  border-radius: var(--radius-m);
   background-color: var(--light-color);
   overflow-x: auto;
   white-space: pre;
 }
 
 main > div {
-  margin: 40px 16px;
+  margin: var(--section-padding) var(--container-padding);
 }
 
 input,
@@ -196,12 +238,14 @@ button.button {
   max-width: 100%;
   margin: 0;
   border: 1px solid transparent;
-  border-radius: 100px;
-  padding: 16px 32px;
+  border-radius: var(--radius-pill);
+  padding: 0 var(--space-l);
+  height: 60px;
   font-family: var(--body-font-family);
-  font-size: 16px;
+  font-size: var(--font-size-body-m);
   font-weight: 600;
-  line-height: 1;
+  letter-spacing: var(--tracking-snug);
+  line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
@@ -215,6 +259,7 @@ button.button:disabled {
   pointer-events: none;
 }
 
+/* Primary: filled accent purple, dark text — <strong><a> */
 a.button.primary,
 button.button.primary {
   border-color: var(--accent-color);
@@ -230,6 +275,7 @@ button.button.primary:focus-visible {
   background-color: color-mix(in srgb, var(--accent-color) 85%, black);
 }
 
+/* Secondary: outlined dark border, transparent bg — <em><a> */
 a.button.secondary,
 button.button.secondary {
   border-color: var(--dark-color);
@@ -241,11 +287,10 @@ a.button.secondary:hover,
 a.button.secondary:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
-  background-color: var(--dark-color);
-  color: var(--background-color);
+  background-color: rgb(24 30 21 / 5%);
 }
 
-/* high-impact call-to-action (bold + em) */
+/* Accent: solid dark bg, white text — wrapping both <strong> and <em> */
 a.button.accent,
 button.button.accent {
   border-color: var(--dark-color);
@@ -282,23 +327,17 @@ main img {
 
 /* sections */
 main > .section {
-  margin: 40px 0;
+  margin: var(--section-padding) 0;
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   margin: auto;
-  padding: 0 24px;
+  padding: 0 var(--container-padding);
 }
 
 main > .section:first-of-type {
   margin-top: 0;
-}
-
-@media (width >= 1024px) {
-  main > .section > div {
-    padding: 0 32px;
-  }
 }
 
 /* section metadata */
@@ -306,5 +345,5 @@ main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
-  padding: 40px 0;
+  padding: var(--section-padding) 0;
 }
