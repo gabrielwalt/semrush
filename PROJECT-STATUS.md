@@ -33,12 +33,18 @@
 | `hero-video` | ✅ Done | Detects video URL in link text, poster fallback, autoplay |
 | `marquee` | ✅ Done | Edge fade via CSS mask-image |
 | `promo-cards` | ✅ Done | 64px padding, video autoplay, glass frame, stacked vertically |
-| `carousel-slider` | ✅ Done | Expandable cards, right-edge bleed, pattern at bottom, + button |
-| `stats` | ✅ Done | Scroll-triggered activation, diagonal arrow pattern, description always visible |
+| `carousel-slider` | ✅✅ Refined | Overflow:hidden clipping, left-edge margin alignment, nav in header area (60px/16px gap), hidden <1024px, section header 48px uppercase |
+| `stats-facts` | ✅✅ Refined | Up-arrow SVG via ::after, hatching pattern via ::before, section header 48px uppercase, "Learn more" CTA grid-positioned top-right |
 | `ai-visibility-index` | ✅ Done | 84px heading, purple-to-teal bar gradient, dark section |
-| `testimonials` | ✅ Done | Dark quote card + grey stat card |
-| `resources-slider` | ✅ Done | Card carousel with category tags |
-| `footer` | ✅ Done | CTA + link columns + wordmark |
+| `testimonials` | ✅✅ Refined | Rebuilt: Zoominfo logo, quote marks, author role, 26px Lazzer quote text, 2fr:1fr grid, stats pattern SVG |
+| `resources-slider` | ✅✅ Refined | Descriptions added to content + parser, Lazzer font on cards, proper spacing (24px image gap, 8px desc gap, 24px tag gap) |
+| `footer` | ✅✅ Refined | Sticky reveal mechanism fixed (sibling of .footer, not child), Lazzer font, 1440px max-width, bottom bar separator, column header weight 600 |
+
+### Global typography refinement (✅✅)
+- Body font-weight 500, letter-spacing -0.02em
+- H2/H3 letter-spacing tightened to -0.04em
+- Tablet breakpoint added (<1024px) for heading-xl → 32px
+- Lazzer font 500 weight loaded for body text rendering
 
 ---
 
@@ -60,6 +66,10 @@
 - `solutions-slider` class still used by remote AEM content — thin redirect block loads `carousel-slider`
 - Resource card images 404 on dev server (remote media assets not available locally)
 - `logo-marquee` alias block may exist in previously-published content
+- Footer social media icons row not yet imported (present on original, missing from our footer content)
+- Footer Adobe logo not yet added to bottom bar copyright row
+- Lazzer font weight 500 is used by body but only 400/600/700 weights are loaded in `fonts.css` — may cause faux-bold rendering on some browsers. Consider adding a 500-weight `@font-face` declaration.
+- ESLint cannot run in current environment (dependency conflict with `es-abstract`) — JS files not linted
 
 ---
 

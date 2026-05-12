@@ -46,15 +46,12 @@ export default async function decorate(block) {
     descEl.textContent = descText;
     cell.appendChild(descEl);
 
-    row.addEventListener('click', () => {
-      statRows.forEach((r) => r.classList.remove('active'));
-      row.classList.add('active');
-    });
+    row.addEventListener('click', () => activateStat(index));
   });
 
-  function activateStat(index) {
+  function activateStat(idx) {
     statRows.forEach((r) => r.classList.remove('active'));
-    if (statRows[index]) statRows[index].classList.add('active');
+    if (statRows[idx]) statRows[idx].classList.add('active');
   }
 
   function onScroll() {

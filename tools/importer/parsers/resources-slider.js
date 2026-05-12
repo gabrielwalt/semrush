@@ -49,18 +49,10 @@ export default function parse(element, { document }) {
       textCell.appendChild(h3);
     }
 
-    // Capture description paragraph (sibling <p> of h3, not inside a tag container)
-    const paragraphs = article.querySelectorAll(':scope > p, :scope > div > p');
-    let descText = '';
-    paragraphs.forEach((para) => {
-      const isInsideTagContainer = para.closest('[class*="tag"], [class*="info-tag"]');
-      if (!isInsideTagContainer && para.textContent.trim()) {
-        descText = para.textContent.trim();
-      }
-    });
-    if (descText) {
+    const descEl = article.querySelector('.mp-resources__item-description, [class*="description"]');
+    if (descEl) {
       const descP = document.createElement('p');
-      descP.textContent = descText;
+      descP.textContent = descEl.textContent.trim();
       textCell.appendChild(descP);
     }
 

@@ -1,6 +1,29 @@
 /* Carousel Slider — shared base */
 .carousel-slider-container > .default-content-wrapper {
+  position: relative;
   padding: 0 var(--container-padding);
+  margin-bottom: 60px;
+}
+
+.carousel-slider-container > .default-content-wrapper > p:first-child {
+  margin-bottom: 22px;
+}
+
+.carousel-slider-container > .default-content-wrapper > h2 {
+  font-size: var(--font-size-heading-l);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+}
+
+.carousel-slider-container > .default-content-wrapper > .carousel-slider-nav {
+  position: absolute;
+  right: var(--container-padding);
+  bottom: 0;
+}
+
+.carousel-slider-container {
+  overflow: hidden;
 }
 
 .carousel-slider {
@@ -14,7 +37,8 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 0 var(--container-padding) var(--space-s);
+  padding: 0 0 var(--space-s);
+  margin: 0 0 0 var(--container-padding);
   scrollbar-width: none;
 }
 
@@ -22,19 +46,22 @@
   display: none;
 }
 
+.carousel-slider > div:last-child {
+  margin-right: var(--container-padding);
+}
+
+/* stylelint-disable no-descending-specificity */
+
 /* Navigation — shared */
 .carousel-slider-nav {
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-bottom: var(--space-m);
-  padding: 0 var(--container-padding);
+  gap: var(--space-s);
 }
 
 .carousel-slider-nav button {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: var(--cta-height);
+  height: var(--cta-height);
+  border-radius: var(--radius-pill);
   border: 1px solid var(--dark-color);
   background: transparent;
   font-size: 24px;
@@ -70,6 +97,7 @@
   border-radius: var(--card-radius);
   overflow: hidden;
   flex-shrink: 0;
+  margin-bottom: var(--space-m);
 }
 
 .carousel-slider:not(.carousel-slider-expansible) > div > div:first-child picture {
@@ -86,11 +114,11 @@
 
 /* Text cell */
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child {
-  padding: 16px 0 0;
+  padding: 0 var(--space-l) 0 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   flex: 1;
+  font-family: var(--heading-font-family);
 }
 
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child h3 {
@@ -99,6 +127,7 @@
   color: var(--dark-color);
   margin: 0;
   line-height: 1.5;
+  letter-spacing: var(--tracking-snug);
 }
 
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child h3 a {
@@ -113,47 +142,49 @@
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child p {
   font-size: var(--font-size-body-m);
   color: var(--dark-color);
-  margin: 0;
+  margin: 8px 0 0;
   line-height: 1.5;
+  letter-spacing: var(--tracking-snug);
 }
 
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child p:last-of-type {
   font-size: var(--font-size-caption);
   font-weight: 500;
-  color: rgb(108 110 121);
-  margin-top: auto;
+  color: var(--dark-color);
+  margin-top: 24px;
+  line-height: 1.4;
+  letter-spacing: var(--tracking-snug);
 }
-
-/* stylelint-disable no-descending-specificity */
 
 /* ==========================================================================
    EXPANSIBLE VARIANT — rich cards with expand/collapse
    ========================================================================== */
 
 .carousel-slider.carousel-slider-expansible {
-  padding: 0 0 0 var(--container-padding);
+  padding: 0;
+  margin-left: var(--container-padding);
   overflow: visible;
 }
 
 /* Override: expansible uses a track wrapper instead of block-as-track */
 .carousel-slider.carousel-slider-expansible > .carousel-slider-track {
   display: flex;
-  gap: 12px;
+  gap: var(--slider-gap);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   padding-bottom: var(--space-s);
-  padding-right: var(--container-padding);
+}
+
+.carousel-slider.carousel-slider-expansible > .carousel-slider-track > :last-child {
+  margin-right: var(--container-padding);
 }
 
 .carousel-slider.carousel-slider-expansible > .carousel-slider-track::-webkit-scrollbar {
   display: none;
 }
 
-/* Expansible nav is inside the block */
-.carousel-slider.carousel-slider-expansible > .carousel-slider-nav {
-  padding-right: var(--container-padding);
-}
+/* Expansible nav is now in default-content-wrapper — no extra padding needed */
 
 /* Card base (collapsed) */
 .carousel-slider-card {
@@ -192,11 +223,13 @@
 }
 
 .carousel-slider.carousel-slider-expansible .carousel-slider-header h3 {
-  font-size: var(--font-size-body-s);
-  font-weight: 500;
+  font-size: var(--font-size-label);
+  font-weight: 600;
   margin: 0;
-  font-family: var(--body-font-family);
-  text-transform: capitalize;
+  font-family: var(--heading-font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 .carousel-slider-header h4 {
@@ -347,10 +380,22 @@
    RESPONSIVE
    ========================================================================== */
 
+@media (width < 1024px) {
+  .carousel-slider-container > .default-content-wrapper > .carousel-slider-nav {
+    display: none;
+  }
+
+  .carousel-slider-container > .default-content-wrapper {
+    margin-bottom: 40px;
+  }
+}
+
 @media (width < 768px) {
   .carousel-slider {
-    --card-width: 300px;
-    --img-height: 200px;
+    --card-width: 268px;
+    --img-height: 178px;
+
+    margin-left: var(--container-padding);
   }
 
   .carousel-slider-card {

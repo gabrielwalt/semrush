@@ -19,9 +19,12 @@ export default async function decorate(block) {
 
   block.append(footer);
 
-  // Create footer reveal element
+  // Create footer reveal element — placed outside block, as sibling in <footer>
   const reveal = document.createElement('div');
   reveal.className = 'footer-reveal';
   reveal.innerHTML = '<span>SEMRUSH</span>';
-  block.append(reveal);
+  const footerEl = block.closest('footer');
+  if (footerEl) {
+    footerEl.append(reveal);
+  }
 }

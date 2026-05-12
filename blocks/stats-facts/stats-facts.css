@@ -1,3 +1,12 @@
+/* Section header */
+.stats-facts-container > .default-content-wrapper > h2 {
+  font-size: var(--font-size-heading-l);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+  margin-top: 0;
+}
+
 /* Stats Facts block */
 .stats-facts {
   --stats-bg: rgb(255 255 255);
@@ -12,29 +21,24 @@
 }
 
 /* Stat rows */
-.stats-facts > div.stat-row {
+.stats-facts > .stat-row {
   padding: 0;
   cursor: pointer;
-  margin-bottom: 0;
   transition: color var(--transition-duration) var(--transition-easing);
   color: var(--stats-inactive-text);
 }
 
-.stats-facts > div.stat-row > div {
+.stats-facts > .stat-row > div {
   display: flex;
   align-items: center;
-  gap: 0;
 }
 
 /* Number area */
-.stats-facts > div.stat-row .stat-number {
+.stats-facts > .stat-row .stat-number {
   display: flex;
   align-items: center;
-  gap: 0;
   position: relative;
   height: 140px;
-  background: transparent;
-  padding-right: 0;
   border-radius: var(--radius-s);
   transition: height var(--transition-duration) var(--transition-easing),
     background-color var(--transition-duration) var(--transition-easing),
@@ -42,31 +46,40 @@
 }
 
 /* Arrow indicator */
-.stats-facts > div.stat-row .stat-arrow {
+.stats-facts > .stat-row .stat-arrow {
   width: 100px;
   height: 100%;
   background: rgb(240 241 242);
   flex-shrink: 0;
   border-radius: var(--radius-s) 0 0 var(--radius-s);
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 4px,
-    rgb(0 0 0 / 5%) 4px,
-    rgb(0 0 0 / 5%) 5px
-  );
+  position: relative;
+  overflow: hidden;
   transition: background-color var(--transition-duration) var(--transition-easing),
     width var(--transition-duration) var(--transition-easing);
 }
 
-.stats-facts > div.stat-row .stat-count-wrapper {
+.stats-facts > .stat-row .stat-arrow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/icons/pattern-stats.svg') no-repeat 0% 50% / contain;
+}
+
+.stats-facts > .stat-row .stat-arrow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='61' height='64' viewBox='0 0 61 64' fill='none'%3E%3Cpath d='M25.672 8.94631H33.0624L6.09386 36.4335L0 30.3397L30.0803 0L60.42 30.3397L54.3261 36.4335L27.2279 9.07596H34.748L34.8776 63.4021H25.8017L25.672 8.94631Z' fill='%23D1D2D5'/%3E%3C/svg%3E") no-repeat 50% 50% / 74px 78px;
+}
+
+.stats-facts > .stat-row .stat-count-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-left: var(--space-s);
 }
 
-.stats-facts > div.stat-row .stat-count {
+.stats-facts > .stat-row .stat-count {
   font-size: 96px;
   font-weight: 500;
   font-family: var(--heading-font-family);
@@ -78,7 +91,7 @@
     color var(--transition-duration) var(--transition-easing);
 }
 
-.stats-facts > div.stat-row .stat-title {
+.stats-facts > .stat-row .stat-title {
   font-size: var(--font-size-heading-m);
   font-weight: 500;
   color: var(--stats-inactive-text);
@@ -88,7 +101,7 @@
 }
 
 /* Description — always visible, right side */
-.stats-facts > div.stat-row .stat-description {
+.stats-facts > .stat-row .stat-description {
   font-size: var(--font-size-heading-m);
   color: var(--stats-inactive-text);
   margin: 0;
@@ -98,100 +111,103 @@
 }
 
 /* Active state */
-.stats-facts > div.stat-row.active {
+.stats-facts > .stat-row.active {
   color: var(--stats-active-text);
 }
 
-.stats-facts > div.stat-row.active .stat-number {
+.stats-facts > .stat-row.active .stat-number {
   background: var(--stats-active-bg);
   height: 180px;
   padding-right: var(--space-l);
-  border-radius: var(--radius-s);
 }
 
-.stats-facts > div.stat-row.active .stat-arrow {
+.stats-facts > .stat-row.active .stat-arrow {
   background-color: var(--stats-accent);
   width: 140px;
 }
 
-.stats-facts > div.stat-row.active .stat-count {
+.stats-facts > .stat-row.active .stat-arrow::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='61' height='64' viewBox='0 0 61 64' fill='none'%3E%3Cpath d='M25.672 8.94631H33.0624L6.09386 36.4335L0 30.3397L30.0803 0L60.42 30.3397L54.3261 36.4335L27.2279 9.07596H34.748L34.8776 63.4021H25.8017L25.672 8.94631Z' fill='%23181E15'/%3E%3C/svg%3E");
+}
+
+.stats-facts > .stat-row.active .stat-count {
   font-size: 130px;
   color: var(--stats-active-text);
 }
 
-.stats-facts > div.stat-row.active .stat-title {
+.stats-facts > .stat-row.active .stat-title {
   color: var(--stats-active-text);
 }
 
-.stats-facts > div.stat-row.active .stat-description {
+.stats-facts > .stat-row.active .stat-description {
   color: var(--stats-text);
 }
 
 @media (width >= 1024px) {
-  .stats-facts > div.stat-row {
+  .stats-facts > .stat-row {
     grid-column: 2;
   }
 
-  .stats-facts > div.stat-row .stat-number {
+  .stats-facts > .stat-row .stat-number {
     height: 188px;
   }
 
-  .stats-facts > div.stat-row .stat-count {
+  .stats-facts > .stat-row .stat-count {
     font-size: 137px;
   }
 
-  .stats-facts > div.stat-row .stat-arrow {
+  .stats-facts > .stat-row .stat-arrow {
     width: 142px;
   }
 
-  .stats-facts > div.stat-row.active .stat-number {
+  .stats-facts > .stat-row.active .stat-number {
     height: 250px;
     padding-right: 42px;
   }
 
-  .stats-facts > div.stat-row.active .stat-count {
+  .stats-facts > .stat-row.active .stat-count {
     font-size: 180px;
   }
 
-  .stats-facts > div.stat-row.active .stat-arrow {
+  .stats-facts > .stat-row.active .stat-arrow {
     width: 189px;
   }
 }
 
 @media (width < 768px) {
-  .stats-facts > div.stat-row > div {
+  .stats-facts > .stat-row > div {
     flex-wrap: wrap;
   }
 
-  .stats-facts > div.stat-row .stat-number {
+  .stats-facts > .stat-row .stat-number {
     height: 100px;
     width: 100%;
   }
 
-  .stats-facts > div.stat-row .stat-count {
+  .stats-facts > .stat-row .stat-count {
     font-size: 56px;
   }
 
-  .stats-facts > div.stat-row .stat-arrow {
+  .stats-facts > .stat-row .stat-arrow {
     width: 60px;
   }
 
-  .stats-facts > div.stat-row .stat-description {
+  .stats-facts > .stat-row .stat-description {
     max-width: 100%;
     margin-left: 0;
     margin-top: var(--space-xs);
     font-size: var(--font-size-body-m);
   }
 
-  .stats-facts > div.stat-row.active .stat-number {
+  .stats-facts > .stat-row.active .stat-number {
     height: 130px;
   }
 
-  .stats-facts > div.stat-row.active .stat-count {
+  .stats-facts > .stat-row.active .stat-count {
     font-size: 80px;
   }
 
-  .stats-facts > div.stat-row.active .stat-arrow {
+  .stats-facts > .stat-row.active .stat-arrow {
     width: 80px;
   }
 }

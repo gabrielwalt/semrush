@@ -110,11 +110,16 @@ main .button-container { display: inline; }
   src: local('Arial');
 }
 
-@media (width < 768px) {
+@media (width < 1024px) {
   :root {
     --font-size-display: 56px;
-    --font-size-heading-xl: 48px;
+    --font-size-heading-xl: 32px;
     --font-size-heading-l: 32px;
+  }
+}
+
+@media (width < 768px) {
+  :root {
     --font-size-heading-m: 18px;
     --section-padding: 60px;
     --block-padding: 32px;
@@ -129,7 +134,9 @@ body {
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
+  font-weight: 500;
   line-height: 1.5;
+  letter-spacing: var(--tracking-snug);
 }
 
 body.appear {
@@ -172,11 +179,20 @@ h1 {
 
 h2 {
   font-size: var(--heading-font-size-xl);
-  letter-spacing: var(--tracking-snug);
+  letter-spacing: var(--tracking-tight);
 }
 
-h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
+h3 {
+  font-size: var(--heading-font-size-l);
+  letter-spacing: var(--tracking-tight);
+}
+
+h4 {
+  font-size: var(--heading-font-size-m);
+  letter-spacing: var(--tracking-snug);
+  line-height: 1.2;
+}
+
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
 

@@ -33,8 +33,14 @@ Design intent and token inventory. For actual values read `styles/brand.css` and
 
 - **Heading font:** Lazzer (Inter fallback)
 - **Body font:** Inter
+- **Body weight:** 500 (not 400 — the original uses Lazzer at weight 500 for all body text)
+- **Body letter-spacing:** `-0.02em` (`--tracking-snug`) globally
 
-Key size tokens: `--font-size-display` (84/56px), `--font-size-heading-xl` (64/48px), `--font-size-heading-l` (48/32px), `--font-size-body-l` (18px), `--font-size-body-m` (16px).
+Key size tokens: `--font-size-display` (84/56px), `--font-size-heading-xl` (64/32px at tablet), `--font-size-heading-l` (48/32px), `--font-size-body-l` (18px), `--font-size-body-m` (16px).
+
+Heading letter-spacing: H1/H2/H3 use `--tracking-tight` (-0.04em), H4 uses `--tracking-snug` (-0.02em). H4 line-height is 1.2 (not 1.1 like other headings).
+
+Tablet breakpoint (< 1024px) reduces `--font-size-display` to 56px and `--font-size-heading-xl` to 32px.
 
 ---
 

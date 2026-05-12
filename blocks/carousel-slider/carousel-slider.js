@@ -26,11 +26,8 @@ function decorateExpansible(block, rows) {
   const items = [];
 
   rows.forEach((row) => {
-    const cols = [...row.children];
-    if (cols.length < 2) return;
-
-    const col1 = cols[0];
-    const col2 = cols[1];
+    const [col1, col2] = [...row.children];
+    if (!col2) return;
 
     const eyebrow = col1.querySelector('h3')?.textContent?.trim() || '';
     const title = col1.querySelector('p')?.textContent?.trim() || '';
@@ -136,16 +133,27 @@ function decorateExpansible(block, rows) {
   });
 
   const nav = createNav(track, 450);
-  block.appendChild(nav);
+  const section = block.closest('.section');
+  const dcw = section?.querySelector('.default-content-wrapper');
+  if (dcw) {
+    dcw.appendChild(nav);
+  } else {
+    block.prepend(nav);
+  }
   block.appendChild(track);
 }
 
 function decorateDefault(block) {
-  const track = block;
-  const nav = createNav(track, 442);
+  const nav = createNav(block, 442);
 
-  const wrapper = block.closest('.carousel-slider-wrapper');
-  if (wrapper) wrapper.before(nav);
+  const section = block.closest('.section');
+  const dcw = section?.querySelector('.default-content-wrapper');
+  if (dcw) {
+    dcw.appendChild(nav);
+  } else {
+    const wrapper = block.closest('.carousel-slider-wrapper');
+    if (wrapper) wrapper.before(nav);
+  }
 }
 
 export default async function decorate(block) {
