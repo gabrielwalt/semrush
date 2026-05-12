@@ -1,39 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
+  const sectionH2 = element.querySelector('h2');
   const sectionSubtitle = element.querySelector('h3');
-  const logoImg = element.querySelector('.mp-client-testimonials__logo-img img');
   const quote = element.querySelector('blockquote, .mp-client-testimonials__quote');
   const authorImg = element.querySelector('.mp-client-testimonials__author-img, .mp-client-testimonials__quote-author-img img');
   const authorCite = element.querySelector('.mp-client-testimonials__quote-author cite');
   const authorName = authorCite ? authorCite.querySelector('b') : null;
-  const authorRole = authorCite ? authorCite.querySelector('span') : null;
   const statNumber = element.querySelector('.mp-client-testimonials__stats-block-number');
   const statText = element.querySelector('.mp-client-testimonials__stats-block-text');
 
-  const rows = [['Testimonials']];
+  const wrapper = document.createElement('div');
 
-  // Row 1: heading
-  const headingCell = document.createElement('div');
-  const eyebrow = document.createElement('p');
-  eyebrow.textContent = 'Our customers';
-  headingCell.appendChild(eyebrow);
+  // Default content: eyebrow + title
+  if (sectionH2) {
+    const eyebrow = document.createElement('p');
+    eyebrow.textContent = sectionH2.textContent.trim();
+    wrapper.appendChild(eyebrow);
+  }
   if (sectionSubtitle) {
     const h2 = document.createElement('h2');
     h2.textContent = sectionSubtitle.textContent.trim();
-    headingCell.appendChild(h2);
+    wrapper.appendChild(h2);
   }
-  rows.push([headingCell]);
 
-  // Row 2: logo + quote
+  const rows = [['Testimonials']];
+
+  // Row 1: quote
   const quoteCell = document.createElement('div');
-  if (logoImg) {
-    const pic = document.createElement('picture');
-    const img = document.createElement('img');
-    img.src = logoImg.src;
-    img.alt = logoImg.alt || 'Zoominfo';
-    pic.appendChild(img);
-    quoteCell.appendChild(pic);
-  }
   if (quote) {
     const bq = document.createElement('blockquote');
     bq.textContent = quote.textContent.trim();
@@ -41,13 +34,13 @@ export default function parse(element, { document }) {
   }
   rows.push([quoteCell]);
 
-  // Row 3: author image + name + title
+  // Row 2: author image + name + title
   const authorCell = document.createElement('div');
   if (authorImg) {
     const pic = document.createElement('picture');
     const img = document.createElement('img');
     img.src = authorImg.src || authorImg.querySelector?.('img')?.src || '';
-    img.alt = authorName ? authorName.textContent.trim() : 'James Roth';
+    img.alt = authorName ? authorName.textContent.trim() : '';
     pic.appendChild(img);
     authorCell.appendChild(pic);
   }
@@ -58,14 +51,9 @@ export default function parse(element, { document }) {
     p.appendChild(strong);
     authorCell.appendChild(p);
   }
-  if (authorRole) {
-    const p = document.createElement('p');
-    p.textContent = authorRole.textContent.trim();
-    authorCell.appendChild(p);
-  }
   rows.push([authorCell]);
 
-  // Row 4: stat
+  // Row 3: stat
   if (statNumber || statText) {
     const statCell = document.createElement('div');
     if (statNumber) {
@@ -82,5 +70,6 @@ export default function parse(element, { document }) {
   }
 
   const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  wrapper.appendChild(table);
+  element.replaceWith(wrapper);
 }

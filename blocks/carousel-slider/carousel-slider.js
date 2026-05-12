@@ -33,12 +33,6 @@ export default async function decorate(block) {
 
   block.textContent = '';
 
-  const sectionHeader = document.createElement('div');
-  sectionHeader.className = 'carousel-slider-section-header';
-  const countBadge = `<span class="carousel-slider-count">( ${items.length} )</span>`;
-  sectionHeader.innerHTML = `<h2>Solutions ${countBadge}</h2><p class="carousel-slider-subtitle">Get seen. Get cited. Be the answer.</p>`;
-  block.appendChild(sectionHeader);
-
   const track = document.createElement('div');
   track.className = 'carousel-slider-track';
 

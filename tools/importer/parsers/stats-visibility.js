@@ -3,35 +3,20 @@ export default function parse(element, { document }) {
   const h2 = element.querySelector('h2');
   const subtitle = element.querySelector('.mp-ai-visibility-index__subtitle, h2 + p');
   const ctaLink = element.querySelector('a.mp-button, a[href*="ai-visibility-index"]');
-  const iconImg = element.querySelector('.mp-ai-visibility-index__img img, img[src*="ai_visibility_index"]');
   const tableRows = element.querySelectorAll('tbody tr, .mp-ai-visibility-index__sov');
 
-  const rows = [['AI Visibility Index']];
+  const wrapper = document.createElement('div');
 
-  // Row 1: icon + heading + description + CTA
-  const headerRow = document.createElement('div');
-  const headerText = document.createElement('div');
-
-  if (iconImg) {
-    const iconDiv = document.createElement('div');
-    const pic = document.createElement('picture');
-    const img = document.createElement('img');
-    img.src = iconImg.src;
-    img.alt = '';
-    pic.appendChild(img);
-    iconDiv.appendChild(pic);
-    headerRow.appendChild(iconDiv);
-  }
-
+  // Default content: heading + description + CTA
   if (h2) {
     const heading = document.createElement('h2');
     heading.textContent = h2.textContent.trim();
-    headerText.appendChild(heading);
+    wrapper.appendChild(heading);
   }
   if (subtitle) {
     const p = document.createElement('p');
     p.textContent = subtitle.textContent.trim();
-    headerText.appendChild(p);
+    wrapper.appendChild(p);
   }
   if (ctaLink) {
     const p = document.createElement('p');
@@ -41,36 +26,41 @@ export default function parse(element, { document }) {
     a.textContent = ctaLink.textContent.trim();
     strong.appendChild(a);
     p.appendChild(strong);
-    headerText.appendChild(p);
+    wrapper.appendChild(p);
   }
 
-  rows.push([headerRow, headerText]);
+  // Block table: column headers + data rows
+  const rows = [['Stats Visibility']];
 
-  // Row 2: table headers
   const headerCellBrand = document.createElement('div');
   headerCellBrand.textContent = 'Brand';
   const headerCellSov = document.createElement('div');
   headerCellSov.textContent = '% Share of Voice';
   rows.push([headerCellBrand, headerCellSov]);
 
-  // Data rows from the table
   tableRows.forEach((tr) => {
     const cells = tr.querySelectorAll('td');
     if (cells.length >= 2) {
       const brand = cells[0].textContent.trim();
       const valueEl = cells[1].querySelector('[class*="value"]');
       const value = valueEl ? valueEl.textContent.trim() : cells[1].textContent.trim();
-      const barEl = cells[1].querySelector('[class*="bar-track"], [style*="width"]');
-      const barWidth = barEl ? barEl.style.width?.replace('%', '') : '';
 
       const brandCell = document.createElement('div');
       brandCell.textContent = brand;
       const valueCell = document.createElement('div');
-      valueCell.textContent = barWidth ? `${value}|${barWidth}` : value;
+      valueCell.textContent = value;
       rows.push([brandCell, valueCell]);
     }
   });
 
   const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  wrapper.appendChild(table);
+
+  const sectionMeta = WebImporter.DOMUtils.createTable(
+    [['Section Metadata'], ['Style', 'dark']],
+    document,
+  );
+  wrapper.appendChild(sectionMeta);
+
+  element.replaceWith(wrapper);
 }

@@ -47,6 +47,22 @@ Maintain a skill library in `skills/`. Skills prevent re-solving problems.
 ### Blocks
 Prefer reuse and variants over new blocks. Add a new block only when structure is fundamentally different or a variant would need >50% new JS/CSS.
 
+### Content
+- All user-facing text lives in `.plain.html` content files — never hardcode strings in JS or CSS. Code only decorates and lays out what the content provides. Exception: purely functional UI labels (e.g., "Previous slide" aria-labels) that authors would never need to change.
+- Prefer default content (headings, paragraphs, links outside a block table) over putting content inside blocks. Eyebrow pre-titles, section headings, subtitles, and CTAs that introduce a block belong in the section's default content above the block — not in the block's first row.
+- Block variants must share the same content structure. A variant is a CSS/JS styling toggle (injected as a class name), not a different content model. If two instances need fundamentally different row/cell layouts, they are different blocks — not variants.
+- Keep content structure consistent across similar blocks. Authors remember patterns; surprises cost them time. If one block uses `[h2, p, CTA]` in a text cell, don't make another block use `[h2]` in row 1 and `[p, CTA]` in row 2 for the same logical content.
+- Import parsers must extract all content from the source DOM — never inject placeholder text or hardcode editorial strings. If source content is missing or inaccessible at import time, leave the field empty rather than inventing a value.
+- When a section needs special styling (background, color scheme, layout), authors apply it via Section Metadata. Import parsers should detect visual context (e.g., dark backgrounds) from the source DOM and emit the corresponding Section Metadata automatically.
+
+### Styling context: variants, section styles, page templates
+All three serve the same purpose — adding a context-specific class name to apply a style or behavior:
+- **Block variant** — class on the block element (e.g., `video-card-enterprise`). Use when two instances of a block differ visually but share content structure.
+- **Section style** — class on the section wrapper (e.g., `dark`). Use when the entire section needs a shared visual treatment (background, color scheme) that spans default content and blocks alike. Authors set it via Section Metadata.
+- **Page template** — class on `<body>` (e.g., `blog-post`). Use for page-wide layout or behavior differences.
+
+When importing content, detect visual context from the source DOM (background color, layout patterns) and emit the appropriate Section Metadata or template metadata automatically. This ensures consistent styling across pages without authors needing to manually replicate styling decisions.
+
 ### CSS
 - Use tokens from `styles.css`; add new tokens when values repeat.
 - Class names: `{block}-{part}` kebab-case.

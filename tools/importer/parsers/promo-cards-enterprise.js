@@ -5,20 +5,16 @@ export default function parse(element, { document }) {
   const ctaLink = element.querySelector('a.mp-button');
   const video = element.querySelector('video');
 
-  // Row 1: heading
-  const headingContent = document.createElement('div');
+  const textContent = document.createElement('div');
   if (h2) {
     const heading = document.createElement('h2');
     heading.innerHTML = h2.innerHTML;
-    headingContent.appendChild(heading);
+    textContent.appendChild(heading);
   }
-
-  // Row 2: description + CTA
-  const bodyContent = document.createElement('div');
   if (description) {
     const p = document.createElement('p');
     p.textContent = description.textContent.trim();
-    bodyContent.appendChild(p);
+    textContent.appendChild(p);
   }
   if (ctaLink) {
     const p = document.createElement('p');
@@ -28,10 +24,10 @@ export default function parse(element, { document }) {
     a.textContent = ctaLink.textContent.trim();
     strong.appendChild(a);
     p.appendChild(strong);
-    bodyContent.appendChild(p);
+    textContent.appendChild(p);
   }
 
-  const rows = [['Video Card (video-card-enterprise)'], [headingContent], [bodyContent]];
+  const rows = [['Video Card (video-card-enterprise)'], [textContent]];
 
   // Row 3: video URL link + poster image
   const mediaContent = document.createElement('div');
@@ -53,7 +49,7 @@ export default function parse(element, { document }) {
       const pic = document.createElement('picture');
       const img = document.createElement('img');
       img.src = posterSrc.startsWith('/') ? `https://www.semrush.com${posterSrc}` : posterSrc;
-      img.alt = 'Enterprise dashboard';
+      img.alt = video.getAttribute('aria-label') || '';
       pic.appendChild(img);
       p.appendChild(pic);
       mediaContent.appendChild(p);

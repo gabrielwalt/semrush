@@ -1,10 +1,5 @@
 export default async function decorate(block) {
-  const rows = [...block.children];
-  const headerRow = rows[0];
-
-  headerRow.classList.add('stat-header');
-
-  const statRows = rows.slice(1);
+  const statRows = [...block.children];
 
   statRows.forEach((row, index) => {
     row.classList.add('stat-row');

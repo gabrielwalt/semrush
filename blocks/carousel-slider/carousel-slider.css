@@ -1,7 +1,7 @@
 /* Carousel Slider Block */
 .section.solutions-slider-container > .default-content-wrapper,
 .section.carousel-slider-container > .default-content-wrapper {
-  display: none;
+  padding: 0 var(--section-gutter);
 }
 
 .solutions-slider-wrapper,

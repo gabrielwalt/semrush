@@ -413,6 +413,20 @@ main .section.highlight {
   background-color: var(--light-color);
 }
 
+main .section.dark {
+  background-color: var(--dark-color);
+  color: #fff;
+}
+
+main .section.dark h1,
+main .section.dark h2,
+main .section.dark h3,
+main .section.dark h4,
+main .section.dark h5,
+main .section.dark h6 {
+  color: #fff;
+}
+
 /* centered section variant */
 main .section.centered > div {
   display: flex;

@@ -49,7 +49,7 @@ export default function parse(element, { document }) {
       const pic = document.createElement('picture');
       const img = document.createElement('img');
       img.src = posterSrc.startsWith('/') ? `https://www.semrush.com${posterSrc}` : posterSrc;
-      img.alt = 'Semrush One platform';
+      img.alt = video.getAttribute('aria-label') || '';
       pic.appendChild(img);
       p.appendChild(pic);
       mediaContent.appendChild(p);

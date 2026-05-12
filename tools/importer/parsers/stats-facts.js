@@ -1,20 +1,23 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
+  const sectionH2 = element.querySelector('h2');
   const sectionSubtitle = element.querySelector('h3');
   const learnMoreLink = element.querySelector('a[href*="/stats/"]');
   const statItems = element.querySelectorAll('li');
 
-  // Header row: eyebrow + title + CTA
-  const headerContent = document.createElement('div');
+  const wrapper = document.createElement('div');
 
-  const eyebrow = document.createElement('p');
-  eyebrow.textContent = 'Stats and facts';
-  headerContent.appendChild(eyebrow);
+  // Default content: eyebrow + title + CTA
+  if (sectionH2) {
+    const eyebrow = document.createElement('p');
+    eyebrow.textContent = sectionH2.textContent.trim();
+    wrapper.appendChild(eyebrow);
+  }
 
   if (sectionSubtitle) {
     const h2 = document.createElement('h2');
     h2.textContent = sectionSubtitle.textContent.trim();
-    headerContent.appendChild(h2);
+    wrapper.appendChild(h2);
   }
 
   if (learnMoreLink) {
@@ -25,10 +28,10 @@ export default function parse(element, { document }) {
     a.textContent = learnMoreLink.textContent.trim();
     em.appendChild(a);
     p.appendChild(em);
-    headerContent.appendChild(p);
+    wrapper.appendChild(p);
   }
 
-  const rows = [['Stats'], [headerContent]];
+  const rows = [['Stats Facts']];
 
   statItems.forEach((item) => {
     const countEl = item.querySelector('.mp-stats__item-count, b');
@@ -60,5 +63,6 @@ export default function parse(element, { document }) {
   });
 
   const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  wrapper.appendChild(table);
+  element.replaceWith(wrapper);
 }

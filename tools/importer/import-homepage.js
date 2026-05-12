@@ -166,7 +166,7 @@
         var ppic = document.createElement('picture');
         var pimg = document.createElement('img');
         pimg.src = posterSrc.startsWith('/') ? 'https://www.semrush.com' + posterSrc : posterSrc;
-        pimg.alt = 'Semrush One platform';
+        pimg.alt = video.getAttribute('aria-label') || '';
         ppic.appendChild(pimg);
         pp.appendChild(ppic);
         mediaContent.appendChild(pp);
@@ -184,17 +184,16 @@
     const ctaLink = element.querySelector('a.mp-button');
     const video = element.querySelector('video');
 
-    const headingContent = document.createElement('div');
+    const textContent = document.createElement('div');
     if (h2) {
       const heading = document.createElement('h2');
       heading.innerHTML = h2.innerHTML;
-      headingContent.appendChild(heading);
+      textContent.appendChild(heading);
     }
-    const bodyContent = document.createElement('div');
     if (description) {
       const p = document.createElement('p');
       p.textContent = description.textContent.trim();
-      bodyContent.appendChild(p);
+      textContent.appendChild(p);
     }
     if (ctaLink) {
       const p = document.createElement('p');
@@ -204,9 +203,9 @@
       a.textContent = ctaLink.textContent.trim();
       strong.appendChild(a);
       p.appendChild(strong);
-      bodyContent.appendChild(p);
+      textContent.appendChild(p);
     }
-    const rows = [['Video Card (video-card-enterprise)'], [headingContent], [bodyContent]];
+    const rows = [['Video Card (video-card-enterprise)'], [textContent]];
 
     if (video) {
       var mediaContent = document.createElement('div');
@@ -227,7 +226,7 @@
         var ppic = document.createElement('picture');
         var pimg = document.createElement('img');
         pimg.src = posterSrc.startsWith('/') ? 'https://www.semrush.com' + posterSrc : posterSrc;
-        pimg.alt = 'Enterprise dashboard';
+        pimg.alt = video.getAttribute('aria-label') || '';
         ppic.appendChild(pimg);
         pp.appendChild(ppic);
         mediaContent.appendChild(pp);
@@ -240,20 +239,24 @@
   }
 
   function solutionsSliderParser(element, { document }) {
-    const sectionSubtitle = element.querySelector('h3');
     const wrapper = document.createElement('div');
 
-    const eyebrow = document.createElement('p');
-    eyebrow.textContent = 'Solutions';
-    wrapper.appendChild(eyebrow);
+    const sectionH2 = element.querySelector('h2');
+    const sectionSubtitle = element.querySelector('h2 ~ h3, h3');
+    const slides = element.querySelectorAll('.mp-toolkit.swiper-slide');
+
+    if (sectionH2) {
+      const eyebrow = document.createElement('p');
+      eyebrow.textContent = sectionH2.textContent.trim() + ' ( ' + slides.length + ' )';
+      wrapper.appendChild(eyebrow);
+    }
     if (sectionSubtitle) {
       const h2 = document.createElement('h2');
       h2.textContent = sectionSubtitle.textContent.trim();
       wrapper.appendChild(h2);
     }
 
-    const slides = element.querySelectorAll('.mp-toolkit.swiper-slide');
-    const rows = [['Solutions Slider']];
+    const rows = [['Carousel Slider']];
     slides.forEach((slide) => {
       const title = slide.querySelector('h3');
       const subtitle = slide.querySelector('h4');
@@ -303,18 +306,22 @@
   }
 
   function statsParser(element, { document }) {
+    const sectionH2 = element.querySelector('h2');
     const sectionSubtitle = element.querySelector('h3');
     const learnMoreLink = element.querySelector('a[href*="/stats/"]');
     const statItems = element.querySelectorAll('li');
 
-    const headerContent = document.createElement('div');
-    const eyebrow = document.createElement('p');
-    eyebrow.textContent = 'Stats and facts';
-    headerContent.appendChild(eyebrow);
+    const wrapper = document.createElement('div');
+
+    if (sectionH2) {
+      const eyebrow = document.createElement('p');
+      eyebrow.textContent = sectionH2.textContent.trim();
+      wrapper.appendChild(eyebrow);
+    }
     if (sectionSubtitle) {
       const h2 = document.createElement('h2');
       h2.textContent = sectionSubtitle.textContent.trim();
-      headerContent.appendChild(h2);
+      wrapper.appendChild(h2);
     }
     if (learnMoreLink) {
       const p = document.createElement('p');
@@ -324,9 +331,10 @@
       a.textContent = learnMoreLink.textContent.trim();
       em.appendChild(a);
       p.appendChild(em);
-      headerContent.appendChild(p);
+      wrapper.appendChild(p);
     }
-    const rows = [['Stats'], [headerContent]];
+
+    const rows = [['Stats Facts']];
     statItems.forEach((item) => {
       const countEl = item.querySelector('.mp-stats__item-count, b');
       const titleEl = item.querySelector('.mp-stats__item-title');
@@ -351,38 +359,27 @@
       }
     });
     const table = WebImporter.DOMUtils.createTable(rows, document);
-    element.replaceWith(table);
+    wrapper.appendChild(table);
+    element.replaceWith(wrapper);
   }
 
   function aiVisibilityIndexParser(element, { document }) {
     const h2 = element.querySelector('h2');
     const subtitle = element.querySelector('.mp-ai-visibility-index__subtitle, h2 + p');
     const ctaLink = element.querySelector('a.mp-button, a[href*="ai-visibility-index"]');
-    const iconImg = element.querySelector('.mp-ai-visibility-index__img img');
     const tableRows = element.querySelectorAll('tbody tr');
 
-    const rows = [['AI Visibility Index']];
-    const headerRow = document.createElement('div');
-    const headerText = document.createElement('div');
-    if (iconImg) {
-      const iconDiv = document.createElement('div');
-      const pic = document.createElement('picture');
-      const img = document.createElement('img');
-      img.src = iconImg.src;
-      img.alt = '';
-      pic.appendChild(img);
-      iconDiv.appendChild(pic);
-      headerRow.appendChild(iconDiv);
-    }
+    const wrapper = document.createElement('div');
+
     if (h2) {
       const heading = document.createElement('h2');
       heading.textContent = h2.textContent.trim();
-      headerText.appendChild(heading);
+      wrapper.appendChild(heading);
     }
     if (subtitle) {
       const p = document.createElement('p');
       p.textContent = subtitle.textContent.trim();
-      headerText.appendChild(p);
+      wrapper.appendChild(p);
     }
     if (ctaLink) {
       const p = document.createElement('p');
@@ -392,10 +389,10 @@
       a.textContent = ctaLink.textContent.trim();
       strong.appendChild(a);
       p.appendChild(strong);
-      headerText.appendChild(p);
+      wrapper.appendChild(p);
     }
-    rows.push([headerRow, headerText]);
 
+    const rows = [['Stats Visibility']];
     const hBrand = document.createElement('div');
     hBrand.textContent = 'Brand';
     const hSov = document.createElement('div');
@@ -416,10 +413,19 @@
       }
     });
     const table = WebImporter.DOMUtils.createTable(rows, document);
-    element.replaceWith(table);
+    wrapper.appendChild(table);
+
+    var sectionMeta = WebImporter.DOMUtils.createTable(
+      [['Section Metadata'], ['Style', 'dark']],
+      document
+    );
+    wrapper.appendChild(sectionMeta);
+
+    element.replaceWith(wrapper);
   }
 
   function testimonialsParser(element, { document }) {
+    const sectionH2 = element.querySelector('h2');
     const sectionSubtitle = element.querySelector('h3');
     const logoImg = element.querySelector('.mp-client-testimonials__logo-img img');
     const quote = element.querySelector('blockquote, .mp-client-testimonials__quote');
@@ -430,27 +436,22 @@
     const statNumber = element.querySelector('.mp-client-testimonials__stats-block-number');
     const statText = element.querySelector('.mp-client-testimonials__stats-block-text');
 
-    const rows = [['Testimonials']];
-    const headingCell = document.createElement('div');
-    const eyebrow = document.createElement('p');
-    eyebrow.textContent = 'Our customers';
-    headingCell.appendChild(eyebrow);
+    const wrapper = document.createElement('div');
+
+    if (sectionH2) {
+      const eyebrow = document.createElement('p');
+      eyebrow.textContent = sectionH2.textContent.trim();
+      wrapper.appendChild(eyebrow);
+    }
     if (sectionSubtitle) {
       const h2el = document.createElement('h2');
       h2el.textContent = sectionSubtitle.textContent.trim();
-      headingCell.appendChild(h2el);
+      wrapper.appendChild(h2el);
     }
-    rows.push([headingCell]);
+
+    const rows = [['Testimonials']];
 
     const quoteCell = document.createElement('div');
-    if (logoImg) {
-      const pic = document.createElement('picture');
-      const img = document.createElement('img');
-      img.src = logoImg.src;
-      img.alt = logoImg.alt || 'Zoominfo';
-      pic.appendChild(img);
-      quoteCell.appendChild(pic);
-    }
     if (quote) {
       const bq = document.createElement('blockquote');
       bq.textContent = quote.textContent.trim();
@@ -463,7 +464,7 @@
       const pic = document.createElement('picture');
       const img = document.createElement('img');
       img.src = authorImg.src || '';
-      img.alt = authorName ? authorName.textContent.trim() : 'James Roth';
+      img.alt = authorName ? authorName.textContent.trim() : '';
       pic.appendChild(img);
       authorCell.appendChild(pic);
     }
@@ -472,11 +473,6 @@
       const strong = document.createElement('strong');
       strong.textContent = authorName.textContent.trim();
       p.appendChild(strong);
-      authorCell.appendChild(p);
-    }
-    if (authorRole) {
-      const p = document.createElement('p');
-      p.textContent = authorRole.textContent.trim();
       authorCell.appendChild(p);
     }
     rows.push([authorCell]);
@@ -496,17 +492,21 @@
       rows.push([statCell]);
     }
     const table = WebImporter.DOMUtils.createTable(rows, document);
-    element.replaceWith(table);
+    wrapper.appendChild(table);
+    element.replaceWith(wrapper);
   }
 
   function resourcesSliderParser(element, { document }) {
+    const sectionH2 = element.querySelector('h2');
     const sectionSubtitle = element.querySelector('h3');
     const wrapper = document.createElement('div');
 
     const articles = element.querySelectorAll('article');
-    const eyebrow = document.createElement('p');
-    eyebrow.textContent = 'Resources ( ' + articles.length + ' )';
-    wrapper.appendChild(eyebrow);
+    if (sectionH2) {
+      const eyebrow = document.createElement('p');
+      eyebrow.textContent = sectionH2.textContent.trim();
+      wrapper.appendChild(eyebrow);
+    }
     if (sectionSubtitle) {
       const h2 = document.createElement('h2');
       h2.textContent = sectionSubtitle.textContent.trim();
@@ -595,8 +595,8 @@
     'promo-cards-semrush-one': promoCardsSemrushOneParser,
     'promo-cards-enterprise': promoCardsEnterpriseParser,
     'solutions-slider': solutionsSliderParser,
-    'stats': statsParser,
-    'ai-visibility-index': aiVisibilityIndexParser,
+    'stats-facts': statsParser,
+    'stats-visibility': aiVisibilityIndexParser,
     'testimonials': testimonialsParser,
     'resources-slider': resourcesSliderParser,
   };
@@ -610,8 +610,8 @@
       { name: 'promo-cards-semrush-one', instances: ['.mp-promo-cards.mp-semrush-one'] },
       { name: 'promo-cards-enterprise', instances: ['.mp-promo-cards.mp-enterprise'] },
       { name: 'solutions-slider', instances: ['.mp-section.mp-toolkits'] },
-      { name: 'stats', instances: ['.mp-section.mp-stats'] },
-      { name: 'ai-visibility-index', instances: ['.mp-section.mp-ai-visibility-index'] },
+      { name: 'stats-facts', instances: ['.mp-section.mp-stats'] },
+      { name: 'stats-visibility', instances: ['.mp-section.mp-ai-visibility-index'] },
       { name: 'testimonials', instances: ['.mp-section.mp-client-testimonials'] },
       { name: 'resources-slider', instances: ['.mp-section.mp-resources'] },
     ],

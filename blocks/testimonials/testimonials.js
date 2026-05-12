@@ -1,15 +1,13 @@
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Row 0: heading (eyebrow + h2)
-  // Row 1: logo + blockquote (single cell)
-  // Row 2: author image + name + title (single cell)
-  // Row 3: stat number + label (single cell)
+  // Row 0: blockquote (single cell)
+  // Row 1: author image + name + title (single cell)
+  // Row 2: stat number + label (single cell)
 
-  const headingRow = rows[0];
-  const quoteRow = rows[1];
-  const authorRow = rows[2];
-  const statsRow = rows[3];
+  const quoteRow = rows[0];
+  const authorRow = rows[1];
+  const statsRow = rows[2];
 
   const logoImgEl = quoteRow ? quoteRow.querySelector('img') : null;
   const blockquoteEl = quoteRow ? quoteRow.querySelector('blockquote') : null;
@@ -18,8 +16,6 @@ export default async function decorate(block) {
   const statsCell = statsRow ? statsRow.querySelector(':scope > div') : null;
 
   block.innerHTML = '';
-
-  block.appendChild(headingRow);
 
   const layout = document.createElement('div');
   layout.className = 'testimonials-layout';
