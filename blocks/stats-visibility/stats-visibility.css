@@ -9,7 +9,7 @@
   padding: 0 var(--space-m);
 }
 
-.section.dark.stats-visibility-container {
+.section.section-dark.stats-visibility-container {
   background:
     url('/icons/pattern-ai-vis-index.svg') repeat-x 0% 100%,
     var(--dark-color);

@@ -1,6 +1,28 @@
 /* eslint-disable */
 /* global WebImporter */
 
+// HELPERS
+
+  function wrapCta(ctaLink, document) {
+    var p = document.createElement('p');
+    var a = document.createElement('a');
+    a.href = ctaLink.href;
+    a.textContent = ctaLink.textContent.trim();
+    var isOutline = ctaLink.classList.contains('mp-button--outline')
+      || ctaLink.classList.contains('mp-button--ghost')
+      || ctaLink.classList.contains('mp-button--secondary');
+    if (isOutline) {
+      var em = document.createElement('em');
+      em.appendChild(a);
+      p.appendChild(em);
+    } else {
+      var strong = document.createElement('strong');
+      strong.appendChild(a);
+      p.appendChild(strong);
+    }
+    return p;
+  }
+
 // PARSERS
 
   function announcementBarParser(element, { document }) {
@@ -82,7 +104,7 @@
 
     // Section Metadata for centered style
     var sectionMetaTable = WebImporter.DOMUtils.createTable(
-      [['Section Metadata'], ['Style', 'centered']],
+      [['Section Metadata'], ['Style', 'section-centered']],
       document
     );
     wrapper.appendChild(sectionMetaTable);
@@ -136,14 +158,7 @@
       textContent.appendChild(p);
     }
     if (ctaLink) {
-      const p = document.createElement('p');
-      const em = document.createElement('em');
-      const a = document.createElement('a');
-      a.href = ctaLink.href;
-      a.textContent = ctaLink.textContent.trim();
-      em.appendChild(a);
-      p.appendChild(em);
-      textContent.appendChild(p);
+      textContent.appendChild(wrapCta(ctaLink, document));
     }
     const rows = [['Video Card (video-card-semrush-one)'], [textContent]];
 
@@ -196,14 +211,7 @@
       textContent.appendChild(p);
     }
     if (ctaLink) {
-      const p = document.createElement('p');
-      const strong = document.createElement('strong');
-      const a = document.createElement('a');
-      a.href = ctaLink.href;
-      a.textContent = ctaLink.textContent.trim();
-      strong.appendChild(a);
-      p.appendChild(strong);
-      textContent.appendChild(p);
+      textContent.appendChild(wrapCta(ctaLink, document));
     }
     const rows = [['Video Card (video-card-enterprise)'], [textContent]];
 
@@ -280,14 +288,7 @@
       }
       const cta = slide.querySelector('a.mp-button');
       if (cta) {
-        const p = document.createElement('p');
-        const strong = document.createElement('strong');
-        const a = document.createElement('a');
-        a.href = cta.href;
-        a.textContent = cta.textContent.trim();
-        strong.appendChild(a);
-        p.appendChild(strong);
-        textCell.appendChild(p);
+        textCell.appendChild(wrapCta(cta, document));
       }
       const imgCell = document.createElement('div');
       if (img) {
@@ -324,14 +325,7 @@
       wrapper.appendChild(h2);
     }
     if (learnMoreLink) {
-      const p = document.createElement('p');
-      const em = document.createElement('em');
-      const a = document.createElement('a');
-      a.href = learnMoreLink.href;
-      a.textContent = learnMoreLink.textContent.trim();
-      em.appendChild(a);
-      p.appendChild(em);
-      wrapper.appendChild(p);
+      wrapper.appendChild(wrapCta(learnMoreLink, document));
     }
 
     const rows = [['Stats Facts']];
@@ -382,14 +376,7 @@
       wrapper.appendChild(p);
     }
     if (ctaLink) {
-      const p = document.createElement('p');
-      const strong = document.createElement('strong');
-      const a = document.createElement('a');
-      a.href = ctaLink.href;
-      a.textContent = ctaLink.textContent.trim();
-      strong.appendChild(a);
-      p.appendChild(strong);
-      wrapper.appendChild(p);
+      wrapper.appendChild(wrapCta(ctaLink, document));
     }
 
     const rows = [['Stats Visibility']];
@@ -416,7 +403,7 @@
     wrapper.appendChild(table);
 
     var sectionMeta = WebImporter.DOMUtils.createTable(
-      [['Section Metadata'], ['Style', 'dark']],
+      [['Section Metadata'], ['Style', 'section-dark']],
       document
     );
     wrapper.appendChild(sectionMeta);

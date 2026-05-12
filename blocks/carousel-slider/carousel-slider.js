@@ -1,12 +1,28 @@
-function createGlassFrame(child, className) {
-  const frame = document.createElement('div');
-  frame.className = `carousel-slider-glass ${className || ''}`;
-  frame.appendChild(child);
-  return frame;
+function createNav(scrollTarget, scrollAmount) {
+  const nav = document.createElement('div');
+  nav.className = 'carousel-slider-nav';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.setAttribute('aria-label', 'Previous slide');
+  prevBtn.textContent = '‹';
+
+  const nextBtn = document.createElement('button');
+  nextBtn.setAttribute('aria-label', 'Next slide');
+  nextBtn.textContent = '›';
+
+  nav.append(prevBtn, nextBtn);
+
+  prevBtn.addEventListener('click', () => {
+    scrollTarget.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', () => {
+    scrollTarget.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+
+  return nav;
 }
 
-export default async function decorate(block) {
-  const rows = [...block.children];
+function decorateExpansible(block, rows) {
   const items = [];
 
   rows.forEach((row) => {
@@ -60,7 +76,9 @@ export default async function decorate(block) {
     card.appendChild(expandBtn);
 
     if (item.smallPic) {
-      const poster = createGlassFrame(item.smallPic.cloneNode(true), 'carousel-slider-poster');
+      const poster = document.createElement('div');
+      poster.className = 'carousel-slider-glass carousel-slider-poster';
+      poster.appendChild(item.smallPic.cloneNode(true));
       card.appendChild(poster);
     }
 
@@ -68,7 +86,9 @@ export default async function decorate(block) {
     content.className = 'carousel-slider-content';
 
     if (item.largePic) {
-      const largeFrame = createGlassFrame(item.largePic.cloneNode(true), 'carousel-slider-large-img');
+      const largeFrame = document.createElement('div');
+      largeFrame.className = 'carousel-slider-glass carousel-slider-large-img';
+      largeFrame.appendChild(item.largePic.cloneNode(true));
       content.appendChild(largeFrame);
     }
 
@@ -110,26 +130,26 @@ export default async function decorate(block) {
     track.appendChild(card);
   });
 
-  const nav = document.createElement('div');
-  nav.className = 'carousel-slider-nav';
-  const prevBtn = document.createElement('button');
-  prevBtn.className = 'carousel-slider-prev';
-  prevBtn.textContent = '‹';
-  prevBtn.setAttribute('aria-label', 'Previous slide');
-  const nextBtn = document.createElement('button');
-  nextBtn.className = 'carousel-slider-next';
-  nextBtn.textContent = '›';
-  nextBtn.setAttribute('aria-label', 'Next slide');
-  nav.appendChild(prevBtn);
-  nav.appendChild(nextBtn);
-
-  prevBtn.addEventListener('click', () => {
-    track.scrollBy({ left: -450, behavior: 'smooth' });
-  });
-  nextBtn.addEventListener('click', () => {
-    track.scrollBy({ left: 450, behavior: 'smooth' });
-  });
-
+  const nav = createNav(track, 450);
   block.appendChild(nav);
   block.appendChild(track);
+}
+
+function decorateDefault(block) {
+  const track = block;
+  const nav = createNav(track, 442);
+
+  const wrapper = block.closest('.carousel-slider-wrapper');
+  if (wrapper) wrapper.before(nav);
+}
+
+export default async function decorate(block) {
+  const isExpansible = block.classList.contains('carousel-slider-expansible');
+
+  if (isExpansible) {
+    const rows = [...block.children];
+    decorateExpansible(block, rows);
+  } else {
+    decorateDefault(block);
+  }
 }

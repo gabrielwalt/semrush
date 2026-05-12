@@ -53,13 +53,19 @@ Prefer reuse and variants over new blocks. Add a new block only when structure i
 - Block variants must share the same content structure. A variant is a CSS/JS styling toggle (injected as a class name), not a different content model. If two instances need fundamentally different row/cell layouts, they are different blocks — not variants.
 - Keep content structure consistent across similar blocks. Authors remember patterns; surprises cost them time. If one block uses `[h2, p, CTA]` in a text cell, don't make another block use `[h2]` in row 1 and `[p, CTA]` in row 2 for the same logical content.
 - Import parsers must extract all content from the source DOM — never inject placeholder text or hardcode editorial strings. If source content is missing or inaccessible at import time, leave the field empty rather than inventing a value.
+- **Import parsers must detect, not hardcode, styling decisions.** Every content styling choice — CTA type (primary/secondary), heading level, block variant, section style, page template — must be derived from observable signals in the source DOM (CSS classes, computed styles, element structure, aria attributes). Never assume a fixed style for a given parser; detect from the source so that the same parser handles varying instances correctly. If no signal is available, default to the most common/neutral option.
+- **CTA link formatting convention:** Links wrapped in formatting become buttons during decoration:
+  - `<strong><a>` → **primary** button (solid filled) — use for the main action
+  - `<em><a>` → **secondary** button (outline/ghost) — use for alternative actions
+  - `<strong><em><a>` → **accent** button (high-impact) — use sparingly for maximum emphasis
+  - Import parsers must detect the visual weight of source CTAs (filled vs outline classes) and apply the matching wrapper. Never hardcode one style — detect from the source DOM.
 - When a section needs special styling (background, color scheme, layout), authors apply it via Section Metadata. Import parsers should detect visual context (e.g., dark backgrounds) from the source DOM and emit the corresponding Section Metadata automatically.
 
 ### Styling context: variants, section styles, page templates
 All three serve the same purpose — adding a context-specific class name to apply a style or behavior:
-- **Block variant** — class on the block element (e.g., `video-card-enterprise`). Use when two instances of a block differ visually but share content structure.
-- **Section style** — class on the section wrapper (e.g., `dark`). Use when the entire section needs a shared visual treatment (background, color scheme) that spans default content and blocks alike. Authors set it via Section Metadata.
-- **Page template** — class on `<body>` (e.g., `blog-post`). Use for page-wide layout or behavior differences.
+- **Block variant** — class on the block element (e.g., `video-card-enterprise`). Use when two instances of a block differ visually but share content structure. For generic styles that apply across multiple blocks (e.g., spacing adjustments), prefix the variant name with `block-` (e.g., `block-spacious`, `block-no-margin-top`) to signal it is not block-specific.
+- **Section style** — class on the section wrapper. Prefix with `section-` (e.g., `section-dark`, `section-narrow`). Use when the entire section needs a shared visual treatment (background, color scheme) that spans default content and blocks alike. Authors set it via Section Metadata.
+- **Page template** — class on `<body>`. Prefix with `template-` (e.g., `template-blog-post`, `template-landing`). Use for page-wide layout or behavior differences.
 
 When importing content, detect visual context from the source DOM (background color, layout patterns) and emit the appropriate Section Metadata or template metadata automatically. This ensures consistent styling across pages without authors needing to manually replicate styling decisions.
 

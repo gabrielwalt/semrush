@@ -23,6 +23,23 @@ var CustomImportScript = (() => {
   __export(import_homepage_exports, {
     default: () => import_homepage_default
   });
+  function wrapCta(ctaLink, document) {
+    var p = document.createElement("p");
+    var a = document.createElement("a");
+    a.href = ctaLink.href;
+    a.textContent = ctaLink.textContent.trim();
+    var isOutline = ctaLink.classList.contains("mp-button--outline") || ctaLink.classList.contains("mp-button--ghost") || ctaLink.classList.contains("mp-button--secondary");
+    if (isOutline) {
+      var em = document.createElement("em");
+      em.appendChild(a);
+      p.appendChild(em);
+    } else {
+      var strong = document.createElement("strong");
+      strong.appendChild(a);
+      p.appendChild(strong);
+    }
+    return p;
+  }
   function announcementBarParser(element, { document }) {
     var _a, _b;
     const text = ((_a = element.querySelector(".srf_announcement_banner__long")) == null ? void 0 : _a.textContent) || element.textContent.trim();
@@ -93,7 +110,7 @@ var CustomImportScript = (() => {
     var heroVideoTable = WebImporter.DOMUtils.createTable([["Hero Video"], [videoCell]], document);
     wrapper.appendChild(heroVideoTable);
     var sectionMetaTable = WebImporter.DOMUtils.createTable(
-      [["Section Metadata"], ["Style", "centered"]],
+      [["Section Metadata"], ["Style", "section-centered"]],
       document
     );
     wrapper.appendChild(sectionMetaTable);
@@ -144,14 +161,7 @@ var CustomImportScript = (() => {
       textContent.appendChild(p);
     }
     if (ctaLink) {
-      const p = document.createElement("p");
-      const em = document.createElement("em");
-      const a = document.createElement("a");
-      a.href = ctaLink.href;
-      a.textContent = ctaLink.textContent.trim();
-      em.appendChild(a);
-      p.appendChild(em);
-      textContent.appendChild(p);
+      textContent.appendChild(wrapCta(ctaLink, document));
     }
     const rows = [["Video Card (video-card-semrush-one)"], [textContent]];
     if (video) {
@@ -200,14 +210,7 @@ var CustomImportScript = (() => {
       textContent.appendChild(p);
     }
     if (ctaLink) {
-      const p = document.createElement("p");
-      const strong = document.createElement("strong");
-      const a = document.createElement("a");
-      a.href = ctaLink.href;
-      a.textContent = ctaLink.textContent.trim();
-      strong.appendChild(a);
-      p.appendChild(strong);
-      textContent.appendChild(p);
+      textContent.appendChild(wrapCta(ctaLink, document));
     }
     const rows = [["Video Card (video-card-enterprise)"], [textContent]];
     if (video) {
@@ -278,14 +281,7 @@ var CustomImportScript = (() => {
       }
       const cta = slide.querySelector("a.mp-button");
       if (cta) {
-        const p = document.createElement("p");
-        const strong = document.createElement("strong");
-        const a = document.createElement("a");
-        a.href = cta.href;
-        a.textContent = cta.textContent.trim();
-        strong.appendChild(a);
-        p.appendChild(strong);
-        textCell.appendChild(p);
+        textCell.appendChild(wrapCta(cta, document));
       }
       const imgCell = document.createElement("div");
       if (img) {
@@ -307,28 +303,21 @@ var CustomImportScript = (() => {
     const sectionSubtitle = element.querySelector("h3");
     const learnMoreLink = element.querySelector('a[href*="/stats/"]');
     const statItems = element.querySelectorAll("li");
-    const headerContent = document.createElement("div");
+    const wrapper = document.createElement("div");
     if (sectionH2) {
       const eyebrow = document.createElement("p");
       eyebrow.textContent = sectionH2.textContent.trim();
-      headerContent.appendChild(eyebrow);
+      wrapper.appendChild(eyebrow);
     }
     if (sectionSubtitle) {
       const h2 = document.createElement("h2");
       h2.textContent = sectionSubtitle.textContent.trim();
-      headerContent.appendChild(h2);
+      wrapper.appendChild(h2);
     }
     if (learnMoreLink) {
-      const p = document.createElement("p");
-      const em = document.createElement("em");
-      const a = document.createElement("a");
-      a.href = learnMoreLink.href;
-      a.textContent = learnMoreLink.textContent.trim();
-      em.appendChild(a);
-      p.appendChild(em);
-      headerContent.appendChild(p);
+      wrapper.appendChild(wrapCta(learnMoreLink, document));
     }
-    const rows = [["Stats"], [headerContent]];
+    const rows = [["Stats Facts"]];
     statItems.forEach((item) => {
       const countEl = item.querySelector(".mp-stats__item-count, b");
       const titleEl = item.querySelector(".mp-stats__item-title");
@@ -353,7 +342,8 @@ var CustomImportScript = (() => {
       }
     });
     const table = WebImporter.DOMUtils.createTable(rows, document);
-    element.replaceWith(table);
+    wrapper.appendChild(table);
+    element.replaceWith(wrapper);
   }
   function aiVisibilityIndexParser(element, { document }) {
     const h2 = element.querySelector("h2");
@@ -372,16 +362,9 @@ var CustomImportScript = (() => {
       wrapper.appendChild(p);
     }
     if (ctaLink) {
-      const p = document.createElement("p");
-      const strong = document.createElement("strong");
-      const a = document.createElement("a");
-      a.href = ctaLink.href;
-      a.textContent = ctaLink.textContent.trim();
-      strong.appendChild(a);
-      p.appendChild(strong);
-      wrapper.appendChild(p);
+      wrapper.appendChild(wrapCta(ctaLink, document));
     }
-    const rows = [["AI Visibility Index"]];
+    const rows = [["Stats Visibility"]];
     const hBrand = document.createElement("div");
     hBrand.textContent = "Brand";
     const hSov = document.createElement("div");
@@ -403,7 +386,7 @@ var CustomImportScript = (() => {
     const table = WebImporter.DOMUtils.createTable(rows, document);
     wrapper.appendChild(table);
     var sectionMeta = WebImporter.DOMUtils.createTable(
-      [["Section Metadata"], ["Style", "dark"]],
+      [["Section Metadata"], ["Style", "section-dark"]],
       document
     );
     wrapper.appendChild(sectionMeta);
@@ -561,8 +544,8 @@ var CustomImportScript = (() => {
     "promo-cards-semrush-one": promoCardsSemrushOneParser,
     "promo-cards-enterprise": promoCardsEnterpriseParser,
     "solutions-slider": solutionsSliderParser,
-    "stats": statsParser,
-    "ai-visibility-index": aiVisibilityIndexParser,
+    "stats-facts": statsParser,
+    "stats-visibility": aiVisibilityIndexParser,
     "testimonials": testimonialsParser,
     "resources-slider": resourcesSliderParser
   };
@@ -575,8 +558,8 @@ var CustomImportScript = (() => {
       { name: "promo-cards-semrush-one", instances: [".mp-promo-cards.mp-semrush-one"] },
       { name: "promo-cards-enterprise", instances: [".mp-promo-cards.mp-enterprise"] },
       { name: "solutions-slider", instances: [".mp-section.mp-toolkits"] },
-      { name: "stats", instances: [".mp-section.mp-stats"] },
-      { name: "ai-visibility-index", instances: [".mp-section.mp-ai-visibility-index"] },
+      { name: "stats-facts", instances: [".mp-section.mp-stats"] },
+      { name: "stats-visibility", instances: [".mp-section.mp-ai-visibility-index"] },
       { name: "testimonials", instances: [".mp-section.mp-client-testimonials"] },
       { name: "resources-slider", instances: [".mp-section.mp-resources"] }
     ]
