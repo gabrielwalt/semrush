@@ -94,16 +94,35 @@
   }
 
   function marqueeParser(element, { document }) {
-    // SVG images are stripped by the Helix Importer html2md pipeline.
-    // Remove the source element to keep it clean — marquee content will be
-    // injected as a post-processing step after import.
-    element.remove();
+    const firstGroup = element.querySelector('.mp-logo-marquee__group, ul');
+    if (!firstGroup) { element.remove(); return; }
+
+    const logos = firstGroup.querySelectorAll('img');
+    if (logos.length === 0) { element.remove(); return; }
+
+    const content = document.createElement('div');
+    logos.forEach((img) => {
+      const p = document.createElement('p');
+      const pic = document.createElement('picture');
+      const imgEl = document.createElement('img');
+      const src = img.getAttribute('src') || '';
+      imgEl.src = src.startsWith('/') ? 'https://www.semrush.com' + src : src;
+      imgEl.alt = img.alt || '';
+      pic.appendChild(imgEl);
+      p.appendChild(pic);
+      content.appendChild(p);
+    });
+
+    const cells = [['Marquee'], [content]];
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    element.replaceWith(table);
   }
 
   function promoCardsSemrushOneParser(element, { document }) {
     const h2 = element.querySelector('h2');
     const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
     const ctaLink = element.querySelector('a.mp-button');
+    const video = element.querySelector('video');
 
     const textContent = document.createElement('div');
     if (h2) {
@@ -126,7 +145,35 @@
       p.appendChild(em);
       textContent.appendChild(p);
     }
-    const rows = [['Promo Cards (promo-cards-semrush-one)'], [textContent]];
+    const rows = [['Video Card (video-card-semrush-one)'], [textContent]];
+
+    if (video) {
+      var mediaContent = document.createElement('div');
+      var source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
+      var videoUrl = source ? (source.getAttribute('src') || source.getAttribute('data-src') || '') : (video.getAttribute('src') || '');
+      if (videoUrl) {
+        var vp = document.createElement('p');
+        var va = document.createElement('a');
+        var fullVideoUrl = videoUrl.startsWith('/') ? 'https://www.semrush.com' + videoUrl : videoUrl;
+        va.href = fullVideoUrl;
+        va.textContent = fullVideoUrl;
+        vp.appendChild(va);
+        mediaContent.appendChild(vp);
+      }
+      var posterSrc = video.getAttribute('poster') || '';
+      if (posterSrc) {
+        var pp = document.createElement('p');
+        var ppic = document.createElement('picture');
+        var pimg = document.createElement('img');
+        pimg.src = posterSrc.startsWith('/') ? 'https://www.semrush.com' + posterSrc : posterSrc;
+        pimg.alt = 'Semrush One platform';
+        ppic.appendChild(pimg);
+        pp.appendChild(ppic);
+        mediaContent.appendChild(pp);
+      }
+      if (mediaContent.children.length > 0) rows.push([mediaContent]);
+    }
+
     const table = WebImporter.DOMUtils.createTable(rows, document);
     element.replaceWith(table);
   }
@@ -135,6 +182,7 @@
     const h2 = element.querySelector('h2');
     const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
     const ctaLink = element.querySelector('a.mp-button');
+    const video = element.querySelector('video');
 
     const headingContent = document.createElement('div');
     if (h2) {
@@ -158,7 +206,35 @@
       p.appendChild(strong);
       bodyContent.appendChild(p);
     }
-    const rows = [['Promo Cards (promo-cards-enterprise)'], [headingContent], [bodyContent]];
+    const rows = [['Video Card (video-card-enterprise)'], [headingContent], [bodyContent]];
+
+    if (video) {
+      var mediaContent = document.createElement('div');
+      var source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
+      var videoUrl = source ? (source.getAttribute('src') || source.getAttribute('data-src') || '') : (video.getAttribute('src') || '');
+      if (videoUrl) {
+        var vp = document.createElement('p');
+        var va = document.createElement('a');
+        var fullVideoUrl = videoUrl.startsWith('/') ? 'https://www.semrush.com' + videoUrl : videoUrl;
+        va.href = fullVideoUrl;
+        va.textContent = fullVideoUrl;
+        vp.appendChild(va);
+        mediaContent.appendChild(vp);
+      }
+      var posterSrc = video.getAttribute('poster') || '';
+      if (posterSrc) {
+        var pp = document.createElement('p');
+        var ppic = document.createElement('picture');
+        var pimg = document.createElement('img');
+        pimg.src = posterSrc.startsWith('/') ? 'https://www.semrush.com' + posterSrc : posterSrc;
+        pimg.alt = 'Enterprise dashboard';
+        ppic.appendChild(pimg);
+        pp.appendChild(ppic);
+        mediaContent.appendChild(pp);
+      }
+      if (mediaContent.children.length > 0) rows.push([mediaContent]);
+    }
+
     const table = WebImporter.DOMUtils.createTable(rows, document);
     element.replaceWith(table);
   }
@@ -445,12 +521,15 @@
 
       const imgCell = document.createElement('div');
       if (img) {
-        const pic = document.createElement('picture');
-        const imgEl = document.createElement('img');
-        imgEl.src = img.src;
-        imgEl.alt = img.alt || '';
-        pic.appendChild(imgEl);
-        imgCell.appendChild(pic);
+        const src = img.getAttribute('src') || '';
+        if (src && src !== 'about:error') {
+          const pic = document.createElement('picture');
+          const imgEl = document.createElement('img');
+          imgEl.src = src.startsWith('/') ? 'https://www.semrush.com' + src : src;
+          imgEl.alt = img.alt || '';
+          pic.appendChild(imgEl);
+          imgCell.appendChild(pic);
+        }
       }
       const textCell = document.createElement('div');
       if (titleLink) {

@@ -28,12 +28,15 @@ export default function parse(element, { document }) {
 
     const imgCell = document.createElement('div');
     if (img) {
-      const pic = document.createElement('picture');
-      const imgEl = document.createElement('img');
-      imgEl.src = img.src;
-      imgEl.alt = img.alt || titleLink?.textContent?.trim() || '';
-      pic.appendChild(imgEl);
-      imgCell.appendChild(pic);
+      const src = img.getAttribute('src') || '';
+      if (src && src !== 'about:error') {
+        const pic = document.createElement('picture');
+        const imgEl = document.createElement('img');
+        imgEl.src = src.startsWith('/') ? `https://www.semrush.com${src}` : src;
+        imgEl.alt = img.alt || titleLink?.textContent?.trim() || '';
+        pic.appendChild(imgEl);
+        imgCell.appendChild(pic);
+      }
     }
 
     const textCell = document.createElement('div');

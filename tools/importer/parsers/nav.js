@@ -4,19 +4,23 @@ export default function parse(element, { document }) {
   // Brand div (logo)
   const brandDiv = document.createElement('div');
   const logoImg = element.querySelector('a[href="/"] img, [class*="logo"] img');
+  const logoP = document.createElement('p');
+  const logoA = document.createElement('a');
+  logoA.href = '/';
+  const logoPic = document.createElement('picture');
+  const logoImgEl = document.createElement('img');
   if (logoImg) {
-    const p = document.createElement('p');
-    const a = document.createElement('a');
-    a.href = '/';
-    const pic = document.createElement('picture');
-    const img = document.createElement('img');
-    img.src = logoImg.src;
-    img.alt = logoImg.alt || 'Semrush';
-    pic.appendChild(img);
-    a.appendChild(pic);
-    p.appendChild(a);
-    brandDiv.appendChild(p);
+    const src = logoImg.getAttribute('src') || '';
+    logoImgEl.src = src.startsWith('/') ? `https://www.semrush.com${src}` : src;
+    logoImgEl.alt = logoImg.alt || 'Semrush';
+  } else {
+    logoImgEl.src = 'https://www.semrush.com/static/images/semrush-logo.svg';
+    logoImgEl.alt = 'Semrush';
   }
+  logoPic.appendChild(logoImgEl);
+  logoA.appendChild(logoPic);
+  logoP.appendChild(logoA);
+  brandDiv.appendChild(logoP);
   wrapper.appendChild(brandDiv);
 
   // Sections div (H2/H3/UL structure)

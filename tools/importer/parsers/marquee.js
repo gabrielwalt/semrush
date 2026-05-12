@@ -1,7 +1,7 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
   // Get only the first group of logos (second is a duplicate for animation)
-  const firstGroup = element.querySelector('.mp-logo-marquee__group');
+  const firstGroup = element.querySelector('.mp-logo-marquee__group, ul');
   if (!firstGroup) return;
 
   const logos = firstGroup.querySelectorAll('img');
@@ -9,12 +9,15 @@ export default function parse(element, { document }) {
 
   const content = document.createElement('div');
   logos.forEach((img) => {
+    const p = document.createElement('p');
     const picture = document.createElement('picture');
     const imgEl = document.createElement('img');
-    imgEl.src = img.src;
+    const src = img.getAttribute('src') || '';
+    imgEl.src = src.startsWith('/') ? `https://www.semrush.com${src}` : src;
     imgEl.alt = img.alt || '';
     picture.appendChild(imgEl);
-    content.appendChild(picture);
+    p.appendChild(picture);
+    content.appendChild(p);
   });
 
   const cells = [['Marquee'], [content]];

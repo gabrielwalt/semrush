@@ -37,7 +37,7 @@ export default function parse(element, { document }) {
   const mediaContent = document.createElement('div');
   if (video) {
     const source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
-    const videoUrl = source?.src || source?.getAttribute('data-src') || video.src || '';
+    const videoUrl = source ? (source.getAttribute('src') || source.getAttribute('data-src') || '') : (video.getAttribute('src') || '');
     if (videoUrl) {
       const p = document.createElement('p');
       const a = document.createElement('a');
@@ -47,11 +47,12 @@ export default function parse(element, { document }) {
       p.appendChild(a);
       mediaContent.appendChild(p);
     }
-    if (video.poster) {
+    const posterSrc = video.getAttribute('poster') || '';
+    if (posterSrc) {
       const p = document.createElement('p');
       const pic = document.createElement('picture');
       const img = document.createElement('img');
-      img.src = video.poster;
+      img.src = posterSrc.startsWith('/') ? `https://www.semrush.com${posterSrc}` : posterSrc;
       img.alt = 'Enterprise dashboard';
       pic.appendChild(img);
       p.appendChild(pic);
