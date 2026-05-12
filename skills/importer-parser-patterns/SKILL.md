@@ -25,6 +25,13 @@ export default function parse(element, { document }) {
 }
 ```
 
+## DOM access rules
+- Use `getAttribute('src')` / `getAttribute('poster')` — NOT `.src` / `.poster` properties. Properties resolve against the browser context and return `about:error` for failed loads; the attribute returns the raw authored value.
+- Always resolve relative paths to absolute: prefix paths starting with `/` with the source origin. EDS media pipeline needs full URLs.
+- Skip images with `src="about:error"` or empty `src` — never emit broken references.
+- SVGs in `<img>` tags survive the EDS pipeline, but inline SVGs and CSS background-image SVGs do not. Download them as files and reference via `<img>`.
+- Wrap every `<img>` in `<picture>` — EDS requires this for media handling.
+
 ## Pitfalls
 - Block name in header must match folder name (capitalized: `'Hero Video'` → `blocks/hero-video/`)
 - Forgetting `element.replaceWith()` leaves original DOM — block not created
