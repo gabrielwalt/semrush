@@ -27,7 +27,7 @@ export default function parse(element, { document }) {
   const insightsTable = WebImporter.DOMUtils.createTable([['Insights Widget'], [widgetContent]], document);
   wrapper.appendChild(insightsTable);
 
-  // Hero Video block — output as link (video URL) + picture (poster)
+  // Video block — output as link (video URL) + picture (poster)
   const video = element.querySelector('video');
   const videoCell = document.createElement('div');
 
@@ -71,7 +71,7 @@ export default function parse(element, { document }) {
     videoCell.appendChild(p2el);
   }
 
-  const heroVideoTable = WebImporter.DOMUtils.createTable([['Hero Video'], [videoCell]], document);
+  const heroVideoTable = WebImporter.DOMUtils.createTable([['Video'], [videoCell]], document);
   wrapper.appendChild(heroVideoTable);
 
   // Section Metadata for centered style

@@ -67,6 +67,10 @@
   pointer-events: none;
 }
 
+.insights-widget-input input:focus ~ .insights-widget-input-cursor {
+  display: none;
+}
+
 @keyframes insights-cursor-blink {
   0%,
   100% {

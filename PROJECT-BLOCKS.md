@@ -11,11 +11,13 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 |-------|----------|---------|-------|
 | `announcement-bar` | — | Homepage | Dismissible top banner |
 | `insights-widget` | — | Homepage | Search form with searchable country dropdown (115 countries), blinking cursor, glass surface |
-| `hero-video` | — | Homepage | Glass-framed; detects video URLs in link text (EDS pattern for external media) |
+| `video` | — | Homepage | Glass-framed; detects video URLs in link text (EDS pattern for external media) |
 | `marquee` | — | Homepage | Infinite-scroll logo strip with edge fade mask |
-| `promo-cards` | `promo-cards-semrush-one`, `promo-cards-enterprise` | Homepage | 64px padding, grid layout, video in glass frame on right half |
+| `video-card` | `video-card-semrush-one`, `video-card-enterprise` | Homepage | 64px padding, grid layout, video in glass frame on right half |
 | `carousel-slider` | — | Homepage | Expandable card carousel with + button; extends to right viewport edge |
 | `solutions-slider` | — | (alias) | Thin redirect to `carousel-slider` for backward compat with remote content |
+| `hero-video` | — | (alias) | Thin redirect to `video` for backward compat with remote content |
+| `promo-cards` | `promo-cards-semrush-one`, `promo-cards-enterprise` | (alias) | Thin redirect to `video-card` for backward compat |
 | `stats` | — | Homepage | Click/scroll-to-expand; diagonal-line arrow pattern, 180px numbers |
 | `ai-visibility-index` | — | Homepage | Dark section, bar chart with purple-to-teal gradient, 84px heading |
 | `testimonials` | — | Homepage | Quote card (dark) + stat card (grey), 2-column layout |
@@ -51,7 +53,7 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 
 | Module | Purpose |
 |--------|---------|
-| `scripts/glass.js` | `applyGlassSurface(el)` — glass effect for hero-video |
+| `scripts/glass.js` | `applyGlassSurface(el)` — glass effect for video block |
 
 ---
 

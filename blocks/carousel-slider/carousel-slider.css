@@ -221,20 +221,21 @@
   pointer-events: auto;
 }
 
-/* Large image — spans right column, overflows card edge */
+/* Large image — spans right column, hangs on right edge */
 .carousel-slider-large-img {
   grid-column: 2 / 3;
   grid-row: 1 / -1;
-  align-self: stretch;
+  align-self: end;
   margin-right: -36px;
-  margin-bottom: -24px;
+  margin-top: 16px;
   border-radius: 12px 0 0 12px;
   border-right: none;
 }
 
 .carousel-slider-large-img img {
-  height: 100%;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
   border-radius: 8px 0 0 8px;
 }
 

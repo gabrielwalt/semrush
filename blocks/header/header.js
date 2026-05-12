@@ -182,6 +182,9 @@ function buildNavFromHeadings(container) {
     }
 
     li.addEventListener('click', (e) => {
+      // Don't intercept clicks on links inside the mega panel
+      if (e.target.closest('.nav-mega-panel a')) return;
+
       if (isDesktop.matches && li.classList.contains('nav-drop')) {
         e.preventDefault();
         const exp = li.getAttribute('aria-expanded') === 'true';

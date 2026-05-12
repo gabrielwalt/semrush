@@ -29,7 +29,7 @@ function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
 
-  if (main.querySelector('.insights-widget') || main.querySelector('.hero-video')) return;
+  if (main.querySelector('.insights-widget') || main.querySelector('.hero-video') || main.querySelector('.video')) return;
   if (h1 && h1.closest('.section-metadata, .hero')) return;
 
   // eslint-disable-next-line no-bitwise

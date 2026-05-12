@@ -1,0 +1,188 @@
+/* Video Card Section — stacked vertically */
+.section.video-card-container,
+.section.promo-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 32px 0;
+}
+
+.video-card-wrapper,
+.promo-cards-wrapper {
+  padding: 0 var(--container-padding) !important;
+}
+
+/* Base card layout */
+.video-card .video-card-container,
+.promo-cards .video-card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  padding: 64px 0 64px 64px;
+}
+
+/* Text column */
+.video-card .video-card-text,
+.promo-cards .video-card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 32px 0 0;
+}
+
+.video-card h2,
+.promo-cards h2 {
+  font-size: var(--font-size-heading-l);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.video-card p,
+.promo-cards p {
+  font-size: var(--font-size-body-m);
+  line-height: var(--line-height-relaxed);
+  margin-top: 0;
+  margin-bottom: 0.8em;
+}
+
+main .video-card .button-wrapper,
+main .promo-cards .button-wrapper {
+  margin: var(--space-s) 0 0;
+}
+
+/* Media column — glass wrapper */
+.video-card .video-card-media,
+.promo-cards .video-card-media {
+  align-self: center;
+  padding: 12px 0 12px 12px;
+  background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
+  backdrop-filter: blur(5px);
+  border-radius: 12px 0 0 12px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
+}
+
+.video-card .video-card-media .video-card-video,
+.video-card .video-card-media picture,
+.video-card .video-card-media img,
+.promo-cards .video-card-media .video-card-video,
+.promo-cards .video-card-media picture,
+.promo-cards .video-card-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px 0 0 6px;
+}
+
+/* =============================================
+   Semrush One Variant
+   ============================================= */
+.video-card.video-card-semrush-one .video-card-container,
+.promo-cards.promo-cards-semrush-one .video-card-container {
+  background:
+    url('/content/images/semrush-one-bg.svg') no-repeat 50% 50%,
+    linear-gradient(182deg, rgb(193 144 255) -4.72%, rgb(220 238 235) 68.72%, rgb(255 255 255) 152.44%);
+  color: var(--dark-color);
+}
+
+/* =============================================
+   Enterprise Variant — dark background
+   ============================================= */
+.video-card.video-card-enterprise .video-card-container,
+.promo-cards.promo-cards-enterprise .video-card-container {
+  background:
+    url('/content/images/enterprise-bg.webp') no-repeat 100% 100% / contain,
+    rgb(0 0 0);
+  color: #fff;
+}
+
+.video-card.video-card-enterprise h2,
+.promo-cards.promo-cards-enterprise h2 {
+  color: #fff;
+}
+
+.video-card.video-card-enterprise p,
+.promo-cards.promo-cards-enterprise p {
+  color: #fff;
+}
+
+/* Enterprise button — outline white on dark bg */
+main .video-card.video-card-enterprise a.button:any-link,
+main .promo-cards.promo-cards-enterprise a.button:any-link,
+main .video-card.video-card-enterprise a.button.primary:any-link,
+main .promo-cards.promo-cards-enterprise a.button.primary:any-link {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+main .video-card.video-card-enterprise a.button:any-link:hover,
+main .promo-cards.promo-cards-enterprise a.button:any-link:hover,
+main .video-card.video-card-enterprise a.button:any-link:focus-visible,
+main .promo-cards.promo-cards-enterprise a.button:any-link:focus-visible {
+  background: rgb(255 255 255 / 10%);
+}
+
+/* Enterprise glass wrapper — inverted */
+.video-card.video-card-enterprise .video-card-media,
+.promo-cards.promo-cards-enterprise .video-card-media {
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 8%);
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (width < 768px) {
+  .section.video-card-container,
+  .section.promo-cards-container {
+    gap: 32px;
+    padding: 16px 0;
+  }
+
+  .video-card-wrapper,
+  .promo-cards-wrapper {
+    padding: 0 16px !important;
+  }
+
+  .video-card .video-card-container,
+  .promo-cards .video-card-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: var(--space-l);
+  }
+
+  .video-card .video-card-text,
+  .promo-cards .video-card-text {
+    padding: 0;
+  }
+
+  .video-card .video-card-media,
+  .promo-cards .video-card-media {
+    padding: 12px;
+    min-height: 250px;
+    margin: 0 calc(-1 * var(--space-l)) calc(-1 * var(--space-l));
+    border: 1px solid rgb(255 255 255 / 60%);
+    border-radius: 0 0 12px 12px;
+  }
+
+  .video-card .video-card-media .video-card-video,
+  .video-card .video-card-media picture,
+  .video-card .video-card-media img,
+  .promo-cards .video-card-media .video-card-video,
+  .promo-cards .video-card-media picture,
+  .promo-cards .video-card-media img {
+    border-radius: 8px;
+  }
+}
+
+@media (width >= 1024px) {
+  .video-card h2,
+  .promo-cards h2 {
+    font-size: var(--font-size-heading-xl);
+  }
+}

@@ -3,7 +3,7 @@ export default function parse(element, { document }) {
   const h2 = element.querySelector('h2');
   const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
   const ctaLink = element.querySelector('a.mp-button');
-  const img = element.querySelector('img');
+  const video = element.querySelector('video');
 
   const textContent = document.createElement('div');
   if (h2) {
@@ -27,15 +27,35 @@ export default function parse(element, { document }) {
     textContent.appendChild(p);
   }
 
-  const rows = [['Promo Cards (promo-cards-semrush-one)'], [textContent]];
+  const rows = [['Video Card (video-card-semrush-one)'], [textContent]];
 
-  if (img) {
-    const pic = document.createElement('picture');
-    const imgEl = document.createElement('img');
-    imgEl.src = img.src;
-    imgEl.alt = img.alt || 'Semrush One platform preview';
-    pic.appendChild(imgEl);
-    rows.push([pic]);
+  // Video row: URL link + poster image
+  const mediaContent = document.createElement('div');
+  if (video) {
+    const source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
+    const videoUrl = source?.src || source?.getAttribute('data-src') || video.src || '';
+    if (videoUrl) {
+      const p = document.createElement('p');
+      const a = document.createElement('a');
+      const fullUrl = videoUrl.startsWith('/') ? `https://www.semrush.com${videoUrl}` : videoUrl;
+      a.href = fullUrl;
+      a.textContent = fullUrl;
+      p.appendChild(a);
+      mediaContent.appendChild(p);
+    }
+    if (video.poster) {
+      const p = document.createElement('p');
+      const pic = document.createElement('picture');
+      const img = document.createElement('img');
+      img.src = video.poster;
+      img.alt = 'Semrush One platform';
+      pic.appendChild(img);
+      p.appendChild(pic);
+      mediaContent.appendChild(p);
+    }
+  }
+  if (mediaContent.children.length > 0) {
+    rows.push([mediaContent]);
   }
 
   const table = WebImporter.DOMUtils.createTable(rows, document);
