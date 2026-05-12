@@ -2,9 +2,11 @@ export default async function decorate(block) {
   const rows = [...block.children];
   if (rows.length < 2) return;
 
-  // Row 0: table column headers (Brand | % Share of Voice)
+  // Row 0: table column headers (Brand | % Share of Voice | optional platform info)
   const colHeaderRow = rows[0];
-  const colHeaders = [...colHeaderRow.children].map((c) => c.textContent.trim());
+  const headerCells = [...colHeaderRow.children].map((c) => c.textContent.trim());
+  const colHeaders = headerCells.slice(0, 2);
+  const platformText = headerCells[2] || '';
 
   // Build table container
   const tableDiv = document.createElement('div');
@@ -22,6 +24,13 @@ export default async function decorate(block) {
     labels.appendChild(span);
   });
   tableHeader.appendChild(labels);
+
+  if (platformText) {
+    const platform = document.createElement('span');
+    platform.className = 'table-platform';
+    platform.textContent = platformText;
+    tableHeader.appendChild(platform);
+  }
 
   tableDiv.appendChild(tableHeader);
 

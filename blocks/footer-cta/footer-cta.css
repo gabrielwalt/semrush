@@ -1,15 +1,16 @@
 .footer-cta {
-  text-align: center;
-  padding: 0 0 34px;
-  border-bottom: 1px solid #e8e8e8;
+  text-align: left;
+  padding: 0;
 }
 
 .footer-cta h2 {
   font-size: 36px;
   font-weight: 600;
   color: var(--dark-color);
+  text-transform: uppercase;
   margin: 0 0 12px;
-  line-height: var(--line-height-normal);
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .footer-cta p {

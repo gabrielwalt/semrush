@@ -94,7 +94,9 @@ main .promo-cards .button-wrapper {
    ============================================= */
 .video-card.video-card-enterprise .video-card-container,
 .promo-cards.promo-cards-enterprise .video-card-container {
-  background: rgb(0 0 0);
+  background:
+    url('/content/images/enterprise-bg.webp') no-repeat 100% 100% / contain,
+    rgb(0 0 0);
   color: #fff;
 }
 

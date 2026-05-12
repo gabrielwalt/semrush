@@ -8,10 +8,6 @@
   gap: var(--space-m);
 }
 
-.footer-links > div > div {
-  /* individual column cells */
-}
-
 .footer-links p {
   font-size: var(--font-size-body-m);
   font-weight: 600;
@@ -75,6 +71,16 @@
 @media (width >= 1024px) {
   .footer-links > div {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-l);
+    gap: 0 var(--space-l);
+  }
+
+  /* Support + Community share the 4th column */
+  .footer-links > div > div:nth-child(4) {
+    grid-column: 4;
+  }
+
+  .footer-links > div > div:nth-child(5) {
+    grid-column: 4;
+    padding-top: var(--space-m);
   }
 }
