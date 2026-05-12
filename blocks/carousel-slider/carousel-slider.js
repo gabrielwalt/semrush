@@ -149,6 +149,9 @@ function decorateDefault(block) {
 }
 
 export default async function decorate(block) {
+  const wrapper = block.closest('.carousel-slider-wrapper');
+  if (wrapper) wrapper.classList.add('full-width');
+
   const isExpansible = block.classList.contains('carousel-slider-expansible');
 
   if (isExpansible) {

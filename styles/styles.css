@@ -403,6 +403,12 @@ main > .section > *:last-child {
   margin-bottom: 0;
 }
 
+/* Full-width breakout: blocks that need to escape the container max-width */
+main > .section > .full-width {
+  max-width: none;
+  padding: 0;
+}
+
 main > .section:first-of-type {
   padding-top: 0;
 }

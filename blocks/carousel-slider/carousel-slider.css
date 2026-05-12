@@ -1,11 +1,6 @@
 /* Carousel Slider — shared base */
 .carousel-slider-container > .default-content-wrapper {
-  padding: 0 var(--section-gutter);
-}
-
-.carousel-slider-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
+  padding: 0 var(--container-padding);
 }
 
 .carousel-slider {

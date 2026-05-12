@@ -1,12 +1,3 @@
-.marquee-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
-
-.marquee-wrapper .marquee-container {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
 
 .section.marquee-container {
   padding: 0;

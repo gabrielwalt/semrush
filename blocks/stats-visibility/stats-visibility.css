@@ -17,18 +17,7 @@
 }
 
 .stats-visibility-wrapper {
-  max-width: 100% !important;
   padding: 0 !important;
-}
-
-/* Section wrapper override for full-width dark bg */
-main .section:has(.stats-visibility) {
-  margin: 0;
-}
-
-main .section:has(.stats-visibility) > div {
-  max-width: 100%;
-  padding: 0;
 }
 
 /* Table area */

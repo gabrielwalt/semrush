@@ -1,4 +1,7 @@
 export default async function decorate(block) {
+  const wrapper = block.closest('.marquee-wrapper');
+  if (wrapper) wrapper.classList.add('full-width');
+
   const row = block.querySelector(':scope > div');
   if (!row) return;
 
