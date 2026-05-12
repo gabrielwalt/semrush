@@ -33,3 +33,4 @@ Operational micro-skills distilled from implementation experience. Each file is 
 | [glass-surface-pattern.md](glass-surface-pattern.md) | Implementing frosted glass frame effects around images/videos |
 | [stylelint-no-descending-specificity.md](stylelint-no-descending-specificity.md) | Fixing stylelint no-descending-specificity errors |
 | [clip-path-bar-charts.md](clip-path-bar-charts.md) | Building horizontal bar charts with arrow/pyramid-shaped bars |
+| [mobile-nav-click-handling.md](mobile-nav-click-handling.md) | Mobile nav closes when clicking sub-items; click delegation issues |
