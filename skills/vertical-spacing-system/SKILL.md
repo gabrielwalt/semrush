@@ -27,3 +27,5 @@ Set desktop and mobile values via media queries. Typical range: `--section-paddi
 ## Pitfalls
 - `main > .section > * + *` — universal `*` has zero specificity and loses
 - The `> div` inside a section is `.default-content-wrapper`, not a generic container
+
+See also: `eds-dom-structure` (full DOM tree), `css-specificity-eds` (why `* + *` loses)

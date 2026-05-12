@@ -23,6 +23,14 @@ A skill answers: "What do I wish I'd known 30 minutes ago?"
 6. **Add a row to the skill index in `AGENTS.md`** — in the correct table (generic or project-specific) with "When to use" and "Key insight" columns
 7. Verify the `name` field matches the directory name exactly
 
+## Keeping skills modular and connected
+
+- **One domain per skill.** If a skill covers two distinct topics, keep it focused on the primary one and cross-reference the other.
+- **Cross-reference, don't duplicate.** If content exists in another skill, point to it with a `See also:` line at the bottom rather than repeating it. One skill owns each concept.
+- **Add `See also:` to every skill** that has natural neighbors — related patterns, prerequisites, or next-step workflows. Format: `See also: \`skill-name\` (why), \`other-skill\` (why)`
+- **Keep skills compact.** Aim for 20-30 lines. If a skill grows past ~40 lines, look for content that belongs in a referenced skill instead.
+- **Friction-based triggers.** If you encounter the same problem or workaround twice, it's a skill gap. Propose a skill before moving on.
+
 ## SKILL.md format
 
 ```yaml

@@ -33,3 +33,5 @@ npm run lint
 - EDS auto-generates `.{block}-container` on the section — CSS targeting that class must update
 - Importer table header controls block name in imported content — capitalize correctly
 - PROJECT-BLOCKS.md and PROJECT-STATUS.md reference block names — update those too
+
+See also: `block-rename-in-eds` (workaround when remote content still uses old name)

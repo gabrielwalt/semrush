@@ -38,3 +38,5 @@ export default function parse(element, { document }) {
 - Section Metadata must come AFTER all blocks in its section
 - Use `innerHTML` (not `textContent`) for headings that may contain inline markup
 - Section boundaries (`<hr>`) go in `beforeTransform`, not parsers
+
+See also: `import-script-bundling` (bundling and running), `plain-html-format` (output section structure), `eds-content-modeling` (content decisions)

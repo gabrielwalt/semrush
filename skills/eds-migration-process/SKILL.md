@@ -25,3 +25,5 @@ Always frame as a suggestion: *"The next step would be X — shall I go ahead?"*
 ## Pitfalls
 - Don't skip Phase 1 validation — broken content structure is harder to fix after styling
 - Re-import flattens section boundaries — maintain section-div structure by hand after
+
+See also: `eds-content-modeling` (content decisions), `importer-parser-patterns` (writing parsers), `import-script-bundling` (running imports)

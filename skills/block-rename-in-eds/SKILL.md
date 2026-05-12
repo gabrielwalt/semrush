@@ -25,3 +25,5 @@ export default decorate;
 - `export { default } from '...'` triggers eslint `no-restricted-exports` — use `import` + `export default`
 - `@import url()` path must be correct relative to the file
 - AEM CLI caches remote page shell — restart won't help
+
+See also: `block-rename-checklist` (full list of locations to update)

@@ -30,3 +30,5 @@ Check `PROJECT-DESIGN.md` for the exact breakpoint values used in this project.
 ## Pitfalls
 - Background SVG positions change per breakpoint — check each one
 - Nav typically uses a different breakpoint than content for hamburger/full nav switch
+
+See also: `measure-then-implement` (how to measure), `nav-header-eds` (nav-specific breakpoint behavior)

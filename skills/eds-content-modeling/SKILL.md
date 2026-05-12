@@ -37,3 +37,5 @@ All three add a context-specific class name:
 - A variant that needs a different content model is a different block — not a variant
 - Section Metadata must be the LAST element inside its section div
 - If source content is missing at import time, leave the field empty rather than inventing a value
+
+See also: `eds-content-patterns` (CTA decoration details), `importer-parser-patterns` (parser implementation), `eds-styling-context` naming in `page-template-metadata`

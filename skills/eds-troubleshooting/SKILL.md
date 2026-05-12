@@ -20,3 +20,5 @@ curl -s https://www.aem.live/docpages-index.json | jq -r '.data[] | select(.cont
 ## Pitfalls
 - AEM CLI serves content from the remote origin — local `.plain.html` edits don't affect rendered pages at `localhost:3000`
 - `localhost:3000/path.plain.html` does serve local content — use that for content file verification
+
+See also: `eds-dom-structure` (DOM inspection), `css-specificity-eds` (CSS debugging), `plain-html-format` (content file issues)

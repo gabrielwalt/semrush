@@ -16,3 +16,5 @@ Carousels use left-only padding on the block, right-edge bleed via overflow scro
 ## Pitfalls
 - Don't use `overflow: hidden` on the block — it prevents scrolling
 - The track's `padding-right` is needed or the last card touches the viewport edge
+
+See also: `max-width-container-pattern` (full-width escape hatch), `eds-dom-structure` (wrapper chain)
