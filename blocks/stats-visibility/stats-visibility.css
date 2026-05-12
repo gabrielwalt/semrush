@@ -10,10 +10,23 @@
   padding: 0 var(--space-m);
 }
 
-.section.section-pattern-bars {
+.section.section-ai-visibility {
   background-image: url('/icons/pattern-ai-vis-index.svg');
   background-repeat: repeat-x;
   background-position: 0% 100%;
+}
+
+.section.section-ai-visibility > .default-content-wrapper {
+  text-align: center;
+}
+
+.section.section-ai-visibility > .default-content-wrapper::before {
+  content: '';
+  display: block;
+  width: 136px;
+  height: 136px;
+  margin: 0 auto 32px;
+  background: url('/icons/ai-visibility-index.svg') no-repeat center / contain;
 }
 
 .stats-visibility-wrapper {

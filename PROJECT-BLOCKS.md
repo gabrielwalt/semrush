@@ -38,6 +38,8 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 | Style | Effect |
 |-------|--------|
 | `centered` | Flex column + center-align (hero section) |
+| `section-dark` | Dark background, white text |
+| `section-ai-visibility` | Bar pattern background, centered heading area with AI Visibility Index icon |
 
 ---
 

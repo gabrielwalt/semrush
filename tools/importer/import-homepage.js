@@ -403,7 +403,7 @@
     wrapper.appendChild(table);
 
     var sectionMeta = WebImporter.DOMUtils.createTable(
-      [['Section Metadata'], ['Style', 'section-dark, section-pattern-bars']],
+      [['Section Metadata'], ['Style', 'section-dark, section-ai-visibility']],
       document
     );
     wrapper.appendChild(sectionMeta);
