@@ -10,10 +10,10 @@
   padding: 0 var(--space-m);
 }
 
-.section.section-dark.stats-visibility-container {
-  background:
-    url('/icons/pattern-ai-vis-index.svg') repeat-x 0% 100%,
-    var(--dark-color);
+.section.section-pattern-bars {
+  background-image: url('/icons/pattern-ai-vis-index.svg');
+  background-repeat: repeat-x;
+  background-position: 0% 100%;
 }
 
 .stats-visibility-wrapper {
