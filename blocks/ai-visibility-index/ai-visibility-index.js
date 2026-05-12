@@ -11,7 +11,13 @@ export default async function decorate(block) {
   const iconCell = headerCells[0];
   const textCell = headerCells[1];
   headerRow.innerHTML = '';
-  const icon = iconCell.querySelector('img');
+  let icon = iconCell.querySelector('img');
+  if (!icon && !iconCell.textContent.trim()) {
+    icon = document.createElement('img');
+    icon.src = '/icons/ai-visibility-index.svg';
+    icon.alt = '';
+    icon.loading = 'lazy';
+  }
   if (icon) headerRow.appendChild(icon);
   headerRow.append(...textCell.children);
 
@@ -43,15 +49,19 @@ export default async function decorate(block) {
 
   tableDiv.appendChild(tableHeader);
 
-  // Data rows (rows 2+)
+  // Collect data rows and find max value for proportional bars
+  const dataItems = [];
   for (let i = 2; i < rows.length; i += 1) {
     const cells = [...rows[i].children];
     const brand = cells[0]?.textContent.trim();
-    const valueStr = cells[1]?.textContent.trim();
-
-    // Parse "value|barPercentage"
+    const valueStr = cells[1]?.textContent.trim() || '0';
     const [value, barPct] = valueStr.split('|');
+    dataItems.push({ brand, value: value.trim(), barPct: barPct?.trim() });
+  }
 
+  const maxValue = Math.max(...dataItems.map((d) => parseFloat(d.value) || 0));
+
+  dataItems.forEach(({ brand, value, barPct }) => {
     const rowDiv = document.createElement('div');
     rowDiv.className = 'ai-visibility-index-row';
 
@@ -71,7 +81,8 @@ export default async function decorate(block) {
 
     const barFill = document.createElement('div');
     barFill.className = 'bar-fill';
-    barFill.style.width = `${barPct}%`;
+    const pct = barPct || (maxValue > 0 ? Math.round((parseFloat(value) / maxValue) * 100) : 0);
+    barFill.style.width = `${pct}%`;
 
     barTrack.appendChild(barFill);
     sovContainer.appendChild(sovValue);
@@ -79,7 +90,7 @@ export default async function decorate(block) {
     rowDiv.appendChild(brandSpan);
     rowDiv.appendChild(sovContainer);
     tableDiv.appendChild(rowDiv);
-  }
+  });
 
   // Replace rows 1+ with the table
   for (let i = 1; i < rows.length; i += 1) {

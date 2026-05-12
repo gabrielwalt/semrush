@@ -18,7 +18,7 @@ export default async function decorate(block) {
 
     const eyebrow = col1.querySelector('h3')?.textContent?.trim() || '';
     const title = col1.querySelector('p')?.textContent?.trim() || '';
-    const smallPic = col1.querySelector('picture') || col2.querySelector('picture');
+    const smallPic = col1.querySelector('picture');
     const largePic = col2.querySelector('picture');
     const paras = [...col2.querySelectorAll('p')];
     const description = paras.find((p) => !p.querySelector('a') && !p.querySelector('picture'))?.textContent?.trim() || '';

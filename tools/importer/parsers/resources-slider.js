@@ -46,6 +46,21 @@ export default function parse(element, { document }) {
       textCell.appendChild(h3);
     }
 
+    // Capture description paragraph (sibling <p> of h3, not inside a tag container)
+    const paragraphs = article.querySelectorAll(':scope > p, :scope > div > p');
+    let descText = '';
+    paragraphs.forEach((para) => {
+      const isInsideTagContainer = para.closest('[class*="tag"], [class*="info-tag"]');
+      if (!isInsideTagContainer && para.textContent.trim()) {
+        descText = para.textContent.trim();
+      }
+    });
+    if (descText) {
+      const descP = document.createElement('p');
+      descP.textContent = descText;
+      textCell.appendChild(descP);
+    }
+
     const tagText = [...tags].map((t) => t.textContent.trim()).join(' · ');
     if (tagText) {
       const p = document.createElement('p');

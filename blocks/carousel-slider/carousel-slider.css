@@ -211,7 +211,7 @@
   visibility: hidden;
   position: absolute;
   pointer-events: none;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 0.4s ease, visibility 0.4s;
 }
 
 .carousel-slider-card-expanded .carousel-slider-content {
@@ -246,6 +246,9 @@
   line-height: var(--line-height-relaxed);
   margin: 0;
   align-self: end;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
 }
 
 /* CTA */
@@ -265,13 +268,27 @@
   text-decoration: none;
   white-space: nowrap;
   justify-self: start;
-  transition: background-color 0.2s;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s, background-color 0.2s;
 }
 
 .carousel-slider-cta:hover {
   background: rgb(40 40 40);
   color: #fff;
   text-decoration: none;
+}
+
+/* Fade-in animation for description + CTA on expand */
+.carousel-slider-card-expanded .carousel-slider-description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.carousel-slider-card-expanded .carousel-slider-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
 }
 
 /* Responsive */

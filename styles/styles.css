@@ -205,6 +205,12 @@ pre {
 
 main > div {
   margin: var(--section-padding) 0;
+}
+
+main > div > div {
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 var(--container-padding);
 }
 

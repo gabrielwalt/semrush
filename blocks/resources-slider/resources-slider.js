@@ -39,13 +39,11 @@ export default async function decorate(block) {
   wrapper.before(headerArea);
 
   // Scroll behavior
-  const cardWidth = 268 + 12; // card width + gap
-
   prevBtn.addEventListener('click', () => {
-    block.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    block.scrollBy({ left: -442, behavior: 'smooth' });
   });
 
   nextBtn.addEventListener('click', () => {
-    block.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    block.scrollBy({ left: 442, behavior: 'smooth' });
   });
 }

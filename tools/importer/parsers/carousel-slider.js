@@ -8,9 +8,20 @@ export default function parse(element, { document }) {
   slides.forEach((slide) => {
     const title = slide.querySelector('h3');
     const subtitle = slide.querySelector('h4');
-    const desc = slide.querySelector('.mp-toolkit__description, p');
-    const img = slide.querySelector('img');
-    const cta = slide.querySelector('a.mp-button');
+    const desc = slide.querySelector('.mp-toolkit__description');
+    const cta = slide.querySelector('a.mp-button, a.mp-toolkit__cta');
+
+    // Small image (poster — visible when collapsed)
+    const posterWrapper = slide.querySelector('.mp-toolkit__poster');
+    const smallImg = posterWrapper ? posterWrapper.querySelector('img') : null;
+
+    // Large image (content area — visible when expanded, use desktop source)
+    const contentImgWrapper = slide.querySelector('.mp-toolkit__content .mp-toolkit__img-wrapper');
+    const largeSource = contentImgWrapper ? contentImgWrapper.querySelector('source[media="(min-width: 768px)"]') : null;
+    const largeImg = contentImgWrapper ? contentImgWrapper.querySelector('img') : null;
+    let largeSrc = '';
+    if (largeSource) largeSrc = largeSource.srcset;
+    else if (largeImg) largeSrc = largeImg.src;
 
     // Column 1: eyebrow + title + small image
     const col1 = document.createElement('div');
@@ -24,22 +35,22 @@ export default function parse(element, { document }) {
       p.textContent = subtitle.textContent.trim();
       col1.appendChild(p);
     }
-    if (img) {
+    if (smallImg) {
       const pic = document.createElement('picture');
       const imgEl = document.createElement('img');
-      imgEl.src = img.src;
-      imgEl.alt = img.alt || '';
+      imgEl.src = smallImg.src;
+      imgEl.alt = smallImg.alt || '';
       pic.appendChild(imgEl);
       col1.appendChild(pic);
     }
 
     // Column 2: large image + description + CTA
     const col2 = document.createElement('div');
-    if (img) {
+    if (largeSrc) {
       const pic = document.createElement('picture');
       const imgEl = document.createElement('img');
-      imgEl.src = img.src;
-      imgEl.alt = img.alt || '';
+      imgEl.src = largeSrc;
+      imgEl.alt = largeImg ? largeImg.alt || '' : '';
       pic.appendChild(imgEl);
       col2.appendChild(pic);
     }
