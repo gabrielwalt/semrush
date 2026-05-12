@@ -37,9 +37,9 @@ export default async function decorate(block) {
 
   const maxValue = Math.max(...dataItems.map((d) => parseFloat(d.value) || 0));
 
-  dataItems.forEach(({ brand, value, barPct }) => {
+  dataItems.forEach(({ brand, value, barPct }, index) => {
     const rowDiv = document.createElement('div');
-    rowDiv.className = 'stats-visibility-row';
+    rowDiv.className = `stats-visibility-row ${index % 2 === 0 ? 'bar-cyan' : 'bar-purple'}`;
 
     const brandSpan = document.createElement('span');
     brandSpan.className = 'brand-name';

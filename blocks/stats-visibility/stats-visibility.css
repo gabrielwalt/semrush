@@ -1,7 +1,8 @@
 /* AI Visibility Index block */
 .stats-visibility {
   --block-accent: var(--accent-color);
-  --block-bar-color: var(--accent-cyan);
+  --bar-color-cyan: rgb(24 240 191);
+  --bar-color-purple: rgb(193 144 255);
   --table-bg: #fff;
   --table-text: var(--dark-color);
   --table-muted: rgb(108 110 121);
