@@ -264,7 +264,7 @@
       wrapper.appendChild(h2);
     }
 
-    const rows = [['Carousel Slider']];
+    const rows = [['Carousel Slider (carousel-slider-expansible)']];
     slides.forEach((slide) => {
       const title = slide.querySelector('h3');
       const subtitle = slide.querySelector('h4');
@@ -500,7 +500,7 @@
       wrapper.appendChild(h2);
     }
 
-    const rows = [['Resources Slider']];
+    const rows = [['Carousel Slider']];
     articles.forEach((article) => {
       const img = article.querySelector('img');
       const titleLink = article.querySelector('h3 a');

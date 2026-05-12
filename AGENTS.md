@@ -54,7 +54,7 @@ Prefer reuse and variants over new blocks. Add a new block only when structure i
 - Keep content structure consistent across similar blocks. Authors remember patterns; surprises cost them time. If one block uses `[h2, p, CTA]` in a text cell, don't make another block use `[h2]` in row 1 and `[p, CTA]` in row 2 for the same logical content.
 - Import parsers must extract all content from the source DOM — never inject placeholder text or hardcode editorial strings. If source content is missing or inaccessible at import time, leave the field empty rather than inventing a value.
 - **Import parsers must detect, not hardcode, styling decisions.** Every content styling choice — CTA type (primary/secondary), heading level, block variant, section style, page template — must be derived from observable signals in the source DOM (CSS classes, computed styles, element structure, aria attributes). Never assume a fixed style for a given parser; detect from the source so that the same parser handles varying instances correctly. If no signal is available, default to the most common/neutral option.
-- **CTA link formatting convention:** Links wrapped in formatting become buttons during decoration:
+- **CTA link formatting convention:** Links wrapped in formatting become buttons during decoration. This applies everywhere — in default content and inside blocks alike. Block JS must not strip or override button formatting; instead, style `.button` elements within the block's CSS scope.
   - `<strong><a>` → **primary** button (solid filled) — use for the main action
   - `<em><a>` → **secondary** button (outline/ghost) — use for alternative actions
   - `<strong><em><a>` → **accent** button (high-impact) — use sparingly for maximum emphasis
@@ -68,6 +68,13 @@ All three serve the same purpose — adding a context-specific class name to app
 - **Page template** — class on `<body>`. Prefix with `template-` (e.g., `template-blog-post`, `template-landing`). Use for page-wide layout or behavior differences.
 
 When importing content, detect visual context from the source DOM (background color, layout patterns) and emit the appropriate Section Metadata or template metadata automatically. This ensures consistent styling across pages without authors needing to manually replicate styling decisions.
+
+### Import parsers
+- Use `getAttribute('src')` / `getAttribute('poster')` instead of `.src` / `.poster` properties. The property resolves against the browser context and returns `about:error` for failed loads (SVGs, CSS background images, lazy-loaded assets); the attribute returns the raw authored value.
+- Always resolve relative paths to absolute: prefix paths starting with `/` with the source origin (e.g., `https://www.semrush.com`). EDS media pipeline needs full URLs to download assets.
+- Skip images with `src="about:error"` or empty `src` — never emit broken references into content.
+- SVGs referenced in `<img>` tags survive the EDS pipeline, but inline SVGs and CSS background-image SVGs do not. When the source uses inline/background SVGs, download them as files and reference them via `<img>` in the content.
+- Wrap every `<img>` in `<picture>` — EDS requires this structure for proper media handling.
 
 ### CSS
 - Use tokens from `styles.css`; add new tokens when values repeat.

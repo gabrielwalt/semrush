@@ -94,9 +94,7 @@ main .promo-cards .button-wrapper {
    ============================================= */
 .video-card.video-card-enterprise .video-card-container,
 .promo-cards.promo-cards-enterprise .video-card-container {
-  background:
-    url('/content/images/enterprise-bg.webp') no-repeat 100% 100% / contain,
-    rgb(0 0 0);
+  background: rgb(0 0 0);
   color: #fff;
 }
 
@@ -118,20 +116,24 @@ main .promo-cards.promo-cards-enterprise a.button.primary:any-link {
   border-color: #fff;
   background-color: transparent;
   color: #fff;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 main .video-card.video-card-enterprise a.button:any-link:hover,
 main .promo-cards.promo-cards-enterprise a.button:any-link:hover,
 main .video-card.video-card-enterprise a.button:any-link:focus-visible,
 main .promo-cards.promo-cards-enterprise a.button:any-link:focus-visible {
-  background: rgb(255 255 255 / 10%);
+  background: #fff;
+  color: rgb(0 0 0);
+  border-color: #fff;
 }
 
-/* Enterprise glass wrapper — inverted */
+/* Enterprise glass wrapper — same border intensity as base */
 .video-card.video-card-enterprise .video-card-media,
 .promo-cards.promo-cards-enterprise .video-card-media {
-  background: rgb(255 255 255 / 5%);
-  border: 1px solid rgb(255 255 255 / 8%);
+  background: linear-gradient(91deg, rgb(255 255 255 / 4%) 11.45%, rgb(255 255 255 / 8%) 88.55%);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
 }
 
 /* =============================================

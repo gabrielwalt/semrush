@@ -25,10 +25,10 @@
 .marquee .marquee-track {
   display: flex;
   align-items: center;
-  gap: 100px;
-  padding: 0 40px;
+  gap: 12px;
+  padding-right: 12px;
   flex-shrink: 0;
-  animation: marquee-scroll 45s linear infinite;
+  animation: marquee-scroll 100s linear infinite;
 }
 
 .marquee .marquee-track picture,
@@ -46,7 +46,7 @@
 
 @media (width < 768px) {
   .marquee {
-    padding: 24px 0;
+    padding: 20px 0;
   }
 
   .marquee .marquee-track img {
@@ -54,7 +54,8 @@
   }
 
   .marquee .marquee-track {
-    gap: 48px;
+    gap: 8px;
+    padding-right: 8px;
   }
 }
 

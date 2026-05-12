@@ -100,9 +100,14 @@ function decorateExpansible(block, rows) {
     }
 
     if (item.ctaLink) {
-      const cta = item.ctaLink.cloneNode(true);
-      cta.className = 'carousel-slider-cta';
-      content.appendChild(cta);
+      const p = item.ctaLink.closest('p');
+      if (p) {
+        content.appendChild(p.cloneNode(true));
+      } else {
+        const wrapper = document.createElement('p');
+        wrapper.appendChild(item.ctaLink.cloneNode(true));
+        content.appendChild(wrapper);
+      }
     }
 
     card.appendChild(content);

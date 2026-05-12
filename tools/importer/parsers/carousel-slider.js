@@ -3,7 +3,7 @@ export default function parse(element, { document }) {
   const wrapper = document.createElement('div');
 
   const slides = element.querySelectorAll('.mp-toolkit, .swiper-slide');
-  const rows = [['Carousel Slider']];
+  const rows = [['Carousel Slider (carousel-slider-expansible)']];
 
   slides.forEach((slide) => {
     const title = slide.querySelector('h3');
