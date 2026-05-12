@@ -115,10 +115,17 @@ main .section:has(.stats-visibility) > div {
 
 .stats-visibility .stats-visibility-row .bar-fill {
   height: 100%;
-  background: var(--block-bar-color);
   border-radius: 0;
   clip-path: polygon(0 0, 100% 50%, 0 100%);
   transition: width 0.3s ease;
+}
+
+.stats-visibility .stats-visibility-row.bar-cyan .bar-fill {
+  background: var(--bar-color-cyan);
+}
+
+.stats-visibility .stats-visibility-row.bar-purple .bar-fill {
+  background: var(--bar-color-purple);
 }
 
 @media (width >= 1024px) {
