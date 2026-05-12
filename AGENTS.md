@@ -16,29 +16,45 @@ Project details live in `PROJECT.md` and `PROJECT-*.md`. Keep them accurate.
 
 **Keep PROJECT files current.** Any meaningful change — block, variant, token, import script, page — updates the relevant file immediately. Don't defer.
 
+**AGENTS.md is project-agnostic.** This file contains only reusable EDS migration guidance — no references to specific source sites, brand names, specific token values, container widths, or project-specific selectors. Project-specific details belong in `PROJECT-*.md` files or project-specific skills.
+
 **Code is truth for implementation.** Don't copy selectors, token values, or DOM patterns into PROJECT-*.md — read the code. PROJECT files hold inventory, intent, decisions, non-obvious gotchas.
 
 **Content structure = import script.** The import script is the authoritative mapping from source DOM to EDS content. Never change a block's structure without updating the import script. Edits to `.plain.html` files are temporary; the script is the truth.
 
 **One import script for the whole project.** Add parsers to the existing registry. Only create a second script for fundamentally incompatible DOM structures.
 
-**No Git, no AEM pushes.** Never run `git` commands or push content yourself. Both happen through the Console UI:
+**No Git, no AEM pushes.** Never run `git` commands or push content yourself. Never offer to commit, push, or publish — not even as a suggestion or closing question. Both happen through the Console UI:
 - **Push code:** Code mode → "Git Changes" → stage with "+" → GitHub menu → Push.
 - **Upload content:** Content mode → "Upload content" → select files → Upload → "View in AEM" → Publish.
 
-When content needs to go live, tell the user they can click "Upload content" in the Console — never suggest you'll do it.
+When code or content needs to go live, tell the user they can use the Console UI — never suggest you'll do it, and never frame git/push operations as a "next step".
 
 ---
 
 ## Skills System
 
-Maintain a skill library in `skills/`. Skills prevent re-solving problems.
+Operational micro-skills. Each skill is a directory under `skills/` with a `SKILL.md` file using YAML frontmatter (`name`, `description`) and a markdown body.
 
-- **Before any task:** scan `skills/README.md`, load matching skills, follow recipes before inventing.
-- **After solving something non-obvious or being corrected:** create/update a skill immediately.
-- **End of multi-step tasks:** review surprises → skill.
+**Skills are mandatory context.** Before writing CSS, JS, import parsers, or content structure — check if a skill already covers it. Solving a problem that a skill already addresses is wasted effort and risks inconsistency. Skills encode hard-won lessons; ignoring them means repeating past mistakes. When in doubt, scan `skills/README.md` first.
 
-**Skill format:** `When to load` / `Key insight` / `Recipe` / `Pitfalls`. ~20 lines max, prescriptive, concrete. See `skills/_template.md`.
+**Directory layout:** Skills live in `skills/` at the project root (visible in the Console UI, tracked by git). Always create and edit skills in `skills/`.
+
+**Dual discovery — two paths ensure skills always work:**
+1. **Native Claude Code skills** (optimal) — A symlink at `.claude/skills → ../skills` enables Claude Code's native skill system: auto-matching, `/skill-name` invocation, compaction survival. If this symlink is missing at session start, recreate it: `mkdir -p .claude && ln -sf ../skills .claude/skills`
+2. **`@skills/README.md` import** (fallback) — The enriched index in `skills/README.md` auto-loads via `CLAUDE.md` every session. Each skill's key insight is inline, so most problems can be resolved from the index. Read the full SKILL.md only when you need the recipe or code.
+
+**When to create/update skills:**
+- After solving something non-obvious or being corrected → create/update immediately.
+- End of multi-step tasks → review surprises → skill.
+
+**Skill format:** YAML frontmatter with `name` and `description`, then markdown body with recipe and pitfalls. Keep under 500 lines; aim for ~20-30 lines for reference skills. The `description` is critical — Claude Code uses it for auto-matching. See `skills/writing-skills/SKILL.md` for the full guide.
+
+**Skill scope — naming convention:**
+- Generic skills (reusable across migrations): named normally, e.g. `eds-dom-structure`
+- Project-specific skills: prefixed with `project-`, e.g. `project-glass-surface-pattern`
+- When creating a skill, ask: "Would this help on a completely different brand migration?" If yes → no prefix. If no → prefix with `project-`.
+- When creating or updating a skill, also update `skills/README.md` with a row including the key insight.
 
 ---
 
@@ -71,7 +87,7 @@ When importing content, detect visual context from the source DOM (background co
 
 ### Import parsers
 - Use `getAttribute('src')` / `getAttribute('poster')` instead of `.src` / `.poster` properties. The property resolves against the browser context and returns `about:error` for failed loads (SVGs, CSS background images, lazy-loaded assets); the attribute returns the raw authored value.
-- Always resolve relative paths to absolute: prefix paths starting with `/` with the source origin (e.g., `https://www.semrush.com`). EDS media pipeline needs full URLs to download assets.
+- Always resolve relative paths to absolute: prefix paths starting with `/` with the source origin. EDS media pipeline needs full URLs to download assets.
 - Skip images with `src="about:error"` or empty `src` — never emit broken references into content.
 - SVGs referenced in `<img>` tags survive the EDS pipeline, but inline SVGs and CSS background-image SVGs do not. When the source uses inline/background SVGs, download them as files and reference them via `<img>` in the content.
 - Wrap every `<img>` in `<picture>` — EDS requires this structure for proper media handling.
@@ -80,7 +96,7 @@ When importing content, detect visual context from the source DOM (background co
 - Use tokens from `styles.css`; add new tokens when values repeat.
 - Class names: `{block}-{part}` kebab-case.
 - No positional selectors (`nth-child`). Use `decorate()` to add semantic classes.
-- No `!important`. Container max-width is set on `main > .section > div` globally. Blocks needing full viewport width add `.full-width` to their wrapper via JS — never override with `!important`.
+- No `!important`. See the project's container constraint pattern (documented in skills or `PROJECT-DESIGN.md`) for full-width escape hatches — never override container constraints with `!important`.
 
 ### JavaScript
 - No layout coupling between blocks. No `aem.js` edits.
@@ -119,7 +135,7 @@ Always frame as a suggestion: *"The next step would be X — shall I go ahead?"*
 | Design tokens | `PROJECT-DESIGN.md` |
 | Import scripts | `PROJECT-IMPORT.md` |
 | Migration progress | `PROJECT-STATUS.md` |
-| Prior solutions | `skills/README.md` |
+| Prior solutions | `skills/` (native skills via symlink + fallback index via `@skills/README.md`) |
 
 ---
 

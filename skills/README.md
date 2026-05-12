@@ -1,36 +1,45 @@
-# Project Skills
+# Skills
 
-Operational micro-skills distilled from implementation experience. Each file is a self-contained reference for a specific class of problem.
+Operational micro-skills for EDS migration. Each skill is a directory with a `SKILL.md` file.
 
-## How to Use
+These skills are auto-discovered by Claude Code via `.claude/skills` symlink when available. This index also auto-loads via `CLAUDE.md` as a fallback. The key insight for each skill is inline so you can act on most problems without reading the full file — only open the SKILL.md when you need the recipe or code.
 
-- **Before starting work**: Scan this index. Load any skill whose trigger matches your situation.
-- **After completing work**: If you struggled or discovered something non-obvious, create or update a skill.
-- **To write a new skill**: Load [writing-skills.md](writing-skills.md) and copy [_template.md](_template.md).
+## Generic Skills (reusable across projects)
 
-## Index
+| Skill | When to load | Key insight |
+|-------|-------------|-------------|
+| [eds-dom-structure](eds-dom-structure/SKILL.md) | Selector doesn't match; need EDS DOM structure | Blocks are siblings at section level in `-wrapper > -container > .block` chain — NOT children of section's inner div |
+| [css-specificity-eds](css-specificity-eds/SKILL.md) | CSS rule not applying; wrong computed style | EDS wrappers carry `!important` on padding/max-width. Attribute selectors beat plain class selectors |
+| [eds-content-patterns](eds-content-patterns/SKILL.md) | CTA links not rendering as buttons; button styles wrong | Links in `<strong>` → primary button, `<em>` → secondary. `decorateButtons()` skips if `<p>` has extra text |
+| [vertical-spacing-system](vertical-spacing-system/SKILL.md) | Blocks touching; sections too far apart | Sections use padding. Blocks spaced via `margin-top` on adjacent `[class$="-wrapper"]` selectors |
+| [max-width-container-pattern](max-width-container-pattern/SKILL.md) | Setting up global layout constraints | Apply max-width at `main > .section > div`. Full-width blocks add `.full-width` via JS |
+| [nav-header-eds](nav-header-eds/SKILL.md) | Header broken; nav invisible; mega menu issues | `aria-expanded='true'` on desktop means mobile CSS applies unless you match that specificity |
+| [carousel-pattern-eds](carousel-pattern-eds/SKILL.md) | Building horizontal scrolling carousel | Left-only padding, track scrolls via `overflow-x: auto`, wrapper escapes with `max-width: 100% !important` |
+| [importer-parser-patterns](importer-parser-patterns/SKILL.md) | Writing a block parser; validation failing | Parser outputs EDS block tables via `createTable()`. First row = block name. Use `element.replaceWith()` |
+| [import-script-bundling](import-script-bundling/SKILL.md) | Import script not executing | Must use `export default { transform }` — esbuild wraps as IIFE exposing `window.CustomImportScript.default` |
+| [plain-html-format](plain-html-format/SKILL.md) | Sections not rendering; blocks unstyled | Each section = top-level `<div>`. No `<hr>` separators. Section-metadata must be last in its div |
+| [video-in-eds](video-in-eds/SKILL.md) | Implementing video playback | EDS rewrites media hrefs — check link **textContent** for video extensions, not href |
+| [page-template-metadata](page-template-metadata/SKILL.md) | Applying page-level styles | EDS reads `<meta name="template">` → class on `document.body` |
+| [block-rename-checklist](block-rename-checklist/SKILL.md) | Renaming a block | Name propagates to 12+ locations. Grep to verify nothing remains |
+| [block-rename-in-eds](block-rename-in-eds/SKILL.md) | Renaming when remote content uses old name | Keep thin redirect (import+re-export) at old name until re-published |
+| [stylelint-no-descending-specificity](stylelint-no-descending-specificity/SKILL.md) | Fixing stylelint specificity errors | Lower-specificity selector after higher one. Fix by reordering or merging into base selectors |
+| [mobile-nav-click-handling](mobile-nav-click-handling/SKILL.md) | Mobile nav closes on sub-item click | Guard against entire panel container (`e.target.closest('.panel')`) not just links |
+| [measure-then-implement](measure-then-implement/SKILL.md) | Matching original site's exact dimensions | Measure via `getBoundingClientRect()` / `getComputedStyle()` at project breakpoints. Hover colors from stylesheet rules |
+| [responsive-verification](responsive-verification/SKILL.md) | Checking component at all breakpoints | Verify at all project breakpoints (see `PROJECT-DESIGN.md`). Measure original first, then verify match |
 
-| Skill | Load when... |
+## Project-Specific Skills (current migration, prefixed `project-`)
+
+| Skill | When to load | Key insight |
+|-------|-------------|-------------|
+| [project-glass-surface-pattern](project-glass-surface-pattern/SKILL.md) | Frosted glass/translucent frame effect | Gradient + `backdrop-filter: blur(5px)` + border-radius + semi-transparent border |
+| [project-mega-menu-content-model](project-mega-menu-content-model/SKILL.md) | Editing nav content; mega menu columns | H2 = nav item, H3 = column, UL = links. No content after H2 = no dropdown |
+| [project-background-layering](project-background-layering/SKILL.md) | Gradient not showing through blocks | ONE background on `main` with layers. All blocks must be `background: transparent` |
+| [project-clip-path-bar-charts](project-clip-path-bar-charts/SKILL.md) | Arrow-shaped bar charts | `clip-path: polygon()` for shape. Proportional widths from data values |
+| [project-carousel-expand-collapse](project-carousel-expand-collapse/SKILL.md) | Expand/collapse card behavior | One card expanded at a time. 430px collapsed, 798px expanded. "+" rotates to "×" |
+| [project-nav-header-semrush](project-nav-header-semrush/SKILL.md) | Brand-specific nav toggle | Tinted bg switches to white on dropdown. Toggle `.nav-open` on BOTH wrapper and header |
+
+## Meta
+
+| Skill | When to load |
 |-------|-------------|
-| [css-specificity-eds.md](css-specificity-eds.md) | A CSS rule isn't applying; computed style shows wrong value |
-| [eds-dom-structure.md](eds-dom-structure.md) | Selector doesn't match; need to know where EDS puts blocks in the DOM |
-| [vertical-spacing-system.md](vertical-spacing-system.md) | Blocks touching with no gap; sections too far apart; page rhythm wrong |
-| [background-layering.md](background-layering.md) | Gradient not visible; background blocked by a block; need page-specific pattern |
-| [nav-header-eds.md](nav-header-eds.md) | Header broken; nav invisible; chevrons missing; mega menu won't animate |
-| [mega-menu-content-model.md](mega-menu-content-model.md) | Editing nav content; adding mega menu items; dropdown column not rendering |
-| [measure-then-implement.md](measure-then-implement.md) | Matching an original site's exact dimensions, colors, or hover states |
-| [responsive-verification.md](responsive-verification.md) | Checking a component at all breakpoints; layout differs per viewport |
-| [importer-parser-patterns.md](importer-parser-patterns.md) | Writing a block parser; parser validation failing; table format questions |
-| [eds-content-patterns.md](eds-content-patterns.md) | Link not becoming a button; borders doubling; lint failing on fonts |
-| [block-rename-checklist.md](block-rename-checklist.md) | Renaming a block; need to hit all 12+ locations that reference the name |
-| [plain-html-format.md](plain-html-format.md) | Sections not rendering; blocks unstyled; editing .plain.html content files |
-| [import-script-bundling.md](import-script-bundling.md) | Import script not executing; CustomImportScript.default not found |
-| [video-in-eds.md](video-in-eds.md) | Implementing video playback; EDS rewrites video URLs in link hrefs |
-| [block-rename-in-eds.md](block-rename-in-eds.md) | Renaming a block when remote content still uses the old name |
-| [page-template-metadata.md](page-template-metadata.md) | Applying page-level styles via metadata template classes |
-| [max-width-container-pattern.md](max-width-container-pattern.md) | Setting up global layout constraints (max-width, centering) for all blocks |
-| [carousel-pattern-eds.md](carousel-pattern-eds.md) | Building horizontal scrolling carousels with right-edge bleed |
-| [glass-surface-pattern.md](glass-surface-pattern.md) | Implementing frosted glass frame effects around images/videos |
-| [stylelint-no-descending-specificity.md](stylelint-no-descending-specificity.md) | Fixing stylelint no-descending-specificity errors |
-| [clip-path-bar-charts.md](clip-path-bar-charts.md) | Building horizontal bar charts with arrow/pyramid-shaped bars |
-| [mobile-nav-click-handling.md](mobile-nav-click-handling.md) | Mobile nav closes when clicking sub-items; click delegation issues |
+| [writing-skills](writing-skills/SKILL.md) | Creating, improving, or auditing skills |
