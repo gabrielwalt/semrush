@@ -9,9 +9,10 @@ A skill answers: "What do I wish I'd known 30 minutes ago?"
 ## Non-negotiable rules
 
 1. **Project-specific skills MUST be prefixed with `project-`** in both the directory name and the `name` frontmatter field. "Would this help on a completely different brand migration?" — if no, it gets the prefix. No exceptions.
-2. **The skill index in `AGENTS.md` MUST be updated with every skill change** — creation, rename, deletion, or key insight change. The index is the authoritative listing that loads every session. A skill not listed there may as well not exist.
-3. **Generic skills MUST NOT hardcode project-specific values** — no pixel breakpoints, no token values, no brand font names, no specific file names. Reference `PROJECT-DESIGN.md` for breakpoints/tokens, `PROJECT-IMPORT.md` for import file names, or use generic placeholders.
-4. **Never modify the Rules section of AGENTS.md when adding skills** — skills extend the rules, they don't override them. The Rules section is the core contract.
+2. **Skills are recipes, not state descriptions.** A skill teaches how to do something — a sequence of steps, a pattern to apply, a problem to solve. If it merely describes how something currently looks or works (layout dimensions, current color values, component behavior), it belongs in `PROJECT-BLOCKS.md` or another `PROJECT-*.md` file, not a skill. Ask: "Does this tell me *how to build or fix* something, or *what currently exists*?" — only the former is a skill.
+3. **The skill index in `AGENTS.md` MUST be updated with every skill change** — creation, rename, deletion, or key insight change. The index is the authoritative listing that loads every session. A skill not listed there may as well not exist.
+4. **Generic skills MUST NOT hardcode project-specific values** — no pixel breakpoints, no token values, no brand font names, no specific file names. Reference `PROJECT-DESIGN.md` for breakpoints/tokens, `PROJECT-IMPORT.md` for import file names, or use generic placeholders.
+5. **Never modify the Rules section of AGENTS.md when adding skills** — skills extend the rules, they don't override them. The Rules section is the core contract.
 
 ## Creating a new skill
 

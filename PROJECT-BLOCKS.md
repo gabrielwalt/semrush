@@ -65,3 +65,6 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 - **Glass frame**: `linear-gradient(91deg, rgba(5,5,5,0.04), rgba(255,255,255,0.04))` + `backdrop-filter: blur(5px)` + `border: 1px solid rgba(255,255,255,0.6)` + `border-radius: 12px` + `padding: 12px`.
 - **Carousel edge-bleed**: Block has `padding-left` only; track scrolls to right viewport edge.
 - **Pattern-hero positioning**: Fixed `680px` from top of `main` (not percentage-based, since `main` is very tall).
+- **Footer layout**: CTA left (~1/3) + link columns right (~2/3) side-by-side via CSS grid `1fr 2fr`. CTA is left-aligned, uppercase heading. 5 link groups in 4 columns — Support and Community share column 4 via `grid-column: 4`.
+- **Nav header bg toggle**: Tinted background (`rgb(220 238 235)`) switches to white when a dropdown opens. `.nav-open` must toggle on BOTH `.nav-wrapper` and `header` element. Enterprise arrow via `li:last-child a::after`.
+- **Carousel expand/collapse**: One card expanded at a time (430px collapsed, 798px expanded). "+" button rotates 45° to "×". Collapsed shows eyebrow + title + poster; expanded shows large image + description + CTA.

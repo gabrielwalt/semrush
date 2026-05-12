@@ -69,6 +69,7 @@ When code or content needs to go live, tell the user they can use the Console UI
 | `responsive-verification` | Breakpoint testing | Verify at all project breakpoints (see `PROJECT-DESIGN.md`) |
 | `eds-migration-process` | Starting a page migration | Content first, then styles. Consult `PROJECT-STATUS.md` after each page |
 | `eds-troubleshooting` | Stuck on an EDS issue | `site:www.aem.live` or full-text search via `docpages-index.json` |
+| `eds-section-style-icons` | Section needs decorative icon | `::before` pseudo-element on `.default-content-wrapper` bound to section style class |
 | `writing-skills` | Creating or auditing skills | Format guide, frontmatter reference, non-negotiable rules |
 
 ### Project-specific
@@ -79,8 +80,6 @@ When code or content needs to go live, tell the user they can use the Console UI
 | `project-mega-menu-content-model` | Nav/mega menu content | H2 = nav item, H3 = column, UL = links. No content = no dropdown |
 | `project-background-layering` | Gradient not showing | ONE background on `main` with layers. All blocks transparent |
 | `project-clip-path-bar-charts` | Arrow-shaped bars | `clip-path: polygon()`. Proportional widths from data |
-| `project-carousel-expand-collapse` | Expand/collapse cards | One expanded at a time. "+" rotates to "×" |
-| `project-nav-header-semrush` | Brand nav toggle | Tinted bg → white on dropdown. `.nav-open` on wrapper AND header |
 
 ---
 
