@@ -1,13 +1,15 @@
-# [Skill Name]
+---
+name: skill-name-here
+description: One sentence describing what this skill does and when to use it. Put key trigger phrases here so Claude can auto-match.
+---
 
-## When to load
-[One sentence: the symptom or trigger that tells you this skill is relevant. Write as if answering "When would I search for this?" — describe what you're SEEING, not what you're DOING.]
-
-## Key insight
-[The non-obvious truth — the thing that, once you know it, makes the problem trivial. If someone only reads this line, they should be unblocked. One to two sentences max.]
+[Key insight — the one sentence that unblocks. If someone only reads this line, they should be unblocked.]
 
 ## Recipe
-[The actual solution — numbered steps, a code snippet, a table, or a command sequence. Must be copy-pasteable or directly actionable. No preamble.]
+[The actual solution — numbered steps, code snippets, tables, or commands. Must be copy-pasteable. No preamble.]
 
 ## Pitfalls
-[Bullet list of 2-4 things that look right but aren't. Each item: what you might try → why it fails. Keep to one line each.]
+- [What you might try → why it fails. One line each.]
+- [Keep to 2-4 items.]
+
+See also: `related-skill` (why), `other-skill` (why)

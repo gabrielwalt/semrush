@@ -20,6 +20,20 @@ The wrapping element (`<strong>`, `<em>`) determines the button variant. Import 
 2. Extra text in the paragraph — `decorateButtons()` checks `p.textContent.trim() !== linkText` and skips if the `<p>` contains other text besides the link
 3. `:only-child` false match — CSS `:only-child` ignores text nodes, so `p > a:only-child` matches even when there's text before the link. Use JS `p.textContent.trim() === a.textContent.trim()` instead
 
+## Adjacent item borders (avoiding double borders)
+```css
+.item { border-top: 1px solid var(--border-color); }
+.item:last-child { border-bottom: 1px solid var(--border-color); }
+/* NOT border-top + border-bottom on every item — that doubles the visible border */
+```
+
+## Lint gotchas
+- Font family names must NOT be quoted: `font-family: Inter, sans-serif` (not `'Inter'`)
+- Vendor prefixes (`-webkit-`) fail `property-no-vendor-prefix` — remove unless absolutely needed
+- `no-descending-specificity` — order selectors from least to most specific
+
 ## Pitfalls
 - Block JS must not strip button formatting — style `.button` elements within the block's CSS scope
 - EDS runs `decorateButtons()` globally during page load — blocks decorated later must call it explicitly if they inject new content
+
+See also: `eds-content-modeling` (CTA type decisions), `css-specificity-eds` (specificity issues)

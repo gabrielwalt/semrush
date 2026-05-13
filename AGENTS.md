@@ -35,7 +35,7 @@ Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to w
 - Generic skills must not hardcode project-specific values — reference `PROJECT-DESIGN.md` or `PROJECT-IMPORT.md`.
 - When creating or updating a skill, add or update its row in `skills/README.md`.
 
-**Keep AGENTS.md and PROJECT files current.** Any meaningful change — block, variant, token, import script, page, or skill — updates the relevant file immediately. Don't defer. Project details live in `PROJECT.md` and `PROJECT-*.md`. The skill index below must stay in sync with the `skills/` directory.
+**Keep AGENTS.md and PROJECT files current.** Any meaningful change — block, variant, token, import script, page, or skill — updates the relevant file immediately. Don't defer. Project details live in `PROJECT.md` and `PROJECT-*.md`. New or renamed skills must be reflected in `skills/README.md`.
 
 **AGENTS.md is project-agnostic.** This file contains only reusable EDS migration guidance — no references to specific source sites, brand names, specific token values, container widths, or project-specific selectors. Project-specific details belong in `PROJECT-*.md` files or `project-` prefixed skills.
 

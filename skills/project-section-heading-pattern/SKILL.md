@@ -1,5 +1,5 @@
 ---
-name: section-heading-pattern
+name: project-section-heading-pattern
 description: Consistent eyebrow + uppercase heading pattern used across multiple sections. Use when adding a new section that needs the standard heading treatment.
 ---
 

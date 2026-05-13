@@ -1,5 +1,5 @@
 ---
-name: footer-reveal-pattern
+name: project-footer-reveal-pattern
 description: Sticky reveal element behind footer for scroll-to-unveil branding effect. Use when a large text or image should appear fixed at the bottom and get revealed as the footer scrolls away.
 ---
 

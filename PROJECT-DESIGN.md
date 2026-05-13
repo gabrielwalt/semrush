@@ -27,6 +27,8 @@ Design intent and token inventory. For actual values read `styles/brand.css` and
 | `--accent-cyan` | Mint/cyan — stats, data viz |
 | `--accent-hover` | Darker lavender — universal CTA hover |
 
+**Page gradient:** `linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%)` with `background-size: 100% 2814px`.
+
 ---
 
 ## Typography
@@ -35,6 +37,7 @@ Design intent and token inventory. For actual values read `styles/brand.css` and
 - **Body font:** Inter
 - **Body weight:** 500 (not 400 — the original uses Lazzer at weight 500 for all body text)
 - **Body letter-spacing:** `-0.02em` (`--tracking-snug`) globally
+- **Eyebrow/pre-title letter-spacing:** `+0.02em` (`--tracking-wide`) — used for section eyebrow labels
 
 Key size tokens: `--font-size-display` (84/56px), `--font-size-heading-xl` (64/32px at tablet), `--font-size-heading-l` (48/32px), `--font-size-body-l` (18px), `--font-size-body-m` (16px).
 
@@ -75,8 +78,11 @@ All buttons: pill shape (`--radius-pill: 100px`), 60px height, `padding: 0 32px`
 |---------|--------|-------|
 | Primary | `<strong><a>` | Purple bg, dark text |
 | Secondary | `<em><a>` | Transparent bg, dark border |
+| Accent | `<strong><em><a>` | Dark fill, white text |
 
 Hover: all transition to `--accent-hover` (#b072ff), 0.2s ease.
+
+**Nav CTA sizes:** "Log In" button uses compact height with `padding: 16px 24px` (outlined); "Sign Up" uses the same compact height, solid dark fill.
 
 ---
 

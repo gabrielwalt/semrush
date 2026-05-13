@@ -21,6 +21,31 @@ description: Frosted glass/translucent frame effect for images and videos. Combi
 
 On dark backgrounds: `border: 1px solid rgb(255 255 255 / 8%); background: rgb(255 255 255 / 5%)`
 
+## Variants
+
+**Left-side only (promo cards video):**
+```css
+.promo-cards-media {
+  border-radius: 12px 0 0 12px;
+  border-right: none;
+  padding: 12px 0 12px 12px;
+}
+```
+
+**Enterprise (dark background):**
+```css
+.enterprise .glass-frame {
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 8%);
+}
+```
+
+## Where it's used
+- Hero video frame
+- Carousel slider poster images (small)
+- Carousel slider expanded large image
+- Promo cards video wrapper (left-rounded only)
+
 ## Pitfalls
 - White border is essential — without it the glass effect is invisible on light backgrounds
 - Inner border-radius should be `padding - 4px` smaller than the frame's

@@ -63,6 +63,41 @@ Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P conten
 
 ---
 
+## Key Parser Requirements
+
+### Hero Parser
+
+- Output ordered structure: Section Metadata (`Style: centered`) → default content (`h1` + subtitle `<p>`) → `insights-widget` block (empty) → `video` block (link + poster format).
+- **`buildHeroBlock` must NOT inject a synthetic `hero` block** when `insights-widget` or `video` blocks are already detected on the page — they ARE the hero.
+
+### Stats Facts Parser
+
+- Extract eyebrow/title/CTA to **default content above the block** (not inside the block table).
+- Block table rows: each row = stat number + stat label.
+- "Learn more" CTA must be emitted as `<strong><a>` or `<em><a>` (a button), not a plain link.
+
+### Stats Visibility Parser
+
+- Extract eyebrow/title/CTA to **default content above the block**.
+- Auto-detect dark background from source DOM → emit `section-dark` in Section Metadata.
+- Auto-detect bar pattern presence → emit `section-pattern-bars` in Section Metadata alongside `section-dark`.
+- Block table rows: each row = bar label + bar value (e.g., pipe-separated `Google | 7.9`).
+
+### Testimonials Parser
+
+- Content must follow the 5-row model: Row 1: section heading; Row 2: company logo; Row 3: quote text; Row 4: author photo + name + role; Row 5+: stats cards.
+- Do NOT wrap content in a `.testimonials-layout` intermediate element.
+
+### Core Rules (all parsers)
+
+- Use `getAttribute('src')` / `getAttribute('poster')` — never `.src` / `.poster` (property resolves to `about:error` on failed loads).
+- Resolve relative paths to absolute — prefix `/` paths with the source origin.
+- Skip images with empty `src` or `src="about:error"`.
+- Wrap every `<img>` in `<picture>`.
+- Emit video as link + poster URL — DA does not support `<video>` elements.
+
+---
+
 ## Commands
 
 ### Bundle (required before running import)

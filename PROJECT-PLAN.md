@@ -24,7 +24,7 @@ Each task is self-contained: file paths, required values, and acceptance criteri
 
 ### M01 — Consolidate skills into a single file format
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — 23 flat .md files deleted; 4 project-specific skills properly prefixed (`project-footer-reveal-pattern`, `project-section-heading-pattern`); content from flat files merged into directory versions; `_template.md` updated to directory/frontmatter format  
 **Priority:** P0-meta — structural chaos makes the skill system unreliable  
 **Files:** `skills/` (entire directory)
 
@@ -60,7 +60,7 @@ Update `_template.md` to show the directory/SKILL.md format (with frontmatter), 
 
 ### M02 — Rebuild the skills/README.md index to cover all skills
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — All 38 skills indexed in 7 categorized sections (Always load, Layout & CSS, Nav & Header, Content & Authoring, Blocks & Patterns, Import & Migration, Block Renaming, Skills Library, Project-specific). Symptoms-first trigger phrases throughout.  
 **Priority:** P0-meta — the index is the agent's skill-matching mechanism; incomplete = skills never loaded  
 **Files:** `skills/README.md`, `AGENTS.md`
 
@@ -98,7 +98,7 @@ The AGENTS.md currently contains its own duplicate skill index table. Remove it 
 
 ### M03 — Add missing meta-skills: the three failure modes
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Created `verify-before-claiming`, `regression-guard`, `measure-first`; all indexed in README under "Always load"  
 **Priority:** P0-meta — these skills prevent the most costly recurring agent failures  
 **Files:** `skills/` (new directories), `skills/README.md`
 
@@ -215,7 +215,7 @@ After creating all three skills, add them to `skills/README.md` with trigger phr
 
 ### M04 — Add session startup and close rituals as skills
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Created `session-startup` and `session-close`; indexed in README under "Always load"  
 **Priority:** P1-meta — context loss between sessions is why decisions and corrections evaporate  
 **Files:** `skills/` (new), `AGENTS.md`, `skills/README.md`
 
@@ -297,7 +297,7 @@ After creating both skills:
 
 ### M05 — Update stale skills with current implementation facts
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Updated: `mobile-nav-click-handling` (closeOnFocusLost recipe added), `eds-section-style-icons` (selector updated to `section-dark.section-pattern-bars`, deprecated `section-ai-visibility`), `nav-header-eds` (transparent bg, nav-open on both elements, --nav-top-offset pattern), `eds-code-conventions` (full-width escape hatch inlined)  
 **Priority:** P1-meta — stale skills actively mislead; the agent follows them and produces wrong output  
 **Files:** `skills/mobile-nav-click-handling/SKILL.md`, `skills/eds-section-style-icons/SKILL.md`, `skills/nav-header-eds/SKILL.md`, `skills/eds-code-conventions/SKILL.md`
 
@@ -392,7 +392,7 @@ With:
 
 ### M07 — Create a `full-width-escape-hatch` skill and audit all blocks for !important
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Created `full-width-escape-hatch` skill; indexed in README under "Layout & CSS" with trigger phrase targeting the moment of temptation  
 **Priority:** P1-meta — the most violated coding rule needs its own dedicated skill so future agents find it automatically  
 **Files:** `skills/full-width-escape-hatch/` (new), `skills/README.md`
 

@@ -13,7 +13,7 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 | `insights-widget` | — | Homepage | Search form with searchable country dropdown (115 countries), blinking cursor, glass surface |
 | `video` | — | Homepage | Glass-framed; detects video URLs in link text (EDS pattern for external media) |
 | `marquee` | — | Homepage | Infinite-scroll logo strip with edge fade mask |
-| `video-card` | `video-card-semrush-one`, `video-card-enterprise` | Homepage | 64px padding, grid layout, video in glass frame on right half |
+| `video-card` | `video-card-semrush-one`, `video-card-enterprise` | Homepage | 64px padding, glass frame; cards stacked vertically (text above, video below) |
 | `carousel-slider` | `carousel-slider-expansible` | Homepage | Default (resource cards) and expansible (solutions accordion); extends to right viewport edge |
 | `stats-facts` | — | Homepage | Click/scroll-to-expand stat rows; diagonal-line arrow pattern, 180px numbers |
 | `stats-visibility` | — | Homepage | Dark section, bar chart with purple-to-teal gradient clip-path arrows, 84px heading |
@@ -45,7 +45,7 @@ These thin blocks exist because remote AEM content may reference old block names
 | `section-centered` | Flex column + center-align |
 | `section-dark` | Dark background, white text |
 | `section-pattern-bars` | Bar pattern background (used with `section-dark` on stats-visibility) |
-| `section-ai-visibility` | Pattern background, centered heading with icon (legacy — may be replaced by `section-pattern-bars`) |
+| `section-ai-visibility` | **Removed** — fully replaced by `section-dark` + `section-pattern-bars`. Do not use. |
 
 ---
 
@@ -74,11 +74,13 @@ These thin blocks exist because remote AEM content may reference old block names
 - **Carousel edge-bleed**: Section has `overflow: hidden`. Slider uses `margin-left: container-padding` (not padding — padding on `overflow-x: auto` flex containers doesn't reliably offset scroll-snap). Last card gets `margin-right: container-padding`. This creates the right-edge peek where the 4th card is partially visible, clipped by the section boundary.
 - **Carousel nav buttons**: Both variants place nav in `.default-content-wrapper` (JS appends there). CSS positions via `position: absolute; right: container-padding; bottom: 0` to bottom-align with the heading. Hidden below 1024px (touch scroll only).
 - **Section header pattern**: Eyebrow `<p>` + `<h2>` tagline used across carousel, stats, and testimonials sections. H2 is 48px/uppercase/line-height 1.0/letter-spacing -0.04em. Applied via block-specific selectors on `.default-content-wrapper > h2`.
-- **Pattern-hero positioning**: Fixed `680px` from top of `main` (not percentage-based, since `main` is very tall).
+- **Pattern-hero positioning**: calc-based, scoped to `main .section.centered:first-of-type`. Breakpoints: ≥1440px → `calc(50% - 20px)`, 1024–1439px → `calc(50% - 100px)`, 768–1023px → `calc(50% + 100px)`, <768px → `100%`.
 - **Footer layout**: CTA left (~1/3) + link columns right (~2/3) side-by-side via CSS grid `1fr 2fr`. CTA is left-aligned, uppercase heading. Footer uses Lazzer font family throughout. Social icons detected from href patterns in `decorateSocialLinks()`.
 - **Footer reveal**: `.footer-reveal` is a sibling of `.footer` block inside `<footer>` element (not a child of `.footer`). Uses `position: sticky; bottom: 0; z-index: 0` while `.footer` has `position: relative; z-index: 1; background: white`. The white footer scrolls up to reveal the sticky mint-colored SEMRUSH wordmark behind it.
 - **Nav header bg toggle**: Tinted background (`rgb(220 238 235)`) switches to white when a dropdown opens. `.nav-open` must toggle on BOTH `.nav-wrapper` and `header` element.
 - **Carousel expand/collapse** (expansible variant): One card expanded at a time (430px collapsed, 798px expanded). "+" button rotates 45° to "×". Collapsed shows eyebrow + title + poster; expanded shows large image + description + CTA.
-- **Testimonials content model**: 3-row model — Row 0: blockquote + company logo img; Row 1: author image + author name (bold) + role; Row 2: stats grid. JS extracts `<strong>` for author name, plain `<p>` for role, `<blockquote>` for quote text.
+- **Testimonials content model**: 5-row model — Row 1: section heading; Row 2: company logo; Row 3: quote text (`<blockquote>`); Row 4: author photo + name (bold) + role; Row 5+: stats cards (one per row). JS extracts `<strong>` for author name, plain `<p>` for role.
 - **Stats-facts arrow indicator**: CSS `::before` for diagonal hatching SVG pattern, `::after` for up-arrow SVG icon (data URI). Active state changes arrow bg to cyan and icon fill to dark. `activateStat()` function handles both click and scroll-driven activation.
 - **Stats-visibility bars**: `clip-path: polygon()` for angled bar ends. Bar widths derived from data attributes set by JS. Alternating cyan/purple fills on bars.
+- **Stats-visibility h2**: The `h2` lives in `.default-content-wrapper` (default section content above the block), NOT inside `.stats-visibility`. CSS selector `.stats-visibility h2` never matches — use `.section > .default-content-wrapper > h2` to target it.
+- **Insights-widget blinking cursor**: Hide cursor when (a) country dropdown is open and (b) when the text input has focus — two conflicting cursors otherwise.

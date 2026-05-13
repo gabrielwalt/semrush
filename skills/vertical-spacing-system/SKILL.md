@@ -22,10 +22,16 @@ main > .section > [class$="-wrapper"] + .default-content-wrapper {
 | `--section-padding` | Section top/bottom padding |
 | `--block-padding` | Margin between blocks in a section |
 
-Set desktop and mobile values via media queries. Typical range: `--section-padding` 60–120px, `--block-padding` 32–64px.
+See `PROJECT-DESIGN.md` for the project's token values (desktop and mobile).
+
+## Common overrides
+- **First section (hero):** `padding-top: 0` — starts directly at header bottom, no extra gap
+- **Full-bleed blocks (marquee):** `.section.marquee-container { padding: 0 }` — block handles its own internal spacing
+- **Centered hero section:** may need custom `padding-top` to control hero vertical position
 
 ## Pitfalls
 - `main > .section > * + *` — universal `*` has zero specificity and loses
 - The `> div` inside a section is `.default-content-wrapper`, not a generic container
+- First and last items inside a section must have `margin-top: 0` / `margin-bottom: 0` — all inter-section gap comes from section padding only
 
 See also: `eds-dom-structure` (full DOM tree), `css-specificity-eds` (why `* + *` loses)

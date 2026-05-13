@@ -24,7 +24,10 @@ main > .section.{block}-container
 | Block root in decorate() | `block` argument (already the `.block` element) |
 
 ## Pitfalls
-- `.section.{block}-container` is on the **section**, not the block
+- `.section.{block}-container` is on the **section**, not the block — confusing naming
 - Section metadata disappears from DOM after decoration — only its classes remain
 - Never add `{block}-wrapper` or `{block}-container` classes in JS — reserved by EDS
 - EDS wraps `<img>` in `<picture>` only when img is direct child of `<div>` — detect both: `el.querySelector('picture') || el.querySelector('img')`
+- Making a section `display: flex` for side-by-side blocks: the `[class$="-wrapper"] + [class$="-wrapper"]` spacing rule will misalign — override `margin-top: 0` on wrappers in that section
+
+See also: `css-specificity-eds` (why selectors don't apply), `vertical-spacing-system` (block spacing rules)

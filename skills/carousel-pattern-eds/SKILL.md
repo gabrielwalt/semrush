@@ -19,7 +19,7 @@ Carousels use section-level overflow clipping, margin-based left alignment, and 
 - **Section `overflow: hidden` is required** — without it, the cards extend past the viewport and there's no peek/clip effect.
 - **Don't put nav buttons inside the scrollable area** — they'll scroll with the cards. Place them in the section header area outside the block.
 
-## Original site technique (Semrush/Swiper)
-The original uses Swiper.js with `overflow: visible` on the swiper container and `overflow: hidden` on the parent `<section>`. Our EDS implementation achieves the same effect with native scroll-snap + section overflow clipping.
+## How the original site works
+The original site uses Swiper.js with `overflow: visible` on the swiper container and `overflow: hidden` on the parent `<section>`. The EDS implementation achieves the same effect with native scroll-snap + section overflow clipping.
 
 See also: `max-width-container-pattern` (full-width escape hatch), `eds-dom-structure` (wrapper chain)
