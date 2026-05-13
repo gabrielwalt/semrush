@@ -1,6 +1,11 @@
 export default async function decorate(block) {
   const statRows = [...block.children];
 
+  function activateStat(idx) {
+    statRows.forEach((r) => r.classList.remove('active'));
+    if (statRows[idx]) statRows[idx].classList.add('active');
+  }
+
   statRows.forEach((row, index) => {
     row.classList.add('stat-row');
     if (index === 0) row.classList.add('active');
@@ -48,11 +53,6 @@ export default async function decorate(block) {
 
     row.addEventListener('click', () => activateStat(index));
   });
-
-  function activateStat(idx) {
-    statRows.forEach((r) => r.classList.remove('active'));
-    if (statRows[idx]) statRows[idx].classList.add('active');
-  }
 
   function onScroll() {
     const rect = block.getBoundingClientRect();

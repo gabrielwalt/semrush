@@ -1,0 +1,39 @@
+{
+  "variantName": "columns-stats",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-05-13T05:30:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.semrush.com/one/",
+    "originPage": "Semrush One landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "stats-display",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "large number heading + description text (3 columns)",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "stat/number highlight sections",
+      "KPI displays",
+      "trust metric rows"
+    ],
+    "notSuitableFor": [
+      "content-heavy multi-column layouts",
+      "image-based columns",
+      "interactive stat sections"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/one/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-05-13T05:30:00.000Z"
+  }
+}

@@ -12,9 +12,14 @@ Import pipeline status and commands. For parser/transformer implementation, read
 | `tools/importer/import-homepage.js` | Main import script (all homepage parsers inline, ES module export) |
 | `tools/importer/import-nav.js` | Nav fragment import (parses `srf-header` structure) |
 | `tools/importer/import-footer.js` | Footer fragment import (parses `srf-footer` structure) |
+| `tools/importer/import-semrush-one.js` | Semrush One page import (video-card-feature, columns-stats, cards-icon, cards-awards parsers) |
+| `tools/importer/import-enterprise.js` | Enterprise page import (case-study, tabs, testimonials variations) |
 | `tools/importer/parsers/*.js` | Standalone parsers (11 total) |
 | `tools/importer/transformers/cleanup.js` | DOM cleanup transformer |
+| `tools/importer/page-templates.json` | Page template definitions for Semrush One and Enterprise (190 lines) |
 | `tools/importer/urls-homepage.txt` | Homepage URL |
+| `tools/importer/urls-semrush-one.txt` | Semrush One page URLs |
+| `tools/importer/urls-enterprise.txt` | Enterprise page URLs |
 
 ---
 

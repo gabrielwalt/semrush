@@ -1,0 +1,39 @@
+{
+  "variantName": "cards-awards",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-05-13T05:30:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.semrush.com/one/",
+    "originPage": "Semrush One landing page",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "compact",
+    "purpose": "awards-badges",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "badge icon image + multi-line label text",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "award badge displays",
+      "certification/recognition rows",
+      "trust indicator sections"
+    ],
+    "notSuitableFor": [
+      "content-heavy card grids",
+      "feature showcases",
+      "cards with descriptions"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/one/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-05-13T05:30:00.000Z"
+  }
+}

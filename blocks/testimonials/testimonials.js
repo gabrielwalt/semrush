@@ -1,41 +1,31 @@
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Row 0: quote cell — logo img, blockquote, author img, author name (strong), author role
-  // Row 1: stats cell — stat number, stat label
+  // Row 0: blockquote (single cell)
+  // Row 1: author image + name + title (single cell)
+  // Row 2: stat number + label (single cell)
+
   const quoteRow = rows[0];
-  const statsRow = rows[1];
+  const authorRow = rows[1];
+  const statsRow = rows[2];
 
-  const quoteCell = quoteRow?.querySelector(':scope > div');
-  const statsCell = statsRow?.querySelector(':scope > div');
-
-  const logoImg = quoteCell?.querySelector('img');
-  const blockquoteEl = quoteCell?.querySelector('blockquote');
-
-  // Author image is the second image (after logo)
-  const allImgs = quoteCell ? [...quoteCell.querySelectorAll('img')] : [];
-  const authorImg = allImgs.length > 1 ? allImgs[1] : null;
-
-  // Author name is in <strong>, role is the paragraph after <strong>
-  const strongEl = quoteCell?.querySelector('strong');
-  const authorName = strongEl?.textContent?.trim();
-  const roleParagraphs = quoteCell ? [...quoteCell.querySelectorAll(':scope > p')] : [];
-  const roleP = roleParagraphs.find((p) => !p.querySelector('picture') && !p.querySelector('strong') && p.textContent.trim());
-  const authorRole = roleP?.textContent?.trim();
+  const logoImgEl = quoteRow ? quoteRow.querySelector('img') : null;
+  const blockquoteEl = quoteRow ? quoteRow.querySelector('blockquote') : null;
+  const authorImgEl = authorRow ? authorRow.querySelector('img') : null;
+  const authorParagraphs = authorRow ? [...authorRow.querySelectorAll('p')] : [];
+  const statsCell = statsRow ? statsRow.querySelector(':scope > div') : null;
 
   block.innerHTML = '';
 
   const layout = document.createElement('div');
   layout.className = 'testimonials-layout';
 
-  // Quote card
   const quoteCard = document.createElement('div');
   quoteCard.className = 'quote-card';
 
-  if (logoImg) {
+  if (logoImgEl) {
     const logoWrap = document.createElement('div');
-    logoWrap.className = 'quote-logo';
-    logoWrap.appendChild(logoImg);
+    logoWrap.appendChild(logoImgEl);
     quoteCard.appendChild(logoWrap);
   }
 
@@ -43,36 +33,26 @@ export default async function decorate(block) {
     quoteCard.appendChild(blockquoteEl);
   }
 
-  const authorDiv = document.createElement('div');
-  authorDiv.className = 'quote-author';
+  if (authorImgEl || authorParagraphs.length) {
+    const authorDiv = document.createElement('div');
+    authorDiv.className = 'author';
 
-  if (authorImg) {
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'quote-author-img';
-    authorImg.style.cssText = '';
-    imgWrap.appendChild(authorImg);
-    authorDiv.appendChild(imgWrap);
+    if (authorImgEl) {
+      authorDiv.appendChild(authorImgEl);
+    }
+
+    if (authorParagraphs.length) {
+      const authorInfo = document.createElement('div');
+      authorInfo.className = 'author-info';
+      authorParagraphs.forEach((p) => authorInfo.appendChild(p));
+      authorDiv.appendChild(authorInfo);
+    }
+
+    quoteCard.appendChild(authorDiv);
   }
 
-  if (authorName || authorRole) {
-    const cite = document.createElement('cite');
-    if (authorName) {
-      const b = document.createElement('b');
-      b.textContent = authorName;
-      cite.appendChild(b);
-    }
-    if (authorRole) {
-      const span = document.createElement('span');
-      span.textContent = authorRole;
-      cite.appendChild(span);
-    }
-    authorDiv.appendChild(cite);
-  }
-
-  quoteCard.appendChild(authorDiv);
   layout.appendChild(quoteCard);
 
-  // Stats card
   if (statsCell) {
     const statsCard = document.createElement('div');
     statsCard.className = 'stats-card';
@@ -88,6 +68,8 @@ export default async function decorate(block) {
       textEl.className = 'stats-text';
       textEl.textContent = paragraphs[1].textContent;
       statsCard.appendChild(textEl);
+    } else {
+      statsCard.innerHTML = statsCell.innerHTML;
     }
 
     layout.appendChild(statsCard);

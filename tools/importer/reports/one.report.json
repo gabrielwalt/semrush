@@ -1,0 +1,26 @@
+{
+  "status": "success",
+  "url": "https://www.semrush.com/one/",
+  "path": "one",
+  "timestamp": "2026-05-13T05:48:23.805Z",
+  "title": "Win Every Search, From SEO to AI Discovery",
+  "template": "semrush-one",
+  "blocks": [
+    "video-card-semrush-one",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "video-card-feature",
+    "columns-stats",
+    "cards-icon",
+    "testimonials",
+    "cards-awards"
+  ]
+}
