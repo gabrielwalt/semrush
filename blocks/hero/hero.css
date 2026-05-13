@@ -13,13 +13,15 @@
   font-size: var(--font-size-display);
   font-weight: 600;
   line-height: var(--line-height-snug);
-  margin: 0 0 var(--space-m);
+  margin: 0 auto var(--space-m);
+  max-width: 12.5em;
 }
 
 .hero p {
   font-size: var(--font-size-body-l);
   line-height: var(--line-height-relaxed);
   margin: 0 auto var(--space-m);
+  max-width: 540px;
 }
 
 @media (width >= 1024px) {

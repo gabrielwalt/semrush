@@ -143,6 +143,40 @@ main .promo-cards.promo-cards-enterprise a.button:any-link:focus-visible {
 }
 
 /* =============================================
+   Enterprise Platform Variant — light gradient, screenshot layout
+   ============================================= */
+.video-card.video-card-enterprise-platform .video-card-container {
+  background: linear-gradient(135deg, rgb(220 238 235) 0%, rgb(240 234 255) 100%);
+  color: var(--dark-color);
+  padding: 64px 0 0 64px;
+  align-items: end;
+}
+
+.video-card.video-card-enterprise-platform .video-card-text {
+  padding: 0 32px var(--space-xl) 0;
+}
+
+.video-card.video-card-enterprise-platform h2 {
+  color: var(--dark-color);
+  font-size: var(--font-size-heading-xl);
+}
+
+/* Platform screenshot — fills the media column edge-to-edge */
+.video-card.video-card-enterprise-platform .video-card-glass {
+  padding: 12px 0 0 12px;
+  background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
+  border-radius: 12px 0 0 12px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
+  border-bottom: none;
+  align-self: end;
+}
+
+.video-card.video-card-enterprise-platform .video-card-glass img {
+  border-radius: 8px 0 0 0;
+}
+
+/* =============================================
    Responsive
    ============================================= */
 @media (width < 768px) {

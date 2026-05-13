@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** Enterprise page block styling  
-**Last completed:** T12 (video-card glass shrink-wrap), section-dark button override, AGENTS.md rules update  
-**Next up:** Enterprise page — style new blocks, then verify on preview  
-**Blocker:** Semrush One content lost — /one page styling on hold until content is re-imported
+**Active task:** V01 — Add missing background image assets  
+**Last completed:** E01–E04 (testimonials-carousel, tabs, case-study, video-card enterprise-platform variant)  
+**Next up:** V01/V02 visual polish; verify enterprise page on preview once content published  
+**Blocker:** Semrush One content lost — /one page styling on hold until content is re-imported; Enterprise page 404 on preview (content not yet published)
 
 ---
 
@@ -28,7 +28,7 @@
 | Semrush One — content imported | ❌ Lost — needs re-import |
 | Semrush One — block styling | ⏸ Blocked (content lost) |
 | Enterprise — content imported | ✅ Done |
-| Enterprise — block styling | 🔲 Not started (E01–E04 in plan) |
+| Enterprise — block styling | ✅ Done (E01–E04 complete; verify on preview once published) |
 | Bulk import | 🔲 Not started |
 | PageSpeed 100 | 🔲 Not started |
 | Accessibility (WCAG 2.1 AA) | 🔲 Not started |

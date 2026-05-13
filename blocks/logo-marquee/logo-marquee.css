@@ -27,7 +27,7 @@
 }
 
 .logo-marquee .marquee-track img {
-  height: 100px;
+  height: 50px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -39,7 +39,7 @@
   }
 
   .logo-marquee .marquee-track img {
-    height: 64px;
+    height: 32px;
   }
 
   .logo-marquee .marquee-track {

@@ -1390,7 +1390,7 @@ main > .section > div:last-child { margin-bottom: 0; }
 
 ### E01 — Create `testimonials-carousel` block
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Created testimonials-carousel.js (full-width + card classes) and testimonials-carousel.css (horizontal snap scroll, 200×80px cards, logo images 40px max-height)  
 **Priority:** P1 — block exists in Enterprise content but has zero CSS/JS  
 **Files:** `blocks/testimonials-carousel/` (create)
 
@@ -1411,7 +1411,7 @@ Create `testimonials-carousel.js` and `testimonials-carousel.css`. The block is 
 
 ### E02 — Create `tabs` block
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Created tabs.js (tab list + panels ARIA, click handler, first tab active) and tabs.css (border-bottom indicator, panel content, mobile scroll)  
 **Priority:** P1 — tabs is a key feature of the Enterprise page (product overview section)  
 **Files:** `blocks/tabs/` (create)
 
@@ -1432,7 +1432,7 @@ Create `tabs.js` to build a tab list + panels UI. First row is active by default
 
 ### E03 — Style `video-card enterprise-platform` variant
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Added `.video-card-enterprise-platform` variant CSS: light mint→purple gradient bg, heading aligned to bottom of card, glass frame open at bottom  
 **Priority:** P1 — Enterprise platform section uses this variant  
 **Files:** `blocks/video-card/video-card.css`
 
@@ -1451,7 +1451,7 @@ Add variant CSS for `.video-card.video-card-enterprise-platform`. This is a 2-co
 
 ### E04 — Create `case-study` block
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Created case-study.js (video row → play button overlay, stats row → stat-number + stat-label) and case-study.css (2-col grid, display-size stat numbers, play button overlay)  
 **Priority:** P1 — "Outperform from day one" section on Enterprise page  
 **Files:** `blocks/case-study/` (create)
 
@@ -1466,6 +1466,44 @@ Create `case-study.js` and `case-study.css`. Layout: stats displayed as large nu
 - Stat numbers are large (display-size typography)
 - Video thumbnail renders with play button or poster
 - Responsive: stacks on mobile
+
+---
+
+## Part 4 — Visual Polish (identified in aem-merged-20260513 audit)
+
+---
+
+### V01 — Add missing background image assets for video-card variants
+
+**Status:** 🔲 Open  
+**Priority:** P2 — video-card-semrush-one and video-card-enterprise cards show gradient fallback only  
+**Files:** `blocks/video-card/video-card.css`, content images
+
+**Problem:**
+- `.video-card-semrush-one` references `/content/images/semrush-one-bg.svg` — file doesn't exist
+- `.video-card-enterprise` references `/content/images/enterprise-bg.webp` — file doesn't exist
+Both variants are likely rendering without their decorative background pattern.
+
+**Fix options:**
+1. Export/download the SVG/webp assets from the original site and add to `/content/images/`
+2. Or replace with a generated CSS-only pattern if exact assets are unavailable
+
+**Acceptance criteria:**
+- Both variant cards show their decorative background (not just the gradient fallback)
+- No 404s in browser network panel for these assets
+
+---
+
+### V02 — Verify hero section rendering at all breakpoints
+
+**Status:** 🔲 Open  
+**Priority:** P2 — hero h1 max-width and subtitle p max-width were applied but need verification  
+**Files:** `blocks/hero/hero.css`
+
+**Acceptance criteria:**
+- h1 max-width: 12.5em keeps text within ~12 words per line at 1440px
+- p max-width: 540px centers subtitle correctly at desktop
+- No regression at mobile
 
 ---
 
