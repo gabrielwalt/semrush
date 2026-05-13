@@ -80,7 +80,12 @@ footer .footer .footer-cta-container p {
   text-decoration: underline;
 }
 
-/* Bottom bar — override EDS default flex wrapper so block fills full width */
+/* Bottom bar — separator line + override EDS default flex wrapper so block fills full width */
+.footer-bottom-container {
+  border-top: 1px solid rgb(230 230 230);
+  padding-top: var(--space-m);
+}
+
 .footer-bottom-container .footer-bottom-wrapper {
   display: block;
 }

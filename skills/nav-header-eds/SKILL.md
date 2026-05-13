@@ -39,9 +39,9 @@ header { height: var(--nav-height); } /* reserves flow space */
 ```css
 @media (width >= 1024px) {
   header .nav-wrapper { background-color: transparent; transition: background-color 0.2s ease-in-out; }
-  /* Both selectors required — missing one causes gradient bleed through */
+  /* Both selectors required — missing one causes gradient bleed through on the other */
   header.nav-open .nav-wrapper,
-  header .nav-wrapper.nav-open { background-color: #fff; }
+  header .nav-wrapper.nav-open { background-color: var(--nav-bg-open, #fff); }
 }
 ```
 
@@ -61,7 +61,6 @@ header { height: var(--nav-height); } /* reserves flow space */
 
 ## Pitfalls
 - Nav fragment loads as 3 sections: brand (0), sections (1), tools (2) — if content changes order, classes map wrong
-- `buildNavFromHeadings()` reads H2s — adding non-nav H2s to the fragment breaks the menu
 - `position: sticky` silently fails if ANY ancestor has `overflow: hidden` — use `fixed` instead
 - Pages without announcement bar need `--nav-top-offset` to default to `0` (CSS fallback handles this)
 - Mobile: `closeOnFocusLost` fires with `e.relatedTarget === null` on tap — `nav.contains(null)` returns false, incorrectly closing menu. Fix: `if (!isDesktop.matches) return;` at top of `closeOnFocusLost`

@@ -70,7 +70,6 @@ To create a new skill: see `writing-skills/SKILL.md` and copy `_template.md`.
 | Skill | Load when... |
 |-------|-------------|
 | [importer-parser-patterns](importer-parser-patterns/SKILL.md) | Writing a block parser; parser validation failing; content structure questions |
-| [import-script-bundling](import-script-bundling/SKILL.md) | Import script not executing; `CustomImportScript.default` not found |
 | [eds-migration-process](eds-migration-process/SKILL.md) | Starting a new page migration; deciding what to import next |
 | [eds-troubleshooting](eds-troubleshooting/SKILL.md) | Stuck on an EDS issue; need to search official docs |
 
@@ -103,5 +102,6 @@ These skills contain Semrush-specific values and patterns. They help on this pro
 | [project-clip-path-bar-charts](project-clip-path-bar-charts/SKILL.md) | Building bar charts with arrow/pyramid-shaped bars (AI Visibility Index) |
 | [project-footer-reveal-pattern](project-footer-reveal-pattern/SKILL.md) | Adding sticky reveal element behind footer; bottom bar social icons/legal layout |
 | [project-glass-surface-pattern](project-glass-surface-pattern/SKILL.md) | Implementing frosted glass frame effect around images or videos |
+| [project-import-script-bundling](project-import-script-bundling/SKILL.md) | Import script not executing; `CustomImportScript.default` not found; bundling commands |
 | [project-mega-menu-content-model](project-mega-menu-content-model/SKILL.md) | Editing nav content; adding mega menu items; debugging dropdown columns |
 | [project-section-heading-pattern](project-section-heading-pattern/SKILL.md) | Adding eyebrow + uppercase heading to a new section; section heading CSS selectors |

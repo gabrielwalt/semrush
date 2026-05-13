@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** T02 — Testimonials: quote text size and font  
-**Last completed:** T01 — closeOnFocusLost mobile guard + hamburger 16px margin  
-**Next up:** T02 → T03 → T04 → T05 → T06  
-**Blocker:** None
+**Active task:** P04 — Verify footer link columns CSS selector  
+**Last completed:** P01–P03 — testimonials.js + testimonials.css restored from reference branch; footer border-top restored  
+**Next up:** P04 (footer link columns verification after push) → P05 (push + visual triage) → T02+  
+**Blocker:** Needs push to preview for visual verification (P04, P05)
 
 ---
 

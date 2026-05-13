@@ -16,6 +16,180 @@ Each task is self-contained: file paths, required values, and acceptance criteri
 
 ---
 
+## Part 0 — Merge Fix: `aem-merged-20260513` Branch Recovery
+
+*The merge of `aem-20260508-1813` + `aem-20260513-1138` produced a visually broken homepage. Three confirmed bugs, one probable bug. Fix these before any Part 1–2 tasks.*
+
+**Diagnosis summary** (based on full code diff + import parser analysis):
+
+| Bug | Root cause | Severity |
+|-----|-----------|----------|
+| All testimonials text is 14px uppercase | CSS `div:first-child` rules target `.testimonials-layout` after JS runs | P0 |
+| Stats card absent; author shows wrong text | Merged JS expects 3-row content; AEM has 2-row (working on reference branch) | P0 |
+| Quote text 18px, no quote marks, stats centered | CSS regressed: font, `::before`, layout not restored from reference branch | P0 |
+| Footer bottom bar separator line missing | `border-top` removed from `.footer-bottom-container` with no replacement | P1 |
+
+**Not broken by this merge:** `styles.css` is identical in both branches (gradient/pattern unaffected). New blocks (`cards-awards`, `cards-icon`, `columns-stats`, `video-card-feature`) are not on the homepage.
+
+---
+
+### P01 — Restore `testimonials.js` from reference branch
+
+**Status:** ✅ Done — restored verbatim from `aem-20260508-1813`; 2-row model (Row 0: logo+blockquote+author; Row 1: stats)  
+**Priority:** P0-blocker — stats card absent; author row shows stat text as author name  
+**Files:** `blocks/testimonials/testimonials.js`
+
+**Root cause — confirmed:**  
+The merge accidentally took `testimonials.js` from `aem-20260513-1138` (3-row model) instead of preserving the 10-commit-refined version on `aem-20260508-1813` (2-row model). The AEM content was imported for the 2-row model (everything in Row 0: logo + blockquote + author img + name + role; Row 1: stats). This is proven by the fact that `aem-20260508-1813` renders testimonials correctly in preview.
+
+The merged 3-row JS reads:
+- `rows[0]` → finds blockquote ✓ and logo img ✓ (both in Row 0 of 2-row content)
+- `rows[1]` → treated as author row, but it IS the stats row → authorParagraphs = ["+373%", "Increase in share of voice"] → rendered as author name/role ✗
+- `rows[2]` → `undefined` → statsCell = null → no stats card created ✗
+
+**Fix:**  
+Restore the file verbatim from the reference branch:
+```bash
+git show aem-20260508-1813:blocks/testimonials/testimonials.js > blocks/testimonials/testimonials.js
+```
+The reference JS reads Row 0 (`quoteCell`) for all quote content — logo img (first `img`), blockquote, author img (second `img`), author name (`strong`), author role (non-picture paragraph). Row 1 (`statsCell`) for stats.
+
+**Acceptance criteria:**
+- Testimonials block renders: quote text, company logo img, author photo, author name+role, and stats card — all present.
+- No `undefined` row access (browser console clean of TypeErrors from this block).
+- `aem-20260508-1813` JS content model is confirmed in the file header comment.
+
+---
+
+### P02 — Restore `testimonials.css` from reference branch
+
+**Status:** ✅ Done — restored verbatim from `aem-20260508-1813`; 26px Lazzer, quote marks, 2fr/1fr grid, pattern SVG on stats card  
+**Priority:** P0-blocker — three CSS regressions compound the JS bug  
+**Files:** `blocks/testimonials/testimonials.css`
+
+**Root cause — confirmed (from full diff analysis):**  
+The merged `testimonials.css` has **three confirmed regressions** vs. the reference branch:
+
+**Regression A — Heading area rules target wrong element:**
+```css
+/* WRONG: after JS runs, div:first-child = .testimonials-layout (entire content wrapper) */
+.testimonials > div:first-child p { font-size: var(--font-size-caption); text-transform: uppercase; }
+.testimonials > div:first-child h2 { font-size: var(--font-size-heading-l); }
+```
+These make ALL paragraphs inside `.testimonials-layout` — blockquote text, author name, stats number, stats label — render as 14px uppercase.
+
+**Regression B — Quote font:**  
+Reference: `font-size: 26px; font-family: var(--heading-font-family); font-weight: 500`  
+Merged: `font-size: var(--font-size-body-l)` (18px), no font-family, no font-weight
+
+**Regression C — Quote marks removed:**  
+Reference had `blockquote::before { content: '\201C\201C'; font-size: 32px; opacity: 0.5; }`  
+Merged: this rule is absent entirely.
+
+**Additional regressions in merged CSS:**
+- Stats card: `justify-content: center; align-items: center; text-align: center` (reference: `justify-content: space-between`)
+- Stats card: no background pattern (`url('/icons/pattern-testimonials-card.svg')` was removed)
+- Layout: changed from `display: grid; grid-template-columns: 2fr 1fr` to `display: flex` with `flex: 2` / `flex: 1`
+- `.testimonials-container > .default-content-wrapper` scoping for eyebrow/h2: removed
+
+**Fix:**  
+Restore the file verbatim from the reference branch:
+```bash
+git show aem-20260508-1813:blocks/testimonials/testimonials.css > blocks/testimonials/testimonials.css
+```
+
+**Acceptance criteria:**
+- Quote text is 26px Lazzer weight 500 (not 18px body-l).
+- Decorative opening quote marks `"` are visible above the blockquote.
+- Stats card has `justify-content: space-between` with number top-left, label bottom-left.
+- Stats card shows the `pattern-testimonials-card.svg` background.
+- Layout is `grid` with `2fr 1fr` columns at desktop.
+- No `div:first-child` heading-area rules anywhere in the file.
+- `npm run lint` passes.
+
+---
+
+### P03 — Restore footer bottom-bar separator line
+
+**Status:** ✅ Done — added `.footer-bottom-container { border-top: 1px solid rgb(230 230 230); padding-top: var(--space-m); }` to footer.css  
+**Priority:** P1 — visual regression: separator between footer links and bottom bar is gone  
+**Files:** `blocks/footer/footer.css`
+
+**Root cause — confirmed:**  
+The merged `footer.css` removed `.footer-bottom-container { border-top: 1px solid rgb(230 230 230); ... }` (confirmed via `git show aem-20260508-1813:blocks/footer/footer.css | grep border-top` → line 84). The merged CSS has NO border-top anywhere (confirmed via grep of current file). The separator line is absent.
+
+The rest of the footer CSS changes in the merged branch are **improvements** (social icon layout, Adobe logo, legal row flex) and should be kept.
+
+**Fix:**  
+Add the missing border-top back. It belongs on the `.footer-bottom-container` section or as a top-border on the `.footer-bottom` block:
+
+```css
+/* Add to blocks/footer/footer.css — restore the separator line */
+.footer-bottom-container {
+  border-top: 1px solid rgb(230 230 230);
+  padding-top: var(--space-m);
+}
+```
+
+Note: The old CSS also had `margin-top: 60px` on `.footer-bottom-container`. The merged CSS moved `margin-top: 60px` to `.footer-bottom-container .footer-bottom`. Check that the combined result doesn't double the margin — apply to only one selector.
+
+**Acceptance criteria:**
+- A 1px solid `rgb(230 230 230)` line separates the link columns from the bottom bar.
+- `margin-top: 60px` applies exactly once (either on container or on the inner block, not both).
+- `npm run lint` passes.
+
+---
+
+### P04 — Verify footer link columns CSS selector still works
+
+**Status:** 🔲 Open  
+**Priority:** P1 — if footer content lacks a "Footer Links" block, columns lose flex layout  
+**Files:** `blocks/footer/footer.css`
+
+**Root cause:**  
+The merged CSS changed `.footer-links-container > div` to `.footer-links-container .footer-links > div`. This is correct IF the footer fragment has a block named "Footer Links" (which EDS renders as `.footer-links-wrapper > .footer-links.block > div`). If the footer content uses a different block name or plain default content, the rule targets nothing and link columns render as block-stacked (no flex).
+
+**Verification step:**  
+After pushing P01–P03, open `https://aem-merged-20260513--semrush--gabrielwalt.aem.page/` and check the footer link columns section. They should be a 5-column horizontal row (not stacked vertically).
+
+**If columns are stacked (selector mismatch):**  
+Add a fallback that targets both selectors:
+```css
+.footer-links-container > div,
+.footer-links-container .footer-links > div {
+  display: flex;
+  gap: var(--space-l);
+  flex-wrap: wrap;
+}
+```
+
+**Acceptance criteria:**
+- Footer link columns display horizontally at ≥1024px (5 columns side by side).
+- `npm run lint` passes.
+
+---
+
+### P05 — Push to preview and do visual triage
+
+**Status:** 🔲 Open  
+**Priority:** P0-gate — gate for confirming all P0x fixes worked  
+**Files:** *(no code changes)*
+
+**Steps:**
+1. Complete P01–P04.
+2. Push via Console UI (Code mode → Git Changes → stage all changed files → Push).
+3. Open `https://aem-merged-20260513--semrush--gabrielwalt.aem.page/` and compare section by section against `https://www.semrush.com/`.
+4. Specifically verify: testimonials (quote size, marks, stats card, layout), footer (separator, columns, social icons).
+5. Note any remaining breaks and map each to an existing task (T01–T18) or create a new one.
+6. Update `PROJECT-STATUS.md` current focus.
+
+**Acceptance criteria:**
+- Testimonials section renders correctly: quote text at 26px, decorative marks, dark quote card (2fr), stats card (1fr) with pattern.
+- Footer renders correctly: separator line visible, columns horizontal, social icons as SVGs, Adobe logo as image.
+- No other visible regressions vs. reference branch `aem-20260508-1813`.
+
+---
+
 ## Part 1 — Meta-work: Skills & Learning Loop
 
 *Do these first. The agent works better when it works correctly, so fixing the methodology infrastructure pays off on every subsequent task.*

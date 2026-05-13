@@ -1,6 +1,6 @@
 ---
-name: import-script-bundling
-description: EDS import script bundling. Use when import script isn't executing, CustomImportScript.default is not found, or blocks aren't being parsed during import.
+name: project-import-script-bundling
+description: EDS import script bundling for this project. Use when import script isn't executing, CustomImportScript.default is not found, or blocks aren't being parsed during import.
 ---
 
 One import script per project. Add parsers to the existing registry — only create a second script for fundamentally incompatible DOM structures.
