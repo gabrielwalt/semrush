@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** P04 — Verify footer link columns CSS selector  
-**Last completed:** P01–P03 — testimonials.js + testimonials.css restored from reference branch; footer border-top restored  
-**Next up:** P04 (footer link columns verification after push) → P05 (push + visual triage) → T02+  
-**Blocker:** Needs push to preview for visual verification (P04, P05)
+**Active task:** T08 — Replace !important overrides with .full-width JS pattern  
+**Last completed:** T07 (stats-facts active 180px), T05+T06 (stats-visibility section class + h2 fix), T09-A (header transparent bg), T10 (hero pattern calc positions), T02–T04 (testimonials already fixed in P02)  
+**Next up:** T07 → T08 (!important cleanup) → T09-B (logo/Enterprise/chevron/mega menu) → T11–T18  
+**Blocker:** None — push to preview for visual verification recommended
 
 ---
 

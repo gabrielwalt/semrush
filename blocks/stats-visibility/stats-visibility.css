@@ -10,23 +10,47 @@
   padding: 0 var(--space-m);
 }
 
-.section.section-ai-visibility {
+/* section-ai-visibility: legacy class still used by AEM content — keep until content is re-authored */
+/* section-dark + section-pattern-bars: canonical class names going forward */
+.section.section-ai-visibility,
+.section.section-dark.section-pattern-bars {
   background-image: url('/icons/pattern-ai-vis-index.svg');
   background-repeat: repeat-x;
   background-position: 0% 100%;
 }
 
-.section.section-ai-visibility > .default-content-wrapper {
+.section.section-ai-visibility > .default-content-wrapper,
+.section.section-dark.section-pattern-bars > .default-content-wrapper {
   text-align: center;
 }
 
-.section.section-ai-visibility > .default-content-wrapper::before {
+.section.section-ai-visibility > .default-content-wrapper::before,
+.section.section-dark.section-pattern-bars > .default-content-wrapper::before {
   content: '';
   display: block;
   width: 136px;
   height: 136px;
   margin: 0 auto 32px;
   background: url('/icons/ai-visibility-index.svg') no-repeat center / contain;
+}
+
+/* h2 is in default-content-wrapper (outside the block) — scope to section class, not block internals */
+.section.section-ai-visibility > .default-content-wrapper > h2,
+.section.section-dark.section-pattern-bars > .default-content-wrapper > h2 {
+  font-size: var(--font-size-display);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.section.section-ai-visibility > .default-content-wrapper > p,
+.section.section-dark.section-pattern-bars > .default-content-wrapper > p {
+  margin-bottom: 32px;
+}
+
+.section.section-ai-visibility > .default-content-wrapper > .button-wrapper,
+.section.section-dark.section-pattern-bars > .default-content-wrapper > .button-wrapper {
+  margin-bottom: 60px;
 }
 
 .stats-visibility-wrapper {
@@ -135,17 +159,14 @@
     padding: var(--section-padding) 0;
   }
 
-  .stats-visibility .stats-visibility-header h2 {
-    font-size: var(--font-size-display);
-  }
-
   .stats-visibility .stats-visibility-table {
     padding: 40px 40px 60px;
   }
 }
 
 @media (width < 768px) {
-  .stats-visibility .stats-visibility-header h2 {
+  .section.section-ai-visibility > .default-content-wrapper > h2,
+  .section.section-dark.section-pattern-bars > .default-content-wrapper > h2 {
     font-size: var(--font-size-heading-l);
   }
 

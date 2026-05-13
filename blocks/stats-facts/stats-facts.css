@@ -131,7 +131,7 @@
 }
 
 .stats-facts > .stat-row.active .stat-count {
-  font-size: 130px;
+  font-size: 180px;
   color: var(--stats-active-text);
 }
 

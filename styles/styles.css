@@ -362,14 +362,22 @@ main {
 /* homepage hero pattern — only on pages with insights-widget (homepage) */
 body.homepage main {
   background:
-    url('/icons/pattern-hero.svg') 2px 680px / auto repeat-x,
+    url('/icons/pattern-hero.svg') 2px calc(50% + 100px) / auto repeat-x,
     linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
 }
 
-@media (width < 1024px) and (width >= 768px) {
+@media (width >= 1024px) {
   body.homepage main {
     background:
-      url('/icons/pattern-hero.svg') 2px 580px / auto repeat-x,
+      url('/icons/pattern-hero.svg') 2px calc(50% - 100px) / auto repeat-x,
+      linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
+  }
+}
+
+@media (width >= 1440px) {
+  body.homepage main {
+    background:
+      url('/icons/pattern-hero.svg') 2px calc(50% - 20px) / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
   }
 }
@@ -377,7 +385,7 @@ body.homepage main {
 @media (width < 768px) {
   body.homepage main {
     background:
-      url('/icons/pattern-hero.svg') -2px 500px / auto repeat-x,
+      url('/icons/pattern-hero.svg') -2px 100% / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
   }
 }
@@ -438,6 +446,13 @@ main .section.highlight {
 main .section.section-dark {
   background-color: var(--dark-color);
   color: #fff;
+}
+
+/* section-pattern-bars: bar/stripe SVG pattern overlay — combine with section-dark for AI Visibility section */
+main .section.section-pattern-bars {
+  background-image: url('/icons/pattern-ai-vis-index.svg');
+  background-repeat: repeat-x;
+  background-position: 0% 100%;
 }
 
 main .section.section-dark h1,

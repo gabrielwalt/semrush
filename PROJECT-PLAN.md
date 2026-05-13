@@ -713,7 +713,7 @@ In `header.css`, ensure:
 
 ### T02 — Testimonials: quote text size and font
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Restored in P02: testimonials.css from reference branch already has 26px / weight 500 / Lazzer / line-height 1.5  
 **Priority:** P1 — visual spec failure on a hero-area block  
 **Files:** `blocks/testimonials/testimonials.css`
 
@@ -743,7 +743,7 @@ Update `.testimonials .quote-card blockquote`:
 
 ### T03 — Testimonials: add decorative quote marks
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Restored in P02: testimonials.css from reference branch has `blockquote::before { content: '\201C\201C'; font-size: 32px; opacity: 0.5; }`  
 **Priority:** P1 — missing design element called out explicitly (Conv06 P8)  
 **Files:** `blocks/testimonials/testimonials.css`
 
@@ -775,7 +775,7 @@ Example pattern (values to be confirmed against the original):
 
 ### T04 — Testimonials: stats card layout and background pattern
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Restored in P02: testimonials.css from reference branch has `justify-content: space-between`, top-left alignment, and `url('/icons/pattern-testimonials-card.svg')` background  
 **Priority:** P1 — two visual spec failures on the stats card (Conv06 P8)  
 **Files:** `blocks/testimonials/testimonials.css`
 
@@ -827,7 +827,7 @@ Inspect the original stat card background at `https://www.semrush.com/`. If a pa
 
 ### T05 — Define `section-pattern-bars` section style
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Added `.section.section-pattern-bars` to styles/styles.css; updated stats-visibility.css to target both `section-ai-visibility` (legacy) and `section-dark.section-pattern-bars` (canonical) for backward compat  
 **Priority:** P1 — the section style is referenced in requirements but has zero CSS definition  
 **Files:** `styles/styles.css`, `blocks/stats-visibility/stats-visibility.css`
 
@@ -875,7 +875,7 @@ main .section.section-pattern-bars {
 
 ### T06 — Stats-visibility h2: fix CSS selector scope
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Moved h2 rule from `.stats-visibility .stats-visibility-header h2` (never fired) to `.section.section-ai-visibility > .default-content-wrapper > h2` (84px display, uppercase, centered); also added spacing rules for subtitle/CTA gaps (24px/32px/60px); mobile breakpoint also corrected  
 **Priority:** P1 — the 84px display size never fires because the selector targets a non-existent element  
 **Files:** `blocks/stats-visibility/stats-visibility.css`, `styles/styles.css` or `styles/lazy-styles.css`
 
@@ -921,7 +921,7 @@ Also add the specific spacing below the h2 (Conv06 P11):
 
 ### T07 — Stats-facts: active number size 130px → 180px
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Changed base (tablet/fallback) active `.stat-count` from 130px to 180px; desktop ≥1024px already had 180px  
 **Priority:** P1 — active number is 28% smaller than specified  
 **Files:** `blocks/stats-facts/stats-facts.css`
 
@@ -993,7 +993,7 @@ Instead, these blocks override `max-width` and `padding` via `!important` on the
 
 ### T09 — Header: transparent background + full desktop spec
 
-**Status:** 🔲 Open  
+**Status:** 🔲 Open (A done) — Problem A fixed: `background-color: transparent` on `.nav-wrapper` at ≥1024px; Problems B-E (logo size, Enterprise arrow, chevron, mega menu) remain  
 **Priority:** P2 — multiple desktop requirements uncovered in audit; transparent nav is the root concern (Conv01 P36, Conv02 P07)  
 **Files:** `blocks/header/header.css`, `blocks/header/header.js`
 
@@ -1091,7 +1091,7 @@ Mega menu panel must animate open/close and have `border-radius: 0 0 12px 12px`.
 
 ### T10 — Hero pattern: use `calc()` breakpoint positions, add ≥1440px breakpoint
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Replaced fixed-px hero pattern positions with calc()-based: `calc(50% + 100px)` default, `calc(50% - 100px)` ≥1024px, `calc(50% - 20px)` ≥1440px, `100%` <768px; added missing ≥1440px breakpoint  
 **Priority:** P2 — pattern anchors incorrectly at tall viewports; missing breakpoint  
 **Files:** `styles/styles.css`
 
