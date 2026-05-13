@@ -1,5 +1,6 @@
 footer {
-  background-color: #fff;
+  background-color: var(--background-color);
+  font-family: var(--heading-font-family);
   font-size: var(--body-font-size-xs);
 }
 
@@ -11,8 +12,8 @@ footer .footer {
 
 footer .footer > div {
   margin: auto;
-  max-width: 1200px;
-  padding: 80px 24px 32px;
+  max-width: var(--container-max-width);
+  padding: 80px var(--space-m) var(--space-l);
 }
 
 footer .footer > div > .section {
@@ -28,34 +29,186 @@ footer .footer p {
   margin: 0;
 }
 
-/* Footer reveal — large SEMRUSH text behind footer */
-footer .footer .footer-reveal {
+/* CTA heading */
+.footer-cta-container h2 {
+  font-size: var(--font-size-heading-l);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-s);
+}
+
+/* stylelint-disable no-descending-specificity */
+
+footer .footer .footer-cta-container p {
+  font-size: var(--font-size-body-m);
+  line-height: 1.5;
+}
+
+/* Link columns */
+.footer-links-container .footer-links > div {
+  display: flex;
+  gap: var(--space-l);
+  flex-wrap: wrap;
+}
+
+.footer-links-container .footer-links > div > div {
+  flex: 1 1 0;
+  min-width: 120px;
+}
+
+.footer-links-container strong {
+  font-weight: 600;
+  font-size: var(--font-size-body-m);
+  display: block;
+  margin-bottom: var(--space-s);
+}
+
+.footer-links-container li {
+  margin-bottom: 6px;
+}
+
+.footer-links-container a {
+  font-size: var(--font-size-body-s);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.footer-links-container a:hover {
+  text-decoration: underline;
+}
+
+/* Bottom bar — override EDS default flex wrapper so block fills full width */
+.footer-bottom-container .footer-bottom-wrapper {
+  display: block;
+}
+
+.footer-bottom-container .footer-bottom {
+  width: 100%;
+  margin-top: 60px;
+}
+
+/* Social icons row */
+.footer-bottom .footer-social-row {
+  margin-bottom: var(--space-m);
+}
+
+.footer-bottom .footer-social-row p {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.footer-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.footer-social-icon img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* Adobe logo */
+.footer-adobe-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--space-s);
+}
+
+.footer-adobe-logo img {
+  width: 62px;
+  height: 15px;
+}
+
+/* Legal / copyright row */
+.footer-bottom .footer-legal-row > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-m);
+}
+
+.footer-bottom .footer-legal-row p {
+  font-size: var(--font-size-body-s);
+  white-space: nowrap;
+}
+
+.footer-bottom-container li {
+  display: inline;
+}
+
+.footer-bottom-container a {
+  font-size: var(--font-size-body-s);
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.footer-bottom-container a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom .footer-legal-row ul {
+  display: flex;
+  gap: var(--space-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Side-by-side layout: CTA left, links right */
+@media (width >= 1024px) {
+  footer .footer > div {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 var(--space-xl);
+  }
+
+  footer .footer > div > .section.footer-cta-container {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  footer .footer > div > .section.footer-links-container {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  footer .footer > div > .section.footer-bottom-container {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* Footer reveal — OUTSIDE the block, sibling in <footer> */
+footer > .footer-reveal {
   position: sticky;
   bottom: 0;
-  z-index: -1;
-  height: 450px;
+  z-index: 0;
+  height: 550px;
   background:
-    url('/content/images/pattern-hero.svg') repeat-x 0 100%,
+    url('/icons/pattern-hero.svg') repeat-x 0 100%,
     rgb(220 238 235);
   display: flex;
   align-items: flex-end;
   justify-content: center;
   overflow: hidden;
-  padding-bottom: 40px;
+  padding: 0 var(--container-padding) var(--space-l);
 }
 
-footer .footer .footer-reveal span {
+footer > .footer-reveal span {
   font-family: var(--heading-font-family);
   font-size: clamp(120px, 15vw, 220px);
   font-weight: 700;
   color: var(--dark-color);
-  letter-spacing: -0.04em;
+  letter-spacing: var(--tracking-tight);
   line-height: 1;
   white-space: nowrap;
-}
-
-@media (width >= 1024px) {
-  footer .footer > div {
-    padding: 80px 32px 32px;
-  }
 }

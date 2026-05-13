@@ -10,26 +10,31 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 | Block | Variants | Used on | Notes |
 |-------|----------|---------|-------|
 | `announcement-bar` | — | Homepage | Dismissible top banner |
-| `insights-widget` | — | Homepage | Search form with searchable country dropdown (115 countries), blinking cursor, glass surface |
-| `video` | — | Homepage | Glass-framed; detects video URLs in link text (EDS pattern for external media) |
+| `insights-widget` | — | Homepage | Search form with country dropdown, glass surface |
+| `video` | — | Homepage | Glass-framed; detects video URLs in link text |
 | `marquee` | — | Homepage | Infinite-scroll logo strip with edge fade mask |
-| `video-card` | `video-card-semrush-one`, `video-card-enterprise` | Homepage | 64px padding, grid layout, video in glass frame on right half |
-| `carousel-slider` | — | Homepage | Expandable card carousel with + button; extends to right viewport edge |
-| `solutions-slider` | — | (alias) | Thin redirect to `carousel-slider` for backward compat with remote content |
-| `hero-video` | — | (alias) | Thin redirect to `video` for backward compat with remote content |
-| `promo-cards` | `promo-cards-semrush-one`, `promo-cards-enterprise` | (alias) | Thin redirect to `video-card` for backward compat |
-| `stats` | — | Homepage | Click/scroll-to-expand; diagonal-line arrow pattern, 180px numbers |
-| `ai-visibility-index` | — | Homepage | Dark section, bar chart with purple-to-teal gradient, 84px heading |
-| `testimonials` | — | Homepage | Quote card (dark) + stat card (grey), 2-column layout |
-| `resources-slider` | — | Homepage | Horizontal card slider with arrows, category tags |
-| `cards` | — | — | Standard card grid |
-| `columns` | — | — | Multi-column layout |
-| `header` | — | All | Sticky nav; nested `<ul>` mega menu from nav fragment |
-| `footer` | — | All | Fragment: `footer-cta`, `footer-links`, `footer-bottom` |
-| `footer-cta` | — | All | "Get started" CTA section with purple button |
-| `footer-links` | — | All | 4-column link grid |
-| `footer-bottom` | — | All | Copyright, legal links, large SEMRUSH wordmark |
+| `video-card` | `video-card-semrush-one`, `video-card-enterprise` | Homepage | Grid layout, video in glass frame |
+| `carousel-slider` | `carousel-slider-expansible` | Homepage | Default (resource cards) and expansible (solutions accordion) |
+| `stats-facts` | — | Homepage | Click-to-expand stat rows with arrow indicators |
+| `stats-visibility` | — | Homepage | Dark section bar chart with clip-path arrows |
+| `testimonials` | — | Homepage, Semrush One | Quote card + stat card grid |
+| `video-card-feature` | — | Semrush One | Stacked text+image feature showcase cards |
+| `columns-stats` | — | Semrush One | Large stat number columns (10M / 35% / 21) |
+| `cards-icon` | — | Semrush One | Icon + title + description feature grid |
+| `cards-awards` | — | Semrush One | Award badge display for dark CTA section |
+| `header` | — | All | Sticky nav with mega-menu dropdowns |
+| `footer` | — | All | CTA + link columns + social/legal bottom bar + SEMRUSH reveal |
 | `fragment` | — | — | Utility — `loadFragment()` used by header/footer |
+
+### Backward-compatibility redirects
+
+These thin blocks exist because remote AEM content may reference old block names:
+
+| Alias block | Redirects to |
+|-------------|-------------|
+| `solutions-slider` | `carousel-slider` |
+| `hero-video` | `video` |
+| `promo-cards` | `video-card` |
 
 ---
 
@@ -37,15 +42,18 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 
 | Style | Effect |
 |-------|--------|
-| `centered` | Flex column + center-align (hero section) |
+| `section-centered` | Flex column + center-align |
+| `section-dark` | Dark background, white text |
+| `section-ai-visibility` | Pattern background, centered heading with icon |
 
 ---
 
 ## Page Templates
 
-| Template | Body class | Effect |
-|----------|-----------|--------|
-| `homepage` | `body.homepage` | Applies gradient background + pattern-hero.svg to `main` |
+| Template | Body class |
+|----------|-----------|
+| `homepage` | `body.homepage` |
+| `semrush-one` | — |
 
 ---
 
@@ -53,13 +61,4 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 
 | Module | Purpose |
 |--------|---------|
-| `scripts/glass.js` | `applyGlassSurface(el)` — glass effect for video block |
-
----
-
-## Key Implementation Patterns
-
-- **Video detection**: Links whose text content contains a video URL (`.mp4`, `.webm`) are detected as video sources — EDS rewrites external media hrefs.
-- **Glass frame**: `linear-gradient(91deg, rgba(5,5,5,0.04), rgba(255,255,255,0.04))` + `backdrop-filter: blur(5px)` + `border: 1px solid rgba(255,255,255,0.6)` + `border-radius: 12px` + `padding: 12px`.
-- **Carousel edge-bleed**: Block has `padding-left` only; track scrolls to right viewport edge.
-- **Pattern-hero positioning**: Fixed `680px` from top of `main` (not percentage-based, since `main` is very tall).
+| `scripts/glass.js` | Glass surface effect for video/widget blocks |

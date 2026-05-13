@@ -80,7 +80,7 @@ When importing content, detect visual context from the source DOM (background co
 - Use tokens from `styles.css`; add new tokens when values repeat.
 - Class names: `{block}-{part}` kebab-case.
 - No positional selectors (`nth-child`). Use `decorate()` to add semantic classes.
-- No `!important` (exception: overriding EDS wrapper styles).
+- No `!important`. Container max-width is set on `main > .section > div` globally. Blocks needing full viewport width add `.full-width` to their wrapper via JS — never override with `!important`.
 
 ### JavaScript
 - No layout coupling between blocks. No `aem.js` edits.

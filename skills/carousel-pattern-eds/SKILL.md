@@ -1,0 +1,25 @@
+---
+name: carousel-pattern-eds
+description: Horizontal scrolling carousel pattern for EDS. Use when building carousels that extend to the viewport edge with right-edge bleed.
+---
+
+Carousels use section-level overflow clipping, margin-based left alignment, and last-child margin for right spacing. The wrapper escapes the global max-width container.
+
+## Recipe
+1. **Section clips**: `.carousel-container { overflow: hidden }` — the section is the clipping boundary. Cards bleed past the visible area but are clipped, creating the "peek" effect where the next card is partially visible.
+2. **Wrapper escapes container**: `.carousel-wrapper.full-width` — JS adds `full-width` class to remove max-width constraints.
+3. **Slider left alignment via margin** (not padding): `margin: 0 0 0 var(--container-padding); padding: 0 0 var(--space-s)` — padding on `overflow-x: auto` flex containers does NOT reliably offset scroll-snap items. Use `margin-left` on the slider itself.
+4. **Last card right spacing via margin**: `.carousel > div:last-child { margin-right: var(--container-padding) }` — instead of `padding-right` on the track (which has the same scroll-snap problem).
+5. **Track scrolls**: `display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none`
+6. **Cards**: `flex-shrink: 0; scroll-snap-align: start` — set card width to match design (e.g. 430px).
+7. **Nav buttons** placed in `.default-content-wrapper` via JS, positioned with `position: absolute; right: container-padding; bottom: 0` to bottom-align with the section heading. Hidden below 1024px.
+
+## Pitfalls
+- **Never use `padding` on the scrollable container for first/last card offset** — `padding` on an `overflow-x: auto` flex container doesn't work reliably with `scroll-snap-type: x mandatory`. The first card snaps to position 0 of the scroll area, overlapping the padding. Use `margin-left` on the container and `margin-right` on the last child instead.
+- **Section `overflow: hidden` is required** — without it, the cards extend past the viewport and there's no peek/clip effect.
+- **Don't put nav buttons inside the scrollable area** — they'll scroll with the cards. Place them in the section header area outside the block.
+
+## Original site technique (Semrush/Swiper)
+The original uses Swiper.js with `overflow: visible` on the swiper container and `overflow: hidden` on the parent `<section>`. Our EDS implementation achieves the same effect with native scroll-snap + section overflow clipping.
+
+See also: `max-width-container-pattern` (full-width escape hatch), `eds-dom-structure` (wrapper chain)

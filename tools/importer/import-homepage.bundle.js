@@ -386,7 +386,7 @@ var CustomImportScript = (() => {
     const table = WebImporter.DOMUtils.createTable(rows, document);
     wrapper.appendChild(table);
     var sectionMeta = WebImporter.DOMUtils.createTable(
-      [["Section Metadata"], ["Style", "section-dark"]],
+      [["Section Metadata"], ["Style", "section-dark, section-pattern-bars"]],
       document
     );
     wrapper.appendChild(sectionMeta);

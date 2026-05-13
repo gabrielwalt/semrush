@@ -1,0 +1,39 @@
+{
+  "variantName": "cards-icon",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-05-13T05:30:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.semrush.com/one/",
+    "originPage": "Semrush One landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "feature-grid",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "icon image + bold title + description paragraph",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "feature benefit grids with icons",
+      "capability/USP lists",
+      "icon-driven content grids"
+    ],
+    "notSuitableFor": [
+      "image-heavy card grids",
+      "product listing cards",
+      "cards with CTAs"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/one/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-05-13T05:30:00.000Z"
+  }
+}

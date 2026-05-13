@@ -1,4 +1,7 @@
 {
+  "metadata": {
+    "projectType": "da"
+  },
   "templates": [
     {
       "name": "homepage",
@@ -46,6 +49,193 @@
         {
           "name": "resources-slider",
           "instances": [".mp-section.mp-resources"]
+        }
+      ]
+    },
+    {
+      "name": "semrush-one",
+      "description": "Semrush One landing page with hero video, feature cards, stats, icon grid, testimonial, capabilities section, CTA and awards",
+      "urls": [
+        "https://www.semrush.com/one/"
+      ],
+      "blocks": [
+        {
+          "name": "video-card-semrush-one",
+          "instances": ["section.main-screen"]
+        },
+        {
+          "name": "video-card-feature",
+          "instances": ["section.cards .cards__item", "section.cards-2 .cards__item"]
+        },
+        {
+          "name": "columns-stats",
+          "instances": ["section.numbers"]
+        },
+        {
+          "name": "cards-icon",
+          "instances": ["section.icons .icons__list"]
+        },
+        {
+          "name": "testimonials",
+          "instances": [".icons__testimonial"]
+        },
+        {
+          "name": "cards-awards",
+          "instances": ["section.awards"]
+        },
+        {
+          "name": "section-dark",
+          "instances": ["section.cta", "section.awards"],
+          "section": "dark"
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero / Main Screen",
+          "selector": "section.main-screen",
+          "style": null,
+          "blocks": ["video-card-semrush-one"],
+          "defaultContent": [".main-screen__one"]
+        },
+        {
+          "id": "feature-cards-1",
+          "name": "Feature Cards - Search Benefits",
+          "selector": "section.cards:not(.cards-2)",
+          "style": null,
+          "blocks": ["video-card-feature"],
+          "defaultContent": [".cards__title"]
+        },
+        {
+          "id": "stats",
+          "name": "Stats / Numbers",
+          "selector": "section.numbers",
+          "style": null,
+          "blocks": ["columns-stats"],
+          "defaultContent": []
+        },
+        {
+          "id": "features-testimonial",
+          "name": "Features Grid with Testimonial",
+          "selector": "section.icons",
+          "style": null,
+          "blocks": ["cards-icon", "testimonials"],
+          "defaultContent": [".icons__title"]
+        },
+        {
+          "id": "gradient-divider",
+          "name": "Gradient Divider",
+          "selector": ".gradient",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [".gradient img"]
+        },
+        {
+          "id": "feature-cards-2",
+          "name": "Feature Cards - Capabilities",
+          "selector": "section.cards.cards-2",
+          "style": null,
+          "blocks": ["video-card-feature"],
+          "defaultContent": [".cards__title"]
+        },
+        {
+          "id": "cta-awards",
+          "name": "Final CTA + Awards",
+          "selector": ["section.cta", "section.awards"],
+          "style": "dark",
+          "blocks": ["cards-awards"],
+          "defaultContent": [".cta h2", ".cta .button", ".cta .under-button"]
+        }
+      ]
+    },
+    {
+      "name": "enterprise",
+      "description": "Semrush Enterprise page with hero, logo marquee, testimonial carousel, solutions tabs, platform section, case study, and CTA form",
+      "urls": [
+        "https://enterprise.semrush.com/"
+      ],
+      "blocks": [
+        {
+          "name": "announcement-bar",
+          "instances": ["[aria-label='Announcement']"]
+        },
+        {
+          "name": "marquee",
+          "instances": ["[aria-label='Company logos infinite slider']"]
+        },
+        {
+          "name": "testimonials-carousel",
+          "instances": ["[aria-label='How leaders get ahead and stay untouchable']"]
+        },
+        {
+          "name": "tabs",
+          "instances": ["[aria-label='Product overview with tabs']"]
+        },
+        {
+          "name": "video-card-enterprise-platform",
+          "instances": ["[aria-label='Connect marketing data, tools, and teams with one AI-powered platform']"]
+        },
+        {
+          "name": "case-study",
+          "instances": ["[aria-label='Outperform from day one']"]
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero",
+          "selector": "[aria-label='Scale up your brand visibility, everywhere search happens']",
+          "style": null,
+          "blocks": [],
+          "defaultContent": ["h1", "p", "a[href*='demo']"]
+        },
+        {
+          "id": "logos",
+          "name": "Logo Marquee",
+          "selector": "[aria-label='Company logos infinite slider']",
+          "style": null,
+          "blocks": ["marquee"],
+          "defaultContent": []
+        },
+        {
+          "id": "testimonials",
+          "name": "Customer Testimonials Carousel",
+          "selector": "[aria-label='How leaders get ahead and stay untouchable']",
+          "style": null,
+          "blocks": ["testimonials-carousel"],
+          "defaultContent": []
+        },
+        {
+          "id": "solutions",
+          "name": "Solutions Tabs",
+          "selector": "[aria-label='Product overview with tabs']",
+          "style": null,
+          "blocks": ["tabs"],
+          "defaultContent": []
+        },
+        {
+          "id": "platform",
+          "name": "Enterprise Platform",
+          "selector": "[aria-label='Connect marketing data, tools, and teams with one AI-powered platform']",
+          "style": "dark",
+          "blocks": ["video-card-enterprise-platform"],
+          "defaultContent": []
+        },
+        {
+          "id": "case-study",
+          "name": "Customer Story",
+          "selector": "[aria-label='Outperform from day one']",
+          "style": null,
+          "blocks": ["case-study"],
+          "defaultContent": []
+        },
+        {
+          "id": "cta",
+          "name": "Final CTA",
+          "selector": "section.marketoForm",
+          "style": null,
+          "blocks": [],
+          "defaultContent": ["h2", "p", "a"]
         }
       ]
     }

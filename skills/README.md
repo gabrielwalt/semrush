@@ -29,7 +29,12 @@ Operational micro-skills distilled from implementation experience. Each file is 
 | [block-rename-in-eds.md](block-rename-in-eds.md) | Renaming a block when remote content still uses the old name |
 | [page-template-metadata.md](page-template-metadata.md) | Applying page-level styles via metadata template classes |
 | [max-width-container-pattern.md](max-width-container-pattern.md) | Setting up global layout constraints (max-width, centering) for all blocks |
+| [block-visual-iteration.md](block-visual-iteration/SKILL.md) | **PROACTIVE**: Systematically comparing and iterating a block toward pixel-match |
+| [content-completeness-audit.md](content-completeness-audit/SKILL.md) | **PROACTIVE**: Auditing imported content for missing text, images, or structure |
 | [carousel-pattern-eds.md](carousel-pattern-eds.md) | Building horizontal scrolling carousels with right-edge bleed |
+| [footer-reveal-pattern.md](footer-reveal-pattern/SKILL.md) | Sticky reveal behind footer (SEMRUSH wordmark scroll effect) |
+| [section-heading-pattern.md](section-heading-pattern/SKILL.md) | Adding eyebrow + uppercase heading to a new section |
 | [glass-surface-pattern.md](glass-surface-pattern.md) | Implementing frosted glass frame effects around images/videos |
 | [stylelint-no-descending-specificity.md](stylelint-no-descending-specificity.md) | Fixing stylelint no-descending-specificity errors |
 | [clip-path-bar-charts.md](clip-path-bar-charts.md) | Building horizontal bar charts with arrow/pyramid-shaped bars |
+| [mobile-nav-click-handling.md](mobile-nav-click-handling.md) | Mobile nav closes when clicking sub-items; click delegation issues |

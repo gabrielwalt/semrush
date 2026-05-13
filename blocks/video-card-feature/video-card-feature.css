@@ -1,0 +1,120 @@
+/* Video Card Feature — stacked feature cards with text + image */
+.section.video-card-feature-container {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 32px 0;
+}
+
+.video-card-feature-wrapper {
+  padding: 0 var(--container-padding) !important;
+}
+
+/* Base card layout */
+.video-card-feature .video-card-feature-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  padding: 64px 0 64px 64px;
+}
+
+/* Text column */
+.video-card-feature .video-card-feature-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 32px 0 0;
+}
+
+.video-card-feature h2 {
+  font-size: var(--font-size-heading-l);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.video-card-feature h3 {
+  font-size: var(--font-size-heading-m);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.video-card-feature p {
+  font-size: var(--font-size-body-m);
+  line-height: var(--line-height-relaxed);
+  margin-top: 0;
+  margin-bottom: 0.8em;
+}
+
+main .video-card-feature .button-wrapper {
+  margin: var(--space-s) 0 0;
+}
+
+/* Media column */
+.video-card-feature .video-card-feature-media {
+  align-self: center;
+  padding: 12px 0 12px 12px;
+  background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
+  backdrop-filter: blur(5px);
+  border-radius: 12px 0 0 12px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
+}
+
+.video-card-feature .video-card-feature-media .video-card-feature-video,
+.video-card-feature .video-card-feature-media picture,
+.video-card-feature .video-card-feature-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px 0 0 6px;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (width < 768px) {
+  .section.video-card-feature-container {
+    gap: 32px;
+    padding: 16px 0;
+  }
+
+  .video-card-feature-wrapper {
+    padding: 0 16px !important;
+  }
+
+  .video-card-feature .video-card-feature-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: var(--space-l);
+  }
+
+  .video-card-feature .video-card-feature-text {
+    padding: 0;
+  }
+
+  .video-card-feature .video-card-feature-media {
+    padding: 12px;
+    min-height: 250px;
+    margin: 0 calc(-1 * var(--space-l)) calc(-1 * var(--space-l));
+    border: 1px solid rgb(255 255 255 / 60%);
+    border-radius: 0 0 12px 12px;
+  }
+
+  .video-card-feature .video-card-feature-media .video-card-feature-video,
+  .video-card-feature .video-card-feature-media picture,
+  .video-card-feature .video-card-feature-media img {
+    border-radius: 8px;
+  }
+}
+
+@media (width >= 1024px) {
+  .video-card-feature h2 {
+    font-size: var(--font-size-heading-xl);
+  }
+}

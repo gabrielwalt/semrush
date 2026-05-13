@@ -9,9 +9,9 @@ Import pipeline status and commands. For parser/transformer implementation, read
 
 | File | Purpose |
 |------|---------|
-| `tools/importer/import-homepage.js` | Main import script (all homepage parsers inline, ES module export) |
-| `tools/importer/import-nav.js` | Nav fragment import (parses `srf-header` structure) |
-| `tools/importer/import-footer.js` | Footer fragment import (parses `srf-footer` structure) |
+| `tools/importer/import-homepage.js` | Homepage import (all parsers inline) |
+| `tools/importer/import-nav.js` | Nav fragment import |
+| `tools/importer/import-footer.js` | Footer fragment import |
 | `tools/importer/parsers/*.js` | Standalone parsers (11 total) |
 | `tools/importer/transformers/cleanup.js` | DOM cleanup transformer |
 | `tools/importer/urls-homepage.txt` | Homepage URL |
@@ -20,41 +20,17 @@ Import pipeline status and commands. For parser/transformer implementation, read
 
 ## Architecture
 
-1. **One script per page type.** Homepage, nav, and footer each have their own (different DOM sources).
-2. **Parsers detect blocks by DOM selector.** Each parser is self-contained.
-3. **Cleanup runs first** (removes header, footer, scripts, tracking, consent banners).
+1. **One script per page type.** Homepage, nav, and footer each have their own.
+2. **Parsers detect blocks by DOM selector.** Each is self-contained.
+3. **Cleanup runs first** — removes header, footer, scripts, tracking, consent banners.
 4. **SVG images are stripped by Helix Importer's html2md pipeline.** Marquee logos must be injected post-import.
-5. **ES module export format** required for esbuild bundling (`export default { transform }` pattern).
+5. **ES module export format** required for esbuild bundling.
 
 ---
 
 ## Nav Content Model
 
-Three divs (brand / sections / tools). Sections div uses H2/H3/UL heading hierarchy:
-
-```
-div (brand): p > a > picture > img
-div (sections):
-  H2 "Products"        ← top nav item (has dropdown: H3/UL content follows)
-    H3 "Start Here"    ← column heading
-    UL                 ← column links
-    H3 "Find the Right Tools"
-    UL
-    ...
-    P > picture        ← promo image
-    P > strong         ← promo title
-    P                  ← promo description
-  H2 "Pricing"        ← top nav item (no content after = no dropdown)
-  H2 "Resources"      ← top nav item with dropdown
-    H3 / UL / ...
-    P promo
-  H2 "Enterprise"     ← external link, no dropdown
-div (tools): p (Log In | Sign Up)
-```
-
-Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P content between each H2. H2 with no following content = simple link (no dropdown).
-
-`import-nav.js` must emit this same shape so re-import doesn't undo hand fixes.
+Three divs (brand / sections / tools). Sections div uses H2/H3/UL hierarchy — see `import-nav.js` for the full structure. Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P content. H2 with no following content = simple link (no dropdown).
 
 ---
 
