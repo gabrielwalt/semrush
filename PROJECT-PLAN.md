@@ -1475,7 +1475,7 @@ Create `case-study.js` and `case-study.css`. Layout: stats displayed as large nu
 
 ### V01 — Add missing background image assets for video-card variants
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Created `/content/images/` dir; `semrush-one-bg.svg` (concentric ring abstract pattern), `enterprise-bg.svg` (white dot-grid pattern), `pattern-toolkit-card.svg` (horizontal purple stripe pattern); updated video-card.css to reference `.svg` instead of `.webp` for enterprise variant  
 **Priority:** P2 — video-card-semrush-one and video-card-enterprise cards show gradient fallback only  
 **Files:** `blocks/video-card/video-card.css`, content images
 
@@ -1496,7 +1496,7 @@ Both variants are likely rendering without their decorative background pattern.
 
 ### V02 — Verify hero section rendering at all breakpoints
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Both constraints confirmed in styles.css `section-centered` rules: `h1 { max-width: 12.5em; }` (line 493) and `p { max-width: 540px; }` (line 499); hero.css mobile breakpoint reduces h1 to heading-xl  
 **Priority:** P2 — hero h1 max-width and subtitle p max-width were applied but need verification  
 **Files:** `blocks/hero/hero.css`
 

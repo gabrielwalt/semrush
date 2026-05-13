@@ -1,4 +1,6 @@
 export default async function decorate(block) {
+  block.closest('.stats-visibility-wrapper')?.classList.add('full-width');
+
   const rows = [...block.children];
   if (rows.length < 2) return;
 

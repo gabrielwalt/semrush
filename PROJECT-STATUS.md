@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** Visual verification — homepage should now match reference  
-**Last completed:** Full reset of blocks/ to aem-20260508-1813 state; mobile nav bug fix (closeOnFocusLost) re-applied; enterprise-platform variant re-added to video-card.css  
-**Next up:** Push, verify preview matches reference; then continue enterprise page styling  
-**Blocker:** Semrush One content lost — /one page styling on hold until content is re-imported; Enterprise page 404 on preview (content not yet published)
+**Active task:** Re-applying all tasks reverted by blocks/ reset (T05–T14)  
+**Last completed:** V01 (missing bg images created); V02 verified done via section-centered; T07 T08 T09 T05 T06 T12 T14 all re-applied; zero !important remaining in blocks  
+**Next up:** Push all changes; verify homepage preview matches reference for all re-applied tasks  
+**Blocker:** Semrush One content lost; Enterprise page not yet published in da.live
 
 ---
 
