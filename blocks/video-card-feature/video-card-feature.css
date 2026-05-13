@@ -6,9 +6,6 @@
   padding: 32px 0;
 }
 
-.video-card-feature-wrapper {
-  padding: 0 var(--container-padding) !important;
-}
 
 /* Base card layout */
 .video-card-feature .video-card-feature-container {
@@ -84,9 +81,6 @@ main .video-card-feature .button-wrapper {
     padding: 16px 0;
   }
 
-  .video-card-feature-wrapper {
-    padding: 0 16px !important;
-  }
 
   .video-card-feature .video-card-feature-container {
     grid-template-columns: 1fr;

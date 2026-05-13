@@ -946,7 +946,7 @@ Also verify: the active `.stat-number` container height (currently 180px) needs 
 
 ### T08 — Replace `!important` overrides with `.full-width` JS pattern
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Added `.full-width` classList call to 6 block decorate() functions (announcement-bar, hero, video, insights-widget, stats-visibility, logo-marquee); removed all !important wrapper/container overrides from 8 CSS files; video-card/video-card-feature wrapper rules removed as redundant (global already applies same padding)  
 **Priority:** P2 — explicit coding rule violation (Conv02 P26); all other full-bleed blocks use `!important` instead of the established pattern  
 **Files:** `blocks/announcement-bar/`, `blocks/hero/`, `blocks/insights-widget/`, `blocks/logo-marquee/`, `blocks/stats-visibility/`, `blocks/video-card/`, `blocks/video-card-feature/`, `blocks/video/`
 
@@ -1150,7 +1150,7 @@ body.homepage main {
 
 ### T11 — Clean up stale redirect block CSS files
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — logo-marquee.css stripped of !important wrapper rules (remaining CSS kept since it styles .logo-marquee class which marquee.css doesn't target); hero-video.css, promo-cards.css, solutions-slider.css are all @import-only (clean pattern, no action needed)  
 **Priority:** P3 — leftover artefacts that could cause style conflicts  
 **Files:** `blocks/logo-marquee/logo-marquee.css`, `blocks/hero-video/` (if CSS present)
 

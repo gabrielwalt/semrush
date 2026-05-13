@@ -1,8 +1,3 @@
-.insights-widget-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
-
 .insights-widget {
   display: flex;
   justify-content: center;

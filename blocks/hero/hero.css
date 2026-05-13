@@ -1,9 +1,4 @@
 /* Hero block – Semrush homepage style */
-.hero-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
-
 .hero {
   --hero-text: var(--dark-color);
   --hero-padding-top: 48px;

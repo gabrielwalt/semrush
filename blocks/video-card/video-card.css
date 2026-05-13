@@ -7,10 +7,6 @@
   padding: 32px 0;
 }
 
-.video-card-wrapper,
-.promo-cards-wrapper {
-  padding: 0 var(--container-padding) !important;
-}
 
 /* Base card layout */
 .video-card .video-card-container,
@@ -148,10 +144,6 @@ main .promo-cards.promo-cards-enterprise a.button:any-link:focus-visible {
     padding: 16px 0;
   }
 
-  .video-card-wrapper,
-  .promo-cards-wrapper {
-    padding: 0 16px !important;
-  }
 
   .video-card .video-card-container,
   .promo-cards .video-card-container {
