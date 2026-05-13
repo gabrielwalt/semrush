@@ -496,7 +496,7 @@ Convention:
 
 ### T01 — Fix mobile nav `closeOnFocusLost` bug + hamburger alignment
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Added `if (!isDesktop.matches) return;` guard to `closeOnFocusLost`; hamburger `margin-right` increased from 8px to 16px  
 **Priority:** P0 — functional bug affecting every mobile user  
 **Files:** `blocks/header/header.js`, `blocks/header/header.css`
 

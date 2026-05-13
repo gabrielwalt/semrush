@@ -82,7 +82,7 @@ header nav .nav-hamburger {
   display: flex;
   align-items: center;
   place-self: center end;
-  margin-right: 8px;
+  margin-right: 16px;
 }
 
 header nav .nav-hamburger button {

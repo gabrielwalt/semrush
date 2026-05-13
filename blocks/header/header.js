@@ -23,6 +23,7 @@ function closeOnEscape(e) {
 }
 
 function closeOnFocusLost(e) {
+  if (!isDesktop.matches) return;
   const nav = e.currentTarget;
   if (!nav.contains(e.relatedTarget)) {
     const navSections = nav.querySelector('.nav-sections');

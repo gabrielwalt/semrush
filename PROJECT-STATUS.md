@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** T01 — Fix mobile nav closeOnFocusLost bug + hamburger alignment  
-**Last completed:** Requirements audit — PROJECT-BLOCKS.md, PROJECT-DESIGN.md, PROJECT-IMPORT.md corrected against all 12 requirements files; skills rebuilt (M01–M05, M07)  
-**Next up:** T01 → T02 → T03 → T04 → T05  
+**Active task:** T02 — Testimonials: quote text size and font  
+**Last completed:** T01 — closeOnFocusLost mobile guard + hamburger 16px margin  
+**Next up:** T02 → T03 → T04 → T05 → T06  
 **Blocker:** None
 
 ---
