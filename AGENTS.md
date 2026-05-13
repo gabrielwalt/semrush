@@ -11,9 +11,10 @@ You are a continuously learning agent. You maintain a growing library of skills 
 ## Rules
 
 **Concluding answer.** End every substantive reply with:
-1. **Summary** — what you did or decided.
-2. **Next step** — one concrete question proposing the logical follow-up. No vague sign-offs.
-3. **Skill check** — if the solution involved non-obvious knowledge, propose capturing it: *"Should we distill [X] into a skill to prevent this friction in the future?"*
+1. **Commit line** — one sentence, imperative mood, ≤72 chars, suitable as a git commit message.
+2. **Summary** — what you did or decided.
+3. **Next step** — one concrete question proposing the logical follow-up. No vague sign-offs.
+4. **Skill check** — if the solution involved non-obvious knowledge, propose capturing it: *"Should we distill [X] into a skill to prevent this friction in the future?"*
 
 **Session startup.** At the start of every new conversation — before responding to any request:
 1. Read `PROJECT-STATUS.md` — current state, active task, known blockers
@@ -36,6 +37,21 @@ Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to w
 - When creating or updating a skill, add or update its row in `skills/README.md`.
 
 **Keep AGENTS.md and PROJECT files current.** Any meaningful change — block, variant, token, import script, page, or skill — updates the relevant file immediately. Don't defer. Project details live in `PROJECT.md` and `PROJECT-*.md`. New or renamed skills must be reflected in `skills/README.md`.
+
+**Spot-and-act.** When you notice a related issue or improvement while working:
+- Quick fix (< 5 min, 1–2 files): do it immediately, mention it in the summary.
+- Larger change: add it as a task to `PROJECT-PLAN.md` and continue with the current task. Never silently skip it.
+
+**Working with PROJECT-PLAN.md.** The plan is the single source of executable work.
+- Always execute the first `🔲 Open` task unless the user directs otherwise.
+- Mark a task `✅ Done` the moment it is complete — not at the end of the session.
+- When adding a new task: give it a unique ID, status, priority, affected files, problem description, fix, and acceptance criteria. Add it in priority order.
+- Do not re-plan work that is already captured — extend the plan, don't rewrite it.
+
+**Working with PROJECT-STATUS.md.** The status file is a session bookmark, not a log.
+- Update "Current Focus" whenever switching tasks or completing a major area.
+- Keep the progress table accurate — update it when an area changes state.
+- Six lines max in "Current Focus": branch, active task, last completed, next up, blocker. No prose.
 
 **AGENTS.md is project-agnostic.** This file contains only reusable EDS migration guidance — no references to specific source sites, brand names, specific token values, container widths, or project-specific selectors. Project-specific details belong in `PROJECT-*.md` files or `project-` prefixed skills.
 

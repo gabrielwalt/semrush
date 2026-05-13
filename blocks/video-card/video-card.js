@@ -69,15 +69,19 @@ export default async function decorate(block) {
   const mediaCol = document.createElement('div');
   mediaCol.className = 'video-card-media';
 
+  const glassFrame = document.createElement('div');
+  glassFrame.className = 'video-card-glass';
+
   if (mediaPart && mediaPart.sources.length > 0) {
     const video = buildVideo(mediaPart.sources, mediaPart.img);
-    mediaCol.appendChild(video);
+    glassFrame.appendChild(video);
   } else if (mediaPart && mediaPart.img) {
     const picture = mediaPart.img.closest('picture') || mediaPart.img;
     picture.querySelector('img')?.classList.add('video-card-video');
-    mediaCol.appendChild(picture);
+    glassFrame.appendChild(picture);
   }
 
+  mediaCol.appendChild(glassFrame);
   container.appendChild(mediaCol);
   block.appendChild(container);
 }

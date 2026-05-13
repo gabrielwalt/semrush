@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** Semrush One block styling (columns-stats, cards-icon, cards-awards)  
-**Last completed:** T14 (stats-facts 2-col section grid), T08 (all !important → .full-width), T09 (header fully done), T11/T13/T15/T16/T17/T18 (verified done)  
-**Next up:** Semrush One push + preview verify → Enterprise block styling  
-**Blocker:** None
+**Active task:** Enterprise page block styling  
+**Last completed:** T12 (video-card glass shrink-wrap), section-dark button override, AGENTS.md rules update  
+**Next up:** Enterprise page — style new blocks, then verify on preview  
+**Blocker:** Semrush One content lost — /one page styling on hold until content is re-imported
 
 ---
 
@@ -25,10 +25,10 @@
 | Footer — layout, social icons, SEMRUSH reveal | ✅ Done |
 | Font system / typography | ✅ Done |
 | Skills system | ✅ Done |
-| Semrush One — content imported | ✅ Done |
-| Semrush One — block styling | 🔶 In progress |
+| Semrush One — content imported | ❌ Lost — needs re-import |
+| Semrush One — block styling | ⏸ Blocked (content lost) |
 | Enterprise — content imported | ✅ Done |
-| Enterprise — block styling | 🔲 Not started |
+| Enterprise — block styling | 🔲 Not started (E01–E04 in plan) |
 | Bulk import | 🔲 Not started |
 | PageSpeed 100 | 🔲 Not started |
 | Accessibility (WCAG 2.1 AA) | 🔲 Not started |
@@ -65,7 +65,7 @@
 | Page | URL | Status |
 |------|-----|--------|
 | Homepage | https://www.semrush.com/ | ✅ Done |
-| Semrush One | https://www.semrush.com/one/ | ✅ Content imported — styling needed |
+| Semrush One | https://www.semrush.com/one/ | ❌ Content lost — re-import needed before styling |
 | Enterprise | https://enterprise.semrush.com/ | ✅ Content imported — styling needed |
 | Pricing | https://www.semrush.com/pricing/ | 🔲 P2 |
 | SEO | https://www.semrush.com/seo/ | 🔲 P2 |
@@ -84,10 +84,7 @@
 
 ## Next Actions
 
-1. Push code and verify on AEM preview
-2. Style the 4 new Semrush One blocks (video-card-feature, columns-stats, cards-icon, cards-awards)
-3. Create `tabs` block for Enterprise solutions section
-4. Style Enterprise-specific blocks (case-study, testimonials variations)
-5. Refine Enterprise import script (hero section missing, case study stats)
-6. Performance validation — PageSpeed on feature branch
-7. Accessibility audit — WCAG 2.1 AA
+1. Enterprise page — style new blocks (see PROJECT-PLAN.md)
+2. Semrush One — re-import content when ready, then verify block styling (columns-stats, cards-icon, cards-awards CSS is ready)
+3. Performance validation — PageSpeed on feature branch
+4. Accessibility audit — WCAG 2.1 AA

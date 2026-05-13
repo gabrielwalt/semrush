@@ -171,7 +171,7 @@ Add a fallback that targets both selectors:
 
 ### P05 — Push to preview and do visual triage
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — homepage verified on aem-merged-20260513 preview; testimonials/footer/header all render correctly; P&G logo 404 is a pre-existing import artifact. Semrush One + Enterprise pages are 404 (content not yet published in da.live).  
 **Priority:** P0-gate — gate for confirming all P0x fixes worked  
 **Files:** *(no code changes)*
 
@@ -1171,7 +1171,7 @@ body.homepage main {
 
 ### T12 — Video-card: glass border shrink-wraps the video
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — wrapped media in `.video-card-glass` div; moved glass styles from `.video-card-media` (now a plain flex container) to `.video-card-glass`; glass sizes to content width; mobile gets `width: 100%` override  
 **Priority:** P3 — the glass border fills the grid column instead of wrapping tightly around the video  
 **Files:** `blocks/video-card/video-card.css`, `blocks/video-card/video-card.js`
 
@@ -1381,6 +1381,91 @@ main > .section > div:last-child { margin-bottom: 0; }
 - Animation speed matches the original site.
 - Loop seam spacing matches inter-logo spacing (no wider gap at wrap point).
 - Marquee background is transparent.
+
+---
+
+## Part 3 — Enterprise Page
+
+---
+
+### E01 — Create `testimonials-carousel` block
+
+**Status:** 🔲 Open  
+**Priority:** P1 — block exists in Enterprise content but has zero CSS/JS  
+**Files:** `blocks/testimonials-carousel/` (create)
+
+**Content structure (from import):**  
+- Section heading (h2) as default-content above the block
+- Block rows: one row per testimonial card, single cell containing a logo image
+- The carousel shows scrollable logo/quote cards
+
+**Fix:**  
+Create `testimonials-carousel.js` and `testimonials-carousel.css`. The block is a horizontal scrollable row of cards. Each row becomes a card with just the logo image. Add a scroll track + snap scrolling.
+
+**Acceptance criteria:**
+- Cards display horizontally in a scrollable row
+- Each card shows the logo image, centered
+- Scroll snapping works on mobile
+
+---
+
+### E02 — Create `tabs` block
+
+**Status:** 🔲 Open  
+**Priority:** P1 — tabs is a key feature of the Enterprise page (product overview section)  
+**Files:** `blocks/tabs/` (create)
+
+**Content structure (from import):**  
+- Default-content above (eyebrow + h2)
+- Block rows: each row = one tab. Single cell with h3 (tab name) + p (subtitle) + optional ul (features) + optional a (CTA) + optional image
+
+**Fix:**  
+Create `tabs.js` to build a tab list + panels UI. First row is active by default. Tab names become clickable tab headers; row content becomes the panel body.
+
+**Acceptance criteria:**
+- Tab list renders horizontally at desktop, scrollable at mobile
+- Clicking a tab shows its panel, hides others
+- First tab is active on load
+- Matches Enterprise page visual design (dark selected tab, light inactive)
+
+---
+
+### E03 — Style `video-card enterprise-platform` variant
+
+**Status:** 🔲 Open  
+**Priority:** P1 — Enterprise platform section uses this variant  
+**Files:** `blocks/video-card/video-card.css`
+
+**Content structure (from import):**  
+Block variant `video-card-enterprise-platform` (from `Video Card (enterprise-platform)`). Row: text cell (eyebrow p + h2 + CTA link) | image cell.
+
+**Fix:**  
+Add variant CSS for `.video-card.video-card-enterprise-platform`. This is a 2-col text+image layout, dark or gradient background, different from the homepage video-card style.
+
+**Acceptance criteria:**
+- Variant renders with correct background and layout
+- Image column shows the platform screenshot
+- CTA is styled appropriately for the background
+
+---
+
+### E04 — Create `case-study` block
+
+**Status:** 🔲 Open  
+**Priority:** P1 — "Outperform from day one" section on Enterprise page  
+**Files:** `blocks/case-study/` (create)
+
+**Content structure (from import):**  
+- Default-content above (eyebrow + h2 + description)
+- Block rows: stat cards (number + label pairs), video thumbnail image
+
+**Fix:**  
+Create `case-study.js` and `case-study.css`. Layout: stats displayed as large numbers in a row, video thumbnail alongside.
+
+**Acceptance criteria:**
+- Stat numbers are large (display-size typography)
+- Video thumbnail renders with play button or poster
+- Responsive: stacks on mobile
 
 ---
 

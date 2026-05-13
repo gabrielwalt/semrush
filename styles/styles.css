@@ -464,6 +464,18 @@ main .section.section-dark h6 {
   color: #fff;
 }
 
+main .section.section-dark a.button:any-link {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+main .section.section-dark a.button:any-link:hover,
+main .section.section-dark a.button:any-link:focus-visible {
+  background-color: #fff;
+  color: var(--dark-color);
+}
+
 /* centered section variant */
 main .section.section-centered > div {
   display: flex;
