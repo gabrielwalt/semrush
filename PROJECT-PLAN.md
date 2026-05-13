@@ -142,7 +142,7 @@ Note: The old CSS also had `margin-top: 60px` on `.footer-bottom-container`. The
 
 ### P04 — Verify footer link columns CSS selector still works
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — User confirmed push to preview; footer structure uses `.footer-links-container .footer-links > div` selector which matches the EDS block structure when footer content uses a "Footer Links" block  
 **Priority:** P1 — if footer content lacks a "Footer Links" block, columns lose flex layout  
 **Files:** `blocks/footer/footer.css`
 
@@ -993,7 +993,7 @@ Instead, these blocks override `max-width` and `padding` via `!important` on the
 
 ### T09 — Header: transparent background + full desktop spec
 
-**Status:** 🔲 Open (A done) — Problem A fixed: `background-color: transparent` on `.nav-wrapper` at ≥1024px; Problems B-E (logo size, Enterprise arrow, chevron, mega menu) remain  
+**Status:** ✅ Done — A: transparent bg; B: logo 150px (auto height); C: Enterprise arrow already on `:last-child a::after`; D: chevron `rotate(180deg)` on `::after`; E: mega menu `border-radius: 0 0 24px 24px`, opacity+transform animation, `overflow: hidden`  
 **Priority:** P2 — multiple desktop requirements uncovered in audit; transparent nav is the root concern (Conv01 P36, Conv02 P07)  
 **Files:** `blocks/header/header.css`, `blocks/header/header.js`
 
@@ -1199,7 +1199,7 @@ Then move the glass styles from `.video-card-media` to `.video-card-glass`, and 
 
 ### T13 — Enterprise video-card CTA: outline/white on dark background
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Already in video-card.css lines 109-127: white outline on dark bg, hover turns white fill  
 **Priority:** P3 — CTA renders as primary purple on a black card (Conv02 P01 §7)  
 **Files:** `blocks/video-card/video-card.css`
 
@@ -1232,7 +1232,7 @@ Add a variant-scoped CTA override:
 
 ### T14 — Stats-facts: verify 2-column desktop layout (title left, stats right)
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — Added section-level grid to `.section.stats-facts-container` at ≥1024px: `1fr 2fr` columns; default-content-wrapper (heading/CTA) sticky left, stats-facts-wrapper right; removed dangling `grid-column: 2` on stat-rows (had no grid parent)  
 **Priority:** P3 — layout requirement from Conv01 P11 not visibly implemented  
 **Files:** `blocks/stats-facts/stats-facts.css`, `styles/lazy-styles.css`
 
@@ -1254,7 +1254,7 @@ Use `measure-then-implement` skill — measure the original before coding.
 
 ### T15 — Footer: full requirements audit and fixes
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — All requirements verified in footer.css/js: Lazzer font, container-max-width, strong font-weight 600, link font-size 14px (body-s), border-top separator (P03), social icons 40px, Adobe logo img, 1:2 grid layout, justify-content space-between, SEMRUSH reveal 550px sticky z-index 0  
 **Priority:** P2 — footer has several specific unverified requirements from Conv06 P14 + P41  
 **Files:** `blocks/footer/footer.css`, `blocks/footer/footer.js`
 
@@ -1283,7 +1283,7 @@ Use `measure-then-implement` skill — measure the original before coding.
 
 ### T16 — Implement global `.glass-surface` utility
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — `.glass-surface` already defined globally in styles.css (backdrop-filter, gradient bg, white border via pseudo-element, 12px padding, 12px radius); insights-widget.css applies it via `.insights-widget-form.glass-surface`; video block has no glass requirement (clean video frame only)  
 **Priority:** P2 — glass style is duplicated per block; requirement says shared utility (Conv02 P01 §4, Conv03 P36)  
 **Files:** `scripts/glass.js` (new), `blocks/insights-widget/insights-widget.css`, `blocks/video/video.css`, `styles/styles.css`
 
@@ -1328,7 +1328,7 @@ export function applyGlassSurface(el) {
 
 ### T17 — Section vertical spacing: use 120px padding, not margins
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — styles.css already has `main > .section { margin: 0; padding: var(--section-padding) 0; }` with first/last child margin resets  
 **Priority:** P2 — spacing system requirement from Conv02 P18; sections may be using margins instead  
 **Files:** `styles/styles.css`
 
@@ -1360,7 +1360,7 @@ main > .section > div:last-child { margin-bottom: 0; }
 
 ### T18 — Marquee: verify logo color, animation speed, and horizontal spacing
 
-**Status:** 🔲 Open  
+**Status:** ✅ Done — marquee.css verified: 50px desktop / 32px mobile height, 100s animation, transparent bg, mask-image edge fades, 60px gap + 60px padding-right for seam consistency; no opacity/filter on logos  
 **Priority:** P3 — several marquee details may not match original (Conv02 P01 §5, Conv05 P11, P12, P17)  
 **Files:** `blocks/marquee/marquee.css`, `blocks/marquee/marquee.js`
 

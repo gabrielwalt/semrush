@@ -1,3 +1,9 @@
+/* Section-level: remove default 120px section padding so the bar stays flush */
+.section.announcement-bar-container {
+  padding: 0;
+  margin: 0;
+}
+
 .announcement-bar {
   --bar-bg: var(--accent-color);
   --bar-text: var(--dark-color);

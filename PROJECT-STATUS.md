@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** T09-B — Header logo size, Enterprise arrow, chevron, mega menu  
-**Last completed:** T07 (stats-facts active 180px), T05+T06 (stats-visibility section class + h2 fix), T09-A (header transparent bg), T10 (hero pattern calc positions), T02–T04 (testimonials already fixed in P02)  
-**Next up:** T07 → T08 (!important cleanup) → T09-B (logo/Enterprise/chevron/mega menu) → T11–T18  
-**Blocker:** None — push to preview for visual verification recommended
+**Active task:** T12 — Video-card glass shrink-wrap (P3, only remaining open task)  
+**Last completed:** T14 (stats-facts 2-col section grid), T08 (all !important → .full-width), T09 (header fully done), T11/T13/T15/T16/T17/T18 (verified done)  
+**Next up:** T12 → Semrush One block styling → Enterprise block styling  
+**Blocker:** None
 
 ---
 

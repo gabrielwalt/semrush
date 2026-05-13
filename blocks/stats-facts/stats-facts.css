@@ -144,8 +144,27 @@
 }
 
 @media (width >= 1024px) {
-  .stats-facts > .stat-row {
-    grid-column: 2;
+  /* Section-level 2-column: default-content (heading/CTA) left, stats right */
+  .section.stats-facts-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 var(--space-xl);
+    align-items: start;
+    padding: var(--section-padding) var(--container-padding);
+  }
+
+  .section.stats-facts-container > .default-content-wrapper,
+  .section.stats-facts-container > .stats-facts-wrapper {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Sticky heading so it stays visible while scrolling through stats */
+  .section.stats-facts-container > .default-content-wrapper {
+    position: sticky;
+    top: calc(84px + var(--space-m));
+    padding-top: 80px;
   }
 
   .stats-facts > .stat-row .stat-number {
