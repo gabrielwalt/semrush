@@ -151,6 +151,8 @@
     gap: 0 var(--space-xl);
     align-items: start;
     padding: var(--section-padding) var(--container-padding);
+    max-width: var(--container-max-width);
+    margin: 0 auto;
   }
 
   .section.stats-facts-container > .default-content-wrapper,

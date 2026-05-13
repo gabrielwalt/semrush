@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** T12 — Video-card glass shrink-wrap (P3, only remaining open task)  
+**Active task:** Semrush One block styling (columns-stats, cards-icon, cards-awards)  
 **Last completed:** T14 (stats-facts 2-col section grid), T08 (all !important → .full-width), T09 (header fully done), T11/T13/T15/T16/T17/T18 (verified done)  
-**Next up:** T12 → Semrush One block styling → Enterprise block styling  
+**Next up:** Semrush One push + preview verify → Enterprise block styling  
 **Blocker:** None
 
 ---
@@ -26,7 +26,7 @@
 | Font system / typography | ✅ Done |
 | Skills system | ✅ Done |
 | Semrush One — content imported | ✅ Done |
-| Semrush One — block styling | 🔲 Not started |
+| Semrush One — block styling | 🔶 In progress |
 | Enterprise — content imported | ✅ Done |
 | Enterprise — block styling | 🔲 Not started |
 | Bulk import | 🔲 Not started |

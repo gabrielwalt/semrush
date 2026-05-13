@@ -2,26 +2,46 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-l);
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .cards-awards > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cards-awards .cards-awards-card-body {
-  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
 }
 
-.cards-awards .cards-awards-card-image {
+.cards-awards .cards-awards-card-body picture {
+  display: block;
   line-height: 0;
 }
 
-.cards-awards > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+.cards-awards .cards-awards-card-body picture img {
+  width: auto;
+  height: 120px;
+  object-fit: contain;
+}
+
+.cards-awards .cards-awards-card-body p {
+  margin: 0;
+  font-size: var(--font-size-body-s);
+  color: var(--light-color);
+}
+
+@media (width < 768px) {
+  .cards-awards .cards-awards-card-body picture img {
+    height: 80px;
+  }
 }
