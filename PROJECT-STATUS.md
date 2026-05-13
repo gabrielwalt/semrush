@@ -4,6 +4,17 @@
 
 ---
 
+## Current Focus
+
+**Last updated:** 2026-05-13  
+**Branch:** `aem-merged-20260513`  
+**Active task:** M01 — Consolidate skills into single file format  
+**Last completed:** PROJECT-PLAN.md enriched — T01 expanded (hamburger), T04 (stat sizes), T09 expanded (full nav spec), T15–T18 added (footer, glass-surface, section spacing, marquee)  
+**Next up:** M01 → M02 → M03 → M04 → M05 → M07, then T01  
+**Blocker:** None
+
+---
+
 ## Progress
 
 | Area | Status |
