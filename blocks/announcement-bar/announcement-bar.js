@@ -1,3 +1,4 @@
-export default async function decorate(block) {
-  block.closest('.announcement-bar-wrapper')?.classList.add('full-width');
+export default async function decorate() {
+  // The announcement bar is a simple single-row block with centered link text.
+  // No DOM restructuring needed — the CSS handles all styling.
 }

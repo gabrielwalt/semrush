@@ -1,7 +1,13 @@
-/* Section-level: remove default 120px section padding so the bar stays flush */
-.section.announcement-bar-container {
-  padding: 0;
-  margin: 0;
+.announcement-bar-container {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.announcement-bar-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .announcement-bar {

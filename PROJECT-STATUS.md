@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-13  
 **Branch:** `aem-merged-20260513`  
-**Active task:** V01 — Add missing background image assets  
-**Last completed:** E01–E04 (testimonials-carousel, tabs, case-study, video-card enterprise-platform variant)  
-**Next up:** V01/V02 visual polish; verify enterprise page on preview once content published  
+**Active task:** Visual verification — homepage should now match reference  
+**Last completed:** Full reset of blocks/ to aem-20260508-1813 state; mobile nav bug fix (closeOnFocusLost) re-applied; enterprise-platform variant re-added to video-card.css  
+**Next up:** Push, verify preview matches reference; then continue enterprise page styling  
 **Blocker:** Semrush One content lost — /one page styling on hold until content is re-imported; Enterprise page 404 on preview (content not yet published)
 
 ---

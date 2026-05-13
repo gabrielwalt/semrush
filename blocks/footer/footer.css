@@ -38,23 +38,22 @@ footer .footer p {
   margin: 0 0 var(--space-s);
 }
 
-/* stylelint-disable no-descending-specificity */
-
 footer .footer .footer-cta-container p {
   font-size: var(--font-size-body-m);
   line-height: 1.5;
 }
 
+/* stylelint-disable no-descending-specificity */
+
 /* Link columns */
-.footer-links-container .footer-links > div {
+.footer-links-container > div {
   display: flex;
   gap: var(--space-l);
-  flex-wrap: wrap;
 }
 
-.footer-links-container .footer-links > div > div {
-  flex: 1 1 0;
-  min-width: 120px;
+.footer-links-container > div > div {
+  flex: 1;
+  min-width: 0;
 }
 
 .footer-links-container strong {
@@ -80,70 +79,22 @@ footer .footer .footer-cta-container p {
   text-decoration: underline;
 }
 
-/* Bottom bar — separator line + override EDS default flex wrapper so block fills full width */
+/* Bottom bar */
 .footer-bottom-container {
   border-top: 1px solid rgb(230 230 230);
   padding-top: var(--space-m);
-}
-
-.footer-bottom-container .footer-bottom-wrapper {
-  display: block;
-}
-
-.footer-bottom-container .footer-bottom {
-  width: 100%;
   margin-top: 60px;
 }
 
-/* Social icons row */
-.footer-bottom .footer-social-row {
-  margin-bottom: var(--space-m);
-}
-
-.footer-bottom .footer-social-row p {
+.footer-bottom-container > div {
   display: flex;
   align-items: center;
-  gap: 0;
-}
-
-.footer-social-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.footer-social-icon img {
-  width: 24px;
-  height: 24px;
-  display: block;
-}
-
-/* Adobe logo */
-.footer-adobe-logo {
-  display: inline-flex;
-  align-items: center;
-  margin-right: var(--space-s);
-}
-
-.footer-adobe-logo img {
-  width: 62px;
-  height: 15px;
-}
-
-/* Legal / copyright row */
-.footer-bottom .footer-legal-row > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
   gap: var(--space-m);
+  flex-wrap: wrap;
 }
 
-.footer-bottom .footer-legal-row p {
+.footer-bottom-container p {
   font-size: var(--font-size-body-s);
-  white-space: nowrap;
 }
 
 .footer-bottom-container li {
@@ -154,18 +105,11 @@ footer .footer .footer-cta-container p {
   font-size: var(--font-size-body-s);
   color: var(--dark-color);
   text-decoration: none;
+  margin-right: var(--space-m);
 }
 
 .footer-bottom-container a:hover {
   text-decoration: underline;
-}
-
-.footer-bottom .footer-legal-row ul {
-  display: flex;
-  gap: var(--space-xl);
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 /* Side-by-side layout: CTA left, links right */
@@ -192,15 +136,13 @@ footer .footer .footer-cta-container p {
   }
 }
 
-/* Footer reveal — OUTSIDE the block, sibling in <footer> */
+/* Footer reveal — large SEMRUSH text behind footer */
 footer > .footer-reveal {
   position: sticky;
   bottom: 0;
   z-index: 0;
   height: 550px;
-  background:
-    url('/icons/pattern-hero.svg') repeat-x 0 100%,
-    rgb(220 238 235);
+  background: rgb(220 238 235);
   display: flex;
   align-items: flex-end;
   justify-content: center;

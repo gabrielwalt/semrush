@@ -142,7 +142,6 @@ function renderOptions(list, filter, selectedId) {
 }
 
 export default async function decorate(block) {
-  block.closest('.insights-widget-wrapper')?.classList.add('full-width');
   const cell = block.querySelector(':scope > div > div');
   const paragraphs = cell ? cell.querySelectorAll('p') : [];
   const placeholder = (paragraphs[0] ? paragraphs[0].textContent.trim() : '') || 'Enter your website';

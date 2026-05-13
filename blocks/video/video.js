@@ -21,7 +21,6 @@ function getVideoSources(cell) {
 }
 
 export default async function decorate(block) {
-  block.closest('.video-wrapper')?.classList.add('full-width');
   const row = block.querySelector(':scope > div');
   if (!row) return;
 

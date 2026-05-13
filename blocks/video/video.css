@@ -1,3 +1,15 @@
+.video-wrapper,
+.hero-video-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.video-wrapper .video-container,
+.hero-video-wrapper .hero-video-container {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
 .video,
 .hero-video {
   padding: 0 var(--space-m) 48px;
