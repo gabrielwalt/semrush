@@ -156,6 +156,7 @@ function decorateDefault(block) {
   }
 }
 
+// Horizontal scrolling carousel — expansible (product cards) and default (resources) variants
 export default async function decorate(block) {
   const wrapper = block.closest('.carousel-slider-wrapper');
   if (wrapper) wrapper.classList.add('full-width');
