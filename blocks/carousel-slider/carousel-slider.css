@@ -1,8 +1,11 @@
 /* Carousel Slider — shared base */
 .carousel-slider-container > .default-content-wrapper {
   position: relative;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
   padding: 0 var(--container-padding);
-  margin-bottom: 60px;
 }
 
 .carousel-slider-container > .default-content-wrapper > p:first-child {
@@ -38,7 +41,7 @@
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   padding: 0 0 var(--space-s);
-  margin: 0 0 0 var(--container-padding);
+  margin: 0 0 0 max(var(--container-padding), calc((100vw - var(--container-max-width)) / 2));
   scrollbar-width: none;
 }
 
@@ -163,7 +166,6 @@
 
 .carousel-slider.carousel-slider-expansible {
   padding: 0;
-  margin-left: var(--container-padding);
   overflow: visible;
 }
 
