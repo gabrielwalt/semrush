@@ -213,13 +213,14 @@
   cursor: default;
 }
 
-/* Header — eyebrow + title */
+/* Header — eyebrow + title, fixed width so text doesn't reflow on expand */
 .carousel-slider-header {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  max-width: 330px;
 }
 
 .carousel-slider.carousel-slider-expansible .carousel-slider-header h3 {
@@ -284,12 +285,13 @@
   display: block;
 }
 
-/* Poster (small image — visible when collapsed) */
+/* Poster (small image — visible when collapsed, centered with equal spacing) */
 .carousel-slider-poster {
   grid-column: 1 / -1;
   grid-row: 2 / 3;
-  align-self: end;
+  place-self: end center;
   max-width: 260px;
+  margin-bottom: 36px;
   transition: opacity 0.3s, visibility 0.3s;
 }
 
@@ -300,17 +302,16 @@
   pointer-events: none;
 }
 
-/* Content (visible when expanded) */
+/* Content (visible when expanded) — fixed left column prevents text reflow during animation */
 .carousel-slider-content {
   grid-column: 1 / -1;
   grid-row: 2 / 3;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 330px 1fr;
   grid-template-rows: 1fr auto;
   gap: 12px;
   opacity: 0;
   visibility: hidden;
-  position: absolute;
   pointer-events: none;
   transition: opacity 0.4s ease, visibility 0.4s;
 }
@@ -318,24 +319,32 @@
 .carousel-slider-card-expanded .carousel-slider-content {
   opacity: 1;
   visibility: visible;
-  position: relative;
   pointer-events: auto;
 }
 
-/* Large image — spans right column */
+/* Large image — spans right column, fly-in from bottom on expand */
 .carousel-slider-large-img {
   grid-column: 2 / 3;
   grid-row: 1 / -1;
-  align-self: end;
+  align-self: center;
   margin-right: -36px;
-  margin-top: 16px;
   border-radius: 12px 0 0 12px;
   border-right: none;
+  max-height: 100%;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.4s ease 0.1s, opacity 0.3s ease 0.1s;
+}
+
+.carousel-slider-card-expanded .carousel-slider-large-img {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .carousel-slider.carousel-slider-expansible .carousel-slider-large-img img {
   width: 100%;
   height: auto;
+  max-height: 380px;
   object-fit: contain;
   border-radius: 8px 0 0 8px;
 }
@@ -348,9 +357,6 @@
   line-height: var(--line-height-relaxed);
   margin: 0;
   align-self: end;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
 }
 
 /* CTA */
@@ -359,21 +365,6 @@
   grid-row: 2 / 3;
   justify-self: start;
   margin: 0;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
-}
-
-/* Fade-in on expand */
-.carousel-slider-card-expanded .carousel-slider-description {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.carousel-slider-card-expanded .carousel-slider-content .button-wrapper {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.25s;
 }
 
 /* ==========================================================================

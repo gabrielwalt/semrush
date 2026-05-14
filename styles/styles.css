@@ -220,7 +220,7 @@ pre {
 }
 
 main > div {
-  margin: var(--section-padding) 0;
+  margin: 0;
 }
 
 main > div > div {
@@ -383,15 +383,11 @@ body.homepage main {
 }
 
 /*
- * Vertical Spacing Design System
+ * Vertical Spacing System
  * --------------------------------
- * Sections have NO margin. Vertical rhythm comes from section padding.
- * Each section gets padding-top and padding-bottom equal to --section-padding (120px desktop).
- * Blocks inside a section are siblings (EDS wraps each block in a -wrapper div).
- * Spacing between blocks comes from margin-top on each wrapper after the first.
- * The first child in a section has no margin-top; the last has no margin-bottom.
- * Sections sit flush against each other — the visual gap between content areas
- * is the sum of one section's padding-bottom + the next's padding-top.
+ * Sections: no margin (flush against each other), padding top/bottom for breathing room.
+ * Blocks: evenly spaced via margin-top. First/last child have no top/bottom margin
+ * (section padding covers that). Backgrounds on sections look seamless.
  */
 main > .section {
   margin: 0;
@@ -404,10 +400,8 @@ main > .section > div {
   padding: 0 var(--container-padding);
 }
 
-/* Block spacing: each wrapper/block after the first gets a top margin */
-main > .section > .default-content-wrapper + *,
-main > .section > [class$="-wrapper"] + [class$="-wrapper"],
-main > .section > [class$="-wrapper"] + .default-content-wrapper {
+/* Block spacing: every block after the first gets a top margin */
+main > .section > * + * {
   margin-top: var(--block-padding);
 }
 
@@ -428,6 +422,14 @@ main > .section > .full-width {
 main > .section:first-of-type {
   padding-top: 0;
 }
+
+/* Block spacing variants — authors apply via block class names (e.g. "Insights Widget (spacing-top-small)") */
+main > .section > *:has(> .spacing-top-none) { margin-top: 0; }
+main > .section > *:has(> .spacing-top-small) { margin-top: var(--space-s); }
+main > .section > *:has(> .spacing-top-large) { margin-top: var(--space-3xl); }
+main > .section > *:has(> .spacing-bottom-none) + * { margin-top: 0; }
+main > .section > *:has(> .spacing-bottom-small) + * { margin-top: var(--space-s); }
+main > .section > *:has(> .spacing-bottom-large) + * { margin-top: var(--space-3xl); }
 
 /* section metadata */
 main .section.light,

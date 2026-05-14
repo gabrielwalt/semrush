@@ -195,6 +195,7 @@ function buildNavFromHeadings(container) {
         if (navWrapper) {
           navWrapper.classList.toggle('nav-open', !exp);
           navWrapper.closest('header')?.classList.toggle('nav-open', !exp);
+          if (!exp) navWrapper.style.backgroundColor = '';
         }
       } else if (!isDesktop.matches && li.classList.contains('nav-drop')) {
         e.preventDefault();

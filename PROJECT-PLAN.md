@@ -234,7 +234,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H07 — 🔲 Open — Fix "The data you need to outrank the competition" section width
+### H07 — ✅ Done — Fix "The data you need to outrank the competition" section width
 
 **Priority:** P1  
 **Type:** Gap  
