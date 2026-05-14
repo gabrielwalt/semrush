@@ -176,7 +176,6 @@ footer > .footer-reveal {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  overflow: hidden;
   padding: 0 var(--container-padding) var(--space-l);
 }
 

@@ -49,7 +49,6 @@ export default {
 
       const ctaTable = WebImporter.DOMUtils.createTable([['Footer CTA'], [ctaContent]], document);
       result.appendChild(ctaTable);
-      result.appendChild(document.createElement('hr'));
     }
 
     // --- Footer Links block ---
@@ -89,52 +88,73 @@ export default {
       if (linksRow.length > 0) {
         const linksTable = WebImporter.DOMUtils.createTable([['Footer Links'], linksRow], document);
         result.appendChild(linksTable);
-        result.appendChild(document.createElement('hr'));
       }
     }
 
     // --- Footer Bottom block ---
     const bottomContent = document.createElement('div');
 
-    // Social links
+    // Social links as <ul> (footer.js decorates text into SVG icons)
     const socialList = footer.querySelector('.srf-footer__social-list');
     if (socialList) {
       const socialLinks = socialList.querySelectorAll('a');
       if (socialLinks.length > 0) {
-        const socialP = document.createElement('p');
-        socialLinks.forEach((a, i) => {
-          const newA = document.createElement('a');
-          newA.href = a.href;
-          newA.textContent = a.getAttribute('aria-label') || a.textContent.trim() || a.href.split('/')[2];
-          if (i > 0) socialP.appendChild(document.createTextNode(' '));
-          socialP.appendChild(newA);
-        });
-        bottomContent.appendChild(socialP);
-      }
-    }
-
-    // Copyright
-    const copyright = footer.querySelector('.srf-footer__copyright');
-    if (copyright) {
-      const p = document.createElement('p');
-      p.textContent = copyright.textContent.trim();
-      bottomContent.appendChild(p);
-    }
-
-    // Legal links
-    const legalList = footer.querySelector('.srf-footer__legal-list');
-    if (legalList) {
-      const legalUl = document.createElement('ul');
-      legalList.querySelectorAll('a').forEach((a) => {
-        if (a.textContent.trim()) {
+        const socialUl = document.createElement('ul');
+        socialLinks.forEach((a) => {
           const li = document.createElement('li');
           const newA = document.createElement('a');
           newA.href = a.href;
-          newA.textContent = a.textContent.trim();
+          newA.textContent = a.getAttribute('aria-label') || a.textContent.trim() || 'Social';
           li.appendChild(newA);
-          legalUl.appendChild(li);
-        }
-      });
+          socialUl.appendChild(li);
+        });
+        bottomContent.appendChild(socialUl);
+      }
+    }
+
+    // Adobe logo + copyright in one <p>
+    const adobeLogo = footer.querySelector('.srf-footer__adobe-logo, a[href*="business.adobe.com"]');
+    const copyright = footer.querySelector('.srf-footer__copyright');
+    if (adobeLogo || copyright) {
+      const p = document.createElement('p');
+      if (adobeLogo) {
+        const a = document.createElement('a');
+        a.href = adobeLogo.href || 'https://business.adobe.com/';
+        const img = document.createElement('img');
+        img.src = '/icons/adobe.svg';
+        img.alt = 'Adobe';
+        a.appendChild(img);
+        p.appendChild(a);
+        p.appendChild(document.createTextNode(' '));
+      }
+      if (copyright) {
+        p.appendChild(document.createTextNode(copyright.textContent.trim()));
+      }
+      bottomContent.appendChild(p);
+    }
+
+    // Legal links + language selector
+    const legalList = footer.querySelector('.srf-footer__legal-list');
+    const langButton = footer.querySelector('.srf-footer__language-selector, button[class*="language"]');
+    if (legalList || langButton) {
+      const legalUl = document.createElement('ul');
+      if (legalList) {
+        legalList.querySelectorAll('a').forEach((a) => {
+          if (a.textContent.trim()) {
+            const li = document.createElement('li');
+            const newA = document.createElement('a');
+            newA.href = a.href;
+            newA.textContent = a.textContent.trim();
+            li.appendChild(newA);
+            legalUl.appendChild(li);
+          }
+        });
+      }
+      if (langButton) {
+        const li = document.createElement('li');
+        li.textContent = langButton.textContent.trim() || 'English';
+        legalUl.appendChild(li);
+      }
       bottomContent.appendChild(legalUl);
     }
 

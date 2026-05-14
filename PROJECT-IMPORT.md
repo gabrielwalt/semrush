@@ -9,7 +9,7 @@ Import pipeline status and commands. For parser/transformer implementation, read
 
 | File | Purpose |
 |------|---------|
-| `tools/importer/import-homepage.js` | Main import script (all homepage parsers inline, ES module export) |
+| `tools/importer/import-homepage.js` | Main import script (imports from `parsers/*.js`, ES module export) |
 | `tools/importer/import-nav.js` | Nav fragment import (parses `srf-header` structure) |
 | `tools/importer/import-footer.js` | Footer fragment import (parses `srf-footer` structure) |
 | `tools/importer/import-semrush-one.js` | Semrush One page import (video-card-feature, columns-stats, cards-icon, cards-awards parsers) |
@@ -20,16 +20,6 @@ Import pipeline status and commands. For parser/transformer implementation, read
 | `tools/importer/urls-homepage.txt` | Homepage URL |
 | `tools/importer/urls-semrush-one.txt` | Semrush One page URLs |
 | `tools/importer/urls-enterprise.txt` | Enterprise page URLs |
-
----
-
-## Architecture
-
-1. **One script per page type.** Homepage, nav, and footer each have their own (different DOM sources).
-2. **Parsers detect blocks by DOM selector.** Each parser is self-contained.
-3. **Cleanup runs first** (removes header, footer, scripts, tracking, consent banners).
-4. **SVG images are stripped by Helix Importer's html2md pipeline.** Marquee logos must be injected post-import.
-5. **ES module export format** required for esbuild bundling (`export default { transform }` pattern).
 
 ---
 
@@ -98,6 +88,31 @@ Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P conten
 
 ---
 
+## Architecture
+
+1. **One script per page type.** Homepage, nav, and footer each have their own (different DOM sources).
+2. **Parsers are standalone files in `parsers/*.js`.** `import-homepage.js` imports from them — no inline duplicates.
+3. **Cleanup runs first** (removes header, footer, scripts, tracking, consent banners).
+4. **SVG images are stripped by Helix Importer's html2md pipeline.** Marquee logos must be ingested via DA upload.
+5. **ES module export format** required for esbuild bundling (`export default { transform }` pattern).
+
+---
+
+## Post-Import Manual Operations
+
+These items cannot be reliably auto-imported and require manual content edits after import:
+
+1. **`spacing-top-small` on insights-widget** — Add class via block name: `Insights Widget (spacing-top-small)`. The parser can't detect this from source DOM.
+2. **Testimonials: author role** — Add "CRO at ZoomInfo" as a `<p>` after the author name in row 2. The `<cite><span>` may not render in time during import.
+3. **Carousel-slider-expansible: column 2 content** — Large images, descriptions, and CTAs are only rendered when a card is expanded on the source site. Import only captures collapsed state. Must be populated manually or by expanding each card before import.
+4. **Stats-visibility: 3rd header column** — "AI Platform: ChatGPT, April 2026" platform info. May not be in the DOM at import time.
+5. **DA media hashes** — Import produces source URLs (semrush.com). After DA upload, images get media hashes. This is the normal DA ingestion workflow — not a bug.
+6. **Footer: single-section structure** — The import script no longer emits `<hr>` between footer blocks. All three (footer-cta, footer-links, footer-bottom) are in one section.
+7. **Marquee logos** — SVGs may get stripped by the html2md pipeline. Verify all 12 logos render after DA upload.
+8. **Enterprise CTA style** — "Book a demo" should be `<strong><a>` (primary) in content but the source has `mp-button--outline` class, making the parser emit `<em><a>` (secondary). Verify and adjust after import.
+
+---
+
 ## Commands
 
 ### Bundle (required before running import)
@@ -109,10 +124,21 @@ Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P conten
 
 ### Run import
 
+**WARNING:** The import script writes directly to `content/*.plain.html`, overwriting any curated content.
+Always back up content files before running, or restore from the remote AEM endpoint after:
+
 ```bash
+# Back up curated content first
+cp content/index.plain.html content/index.plain.html.bak
+
+# Run import
 node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js \
   --import-script tools/importer/import-homepage.bundle.js \
   --urls tools/importer/urls-homepage.txt
+
+# Restore curated content from AEM if needed
+curl -s 'https://aem-merged-20260513--semrush--gabrielwalt.aem.page/index.plain.html' \
+  -o content/index.plain.html
 ```
 
 Output: `content/*.plain.html`

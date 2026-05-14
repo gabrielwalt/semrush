@@ -32,11 +32,20 @@ export default function parse(element, { document }) {
   // Block table: column headers + data rows
   const rows = [['Stats Visibility']];
 
+  // Header row — detect platform info for 3rd column
   const headerCellBrand = document.createElement('div');
   headerCellBrand.textContent = 'Brand';
   const headerCellSov = document.createElement('div');
   headerCellSov.textContent = '% Share of Voice';
-  rows.push([headerCellBrand, headerCellSov]);
+  const platformEl = element.querySelector('[class*="platform"], [class*="source"]');
+  const platformText = platformEl ? platformEl.textContent.trim() : '';
+  if (platformText) {
+    const headerCellPlatform = document.createElement('div');
+    headerCellPlatform.textContent = platformText;
+    rows.push([headerCellBrand, headerCellSov, headerCellPlatform]);
+  } else {
+    rows.push([headerCellBrand, headerCellSov]);
+  }
 
   tableRows.forEach((tr) => {
     const cells = tr.querySelectorAll('td');

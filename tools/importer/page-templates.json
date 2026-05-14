@@ -12,7 +12,7 @@
       "blocks": [
         {
           "name": "announcement-bar",
-          "instances": [".srf_announcement_banner"]
+          "instances": [".srf_announcement_banner", ".srf_top_banner"]
         },
         {
           "name": "hero",

@@ -22,6 +22,8 @@ A decorative element (e.g., large brand wordmark) stays pinned to the viewport b
 - **z-index layering is critical** — footer block z-index must be HIGHER than reveal (1 vs 0). If equal or inverted, the reveal shows through the footer content.
 - **The footer block MUST have an opaque background** — `transparent` won't cover the reveal.
 - **`overflow: hidden` on the `<footer>` element will break sticky** — don't set it.
+- **`overflow: hidden` on `<html>` or `<body>` will break sticky** — it creates a scroll container that prevents `position: sticky; bottom: 0` from working. Use `overflow-x: clip` instead — `clip` hides horizontal overflow without creating a scroll container. This was the root cause of the reveal scrolling with the page instead of sticking.
+- **`overflow: hidden` on the reveal element itself** also breaks sticky — the element needs `overflow: visible` (the default).
 
 ## How it works
 As the user scrolls past the footer, the white `.footer` block (z-index: 1) scrolls up out of view. The `.footer-reveal` (z-index: 0, sticky bottom: 0) stays pinned to the viewport bottom. Since the reveal is behind the footer in z-order, it's hidden while the footer is in view and progressively revealed as the footer exits.
@@ -33,4 +35,7 @@ The footer bottom bar (social icons + copyright + legal links) follows this layo
 - **Adobe logo**: Replace "Adobe" text link with `<img src="/icons/adobe.svg">` via JS decoration. Size: 62×15px.
 - **No border-top divider** between link columns and bottom bar — use whitespace only.
 
-See also: `vertical-spacing-system` (section spacing), `eds-dom-structure` (EDS wrapper chain)
+## Footer content structure
+All footer blocks (footer-cta, footer-links, footer-bottom) must be in a **single section** (single outer `<div>`) in the `.plain.html` content file. If they are in separate sections, EDS renders `<hr>` dividers between them. The import script must NOT emit `<hr>` between footer blocks.
+
+See also: `vertical-spacing-system` (section spacing), `eds-dom-structure` (EDS wrapper chain), `plain-html-format` (section boundaries)

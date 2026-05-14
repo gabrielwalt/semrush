@@ -59,6 +59,8 @@ Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to w
 
 **Content structure = import script.** The import script is the authoritative mapping from source DOM to EDS content. Never change a block's structure without updating the import script. Edits to `.plain.html` files are temporary; the script is the truth.
 
+**Never run the import script without backing up content first.** `run-bulk-import.js` writes directly to `content/*.plain.html` with no `--output-dir` flag — it silently overwrites curated content that has DA media hashes, spacing classes, and section boundaries. The import's markdown pipeline flattens section dividers, so the output is structurally different from the served content. Always `cp` the content file before running, or restore from the remote AEM endpoint after: `curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o content/<path>.plain.html`.
+
 **No Git, no AEM pushes.** Never run `git` commands or push content yourself. Never offer to commit, push, or publish — not even as a suggestion or closing question. Both happen through the Console UI:
 - **Push code:** Code mode → "Git Changes" → stage with "+" → GitHub menu → Push.
 - **Upload content:** Content mode → "Upload content" → select files → Upload → "View in AEM" → Publish.

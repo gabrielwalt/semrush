@@ -497,6 +497,14 @@ main .section.section-centered p {
   max-width: 540px;
 }
 
+main .section.section-centered > .insights-widget-wrapper {
+  margin-top: var(--space-m);
+}
+
+main .section.section-centered > .video-wrapper {
+  margin-top: 96px;
+}
+
 
 /* glass surface utility */
 .glass-surface {

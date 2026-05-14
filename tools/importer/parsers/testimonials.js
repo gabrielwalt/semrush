@@ -3,15 +3,15 @@ export default function parse(element, { document }) {
   const sectionH2 = element.querySelector('h2');
   const sectionSubtitle = element.querySelector('h3');
   const quote = element.querySelector('blockquote, .mp-client-testimonials__quote');
-  const authorImg = element.querySelector('.mp-client-testimonials__author-img, .mp-client-testimonials__quote-author-img img');
+  const authorImgEl = element.querySelector('.mp-client-testimonials__author-img img, .mp-client-testimonials__quote-author-img img');
   const authorCite = element.querySelector('.mp-client-testimonials__quote-author cite');
   const authorName = authorCite ? authorCite.querySelector('b') : null;
+  const authorRole = authorCite ? authorCite.querySelector('span') : null;
   const statNumber = element.querySelector('.mp-client-testimonials__stats-block-number');
   const statText = element.querySelector('.mp-client-testimonials__stats-block-text');
 
   const wrapper = document.createElement('div');
 
-  // Default content: eyebrow + title
   if (sectionH2) {
     const eyebrow = document.createElement('p');
     eyebrow.textContent = sectionH2.textContent.trim();
@@ -34,12 +34,13 @@ export default function parse(element, { document }) {
   }
   rows.push([quoteCell]);
 
-  // Row 2: author image + name + title
+  // Row 2: author image + name + role
   const authorCell = document.createElement('div');
-  if (authorImg) {
+  if (authorImgEl) {
     const pic = document.createElement('picture');
     const img = document.createElement('img');
-    img.src = authorImg.src || authorImg.querySelector?.('img')?.src || '';
+    const src = authorImgEl.getAttribute('src') || '';
+    img.src = src.startsWith('/') ? `https://www.semrush.com${src}` : src;
     img.alt = authorName ? authorName.textContent.trim() : '';
     pic.appendChild(img);
     authorCell.appendChild(pic);
@@ -49,6 +50,11 @@ export default function parse(element, { document }) {
     const strong = document.createElement('strong');
     strong.textContent = authorName.textContent.trim();
     p.appendChild(strong);
+    authorCell.appendChild(p);
+  }
+  if (authorRole) {
+    const p = document.createElement('p');
+    p.textContent = authorRole.textContent.trim();
     authorCell.appendChild(p);
   }
   rows.push([authorCell]);

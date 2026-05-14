@@ -627,7 +627,7 @@ The arrow SVG CSS (from original site):
 
 ---
 
-### H25 — 🔲 Open — Consolidate import scripts: reliable, generic, and matching current content format
+### H25 — ✅ Done — Consolidate import scripts: reliable, generic, and matching current content format
 
 **Priority:** P1  
 **Type:** Enhancement  

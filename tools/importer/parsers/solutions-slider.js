@@ -2,8 +2,23 @@
 export default function parse(element, { document }) {
   const wrapper = document.createElement('div');
 
+  const sectionH2 = element.querySelector('h2');
+  const sectionSubtitle = element.querySelector('h2 ~ h3, h3');
   const slides = element.querySelectorAll('.mp-toolkit, .swiper-slide');
-  const rows = [['Carousel Slider']];
+
+  if (sectionH2) {
+    const eyebrow = document.createElement('p');
+    const h2Text = sectionH2.textContent.trim();
+    eyebrow.textContent = /\(\s*\d+\s*\)/.test(h2Text) ? h2Text : `${h2Text} ( ${slides.length} )`;
+    wrapper.appendChild(eyebrow);
+  }
+  if (sectionSubtitle) {
+    const h2 = document.createElement('h2');
+    h2.textContent = sectionSubtitle.textContent.trim();
+    wrapper.appendChild(h2);
+  }
+
+  const rows = [['Carousel Slider (carousel-slider-expansible)']];
 
   slides.forEach((slide) => {
     const title = slide.querySelector('h3');

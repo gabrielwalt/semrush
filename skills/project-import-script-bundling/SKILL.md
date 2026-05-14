@@ -37,3 +37,4 @@ See `PROJECT-IMPORT.md` for the actual script and URL filenames used in this pro
 - Pass `.bundle.js` to `run-bulk-import.js`, NOT the source `.js`
 - SVG images stripped by `html2md` pipeline — inject post-import
 - Re-import flattens section boundaries — maintain section-div structure by hand
+- **`run-bulk-import.js` overwrites `content/*.plain.html` directly** — it has no `--output-dir` flag. Running it destroys curated content that has DA media hashes, manual edits (spacing classes, author roles), and section boundaries. ALWAYS back up content files before running, or restore from the remote AEM endpoint after: `curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o content/<path>.plain.html`

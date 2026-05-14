@@ -9,7 +9,7 @@ export default function transform(hookName, element, payload) {
   element.querySelectorAll('[class*="cookie"], [class*="consent"], [class*="ch2-"]').forEach((el) => el.remove());
 
   // Preserve announcement banner before removing header
-  const announcement = element.querySelector('.srf_announcement_banner');
+  const announcement = element.querySelector('.srf_announcement_banner, .srf_top_banner');
   if (announcement) {
     const main = element.querySelector('main') || element;
     main.prepend(announcement);

@@ -1,10 +1,11 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const text = element.querySelector('.srf_announcement_banner__long')?.textContent
-    || element.textContent.trim();
+  const longText = element.querySelector('.srf_announcement_banner__long, .srf_top_banner__long');
+  const text = longText ? longText.textContent.trim() : element.textContent.trim();
 
+  const linkEl = element.tagName === 'A' ? element : element.querySelector('a');
   const a = document.createElement('a');
-  a.href = element.href || element.querySelector('a')?.href || '';
+  a.href = linkEl?.href || '';
   a.textContent = text;
 
   const p = document.createElement('p');

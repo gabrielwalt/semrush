@@ -23,28 +23,14 @@ var CustomImportScript = (() => {
   __export(import_homepage_exports, {
     default: () => import_homepage_default
   });
-  function wrapCta(ctaLink, document) {
-    var p = document.createElement("p");
-    var a = document.createElement("a");
-    a.href = ctaLink.href;
-    a.textContent = ctaLink.textContent.trim();
-    var isOutline = ctaLink.classList.contains("mp-button--outline") || ctaLink.classList.contains("mp-button--ghost") || ctaLink.classList.contains("mp-button--secondary");
-    if (isOutline) {
-      var em = document.createElement("em");
-      em.appendChild(a);
-      p.appendChild(em);
-    } else {
-      var strong = document.createElement("strong");
-      strong.appendChild(a);
-      p.appendChild(strong);
-    }
-    return p;
-  }
-  function announcementBarParser(element, { document }) {
-    var _a, _b;
-    const text = ((_a = element.querySelector(".srf_announcement_banner__long")) == null ? void 0 : _a.textContent) || element.textContent.trim();
+
+  // tools/importer/parsers/announcement-bar.js
+  function parse(element, { document }) {
+    const longText = element.querySelector(".srf_announcement_banner__long, .srf_top_banner__long");
+    const text = longText ? longText.textContent.trim() : element.textContent.trim();
+    const linkEl = element.tagName === "A" ? element : element.querySelector("a");
     const a = document.createElement("a");
-    a.href = element.href || ((_b = element.querySelector("a")) == null ? void 0 : _b.href) || "";
+    a.href = (linkEl == null ? void 0 : linkEl.href) || "";
     a.textContent = text;
     const p = document.createElement("p");
     p.appendChild(a);
@@ -52,7 +38,24 @@ var CustomImportScript = (() => {
     const table = WebImporter.DOMUtils.createTable(cells, document);
     element.replaceWith(table);
   }
-  function heroParser(element, { document }) {
+
+  // tools/importer/parsers/hero.js
+  function createVideoLink(fullUrl, document) {
+    const p = document.createElement("p");
+    const a = document.createElement("a");
+    try {
+      const url = new URL(fullUrl);
+      const slug = url.pathname.replace(/[_.]/g, "-").replace(/\/$/, "");
+      a.href = slug;
+    } catch (e) {
+      a.href = fullUrl;
+    }
+    a.textContent = fullUrl;
+    p.appendChild(a);
+    return p;
+  }
+  function parse2(element, { document }) {
+    var _a;
     const h1 = element.querySelector("h1");
     if (!h1) return;
     const subtitle = element.querySelector(".mp-hero__subtitle");
@@ -65,86 +68,100 @@ var CustomImportScript = (() => {
       p.textContent = subtitle.textContent.trim();
       wrapper.appendChild(p);
     }
-    var widgetContent = document.createElement("div");
-    var wp1 = document.createElement("p");
-    wp1.textContent = "Enter your website";
-    widgetContent.appendChild(wp1);
-    var wp2 = document.createElement("p");
-    wp2.textContent = "Get insights";
-    widgetContent.appendChild(wp2);
-    var insightsTable = WebImporter.DOMUtils.createTable([["Insights Widget"], [widgetContent]], document);
+    const widgetContent = document.createElement("div");
+    const searchInput = element.querySelector("input[placeholder]");
+    const searchBtn = element.querySelector('button[type="submit"], .mp-hero__search-button');
+    const p1 = document.createElement("p");
+    p1.textContent = (searchInput == null ? void 0 : searchInput.getAttribute("placeholder")) || "Enter your website";
+    widgetContent.appendChild(p1);
+    const p2 = document.createElement("p");
+    p2.textContent = ((_a = searchBtn == null ? void 0 : searchBtn.textContent) == null ? void 0 : _a.trim()) || "Get insights";
+    widgetContent.appendChild(p2);
+    const insightsTable = WebImporter.DOMUtils.createTable([["Insights Widget"], [widgetContent]], document);
     wrapper.appendChild(insightsTable);
-    var video = element.querySelector("video");
-    var videoCell = document.createElement("div");
+    const video = element.querySelector("video");
+    const videoCell = document.createElement("div");
     if (video) {
-      var videoSrc = video.src || "";
-      var source = video.querySelector("source");
-      if (source) videoSrc = source.src || source.getAttribute("src") || "";
-      if (videoSrc) {
-        var vp = document.createElement("p");
-        var va = document.createElement("a");
-        va.href = videoSrc;
-        va.textContent = videoSrc;
-        vp.appendChild(va);
-        videoCell.appendChild(vp);
+      const source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");
+      const videoUrl = (source == null ? void 0 : source.getAttribute("src")) || video.getAttribute("src") || "";
+      if (videoUrl) {
+        const fullUrl = videoUrl.startsWith("/") ? `https://www.semrush.com${videoUrl}` : videoUrl;
+        videoCell.appendChild(createVideoLink(fullUrl, document));
       }
-      var posterSrc = video.poster || "https://www.semrush.com/static/plg_toolkits.webp";
-      var pp = document.createElement("p");
-      var ppic = document.createElement("picture");
-      var pimg = document.createElement("img");
-      pimg.src = posterSrc;
-      pimg.alt = "Semrush platform toolkits overview";
-      ppic.appendChild(pimg);
-      pp.appendChild(ppic);
-      videoCell.appendChild(pp);
+      const posterSrc = video.getAttribute("poster") || "";
+      if (posterSrc) {
+        const p = document.createElement("p");
+        const pic = document.createElement("picture");
+        const img = document.createElement("img");
+        img.src = posterSrc.startsWith("/") ? `https://www.semrush.com${posterSrc}` : posterSrc;
+        img.alt = video.getAttribute("aria-label") || "Semrush platform toolkits overview";
+        pic.appendChild(img);
+        p.appendChild(pic);
+        videoCell.appendChild(p);
+      }
     } else {
-      var fp = document.createElement("p");
-      var fpic = document.createElement("picture");
-      var fimg = document.createElement("img");
-      fimg.src = "https://www.semrush.com/static/plg_toolkits.webp";
-      fimg.alt = "Semrush platform toolkits overview";
-      fpic.appendChild(fimg);
-      fp.appendChild(fpic);
-      videoCell.appendChild(fp);
+      const posterImg = element.querySelector(".mp-hero__video-wrapper img");
+      const posterSrc = (posterImg == null ? void 0 : posterImg.getAttribute("src")) || "https://www.semrush.com/static/plg_toolkits.webp";
+      videoCell.appendChild(createVideoLink("https://www.semrush.com/static/videos/plg_toolkits_with_pr.mp4", document));
+      const pEl = document.createElement("p");
+      const pic = document.createElement("picture");
+      const img = document.createElement("img");
+      img.src = posterSrc.startsWith("/") ? `https://www.semrush.com${posterSrc}` : posterSrc;
+      img.alt = (posterImg == null ? void 0 : posterImg.alt) || "Semrush platform toolkits overview";
+      pic.appendChild(img);
+      pEl.appendChild(pic);
+      videoCell.appendChild(pEl);
     }
-    var heroVideoTable = WebImporter.DOMUtils.createTable([["Hero Video"], [videoCell]], document);
-    wrapper.appendChild(heroVideoTable);
-    var sectionMetaTable = WebImporter.DOMUtils.createTable(
+    const videoTable = WebImporter.DOMUtils.createTable([["Video"], [videoCell]], document);
+    wrapper.appendChild(videoTable);
+    const sectionMetaTable = WebImporter.DOMUtils.createTable(
       [["Section Metadata"], ["Style", "section-centered"]],
       document
     );
     wrapper.appendChild(sectionMetaTable);
-    wrapper.appendChild(document.createElement("hr"));
     element.replaceWith(wrapper);
   }
-  function marqueeParser(element, { document }) {
+
+  // tools/importer/parsers/marquee.js
+  function parse3(element, { document }) {
     const firstGroup = element.querySelector(".mp-logo-marquee__group, ul");
-    if (!firstGroup) {
-      element.remove();
-      return;
-    }
+    if (!firstGroup) return;
     const logos = firstGroup.querySelectorAll("img");
-    if (logos.length === 0) {
-      element.remove();
-      return;
-    }
+    if (logos.length === 0) return;
     const content = document.createElement("div");
     logos.forEach((img) => {
+      var _a;
       const p = document.createElement("p");
-      const pic = document.createElement("picture");
+      const picture = document.createElement("picture");
       const imgEl = document.createElement("img");
-      const src = img.getAttribute("src") || "";
-      imgEl.src = src.startsWith("/") ? "https://www.semrush.com" + src : src;
+      const source = (_a = img.closest("picture")) == null ? void 0 : _a.querySelector("source[srcset]");
+      const src = (source == null ? void 0 : source.getAttribute("srcset")) || img.getAttribute("src") || "";
+      imgEl.src = src.startsWith("/") ? `https://www.semrush.com${src}` : src;
       imgEl.alt = img.alt || "";
-      pic.appendChild(imgEl);
-      p.appendChild(pic);
+      picture.appendChild(imgEl);
+      p.appendChild(picture);
       content.appendChild(p);
     });
     const cells = [["Marquee"], [content]];
     const table = WebImporter.DOMUtils.createTable(cells, document);
     element.replaceWith(table);
   }
-  function promoCardsSemrushOneParser(element, { document }) {
+
+  // tools/importer/parsers/promo-cards-semrush-one.js
+  function createVideoLink2(fullUrl, document) {
+    const p = document.createElement("p");
+    const a = document.createElement("a");
+    try {
+      const url = new URL(fullUrl);
+      a.href = url.pathname.replace(/[_.]/g, "-").replace(/\/$/, "");
+    } catch (e) {
+      a.href = fullUrl;
+    }
+    a.textContent = fullUrl;
+    p.appendChild(a);
+    return p;
+  }
+  function parse4(element, { document }) {
     const h2 = element.querySelector("h2");
     const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
     const ctaLink = element.querySelector("a.mp-button");
@@ -161,39 +178,59 @@ var CustomImportScript = (() => {
       textContent.appendChild(p);
     }
     if (ctaLink) {
-      textContent.appendChild(wrapCta(ctaLink, document));
+      const p = document.createElement("p");
+      const isOutline = ctaLink.classList.contains("mp-button--outline") || ctaLink.classList.contains("mp-button--ghost") || ctaLink.classList.contains("mp-button--secondary");
+      const wrapper = isOutline ? document.createElement("em") : document.createElement("strong");
+      const a = document.createElement("a");
+      a.href = ctaLink.href;
+      a.textContent = ctaLink.textContent.trim();
+      wrapper.appendChild(a);
+      p.appendChild(wrapper);
+      textContent.appendChild(p);
     }
     const rows = [["Video Card (video-card-semrush-one)"], [textContent]];
+    const mediaContent = document.createElement("div");
     if (video) {
-      var mediaContent = document.createElement("div");
-      var source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");
-      var videoUrl = source ? source.getAttribute("src") || source.getAttribute("data-src") || "" : video.getAttribute("src") || "";
+      const source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");
+      const videoUrl = source ? source.getAttribute("src") || source.getAttribute("data-src") || "" : video.getAttribute("src") || "";
       if (videoUrl) {
-        var vp = document.createElement("p");
-        var va = document.createElement("a");
-        var fullVideoUrl = videoUrl.startsWith("/") ? "https://www.semrush.com" + videoUrl : videoUrl;
-        va.href = fullVideoUrl;
-        va.textContent = fullVideoUrl;
-        vp.appendChild(va);
-        mediaContent.appendChild(vp);
+        const fullUrl = videoUrl.startsWith("/") ? `https://www.semrush.com${videoUrl}` : videoUrl;
+        mediaContent.appendChild(createVideoLink2(fullUrl, document));
       }
-      var posterSrc = video.getAttribute("poster") || "";
+      const posterSrc = video.getAttribute("poster") || "";
       if (posterSrc) {
-        var pp = document.createElement("p");
-        var ppic = document.createElement("picture");
-        var pimg = document.createElement("img");
-        pimg.src = posterSrc.startsWith("/") ? "https://www.semrush.com" + posterSrc : posterSrc;
-        pimg.alt = video.getAttribute("aria-label") || "";
-        ppic.appendChild(pimg);
-        pp.appendChild(ppic);
-        mediaContent.appendChild(pp);
+        const p = document.createElement("p");
+        const pic = document.createElement("picture");
+        const img = document.createElement("img");
+        img.src = posterSrc.startsWith("/") ? `https://www.semrush.com${posterSrc}` : posterSrc;
+        img.alt = video.getAttribute("aria-label") || "";
+        pic.appendChild(img);
+        p.appendChild(pic);
+        mediaContent.appendChild(p);
       }
-      if (mediaContent.children.length > 0) rows.push([mediaContent]);
+    }
+    if (mediaContent.children.length > 0) {
+      rows.push([mediaContent]);
     }
     const table = WebImporter.DOMUtils.createTable(rows, document);
     element.replaceWith(table);
   }
-  function promoCardsEnterpriseParser(element, { document }) {
+
+  // tools/importer/parsers/promo-cards-enterprise.js
+  function createVideoLink3(fullUrl, document) {
+    const p = document.createElement("p");
+    const a = document.createElement("a");
+    try {
+      const url = new URL(fullUrl);
+      a.href = url.pathname.replace(/[_.]/g, "-").replace(/\/$/, "");
+    } catch (e) {
+      a.href = fullUrl;
+    }
+    a.textContent = fullUrl;
+    p.appendChild(a);
+    return p;
+  }
+  function parse5(element, { document }) {
     const h2 = element.querySelector("h2");
     const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
     const ctaLink = element.querySelector("a.mp-button");
@@ -210,46 +247,54 @@ var CustomImportScript = (() => {
       textContent.appendChild(p);
     }
     if (ctaLink) {
-      textContent.appendChild(wrapCta(ctaLink, document));
+      const p = document.createElement("p");
+      const isOutline = ctaLink.classList.contains("mp-button--outline") || ctaLink.classList.contains("mp-button--ghost") || ctaLink.classList.contains("mp-button--secondary");
+      const wrapper = isOutline ? document.createElement("em") : document.createElement("strong");
+      const a = document.createElement("a");
+      a.href = ctaLink.href;
+      a.textContent = ctaLink.textContent.trim();
+      wrapper.appendChild(a);
+      p.appendChild(wrapper);
+      textContent.appendChild(p);
     }
     const rows = [["Video Card (video-card-enterprise)"], [textContent]];
+    const mediaContent = document.createElement("div");
     if (video) {
-      var mediaContent = document.createElement("div");
-      var source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");
-      var videoUrl = source ? source.getAttribute("src") || source.getAttribute("data-src") || "" : video.getAttribute("src") || "";
+      const source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");
+      const videoUrl = source ? source.getAttribute("src") || source.getAttribute("data-src") || "" : video.getAttribute("src") || "";
       if (videoUrl) {
-        var vp = document.createElement("p");
-        var va = document.createElement("a");
-        var fullVideoUrl = videoUrl.startsWith("/") ? "https://www.semrush.com" + videoUrl : videoUrl;
-        va.href = fullVideoUrl;
-        va.textContent = fullVideoUrl;
-        vp.appendChild(va);
-        mediaContent.appendChild(vp);
+        const fullUrl = videoUrl.startsWith("/") ? `https://www.semrush.com${videoUrl}` : videoUrl;
+        mediaContent.appendChild(createVideoLink3(fullUrl, document));
       }
-      var posterSrc = video.getAttribute("poster") || "";
+      const posterSrc = video.getAttribute("poster") || "";
       if (posterSrc) {
-        var pp = document.createElement("p");
-        var ppic = document.createElement("picture");
-        var pimg = document.createElement("img");
-        pimg.src = posterSrc.startsWith("/") ? "https://www.semrush.com" + posterSrc : posterSrc;
-        pimg.alt = video.getAttribute("aria-label") || "";
-        ppic.appendChild(pimg);
-        pp.appendChild(ppic);
-        mediaContent.appendChild(pp);
+        const p = document.createElement("p");
+        const pic = document.createElement("picture");
+        const img = document.createElement("img");
+        img.src = posterSrc.startsWith("/") ? `https://www.semrush.com${posterSrc}` : posterSrc;
+        img.alt = video.getAttribute("aria-label") || "";
+        pic.appendChild(img);
+        p.appendChild(pic);
+        mediaContent.appendChild(p);
       }
-      if (mediaContent.children.length > 0) rows.push([mediaContent]);
+    }
+    if (mediaContent.children.length > 0) {
+      rows.push([mediaContent]);
     }
     const table = WebImporter.DOMUtils.createTable(rows, document);
     element.replaceWith(table);
   }
-  function solutionsSliderParser(element, { document }) {
+
+  // tools/importer/parsers/solutions-slider.js
+  function parse6(element, { document }) {
     const wrapper = document.createElement("div");
     const sectionH2 = element.querySelector("h2");
     const sectionSubtitle = element.querySelector("h2 ~ h3, h3");
-    const slides = element.querySelectorAll(".mp-toolkit.swiper-slide");
+    const slides = element.querySelectorAll(".mp-toolkit, .swiper-slide");
     if (sectionH2) {
       const eyebrow = document.createElement("p");
-      eyebrow.textContent = sectionH2.textContent.trim() + " ( " + slides.length + " )";
+      const h2Text = sectionH2.textContent.trim();
+      eyebrow.textContent = /\(\s*\d+\s*\)/.test(h2Text) ? h2Text : `${h2Text} ( ${slides.length} )`;
       wrapper.appendChild(eyebrow);
     }
     if (sectionSubtitle) {
@@ -261,44 +306,68 @@ var CustomImportScript = (() => {
     slides.forEach((slide) => {
       const title = slide.querySelector("h3");
       const subtitle = slide.querySelector("h4");
-      const img = slide.querySelector("img");
-      const textCell = document.createElement("div");
+      const desc = slide.querySelector(".mp-toolkit__description");
+      const cta = slide.querySelector("a.mp-button, a.mp-toolkit__cta");
+      const posterWrapper = slide.querySelector(".mp-toolkit__poster");
+      const smallImg = posterWrapper ? posterWrapper.querySelector("img") : null;
+      const contentImgWrapper = slide.querySelector(".mp-toolkit__content .mp-toolkit__img-wrapper");
+      const largeSource = contentImgWrapper ? contentImgWrapper.querySelector('source[media="(min-width: 768px)"]') : null;
+      const largeImg = contentImgWrapper ? contentImgWrapper.querySelector("img") : null;
+      let largeSrc = "";
+      if (largeSource) largeSrc = largeSource.srcset;
+      else if (largeImg) largeSrc = largeImg.src;
+      const col1 = document.createElement("div");
       if (title) {
         const h3 = document.createElement("h3");
         h3.textContent = title.textContent.trim();
-        textCell.appendChild(h3);
+        col1.appendChild(h3);
       }
       if (subtitle) {
         const p = document.createElement("p");
         p.textContent = subtitle.textContent.trim();
-        textCell.appendChild(p);
+        col1.appendChild(p);
       }
-      const desc = slide.querySelector(".mp-toolkit__description");
+      if (smallImg) {
+        const pic = document.createElement("picture");
+        const imgEl = document.createElement("img");
+        imgEl.src = smallImg.src;
+        imgEl.alt = smallImg.alt || "";
+        pic.appendChild(imgEl);
+        col1.appendChild(pic);
+      }
+      const col2 = document.createElement("div");
+      if (largeSrc) {
+        const pic = document.createElement("picture");
+        const imgEl = document.createElement("img");
+        imgEl.src = largeSrc;
+        imgEl.alt = largeImg ? largeImg.alt || "" : "";
+        pic.appendChild(imgEl);
+        col2.appendChild(pic);
+      }
       if (desc) {
         const p = document.createElement("p");
         p.textContent = desc.textContent.trim();
-        textCell.appendChild(p);
+        col2.appendChild(p);
       }
-      const cta = slide.querySelector("a.mp-button");
       if (cta) {
-        textCell.appendChild(wrapCta(cta, document));
+        const p = document.createElement("p");
+        const strong = document.createElement("strong");
+        const a = document.createElement("a");
+        a.href = cta.href;
+        a.textContent = cta.textContent.trim();
+        strong.appendChild(a);
+        p.appendChild(strong);
+        col2.appendChild(p);
       }
-      const imgCell = document.createElement("div");
-      if (img) {
-        const pic = document.createElement("picture");
-        const imgEl = document.createElement("img");
-        imgEl.src = img.src;
-        imgEl.alt = img.alt || "";
-        pic.appendChild(imgEl);
-        imgCell.appendChild(pic);
-      }
-      rows.push([textCell, imgCell]);
+      rows.push([col1, col2]);
     });
     const table = WebImporter.DOMUtils.createTable(rows, document);
     wrapper.appendChild(table);
     element.replaceWith(wrapper);
   }
-  function statsParser(element, { document }) {
+
+  // tools/importer/parsers/stats-facts.js
+  function parse7(element, { document }) {
     const sectionH2 = element.querySelector("h2");
     const sectionSubtitle = element.querySelector("h3");
     const learnMoreLink = element.querySelector('a[href*="/stats/"]');
@@ -315,7 +384,14 @@ var CustomImportScript = (() => {
       wrapper.appendChild(h2);
     }
     if (learnMoreLink) {
-      wrapper.appendChild(wrapCta(learnMoreLink, document));
+      const p = document.createElement("p");
+      const em = document.createElement("em");
+      const a = document.createElement("a");
+      a.href = learnMoreLink.href;
+      a.textContent = learnMoreLink.textContent.trim();
+      em.appendChild(a);
+      p.appendChild(em);
+      wrapper.appendChild(p);
     }
     const rows = [["Stats Facts"]];
     statItems.forEach((item) => {
@@ -345,11 +421,13 @@ var CustomImportScript = (() => {
     wrapper.appendChild(table);
     element.replaceWith(wrapper);
   }
-  function aiVisibilityIndexParser(element, { document }) {
+
+  // tools/importer/parsers/stats-visibility.js
+  function parse8(element, { document }) {
     const h2 = element.querySelector("h2");
     const subtitle = element.querySelector(".mp-ai-visibility-index__subtitle, h2 + p");
     const ctaLink = element.querySelector('a.mp-button, a[href*="ai-visibility-index"]');
-    const tableRows = element.querySelectorAll("tbody tr");
+    const tableRows = element.querySelectorAll("tbody tr, .mp-ai-visibility-index__sov");
     const wrapper = document.createElement("div");
     if (h2) {
       const heading = document.createElement("h2");
@@ -362,14 +440,29 @@ var CustomImportScript = (() => {
       wrapper.appendChild(p);
     }
     if (ctaLink) {
-      wrapper.appendChild(wrapCta(ctaLink, document));
+      const p = document.createElement("p");
+      const strong = document.createElement("strong");
+      const a = document.createElement("a");
+      a.href = ctaLink.href;
+      a.textContent = ctaLink.textContent.trim();
+      strong.appendChild(a);
+      p.appendChild(strong);
+      wrapper.appendChild(p);
     }
     const rows = [["Stats Visibility"]];
-    const hBrand = document.createElement("div");
-    hBrand.textContent = "Brand";
-    const hSov = document.createElement("div");
-    hSov.textContent = "% Share of Voice";
-    rows.push([hBrand, hSov]);
+    const headerCellBrand = document.createElement("div");
+    headerCellBrand.textContent = "Brand";
+    const headerCellSov = document.createElement("div");
+    headerCellSov.textContent = "% Share of Voice";
+    const platformEl = element.querySelector('[class*="platform"], [class*="source"]');
+    const platformText = platformEl ? platformEl.textContent.trim() : "";
+    if (platformText) {
+      const headerCellPlatform = document.createElement("div");
+      headerCellPlatform.textContent = platformText;
+      rows.push([headerCellBrand, headerCellSov, headerCellPlatform]);
+    } else {
+      rows.push([headerCellBrand, headerCellSov]);
+    }
     tableRows.forEach((tr) => {
       const cells = tr.querySelectorAll("td");
       if (cells.length >= 2) {
@@ -385,19 +478,20 @@ var CustomImportScript = (() => {
     });
     const table = WebImporter.DOMUtils.createTable(rows, document);
     wrapper.appendChild(table);
-    var sectionMeta = WebImporter.DOMUtils.createTable(
-      [["Section Metadata"], ["Style", "section-dark"]],
+    const sectionMeta = WebImporter.DOMUtils.createTable(
+      [["Section Metadata"], ["Style", "section-dark, section-ai-visibility"]],
       document
     );
     wrapper.appendChild(sectionMeta);
     element.replaceWith(wrapper);
   }
-  function testimonialsParser(element, { document }) {
+
+  // tools/importer/parsers/testimonials.js
+  function parse9(element, { document }) {
     const sectionH2 = element.querySelector("h2");
     const sectionSubtitle = element.querySelector("h3");
-    const logoImg = element.querySelector(".mp-client-testimonials__logo-img img");
     const quote = element.querySelector("blockquote, .mp-client-testimonials__quote");
-    const authorImg = element.querySelector(".mp-client-testimonials__author-img");
+    const authorImgEl = element.querySelector(".mp-client-testimonials__author-img img, .mp-client-testimonials__quote-author-img img");
     const authorCite = element.querySelector(".mp-client-testimonials__quote-author cite");
     const authorName = authorCite ? authorCite.querySelector("b") : null;
     const authorRole = authorCite ? authorCite.querySelector("span") : null;
@@ -410,9 +504,9 @@ var CustomImportScript = (() => {
       wrapper.appendChild(eyebrow);
     }
     if (sectionSubtitle) {
-      const h2el = document.createElement("h2");
-      h2el.textContent = sectionSubtitle.textContent.trim();
-      wrapper.appendChild(h2el);
+      const h2 = document.createElement("h2");
+      h2.textContent = sectionSubtitle.textContent.trim();
+      wrapper.appendChild(h2);
     }
     const rows = [["Testimonials"]];
     const quoteCell = document.createElement("div");
@@ -423,10 +517,11 @@ var CustomImportScript = (() => {
     }
     rows.push([quoteCell]);
     const authorCell = document.createElement("div");
-    if (authorImg) {
+    if (authorImgEl) {
       const pic = document.createElement("picture");
       const img = document.createElement("img");
-      img.src = authorImg.src || "";
+      const src = authorImgEl.getAttribute("src") || "";
+      img.src = src.startsWith("/") ? `https://www.semrush.com${src}` : src;
       img.alt = authorName ? authorName.textContent.trim() : "";
       pic.appendChild(img);
       authorCell.appendChild(pic);
@@ -436,6 +531,11 @@ var CustomImportScript = (() => {
       const strong = document.createElement("strong");
       strong.textContent = authorName.textContent.trim();
       p.appendChild(strong);
+      authorCell.appendChild(p);
+    }
+    if (authorRole) {
+      const p = document.createElement("p");
+      p.textContent = authorRole.textContent.trim();
       authorCell.appendChild(p);
     }
     rows.push([authorCell]);
@@ -457,25 +557,28 @@ var CustomImportScript = (() => {
     wrapper.appendChild(table);
     element.replaceWith(wrapper);
   }
-  function resourcesSliderParser(element, { document }) {
-    const sectionH2 = element.querySelector("h2");
-    const sectionSubtitle = element.querySelector("h3");
+
+  // tools/importer/parsers/resources-slider.js
+  function parse10(element, { document }) {
     const wrapper = document.createElement("div");
-    const articles = element.querySelectorAll("article");
-    if (sectionH2) {
-      const eyebrow = document.createElement("p");
-      eyebrow.textContent = sectionH2.textContent.trim();
-      wrapper.appendChild(eyebrow);
+    const sectionTitle = element.querySelector("h2");
+    const sectionSubtitle = element.querySelector("h3");
+    if (sectionTitle) {
+      const p = document.createElement("p");
+      p.textContent = `Resources ( ${element.querySelectorAll("article, .mp-resources__item").length} )`;
+      wrapper.appendChild(p);
     }
     if (sectionSubtitle) {
       const h2 = document.createElement("h2");
       h2.textContent = sectionSubtitle.textContent.trim();
       wrapper.appendChild(h2);
     }
+    const articles = element.querySelectorAll("article, .mp-resources__item");
     const rows = [["Carousel Slider"]];
     articles.forEach((article) => {
+      var _a;
       const img = article.querySelector("img");
-      const titleLink = article.querySelector("h3 a");
+      const titleLink = article.querySelector('h3 a, a[class*="title"]');
       const tags = article.querySelectorAll('.mp-resources__item-info-tag, [class*="tag"]');
       const imgCell = document.createElement("div");
       if (img) {
@@ -483,8 +586,8 @@ var CustomImportScript = (() => {
         if (src && src !== "about:error") {
           const pic = document.createElement("picture");
           const imgEl = document.createElement("img");
-          imgEl.src = src.startsWith("/") ? "https://www.semrush.com" + src : src;
-          imgEl.alt = img.alt || "";
+          imgEl.src = src.startsWith("/") ? `https://www.semrush.com${src}` : src;
+          imgEl.alt = img.alt || ((_a = titleLink == null ? void 0 : titleLink.textContent) == null ? void 0 : _a.trim()) || "";
           pic.appendChild(imgEl);
           imgCell.appendChild(pic);
         }
@@ -498,6 +601,12 @@ var CustomImportScript = (() => {
         h3.appendChild(a);
         textCell.appendChild(h3);
       }
+      const descEl = article.querySelector('.mp-resources__item-description, [class*="description"]');
+      if (descEl) {
+        const descP = document.createElement("p");
+        descP.textContent = descEl.textContent.trim();
+        textCell.appendChild(descP);
+      }
       const tagText = [...tags].map((t) => t.textContent.trim()).join(" \xB7 ");
       if (tagText) {
         const p = document.createElement("p");
@@ -510,12 +619,14 @@ var CustomImportScript = (() => {
     wrapper.appendChild(table);
     element.replaceWith(wrapper);
   }
+
+  // tools/importer/import-homepage.js
   function cleanupTransformer(hookName, element, payload) {
     if (hookName !== "beforeTransform") return;
     const { document } = payload;
     element.querySelectorAll('script, style, noscript, iframe, link[rel="stylesheet"]').forEach((el) => el.remove());
     element.querySelectorAll('[class*="cookie"], [class*="consent"], [class*="ch2-"]').forEach((el) => el.remove());
-    const announcement = element.querySelector(".srf_announcement_banner");
+    const announcement = element.querySelector(".srf_announcement_banner, .srf_top_banner");
     if (announcement) {
       const main = element.querySelector("main") || element;
       main.prepend(announcement);
@@ -538,21 +649,21 @@ var CustomImportScript = (() => {
     });
   }
   var parsers = {
-    "announcement-bar": announcementBarParser,
-    "hero": heroParser,
-    "marquee": marqueeParser,
-    "promo-cards-semrush-one": promoCardsSemrushOneParser,
-    "promo-cards-enterprise": promoCardsEnterpriseParser,
-    "solutions-slider": solutionsSliderParser,
-    "stats-facts": statsParser,
-    "stats-visibility": aiVisibilityIndexParser,
-    "testimonials": testimonialsParser,
-    "resources-slider": resourcesSliderParser
+    "announcement-bar": parse,
+    "hero": parse2,
+    "marquee": parse3,
+    "promo-cards-semrush-one": parse4,
+    "promo-cards-enterprise": parse5,
+    "solutions-slider": parse6,
+    "stats-facts": parse7,
+    "stats-visibility": parse8,
+    "testimonials": parse9,
+    "resources-slider": parse10
   };
   var PAGE_TEMPLATE = {
     name: "homepage",
     blocks: [
-      { name: "announcement-bar", instances: [".srf_announcement_banner"] },
+      { name: "announcement-bar", instances: [".srf_announcement_banner", ".srf_top_banner"] },
       { name: "hero", instances: [".mp-hero"] },
       { name: "marquee", instances: [".mp-logo-marquee"] },
       { name: "promo-cards-semrush-one", instances: [".mp-promo-cards.mp-semrush-one"] },

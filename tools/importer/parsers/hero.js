@@ -32,13 +32,15 @@ export default function parse(element, { document }) {
     wrapper.appendChild(p);
   }
 
-  // Insights Widget block
+  // Insights Widget block — extract placeholder + button text from source DOM
   const widgetContent = document.createElement('div');
+  const searchInput = element.querySelector('input[placeholder]');
+  const searchBtn = element.querySelector('button[type="submit"], .mp-hero__search-button');
   const p1 = document.createElement('p');
-  p1.textContent = 'Enter your website';
+  p1.textContent = searchInput?.getAttribute('placeholder') || 'Enter your website';
   widgetContent.appendChild(p1);
   const p2 = document.createElement('p');
-  p2.textContent = 'Get insights';
+  p2.textContent = searchBtn?.textContent?.trim() || 'Get insights';
   widgetContent.appendChild(p2);
   const insightsTable = WebImporter.DOMUtils.createTable([['Insights Widget'], [widgetContent]], document);
   wrapper.appendChild(insightsTable);
@@ -49,15 +51,17 @@ export default function parse(element, { document }) {
 
   if (video) {
     const source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
-    const videoUrl = source?.src || source?.getAttribute('src') || video.src;
+    const videoUrl = source?.getAttribute('src') || video.getAttribute('src') || '';
     if (videoUrl) {
-      videoCell.appendChild(createVideoLink(videoUrl, document));
+      const fullUrl = videoUrl.startsWith('/') ? `https://www.semrush.com${videoUrl}` : videoUrl;
+      videoCell.appendChild(createVideoLink(fullUrl, document));
     }
-    if (video.poster) {
+    const posterSrc = video.getAttribute('poster') || '';
+    if (posterSrc) {
       const p = document.createElement('p');
       const pic = document.createElement('picture');
       const img = document.createElement('img');
-      img.src = video.poster;
+      img.src = posterSrc.startsWith('/') ? `https://www.semrush.com${posterSrc}` : posterSrc;
       img.alt = video.getAttribute('aria-label') || 'Semrush platform toolkits overview';
       pic.appendChild(img);
       p.appendChild(pic);
@@ -65,24 +69,23 @@ export default function parse(element, { document }) {
     }
   } else {
     const posterImg = element.querySelector('.mp-hero__video-wrapper img');
+    const posterSrc = posterImg?.getAttribute('src') || 'https://www.semrush.com/static/plg_toolkits.webp';
     videoCell.appendChild(createVideoLink('https://www.semrush.com/static/videos/plg_toolkits_with_pr.mp4', document));
-
-    const p2el = document.createElement('p');
+    const pEl = document.createElement('p');
     const pic = document.createElement('picture');
     const img = document.createElement('img');
-    img.src = posterImg?.src || 'https://www.semrush.com/static/plg_toolkits.webp';
+    img.src = posterSrc.startsWith('/') ? `https://www.semrush.com${posterSrc}` : posterSrc;
     img.alt = posterImg?.alt || 'Semrush platform toolkits overview';
     pic.appendChild(img);
-    p2el.appendChild(pic);
-    videoCell.appendChild(p2el);
+    pEl.appendChild(pic);
+    videoCell.appendChild(pEl);
   }
 
-  const heroVideoTable = WebImporter.DOMUtils.createTable([['Video'], [videoCell]], document);
-  wrapper.appendChild(heroVideoTable);
+  const videoTable = WebImporter.DOMUtils.createTable([['Video'], [videoCell]], document);
+  wrapper.appendChild(videoTable);
 
-  // Section Metadata for centered style
   const sectionMetaTable = WebImporter.DOMUtils.createTable(
-    [['Section Metadata'], ['Style', 'centered']],
+    [['Section Metadata'], ['Style', 'section-centered']],
     document,
   );
   wrapper.appendChild(sectionMetaTable);

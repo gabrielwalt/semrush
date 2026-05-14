@@ -1,4 +1,19 @@
 /* global WebImporter */
+
+function createVideoLink(fullUrl, document) {
+  const p = document.createElement('p');
+  const a = document.createElement('a');
+  try {
+    const url = new URL(fullUrl);
+    a.href = url.pathname.replace(/[_.]/g, '-').replace(/\/$/, '');
+  } catch (e) {
+    a.href = fullUrl;
+  }
+  a.textContent = fullUrl;
+  p.appendChild(a);
+  return p;
+}
+
 export default function parse(element, { document }) {
   const h2 = element.querySelector('h2');
   const description = element.querySelector('.mp-promo-cards__text, p:not([class*="button"])');
@@ -18,30 +33,27 @@ export default function parse(element, { document }) {
   }
   if (ctaLink) {
     const p = document.createElement('p');
-    const strong = document.createElement('strong');
+    const isOutline = ctaLink.classList.contains('mp-button--outline')
+      || ctaLink.classList.contains('mp-button--ghost')
+      || ctaLink.classList.contains('mp-button--secondary');
+    const wrapper = isOutline ? document.createElement('em') : document.createElement('strong');
     const a = document.createElement('a');
     a.href = ctaLink.href;
     a.textContent = ctaLink.textContent.trim();
-    strong.appendChild(a);
-    p.appendChild(strong);
+    wrapper.appendChild(a);
+    p.appendChild(wrapper);
     textContent.appendChild(p);
   }
 
   const rows = [['Video Card (video-card-enterprise)'], [textContent]];
 
-  // Row 3: video URL link + poster image
   const mediaContent = document.createElement('div');
   if (video) {
     const source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
     const videoUrl = source ? (source.getAttribute('src') || source.getAttribute('data-src') || '') : (video.getAttribute('src') || '');
     if (videoUrl) {
-      const p = document.createElement('p');
-      const a = document.createElement('a');
       const fullUrl = videoUrl.startsWith('/') ? `https://www.semrush.com${videoUrl}` : videoUrl;
-      a.href = fullUrl;
-      a.textContent = fullUrl;
-      p.appendChild(a);
-      mediaContent.appendChild(p);
+      mediaContent.appendChild(createVideoLink(fullUrl, document));
     }
     const posterSrc = video.getAttribute('poster') || '';
     if (posterSrc) {

@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-14  
 **Branch:** `aem-merged-20260513`  
-**Active task:** All homepage visual tasks complete (H01–H24, H26)  
-**Last completed:** H14–H22 (testimonials, resource descriptions, footer social/adobe/language/reveal, nav arrow, spacing system)  
-**Next up:** H25 (import script consolidation), then push code + re-upload content to DA  
-**Blocker:** Content changes need DA re-upload: marquee logos, video hrefs, insights-widget spacing, testimonial role, resource descriptions, footer social/adobe/language
+**Active task:** All homepage tasks complete (H01–H26)  
+**Last completed:** H25 (import script consolidation), footer reveal fix, Adobe wordmark, stats-facts layout, footer hr removal  
+**Next up:** Push code + re-upload content to DA  
+**Blocker:** Content changes need DA re-upload: marquee logos, video hrefs, insights-widget spacing, testimonial role, resource descriptions, footer single-section
 
 ---
 
@@ -20,7 +20,7 @@
 | Area | Status |
 |------|--------|
 | Homepage content + blocks + styling | ✅ Done |
-| Import scripts — homepage, nav, footer | ✅ Done |
+| Import scripts — homepage, nav, footer | ✅ Done (consolidated, no inline duplication) |
 | Header/nav — sticky, mega-menu, mobile | ✅ Done |
 | Footer — layout, social icons, SEMRUSH reveal | ✅ Done |
 | Font system / typography | ✅ Done |

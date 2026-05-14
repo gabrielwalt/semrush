@@ -15,5 +15,5 @@
 
 html,
 body {
-  overflow: hidden auto;
+  overflow-x: clip;
 }

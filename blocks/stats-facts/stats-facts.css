@@ -149,10 +149,7 @@
 
 @media (width >= 1024px) {
   .section.stats-facts-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    align-items: start;
-    gap: 0 var(--space-xl);
+    position: relative;
     max-width: var(--container-max-width);
     margin-left: auto;
     margin-right: auto;
@@ -161,8 +158,14 @@
   }
 
   .section.stats-facts-container > .default-content-wrapper {
-    position: sticky;
-    top: 120px;
+    position: relative;
+  }
+
+  .section.stats-facts-container > .default-content-wrapper > .button-wrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
   }
 
   .stats-facts > .stat-row .stat-number {

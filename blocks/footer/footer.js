@@ -12,34 +12,29 @@ const SOCIAL_PATTERNS = {
 };
 
 function decorateSocialLinks(block) {
-  const bottomSection = block.querySelector('.footer-bottom-container');
-  if (!bottomSection) return;
+  const bottomBlock = block.querySelector('.footer-bottom');
+  if (!bottomBlock) return;
 
-  const lists = bottomSection.querySelectorAll('ul');
-  if (lists.length === 0) return;
-
-  const firstList = lists[0];
-  const links = firstList.querySelectorAll('a');
   const patterns = Object.values(SOCIAL_PATTERNS);
-  const isSocial = [...links].some(
-    (a) => patterns.some((re) => re.test(a.href)),
-  );
+  const firstList = [...bottomBlock.querySelectorAll('ul')].find((list) => {
+    const links = list.querySelectorAll('a');
+    return [...links].some((a) => patterns.some((re) => re.test(a.href)));
+  });
+  if (!firstList) return;
 
-  if (isSocial) {
-    firstList.classList.add('footer-social');
-    links.forEach((a) => {
-      const entry = Object.entries(SOCIAL_PATTERNS).find(([, re]) => re.test(a.href));
-      if (entry) {
-        const [name] = entry;
-        const img = document.createElement('img');
-        img.src = `/icons/${name}.svg`;
-        img.alt = a.textContent;
-        img.loading = 'lazy';
-        a.textContent = '';
-        a.appendChild(img);
-      }
-    });
-  }
+  firstList.classList.add('footer-social');
+  firstList.querySelectorAll('a').forEach((a) => {
+    const entry = Object.entries(SOCIAL_PATTERNS).find(([, re]) => re.test(a.href));
+    if (entry) {
+      const [name] = entry;
+      const img = document.createElement('img');
+      img.src = `/icons/${name}.svg`;
+      img.alt = a.textContent;
+      img.loading = 'lazy';
+      a.textContent = '';
+      a.appendChild(img);
+    }
+  });
 }
 
 export default async function decorate(block) {
