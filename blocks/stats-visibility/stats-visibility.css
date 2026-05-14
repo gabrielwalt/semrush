@@ -125,10 +125,6 @@
 }
 
 @media (width >= 1024px) {
-  .stats-visibility {
-    padding: var(--section-padding) 0;
-  }
-
   .section.section-dark.section-ai-visibility > .default-content-wrapper > h2 {
     font-size: var(--font-size-display);
     text-transform: uppercase;

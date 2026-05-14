@@ -16,7 +16,6 @@
   --stats-inactive-text: rgb(209 210 213);
   --stats-accent: var(--accent-cyan);
 
-  padding: 80px 0;
   color: var(--stats-text);
 }
 

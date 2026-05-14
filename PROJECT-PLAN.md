@@ -763,6 +763,87 @@ These items CANNOT be reliably auto-imported and require manual content edits af
 | Video-card background SVG assets | V01 |
 | Hero section breakpoint verification | V02 |
 
+### R01 — 🔲 Open — Marquee section: add section style that removes all vertical padding
+
+**Priority:** P1  
+**Type:** Enhancement  
+**Affected files:** `styles/styles.css`, `content/index.plain.html`
+
+**What's needed:** The marquee section should have zero vertical padding (top and bottom). Add a section style class (e.g. `section-flush`) that sets `padding-top: 0; padding-bottom: 0` on the section. Apply it via Section Metadata in the marquee section's content.
+
+**Acceptance criteria:** Marquee section has 0px padding top and bottom. Other sections unaffected.
+
+---
+
+### R02 — 🔲 Open — Testimonials block: fix padding, add author role, add pink quote mark
+
+**Priority:** P1  
+**Type:** Gap  
+**Affected files:** `blocks/testimonials/testimonials.css`, `blocks/testimonials/testimonials.js`, `content/index.plain.html`
+
+**What's wrong:**
+1. **Padding:** The testimonials block has extra left/right padding preventing it from aligning with the main content area. Remove all horizontal padding so it's flush with the container.
+2. **Author role missing:** "CRO at ZoomInfo" is missing from the rendered output. The content needs this as a `<p>` after the author name, and the JS/CSS must render it.
+3. **Quote mark:** The blockquote should start with a large pink/magenta decorative quote symbol as the first character — matching the original site's treatment.
+
+**Investigation:** Compare the testimonials section on https://www.semrush.com/ with localhost. Note the exact quote mark color, size, and positioning. Note the author role text and layout.
+
+**Acceptance criteria:** Testimonials block left/right aligns with other content. Author role "CRO at ZoomInfo" displays below the name. Blockquote starts with a large pink decorative quote mark.
+
+---
+
+### R03 — 🔲 Open — Expandable carousel: match original site layout and placement
+
+**Priority:** P1  
+**Type:** Gap  
+**Affected files:** `blocks/carousel-slider/carousel-slider.css`
+
+**What's needed:** Take a screenshot of the expandable carousel (Solutions section) on the original site and compare it with the current implementation. Iterate on CSS to match the original's card layout, expand/collapse behavior, image placement, and spacing.
+
+**Acceptance criteria:** Expandable carousel visually matches the original site's layout at desktop viewport.
+
+---
+
+### R04 — 🔲 Open — Resources carousel: style card text (title, description, category)
+
+**Priority:** P1  
+**Type:** Gap  
+**Affected files:** `blocks/carousel-slider/carousel-slider.css`
+
+**What's needed:** The resources carousel cards ("Stay ahead of what's next") need text styling to match the original site: title font/size/weight, description text, and category tag styling. Compare with the original and apply matching typography.
+
+**Acceptance criteria:** Resource card text styling (title, description, category tag) matches the original site.
+
+---
+
+### R05 — 🔲 Open — Footer: fix broken columns and refine layout
+
+**Priority:** P1  
+**Type:** Gap  
+**Affected files:** `blocks/footer/footer.css`, `blocks/footer/footer.js`
+
+**What's wrong:** The footer link columns (the `<ul><li>` lists under each heading) appear broken. The overall footer layout needs careful analysis and refinement against the original site. Use visual comparison skills to identify all gaps: column layout, spacing, typography, bottom bar alignment, social icons placement, legal links row.
+
+**Acceptance criteria:** Footer layout matches the original site — columns properly aligned, bottom bar correct, all elements properly spaced.
+
+---
+
+### R06 — 🔲 Open — Footer reveal: correct background image and reduce height
+
+**Priority:** P1  
+**Type:** Gap  
+**Affected files:** `blocks/footer/footer.css`
+
+**What's wrong:** The SEMRUSH reveal section has the wrong background image. The original uses a specific base64 PNG pattern on `#dceeeb` background. Also the reveal is too tall — should be ~416px with 32px padding around the logo (except top, since logo is positioned at bottom).
+
+**Fix:** Replace the current background with:
+```css
+background: #dceeeb url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAYPCAMAAABfVEFjAAAARVBMVEUAAAC/j//Hj/+/j/+/j//Dj/+/j//Cj/+/j//Fj//Cj//Ekv/Dkf/Dkf/Ekv/Ckf/Dkv/Ckf/Dkv/Dkf/Ckf/Ckf/Ckf9k6gjCAAAAFnRSTlMAECAgMEBAUFBgYHCAkJ+gr7C/z9/vq3m4ogAAAb1JREFUeNrtyNGOnCAYhmEt6gwd1B0E7v9Sm910m6b5gKh/z97n8Bnwr1Huj9s7s2x3/e0NLNvdVe52eyPL9tbd38SyvZ3vb5ZbWLa33mAdy3Y2GOwkd2HZP1a5+6l9yvUs29hosC+5gWU7mwx2Y9nOFoN9y40s+22U687tITexbHtni81yC8t+e8j1J3eU61j2t5fcYLILyzZ3N1nPss39kBtNNrBsc5PJbizb3Cy3mGxk2dY6m00s29rZZrPcwrKt9UbrWLaxwWgnuQvLflnl7qf3KdezbGOj0b7kBpb9cshNp3eVu7FsY4vRvuVGlv00ynXn95CbWPbTJHe22sKy9X3I9Rd2lOtYtrrBbBeWre5utp5lqxv/8waWrW4y241lq5vlFrONLFtbZ7eJZWs7222WW1i2tt5wHctWNhjuJHdh2WGVu1/ap1zPspWNhvuSG1h2OOSmS7vK3Vh2yHKL4b7lRpYd5bpre8hNLDvJnS23sKzeh1x/cUe5jmXlBtNdWFbuKne/uJ5l5X7IjaYbWFbuITdd3I1l5Wa5xXQjy6p1tptYVu1su1luYVm13ngdy4oNJ3b6+bdxGIZf9AyTQKv797YAAAAASUVORK5CYII=) 0 100% repeat-x;
+```
+Set height to 416px, padding to `0 32px 32px`.
+
+**Acceptance criteria:** Reveal has correct hatched background pattern on mint-green, height ~416px, logo at bottom with 32px padding on sides and bottom.
+
 ---
 
 ## Next priorities (not yet planned)

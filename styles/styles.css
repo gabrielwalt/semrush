@@ -59,8 +59,8 @@
   --space-3xl: 120px;
 
   /* section spacing */
-  --section-padding: 120px;
-  --block-padding: 64px;
+  --section-padding: 60px;
+  --block-padding: 60px;
   --container-padding: 32px;
 
   /* layout */
@@ -121,8 +121,8 @@ main .button-container { display: inline; }
 @media (width < 768px) {
   :root {
     --font-size-heading-m: 18px;
-    --section-padding: 60px;
-    --block-padding: 32px;
+    --section-padding: 30px;
+    --block-padding: 30px;
     --container-padding: 16px;
   }
 }
@@ -420,9 +420,6 @@ main > .section > .full-width {
   padding: 0;
 }
 
-main > .section:first-of-type {
-  padding-top: 0;
-}
 
 /* Block spacing variants — authors apply via block class names (e.g. "Insights Widget (spacing-top-small)") */
 main > .section > *:has(> .spacing-top-none) { margin-top: 0; }
@@ -479,12 +476,6 @@ main .section.section-centered > div {
   text-align: center;
 }
 
-main .section.section-centered:first-of-type {
-  padding-top: 64px;
-  padding-bottom: 0;
-}
-
-
 main .section.section-centered h1 {
   margin-top: 0;
   margin-bottom: 0;
@@ -497,13 +488,6 @@ main .section.section-centered p {
   max-width: 540px;
 }
 
-main .section.section-centered > .insights-widget-wrapper {
-  margin-top: var(--space-m);
-}
-
-main .section.section-centered > .video-wrapper {
-  margin-top: 96px;
-}
 
 
 /* glass surface utility */
