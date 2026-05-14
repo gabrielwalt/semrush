@@ -23,6 +23,24 @@
     return p;
   }
 
+  // Converts a full video URL to a relative EDS-style slug for the href.
+  // textContent keeps the full URL so block JS can extract the source.
+  // Relative href avoids CORB when served from aem.page.
+  function createVideoLink(fullUrl, document) {
+    var p = document.createElement('p');
+    var a = document.createElement('a');
+    try {
+      var url = new URL(fullUrl);
+      var slug = url.pathname.replace(/[_.]/g, '-').replace(/\/$/, '');
+      a.href = slug;
+    } catch (e) {
+      a.href = fullUrl;
+    }
+    a.textContent = fullUrl;
+    p.appendChild(a);
+    return p;
+  }
+
 // PARSERS
 
   function announcementBarParser(element, { document }) {
@@ -73,12 +91,7 @@
       var source = video.querySelector('source');
       if (source) videoSrc = source.src || source.getAttribute('src') || '';
       if (videoSrc) {
-        var vp = document.createElement('p');
-        var va = document.createElement('a');
-        va.href = videoSrc;
-        va.textContent = videoSrc;
-        vp.appendChild(va);
-        videoCell.appendChild(vp);
+        videoCell.appendChild(createVideoLink(videoSrc, document));
       }
       var posterSrc = video.poster || 'https://www.semrush.com/static/plg_toolkits.webp';
       var pp = document.createElement('p');
@@ -168,13 +181,8 @@
       var source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
       var videoUrl = source ? (source.getAttribute('src') || source.getAttribute('data-src') || '') : (video.getAttribute('src') || '');
       if (videoUrl) {
-        var vp = document.createElement('p');
-        var va = document.createElement('a');
         var fullVideoUrl = videoUrl.startsWith('/') ? 'https://www.semrush.com' + videoUrl : videoUrl;
-        va.href = fullVideoUrl;
-        va.textContent = fullVideoUrl;
-        vp.appendChild(va);
-        mediaContent.appendChild(vp);
+        mediaContent.appendChild(createVideoLink(fullVideoUrl, document));
       }
       var posterSrc = video.getAttribute('poster') || '';
       if (posterSrc) {
@@ -221,13 +229,8 @@
       var source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
       var videoUrl = source ? (source.getAttribute('src') || source.getAttribute('data-src') || '') : (video.getAttribute('src') || '');
       if (videoUrl) {
-        var vp = document.createElement('p');
-        var va = document.createElement('a');
         var fullVideoUrl = videoUrl.startsWith('/') ? 'https://www.semrush.com' + videoUrl : videoUrl;
-        va.href = fullVideoUrl;
-        va.textContent = fullVideoUrl;
-        vp.appendChild(va);
-        mediaContent.appendChild(vp);
+        mediaContent.appendChild(createVideoLink(fullVideoUrl, document));
       }
       var posterSrc = video.getAttribute('poster') || '';
       if (posterSrc) {

@@ -101,7 +101,7 @@ Alternatively, scope the pattern to only the first section (the hero `section-ce
 
 ---
 
-### H01 — 🔲 Open — Fix all broken images
+### H01 — ✅ Done — Fix all broken images
 
 **Priority:** P0 (blocks entire visual fidelity)  
 **Type:** Gap  
@@ -154,7 +154,7 @@ Alternatively, scope the pattern to only the first section (the hero `section-ce
 
 ---
 
-### H04 — 🔲 Open — Fix videos not autoplaying in all video blocks (systematic)
+### H04 — ✅ Done — Fix videos not autoplaying in all video blocks (systematic)
 
 **Priority:** P1  
 **Type:** Gap  

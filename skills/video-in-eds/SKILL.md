@@ -5,7 +5,17 @@ description: Video playback in EDS blocks. Use when implementing video, since ED
 
 EDS rewrites media URLs — the href becomes a local path without extension, but the link **textContent** preserves the original URL.
 
-## Recipe
+## Content pattern for videos
+In `.plain.html`, video links must use **relative hrefs** (EDS-style slug) so EDS proxies the video same-origin:
+```html
+<!-- Correct — relative href, EDS proxies same-origin -->
+<a href="/static/videos/my-video-mp4">https://www.semrush.com/static/videos/my_video.mp4</a>
+
+<!-- Wrong — absolute href causes CORB on aem.page -->
+<a href="https://www.semrush.com/static/videos/my_video.mp4">https://www.semrush.com/static/videos/my_video.mp4</a>
+```
+
+## JS extraction pattern
 ```js
 cell.querySelectorAll('a').forEach((link) => {
   const text = link.textContent.trim();
@@ -14,9 +24,17 @@ cell.querySelectorAll('a').forEach((link) => {
 });
 ```
 
-Build `<video>` with `playsinline`, `muted`, `loop`, `autoplay`. Use `poster` attribute. Defer to `window.load`. Respect `prefers-reduced-motion`.
+## Autoplay
+- Defer `<video>` creation to `window.load` (with `setTimeout` fallback) — creating during block decoration is too early for autoplay.
+- For below-fold videos, use `IntersectionObserver` as the sole play controller — don't set `autoplay` attribute (causes play/pause race condition → `AbortError`).
+- Always `.catch(() => {})` on `video.play()` — the promise can reject if interrupted.
+- Set `preload="auto"` so video data loads before scrolling into view.
+- Respect `prefers-reduced-motion`.
 
 ## Pitfalls
-- Never rely on `href` alone — always check link text as fallback
-- AEM CLI dev server fetches from remote — local `.plain.html` edits won't affect the served page
-- Headless browsers block autoplay — `video.paused === true` in tests is expected
+- Absolute cross-origin video URLs in href → CORB in Chrome. Use relative hrefs.
+- `autoplay` + `IntersectionObserver` → race condition. Use observer only, no autoplay attribute.
+- Never rely on `href` alone for the source URL — always check link textContent.
+- AEM CLI serves the main page from remote — local `.plain.html` edits need DA re-upload to take effect.
+
+See also: `eds-code-conventions` (clean implementation rules)

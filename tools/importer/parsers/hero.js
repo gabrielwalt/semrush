@@ -1,4 +1,20 @@
 /* global WebImporter */
+
+function createVideoLink(fullUrl, document) {
+  const p = document.createElement('p');
+  const a = document.createElement('a');
+  try {
+    const url = new URL(fullUrl);
+    const slug = url.pathname.replace(/[_.]/g, '-').replace(/\/$/, '');
+    a.href = slug;
+  } catch (e) {
+    a.href = fullUrl;
+  }
+  a.textContent = fullUrl;
+  p.appendChild(a);
+  return p;
+}
+
 export default function parse(element, { document }) {
   const h1 = element.querySelector('h1');
   if (!h1) return;
@@ -35,12 +51,7 @@ export default function parse(element, { document }) {
     const source = video.querySelector('source[type="video/mp4"]') || video.querySelector('source');
     const videoUrl = source?.src || source?.getAttribute('src') || video.src;
     if (videoUrl) {
-      const p = document.createElement('p');
-      const a = document.createElement('a');
-      a.href = videoUrl;
-      a.textContent = videoUrl;
-      p.appendChild(a);
-      videoCell.appendChild(p);
+      videoCell.appendChild(createVideoLink(videoUrl, document));
     }
     if (video.poster) {
       const p = document.createElement('p');
@@ -54,12 +65,7 @@ export default function parse(element, { document }) {
     }
   } else {
     const posterImg = element.querySelector('.mp-hero__video-wrapper img');
-    const p = document.createElement('p');
-    const a = document.createElement('a');
-    a.href = 'https://www.semrush.com/static/index/videos/plg_toolkits_with_pr.mp4';
-    a.textContent = 'https://www.semrush.com/static/index/videos/plg_toolkits_with_pr.mp4';
-    p.appendChild(a);
-    videoCell.appendChild(p);
+    videoCell.appendChild(createVideoLink('https://www.semrush.com/static/videos/plg_toolkits_with_pr.mp4', document));
 
     const p2el = document.createElement('p');
     const pic = document.createElement('picture');
