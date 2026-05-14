@@ -4,18 +4,40 @@ Each skill is a directory with a `SKILL.md` file. Scan the "Load when..." column
 
 To create a new skill: see `writing-skills/SKILL.md` and copy `_template.md`.
 
+**Context budget:** Only the "Always load" skills are read every session. All other skills are loaded on demand via trigger matching. Do not load skills speculatively — load them when the trigger fires.
+
 ---
 
 ## Always load
+
+These are tiny, high-impact skills that apply to every session. Load them at session start.
 
 | Skill | Load when... |
 |-------|-------------|
 | [session-startup](session-startup/SKILL.md) | **ALWAYS** — at the start of every new session, before any work |
 | [session-close](session-close/SKILL.md) | **ALWAYS** — at the end of every session before signing off |
 | [verify-before-claiming](verify-before-claiming/SKILL.md) | **ALWAYS** — before writing "done", "fixed", "implemented", or any completion claim |
+
+---
+
+## Plan tasks
+
+| Skill | Load when... |
+|-------|-------------|
+| [writing-plan-tasks](writing-plan-tasks/SKILL.md) | Creating or updating tasks in PROJECT-PLAN.md from user-reported gaps or enhancement requests |
+| [executing-plan-tasks](executing-plan-tasks/SKILL.md) | Picking up a plan task to implement; need to confirm the problem before coding and verify after |
+
+---
+
+## Quality guards
+
+Load these before making changes — they prevent regressions and guesswork.
+
+| Skill | Load when... |
+|-------|-------------|
 | [regression-guard](regression-guard/SKILL.md) | About to edit CSS in `styles.css`, block wrappers, or any shared selector |
 | [measure-first](measure-first/SKILL.md) | About to write a px value from memory; guessing at sizing, spacing, or color |
-| [block-visual-iteration](block-visual-iteration/SKILL.md) | **PROACTIVE** — asked to improve, iterate, critique, or visually compare any block |
+| [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
 
 ---
 

@@ -24,11 +24,22 @@ A skill answers: "What do I wish I'd known 30 minutes ago?"
 6. **Add a row to the skill index in `AGENTS.md`** — in the correct table (generic or project-specific) with "When to use" and "Key insight" columns
 7. Verify the `name` field matches the directory name exactly
 
+## Context budget
+
+Every loaded skill costs context tokens. Manage the budget:
+
+- **"Always load" in `README.md` must stay at 3 skills or fewer** — only skills that apply to literally every action in every session. Currently: `session-startup`, `session-close`, `verify-before-claiming`. To add a 4th, you must merge or demote an existing one.
+- **Always-load skills must be under 1.5KB each.** If a skill grows larger, extract the detailed content into a separate skill and reference it via `See also:`.
+- **Prefer trigger-based loading over always-load.** A skill with a clear "Load when..." trigger (e.g., "about to edit shared CSS") will be loaded exactly when needed. An always-load skill sits in context even when irrelevant.
+- **Use `See also:` to create loading chains.** If skill A is always loaded and often precedes work that needs skill B, add `See also: \`B\` (why)` to A. The agent will load B when it reaches that point — no need to always-load B.
+- **Review after adding skills.** If `README.md` "Always load" grows past 3, or the total skill library grows past ~40, audit for merges and demotions.
+
 ## Keeping skills modular and connected
 
 - **One domain per skill.** If a skill covers two distinct topics, keep it focused on the primary one and cross-reference the other.
 - **Cross-reference, don't duplicate.** If content exists in another skill, point to it with a `See also:` line at the bottom rather than repeating it. One skill owns each concept.
 - **Add `See also:` to every skill** that has natural neighbors — related patterns, prerequisites, or next-step workflows. Format: `See also: \`skill-name\` (why), \`other-skill\` (why)`
+- **Add cross-references at the point of highest need.** When creating a skill, also add a `See also:` line pointing TO this new skill from the skills that are most likely to already be loaded when the new skill is needed. The goal: the agent encounters the reference at the moment it's most useful, not only if it happens to scan the README.
 - **Keep skills compact.** Aim for 20-30 lines. If a skill grows past ~40 lines, look for content that belongs in a referenced skill instead.
 - **Friction-based triggers.** If you encounter the same problem or workaround twice, it's a skill gap. Propose a skill before moving on.
 

@@ -6,11 +6,11 @@
 
 ## Current Focus
 
-**Last updated:** 2026-05-13  
+**Last updated:** 2026-05-14  
 **Branch:** `aem-merged-20260513`  
-**Active task:** Re-applying all tasks reverted by blocks/ reset (T05–T14)  
-**Last completed:** V01 (missing bg images created); V02 verified done via section-centered; T07 T08 T09 T05 T06 T12 T14 all re-applied; zero !important remaining in blocks  
-**Next up:** Push all changes; verify homepage preview matches reference for all re-applied tasks  
+**Active task:** Homepage visual fidelity iteration (H01–H21)  
+**Last completed:** All prior tasks T01–T18, E01–E04, V01–V02 complete  
+**Next up:** Execute H01 (broken images), then H02–H21 sequentially  
 **Blocker:** Semrush One content lost; Enterprise page not yet published in da.live
 
 ---

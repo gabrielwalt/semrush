@@ -24,3 +24,5 @@ At the start of every session, before doing any work:
 ## Pitfalls
 - Starting work without reading `PROJECT-PLAN.md` — you'll duplicate or skip tasks
 - Reading `AGENTS.md` but not `PROJECT-STATUS.md` — AGENTS.md doesn't tell you what's broken now
+
+See also: `executing-plan-tasks` (how to pick up and execute the first open task), `writing-plan-tasks` (how to create new tasks from user requests)

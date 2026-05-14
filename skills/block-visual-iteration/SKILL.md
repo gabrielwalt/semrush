@@ -38,3 +38,5 @@ Run step 2 again. Confirm all values match. Only THEN take a screenshot for fina
 
 ## Regression guard
 Before changing any existing element's CSS, snapshot its key properties. After the change, re-check the snapshot. If an untouched property changed, you introduced a regression.
+
+See also: `executing-plan-tasks` (Gap vs Enhancement verification workflow), `regression-guard` (full regression protocol), `measure-first` (never guess values)
