@@ -31,7 +31,77 @@ Each task is self-contained: file paths, required values, and acceptance criteri
 
 ## Active tasks
 
-### H01 — 🔲 Open — Fix all broken images
+### H24 — 🔲 Open — Header background should match content gradient, not be transparent
+
+**Priority:** P1  
+**Type:** Gap  
+**Affected files:** `blocks/header/header.css`, `blocks/header/header.js`
+
+**What's wrong:** On the original site, the header has a solid background color that matches the first pixel of the content gradient below it (`rgb(220, 238, 235)` — the mint green gradient start). As the user scrolls, the header color adjusts to continue matching the gradient that's scrolling underneath, creating a seamless visual where the header never interrupts the background. When a mega-menu dropdown opens, the header transitions to white. On our implementation, the header is fully transparent on desktop (`background-color: transparent` at `header.css:42`), relying on the gradient behind it showing through. This causes a visible interruption at the header boundary — the fixed header doesn't move with the scroll, so the gradient behind it shifts while the header stays put, creating a mismatch.
+
+**Evidence:**
+- **Original site:** `header` computed `background-color` = `oklab(0.934924 -0.0193309 -0.00164258)` ≈ `rgb(220, 238, 235)`. Position: `sticky`. The header color is actively managed to track the content gradient.
+- **Localhost:** `.nav-wrapper` computed `background-color` = `rgba(0, 0, 0, 0)` (transparent). Position: `fixed`. The gradient shines through but shifts during scroll while the header stays fixed — creating a visual seam.
+- Current CSS at `header.css:41-43`: `background-color: transparent; transition: background-color 0.2s ease-in-out;`
+- Current CSS at `header.css:50-52`: `.nav-wrapper.nav-open { background-color: #fff; }` — already transitions to white on mega-menu open.
+
+**Root cause:** The header uses `position: fixed` with `transparent` background. The original site uses a dynamic approach where the header background color tracks the gradient underneath. Our transparent approach works at scroll=0 but diverges as the user scrolls because the fixed header doesn't move with the content gradient.
+
+**Fix approach:** Two viable options:
+
+- **Option A (JS-driven, matches original):** On scroll, sample the gradient color at the header's position and set `.nav-wrapper` background-color to match. The homepage gradient is `linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%)` over `2814px`. Calculate the current gradient color based on `scrollY` position: interpolate between the three color stops (mint at 0px, lavender at 2110px, white at 2814px). Set the background-color on each scroll frame using `requestAnimationFrame`. When `.nav-open`, transition to white and stop tracking.
+
+- **Option B (CSS-only, simpler):** Set the initial header background to `rgb(220 238 235)` (matching gradient start) instead of transparent. On scroll, the slight color mismatch as the gradient transitions would be minimal since the gradient is very gradual. When `.nav-open`, transition to white (already implemented). This is simpler but won't perfectly track the gradient through the lavender phase.
+
+Option A better matches the original site behavior. The implementing agent should check how the original site handles this (likely JS-based sampling or a pre-computed gradient on the header itself).
+
+**Verification (implementing agent MUST do all):**
+1. Open https://www.semrush.com/ → look at the header. Scroll slowly from top to bottom. Observe the header background color — it should seamlessly match the content area below at every scroll position. Note the color at scroll=0 (mint), at mid-page (lavender), and further down (approaching white).
+2. Open a mega-menu dropdown → confirm header transitions to white.
+3. Open http://localhost:3000/ → same scroll test. Confirm the header is currently transparent and creates a visual interruption compared to the original.
+4. Implement fix in `blocks/header/header.css` and optionally `blocks/header/header.js`.
+5. Reload localhost → scroll slowly from top to bottom. Confirm header background matches the content gradient seamlessly at every scroll position.
+6. Open a mega-menu dropdown → confirm header transitions to white.
+7. Close dropdown → confirm header returns to gradient-matching behavior.
+8. Test on mobile (<768px) — the header may have different behavior; match the original.
+9. If fix doesn't work after 2 attempts, stop and ask the user.
+
+**Acceptance criteria:** Header background seamlessly matches the content gradient at every scroll position. No visible color boundary between header and content area. Mega-menu open transitions header to white.
+
+---
+
+### H23 — 🔲 Open — Fix hero pattern-hero.svg background position (invisible — too far down)
+
+**Priority:** P0 (the hero's signature vertical-line pattern is completely invisible)  
+**Type:** Gap  
+**Affected files:** `styles/styles.css`
+
+**What's wrong:** The `pattern-hero.svg` background (vertical purple + cyan lines) should appear behind the hero video area. On the original site, the pattern is visible behind the hero section at desktop viewport. On localhost, the pattern is invisible — it renders at ~3936px from the top of `main`, while the hero video is at ~500–990px.
+
+**Evidence:**
+- **Original site:** `pattern-hero.svg` is applied to `section.mp-hero` (1389px tall). Background-position `2px calc(50% - 20px)` resolves to ~675px on a 1389px element — centered in the hero.
+- **Localhost:** The same `calc(50% - 20px)` is applied to `main` (7913px tall), resolving to ~3936px — buried in the middle of the page, far below the hero. The pattern exists in CSS (`styles.css:362-391`) and the SVG file is valid (7.8KB), but the position calculation yields a point nobody ever scrolls to see.
+
+**Root cause:** The CSS applies `background-position: 2px calc(50% - 20px)` to the `main` element. On the original site, this same formula works because it's scoped to a ~1389px-tall hero section. Our `main` is ~7913px tall, so `50%` = ~3956px instead of ~695px. The percentage-based position made sense when the page had fewer sections, but now the page is too tall.
+
+**Fix approach:** Change the background-position from percentage-based `calc(50% - 20px)` to a fixed pixel value from the top. The hero video block sits at roughly 500–990px from the top of `main`. The pattern center should be near the video center (~740px). Use a fixed value like `740px` (or adjust based on measurement) instead of `calc(50% - 20px)`. Apply this across all breakpoints in `styles.css:362-391`.
+
+Alternatively, scope the pattern to only the first section (the hero `section-centered` section) instead of `main`, matching the original site's approach of applying it to the hero section element.
+
+**Verification (implementing agent MUST do all):**
+1. Open https://www.semrush.com/ → scroll to the hero area. Confirm vertical purple + cyan lines are visible behind the hero section. Note their approximate vertical position relative to the search form.
+2. Open http://localhost:3000/ → scroll to the same area. Confirm the pattern is NOT visible (it's currently at ~3936px, way below the viewport).
+3. Implement fix in `styles/styles.css` (lines 362–391).
+4. Reload localhost → scroll to the hero area. Confirm the vertical line pattern is now visible behind the video block, roughly matching the original site's positioning.
+5. Scroll down the full page — confirm the pattern does NOT appear elsewhere (it should only be visible in the hero area).
+6. Check at all breakpoints (mobile <768px, tablet 768–1023px, desktop ≥1024px, wide ≥1440px) — the pattern position should look correct at each.
+7. If the fix doesn't resolve after 2 attempts, stop and ask the user.
+
+**Acceptance criteria:** The pattern-hero.svg vertical lines are visible behind the hero area of the homepage, at approximately the same vertical position as on the original site.
+
+---
+
+### H01 — ✅ Done — Fix all broken images
 
 **Priority:** P0 (blocks entire visual fidelity)  
 **Type:** Gap  
@@ -84,21 +154,42 @@ Each task is self-contained: file paths, required values, and acceptance criteri
 
 ---
 
-### H04 — 🔲 Open — Fix video not playing in 1st video-card block
+### H04 — 🔲 Open — Fix videos not autoplaying in all video blocks (systematic)
 
 **Priority:** P1  
 **Type:** Gap  
-**Affected files:** `blocks/video-card/video-card.js`, `content/index.plain.html`  
-**Problem:** The Semrush One video card should show an autoplaying video. On the original site, confirm the video at `https://www.semrush.com/static/index/videos/semrush_one.mp4` loads and autoplays. In the current implementation, the `<video>` element may not be created or the source URL may be unreachable.  
-**Investigation steps:**
-1. On https://www.semrush.com/, find the Semrush One video card. Confirm a `<video>` element exists and is playing.
-2. On http://localhost:3000/, inspect the same card in DevTools. Check:
-   - Does the `.video-card-glass` contain a `<video>` element or just an `<img>`?
-   - If `<video>` exists, are there any console errors about the source URL?
-   - The video URL in `content/index.plain.html` line 96 is: `https://www.semrush.com/static/index/videos/semrush_one.mp4` — this is an external URL that should be reachable.
-3. The `video-card.js` `getVideoSources()` function checks `link.href` (which EDS may rewrite) and then `link.textContent` (the original URL). Verify the URL extraction works for this content structure.
-**Context:** EDS rewrites link `href` attributes but leaves `textContent` intact. The `getVideoSources()` function at `video-card.js:1-16` has a fallback that checks `link.textContent` — verify this fallback triggers correctly.  
-**Acceptance criteria:** Video autoplays within the glass frame of the Semrush One card, matching the original site behavior.
+**Affected files:** `blocks/video-card/video-card.js`, `blocks/video/video.js`
+
+**What's wrong:** No videos autoplay on the homepage. All three video blocks are affected:
+1. **Hero video** (`.video` block) — `readyState: 0`, video element never created. The `video.js` defers video creation to `window.load` event (line 89-92), but if the `load` event fires before this block decorates (AEM lazy-loads blocks), the listener is never triggered.
+2. **Semrush One video-card** — `<video>` element exists, loaded (readyState: 4, duration: 26.66s), but `paused: true`, `currentTime: 0`. Autoplay attribute is set but browser didn't honor it.
+3. **Enterprise video-card** — Same: loaded (readyState: 4, duration: 12.03s), `paused: true`, `currentTime: 0`.
+
+On the original site, all three videos autoplay.
+
+**Evidence:**
+- Hero video: `readyState: 0` — the `buildVideo()` function in `video.js:55-87` was never called because `window.addEventListener('load', buildVideo)` at line 92 missed the load event.
+- Video-cards: Both have `autoplay: true`, `muted: true` but `paused: true`. The browser loaded the video (readyState 4) but didn't auto-trigger playback — likely because the videos are below the fold and browsers require viewport intersection for autoplay.
+- All video sources are valid external URLs (`semrush.com/static/index/videos/*.mp4`) that resolve correctly.
+
+**Root cause:** Two separate bugs:
+1. **`video.js` (hero):** Race condition — `window.addEventListener('load', buildVideo)` never fires because `document.readyState` may already be `'complete'` by the time the block decorates. Line 89 checks `readyState === 'complete'` but the block may decorate during `'interactive'` state and the `load` event fires before block JS runs.
+2. **`video-card.js` (both cards):** Sets `autoplay` attribute but never calls `.play()` explicitly. Browsers may silently reject autoplay for below-fold videos even when muted. Needs an IntersectionObserver to call `.play()` when the video enters the viewport.
+
+**Fix approach:**
+- **`video.js`:** Replace the `load` event race with a safer pattern. Either use `requestIdleCallback`, a short `setTimeout`, or check `document.readyState` more robustly. Ensure `buildVideo()` is always called.
+- **`video-card.js`:** After creating the `<video>` element, add an IntersectionObserver that calls `video.play()` when the card enters the viewport and `video.pause()` when it exits. This matches how the original site handles autoplay for below-fold videos.
+- Both fixes should respect `prefers-reduced-motion`.
+
+**Verification (implementing agent MUST do all):**
+1. Open https://www.semrush.com/ → confirm hero video and both video-card videos autoplay (scroll down to see each).
+2. Open http://localhost:3000/ → confirm all three are NOT autoplaying (hero shows poster only; both cards show paused video).
+3. Implement fixes in `blocks/video/video.js` and `blocks/video-card/video-card.js`.
+4. Reload localhost → confirm hero video autoplays on load. Scroll down to video-cards → confirm each starts playing when scrolled into view.
+5. Check `prefers-reduced-motion` behavior — videos should pause if the OS accessibility setting is on.
+6. If fix doesn't work after 2 attempts, stop and ask user.
+
+**Acceptance criteria:** All three homepage videos autoplay when visible in the viewport, matching the original site.
 
 ---
 
@@ -495,6 +586,111 @@ The arrow SVG CSS (from original site):
 8. If the fix doesn't work after 2 attempts, stop and ask the user. Document what was tried.
 
 **Acceptance criteria:** All nav links pointing to external domains show a 16×16px diagonal arrow icon after the label text. Internal links show no arrow. The approach is generic (based on the link's domain, not hardcoded to a specific item).
+
+### H25 — 🔲 Open — Consolidate import scripts: reliable, generic, and matching current content format
+
+**Priority:** P1  
+**Type:** Enhancement  
+**Affected files:** `tools/importer/import-homepage.js`, `tools/importer/import-nav.js`, `tools/importer/import-footer.js`, `tools/importer/parsers/*.js`, `tools/importer/transformers/cleanup.js`
+
+**Current state:** The import infrastructure has a dual-codepath problem: every parser exists inline in `import-homepage.js` AND as a standalone file in `parsers/`. The two versions have diverged in block naming, row structure, button wrapping, eyebrow formatting, and section metadata values. The inline scripts were what actually ran, but the standalone parsers often better match the current content output. Several parsers use hardcoded selectors or position-based logic that wouldn't generalize to other pages.
+
+**Requested change:** Consolidate the import scripts so that:
+1. A single, canonical parser exists for each block — no dual inline/standalone divergence.
+2. Parsers use generic, robust selectors that would detect the same blocks if they appeared on another page in a different order.
+3. The import script, when run against `https://www.semrush.com/`, reliably produces content matching the current `content/index.plain.html` format.
+4. Likewise for nav (`import-nav.js` → `content/nav.plain.html`) and footer (`import-footer.js` → `content/footer.plain.html`).
+5. Any content that CANNOT be reliably imported is documented as a "manual post-import operation."
+
+**Specific gaps to address (from audit):**
+
+#### A. Block naming and variant detection
+
+| Parser | Inline emits | Content has | Fix |
+|--------|-------------|-------------|-----|
+| Hero video | `Hero Video` → class `hero-video` | `video` | Change inline to emit `Video` |
+| Solutions slider | `Carousel Slider (carousel-slider-expansible)` | `carousel-slider carousel-slider-expansible` | Matches — but inline row structure differs from standalone |
+| Stats facts | Block name OK, but CTA wraps `<strong>` | CTA is `<em>` (secondary) | Fix `wrapCta()` or use standalone parser logic |
+
+#### B. Row structure divergences
+
+| Block | Inline structure | Content structure | Which is correct |
+|-------|-----------------|-------------------|------------------|
+| Solutions slider (expansible) | 1-column: text + image in single cell | 2-column: col1 = h3 + subtitle + small img; col2 = large img + desc + CTA | Content's 2-column structure (matches standalone parser) |
+| Testimonials | Extracts logo + authorRole but never outputs them | Content has 3 rows: quote, author (photo+name), stat | Content is correct; parser dead-codes logo/role |
+
+#### C. Section metadata
+
+| Section | Import emits | Content has | Match? |
+|---------|-------------|-------------|--------|
+| Hero | `section-centered` | `section-centered` | ✅ |
+| AI Visibility | `section-dark, section-ai-visibility` | `section-dark, section-ai-visibility` | ✅ |
+| Stats/testimonials/resources | none | none | ✅ (section styles come from CSS, not metadata) |
+
+#### D. Eyebrow text patterns
+
+| Section | Inline produces | Content has | Match? |
+|---------|----------------|-------------|--------|
+| Solutions | `{h2Text} ( {count} )` | `Solutions ( 9 )` | ✅ (dynamic) |
+| Stats | `{h2SubText}` eyebrow + `{h2MainText}` heading | `Stats and facts` + `The data you need...` | ✅ |
+| Resources | `{h2Text}` only (no count) | `Resources ( 7 )` with count | ❌ — inline missing count |
+| Testimonials | `{h2SubText}` eyebrow | `Our customers` | ✅ |
+
+#### E. Hardcoded values that need genericizing
+
+| Script | Hardcoded value | Risk | Fix approach |
+|--------|----------------|------|-------------|
+| Hero parser | `'Enter your website'`, `'Get insights'` | Would fail if placeholder text changes | Extract from source DOM input placeholder and button text |
+| Hero parser | Poster URL `semrush.com/static/plg_toolkits.webp` | Brittle fallback | Extract poster from source `<video>` or `<img>` in hero |
+| Nav parser | Logo path `/content/images/semrush-logo.svg` | OK for this project but not generic | Extract logo `<img>` src from source header |
+| Nav parser | Dropdown pairing by sequential index | Would break if nav items reordered or new items added | Pair by aria-controls/aria-labelledby or adjacent-sibling relationship |
+| Enterprise | All 6 `aria-label` selectors hardcoded | Breaks if any label text changes | Use structural selectors (section order, child patterns) as primary, aria-labels as hints |
+
+#### F. Documented post-import manual operations
+
+These items CANNOT be reliably auto-imported and require manual content edits after import:
+
+1. **Testimonials: ZoomInfo logo** — the logo image is extracted from source DOM (`.mp-client-testimonials__logo-img`) but never emitted to a row. Must be added manually as a row before the blockquote row, or the parser must be fixed to emit it.
+2. **Testimonials: Author role** — `authorRole` (e.g., "CRO at ZoomInfo") is extracted but dropped. Must be added manually after author name, or parser must emit it.
+3. **Stats visibility: 3rd column (platform info)** — Content has `AI Platform: ChatGPT, April 2026` as a 3rd cell in the header row. The parser only emits 2 columns. Must be added manually or parser updated.
+4. **Resource card descriptions** — The inline `resourcesSliderParser` does not extract article description paragraphs. The standalone parser does. Content currently lacks descriptions (H15). Fixing the parser to use the standalone version would resolve this.
+5. **Footer: Social links** — The import-footer.js detects `.srf-footer__social-list` but the content file lacks social links. Either the selector didn't match during import (React rendering timing) or the output was lost. Must be verified and re-imported.
+6. **Footer: Adobe logo** — Not extracted by import-footer.js at all. Must be added manually or parser updated.
+7. **Footer: Language selector** — Not extracted by import-footer.js. Must be added manually.
+8. **P&G marquee logo** — The image was not uploaded to AEM media store, causing `about:error` in served HTML. The SVG was manually added to `content/images/`. Future re-imports should ensure all images resolve.
+9. **Empty trailing section** — Content ends with an empty `<div></div>`. Harmless but should be cleaned up in the cleanup transformer.
+
+#### G. Nav import gaps
+
+1. **External link detection** — Nav parser doesn't add `target="_blank"` to external domain links (e.g., Enterprise → `enterprise.semrush.com`). This should be detected generically for any `href` pointing to a different domain.
+2. **Dropdown-to-button pairing** — Uses sequential index, which breaks if items are reordered. Should pair by some content relationship (matching text, id/aria attribute).
+3. **Promo tile date** — The nav content has a promo date ("October 13, 2026 · London, UK") which is imported as a plain `<p>`. This is correct but fragile — the selector relies on promo being after the columns.
+
+#### H. Footer import gaps
+
+1. **Social links**: Selector `.srf-footer__social-list` may fail if the React component hasn't rendered by import time. Add a wait/retry or detect social links by href pattern (`linkedin.com`, `instagram.com`, etc.).
+2. **Adobe logo**: Not detected at all. Add a parser for `.srf-footer__adobe-logo` or detect by `img[alt*="Adobe"]`.
+3. **Language selector**: Not detected. Add parser for the language button/select in the bottom bar.
+
+**Implementation approach:**
+1. **Unify parsers:** For each block, choose the version (inline or standalone) that best matches the current content. Delete the other. The `import-homepage.js` should import from `parsers/*.js` rather than defining inline.
+2. **Fix divergences:** Update the chosen parser to produce output matching the current content format exactly.
+3. **Genericize selectors:** Replace hardcoded text/aria-label selectors with structural ones. Use class-based or role-based selectors where possible.
+4. **Add missing extractions:** Testimonials logo, author role, resource descriptions, stats-visibility platform column, footer social/adobe/language.
+5. **Document remaining manual ops:** Any item that truly can't be generically imported gets documented in a `POST-IMPORT-OPS.md` file or in this task.
+6. **Validate by re-running:** After consolidation, re-run the import against the source URLs and diff the output against current content files. The diff should be zero (or only expected improvements like added descriptions).
+
+**Verification (implementing agent MUST do all):**
+1. Read all current parsers (inline + standalone) and the content files side by side.
+2. For each block, confirm which parser version produces output matching the content.
+3. Consolidate into single parser files in `parsers/`. Update `import-homepage.js` to use them.
+4. Run the import against `https://www.semrush.com/` and diff output against `content/index.plain.html`.
+5. Run nav import and diff against `content/nav.plain.html`.
+6. Run footer import and diff against `content/footer.plain.html`.
+7. Document any remaining manual ops.
+8. If a parser can't produce correct output after 2 attempts, stop and document the gap.
+
+**Acceptance criteria:** Import scripts produce content matching current `index.plain.html`, `nav.plain.html`, and `footer.plain.html` when run against the source URLs. No dual inline/standalone divergence. All post-import manual operations are documented.
 
 ---
 

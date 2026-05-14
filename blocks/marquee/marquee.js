@@ -15,8 +15,18 @@ export default async function decorate(block) {
       items.push(el);
     } else if (el.querySelector('picture')) {
       items.push(el.querySelector('picture'));
+    } else if (el.querySelector('img')) {
+      items.push(el.querySelector('img'));
     } else if (el.textContent.trim()) {
       items.push(el);
+    }
+  });
+
+  items.forEach((item) => {
+    const img = item.tagName === 'IMG' ? item : item.querySelector('img');
+    if (img && (img.src.includes('about:error') || img.src.includes('about:blank'))) {
+      const slug = (img.alt || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      if (slug) img.src = `/content/images/${slug}-logo.svg`;
     }
   });
 

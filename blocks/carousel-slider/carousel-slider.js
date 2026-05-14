@@ -169,4 +169,8 @@ export default async function decorate(block) {
   } else {
     decorateDefault(block);
   }
+
+  block.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+    img.removeAttribute('loading');
+  });
 }
