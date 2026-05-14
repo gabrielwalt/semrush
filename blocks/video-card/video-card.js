@@ -15,26 +15,6 @@ function getVideoSources(cell) {
   return sources;
 }
 
-function buildVideo(sources, img) {
-  const video = document.createElement('video');
-  video.setAttribute('playsinline', '');
-  video.muted = true;
-  video.loop = true;
-  video.autoplay = true;
-  video.className = 'video-card-video';
-  if (img) {
-    video.poster = img.src;
-    if (img.alt) video.setAttribute('aria-label', img.alt);
-  }
-  sources.forEach(({ src, type }) => {
-    const source = document.createElement('source');
-    source.src = src;
-    source.type = type;
-    video.appendChild(source);
-  });
-  return video;
-}
-
 export default async function decorate(block) {
   const rows = [...block.children];
   const textParts = [];
@@ -73,8 +53,63 @@ export default async function decorate(block) {
   glassFrame.className = 'video-card-glass';
 
   if (mediaPart && mediaPart.sources.length > 0) {
-    const video = buildVideo(mediaPart.sources, mediaPart.img);
-    glassFrame.appendChild(video);
+    // Show poster image first, replace with video on load (same pattern as hero video block)
+    const { img } = mediaPart;
+    if (img) {
+      img.loading = 'eager';
+      img.classList.add('video-card-video');
+      const picture = img.closest('picture') || img;
+      glassFrame.appendChild(picture);
+    }
+
+    const buildVideo = () => {
+      const video = document.createElement('video');
+      video.setAttribute('playsinline', '');
+      video.muted = true;
+      video.loop = true;
+      video.autoplay = true;
+      video.className = 'video-card-video';
+      if (img) {
+        video.poster = img.src;
+        if (img.alt) video.setAttribute('aria-label', img.alt);
+      }
+      mediaPart.sources.forEach(({ src, type }) => {
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = type;
+        video.appendChild(source);
+      });
+
+      const poster = glassFrame.querySelector('.video-card-video');
+      if (poster) poster.replaceWith(video);
+      else glassFrame.appendChild(video);
+
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mq.matches) {
+        video.pause();
+        video.removeAttribute('autoplay');
+      }
+      mq.addEventListener('change', (e) => {
+        if (e.matches) video.pause();
+        else video.play();
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (mq.matches) return;
+          if (entry.isIntersecting) video.play();
+          else video.pause();
+        });
+      }, { threshold: 0.25 });
+      observer.observe(block);
+    };
+
+    if (document.readyState === 'complete') {
+      buildVideo();
+    } else {
+      window.addEventListener('load', buildVideo, { once: true });
+      setTimeout(() => { if (!glassFrame.querySelector('video')) buildVideo(); }, 4000);
+    }
   } else if (mediaPart && mediaPart.img) {
     const picture = mediaPart.img.closest('picture') || mediaPart.img;
     picture.querySelector('img')?.classList.add('video-card-video');

@@ -90,6 +90,7 @@ export default async function decorate(block) {
       buildVideo();
     } else {
       window.addEventListener('load', buildVideo, { once: true });
+      setTimeout(() => { if (!wrapper.querySelector('video')) buildVideo(); }, 4000);
     }
   } else if (img) {
     img.loading = 'eager';
