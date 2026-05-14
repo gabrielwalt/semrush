@@ -89,6 +89,7 @@ To create a new skill: see `writing-skills/SKILL.md` and copy `_template.md`.
 | Skill | Load when... |
 |-------|-------------|
 | [writing-skills](writing-skills/SKILL.md) | Creating a new skill; improving existing skill; auditing the skill library |
+| [commit-message](commit-message/SKILL.md) | About to write a commit message; unsure how to describe a change concisely |
 
 ---
 
