@@ -12,7 +12,8 @@ export default function parse(element, { document }) {
     const p = document.createElement('p');
     const picture = document.createElement('picture');
     const imgEl = document.createElement('img');
-    const src = img.getAttribute('src') || '';
+    const source = img.closest('picture')?.querySelector('source[srcset]');
+    const src = source?.getAttribute('srcset') || img.getAttribute('src') || '';
     imgEl.src = src.startsWith('/') ? `https://www.semrush.com${src}` : src;
     imgEl.alt = img.alt || '';
     picture.appendChild(imgEl);

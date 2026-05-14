@@ -70,7 +70,7 @@ Option A better matches the original site behavior. The implementing agent shoul
 
 ---
 
-### H23 — 🔲 Open — Fix hero pattern-hero.svg background position (invisible — too far down)
+### H23 — ✅ Done — Fix hero pattern-hero.svg background position (invisible — too far down)
 
 **Priority:** P0 (the hero's signature vertical-line pattern is completely invisible)  
 **Type:** Gap  
@@ -101,7 +101,7 @@ Alternatively, scope the pattern to only the first section (the hero `section-ce
 
 ---
 
-### H01 — ✅ Done — Fix all broken images
+### H01 — 🔲 Open — Fix all broken images
 
 **Priority:** P0 (blocks entire visual fidelity)  
 **Type:** Gap  
@@ -113,8 +113,8 @@ Alternatively, scope the pattern to only the first section (the hero `section-ce
 3. Open DevTools → Network tab, filter by "Img" type, identify any images with error status.
 4. Compare each broken image against https://www.semrush.com/ to see what should render there.
 5. Cross-reference `content.da.live` URLs — the local dev server should proxy these. If not, the AEM CLI may need configuration, or the URLs need to be rewritten to relative paths or `main--semrush--gabrielwalt.aem.page` paths.
-**Fix approach:** For each broken image, determine whether it's a URL resolution issue (CDN not reachable) or a missing asset. If the asset exists in the repo (check `content/images/` and `icons/`), switch to a local reference. If it's a remote CDN issue, note it as an environment constraint.  
-**Acceptance criteria:** Zero 404s in console on image resources. All visible images render matching their counterparts on semrush.com.
+**Fix approach:** The carousel lazy-load issue is fixed (code change in `carousel-slider.js`). The remaining broken image is **P&G in the marquee** — this is a **content operation**, not a code fix. The P&G image was never uploaded to the AEM media store, so the AEM CLI serves `<img src="about:error">` instead of a `<picture>` element. The fix: upload the P&G SVG to da.live via the Console UI so it gets a proper media hash like every other logo. The SVG is available at `icons/p-g-logo.svg` in the repo (downloaded from original site). No code workaround needed — the marquee JS handles `<picture>` elements correctly for all other logos; P&G just needs the same treatment at the content level.  
+**Acceptance criteria:** Zero 404s in console on image resources. All visible images render matching their counterparts on semrush.com. P&G logo appears in the marquee with a proper `<picture>` element.
 
 ---
 
@@ -586,6 +586,38 @@ The arrow SVG CSS (from original site):
 8. If the fix doesn't work after 2 attempts, stop and ask the user. Document what was tried.
 
 **Acceptance criteria:** All nav links pointing to external domains show a 16×16px diagonal arrow icon after the label text. Internal links show no arrow. The approach is generic (based on the link's domain, not hardcoded to a specific item).
+
+### H26 — ✅ Done — Constrain marquee width to content area max-width
+
+**Priority:** P1  
+**Type:** Gap  
+**Affected files:** `blocks/marquee/marquee.css`, `blocks/marquee/marquee.js`
+
+**What's wrong:** The logo marquee extends across the full viewport width (1920px on a wide screen). On the original site, the visible marquee area is constrained to `max-width: 1440px` (the content area max-width) with `overflow: hidden`, centered horizontally. The animation track inside is wider (scrolls), but the visible window matches the content area.
+
+**Evidence:**
+- **Original site:** `section.mp-logo-marquee` = full viewport (1920px), but child `div.mp-logo-marquee__list` has `max-width: 1440px` and `overflow: hidden`. Logos are only visible within the 1440px container.
+- **Localhost:** `.marquee-wrapper` has class `full-width` (added by `marquee.js:4`), which removes `max-width` and padding via `styles.css:431-434`. The marquee section is 1920px with no constraint. The `.marquee` block itself also has `max-width: none`.
+
+**Root cause:** The `marquee.js` adds `.full-width` to the wrapper, which was intended to let the marquee escape the container. But the original site doesn't do full-viewport marquee — it constrains the visible area to 1440px. The `.full-width` class is wrong for this block.
+
+**Fix approach:**
+1. Remove the `wrapper.classList.add('full-width')` from `marquee.js` — let the marquee respect the global `max-width: var(--container-max-width)` constraint from `styles.css`.
+2. In `marquee.css`, ensure the marquee section or its inner container has `overflow: hidden` so the scrolling track is clipped at the container boundary.
+3. The edge-fade mask effect (if present) should also be scoped to the constrained container, not the full viewport.
+
+**Verification (implementing agent MUST do all):**
+1. Open https://www.semrush.com/ → inspect the marquee logos area. Confirm the visible logo area is constrained to ~1440px max-width, centered, with logos hidden outside that boundary.
+2. Open http://localhost:3000/ → confirm the marquee currently spans the full viewport width (wider than 1440px on wide screens).
+3. Implement fix in `blocks/marquee/marquee.js` (remove `full-width`) and `blocks/marquee/marquee.css` (ensure `overflow: hidden` on the constrained container).
+4. Reload localhost → confirm the marquee visible area is now constrained to 1440px max-width. Logos should animate within the bounded area.
+5. Test at viewport widths below 1440px — the marquee should fill the available width normally.
+6. Confirm the CSS mask/fade effect at the edges (if present) works correctly within the new bounds.
+7. If fix doesn't work after 2 attempts, stop and ask user.
+
+**Acceptance criteria:** Marquee logo visible area is constrained to `--container-max-width` (1440px), matching the original site. Animation continues working within the bounded area.
+
+---
 
 ### H25 — 🔲 Open — Consolidate import scripts: reliable, generic, and matching current content format
 
