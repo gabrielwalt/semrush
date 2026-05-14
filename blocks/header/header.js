@@ -111,10 +111,15 @@ function buildNavFromHeadings(container) {
     const li = document.createElement('li');
     li.className = 'nav-item';
     const link = h2.querySelector('a');
+    const linkHref = link?.href || '';
+    const linkHost = linkHref
+      ? new URL(linkHref, window.location).hostname : '';
+    const isExternal = linkHost && linkHost !== window.location.hostname;
     const label = document.createElement('span');
     label.className = 'nav-item-label';
     label.textContent = link ? link.textContent : h2.textContent;
-    if (link) label.dataset.href = link.href;
+    if (link) label.dataset.href = linkHref;
+    if (isExternal) li.classList.add('nav-external');
     li.appendChild(label);
 
     // Collect siblings between this H2 and the next H2

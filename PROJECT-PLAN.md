@@ -118,19 +118,27 @@ Alternatively, scope the pattern to only the first section (the hero `section-ce
 
 ---
 
-### H02 — ⏸ Pending clarification — Fix spacing between insights-widget and video block
+### H02 — ✅ Done — Spacing system + insights-widget closer to text above
 
 **Priority:** P1  
-**Type:** Gap  
-**Affected files:** `blocks/insights-widget/insights-widget.css`, `blocks/video/video.css`, `styles/styles.css`  
-**Problem:** On the original site, the hero section flows as: H1 → subtitle → insights-widget → video block, all within the same `section-centered` section. Inspect the original site to measure the exact spacing between the bottom of the search form and the top of the video. The current implementation may have too much or too little gap.  
-**Investigation steps:**
-1. On https://www.semrush.com/, use DevTools to inspect the margin/padding between the insights-widget (search bar area) and the video element below it. Look at the computed margin-bottom of the widget and margin-top of the video's wrapper.
-2. On http://localhost:3000/, measure the same gap.
-3. Compare the two values. The gap on the original should be the target.
-**Context:** Both blocks are inside the same `section-centered` section in `content/index.plain.html`. The global spacing rule `main > .section > .default-content-wrapper + *` adds `var(--block-padding)` (64px) between sibling wrappers. The insights-widget and video may need tighter or different spacing since they're part of the hero flow.  
-**Fix approach:** Adjust margin/padding on `.insights-widget-wrapper` bottom margin or `.video-wrapper` (or `.hero-video-wrapper`) top margin within the `section-centered` context to match the original.  
-**Acceptance criteria:** Gap between insights-widget and video on localhost matches semrush.com within 2px.
+**Type:** Enhancement  
+**Affected files:** `styles/styles.css`, `content/index.plain.html`
+
+**What was done:**
+1. **Cleaned up the global spacing system** in `styles/styles.css`:
+   - Sections: `margin: 0` (flush, touching each other — enables seamless section backgrounds)
+   - Sections: `padding: var(--section-padding) 0` (120px desktop / 60px mobile)
+   - Blocks: `main > .section > * + *` gets `margin-top: var(--block-padding)` (64px/32px even spacing)
+   - First/last child: no top/bottom margin (section padding covers edges)
+   - Removed `main > div { margin: var(--section-padding) 0 }` which conflicted with the section rule
+2. **Added spacing variant classes** for author-controlled fine-tuning:
+   - `spacing-top-none` / `spacing-top-small` / `spacing-top-large` — adjusts top spacing of the block
+   - `spacing-bottom-none` / `spacing-bottom-small` / `spacing-bottom-large` — adjusts spacing before the next block
+   - Uses `:has()` selector to reach from EDS wrapper to block class
+   - Authors apply via block class name, e.g. `Insights Widget (spacing-top-small)`
+3. **Applied `spacing-top-small`** to insights-widget in `content/index.plain.html` — needs DA re-upload to take effect
+
+**Acceptance criteria:** Consistent even spacing between all blocks on the page. Insights-widget displays closer to the text above while keeping standard spacing to the video block below. Authors can adjust spacing per-block via variant classes.
 
 ---
 
@@ -250,7 +258,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H08 — 🔲 Open — Fix stats-facts title placement (title and stats side-by-side incorrectly)
+### H08 — ✅ Done — Fix stats-facts title placement (resolved by H07 max-width fix)
 
 **Priority:** P1  
 **Type:** Gap  
@@ -269,7 +277,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H09 — 🔲 Open — Fix missing background on stats-facts items
+### H09 — ✅ Done — Fix missing background on stats-facts items (not a gap — inactive rows are transparent on original too)
 
 **Priority:** P1  
 **Type:** Gap  
@@ -286,7 +294,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H10 — 🔲 Open — Fix missing margin between stats-facts items
+### H10 — ✅ Done — Fix missing margin between stats-facts items
 
 **Priority:** P1  
 **Type:** Gap  
@@ -301,7 +309,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H11 — 🔲 Open — Fix missing centering of "AI Visibility Index" section via section-ai-visibility
+### H11 — ✅ Done — Fix missing centering of "AI Visibility Index" section via section-ai-visibility
 
 **Priority:** P1  
 **Type:** Gap  
@@ -316,7 +324,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H12 — 🔲 Open — Fix missing icon above "AI Visibility Index" title
+### H12 — ✅ Done — Fix missing icon above "AI Visibility Index" title
 
 **Priority:** P1  
 **Type:** Gap  
@@ -342,7 +350,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H13 — 🔲 Open — Fix missing section background image at bottom of section-ai-visibility
+### H13 — ✅ Done — Fix missing section background image at bottom of section-ai-visibility
 
 **Priority:** P1  
 **Type:** Gap  
@@ -367,7 +375,7 @@ main .section.section-pattern-bars {
 
 ---
 
-### H14 — 🔲 Open — Fix missing testimonials block content (ZoomInfo logo, quote mark, author info, stats)
+### H14 — ✅ Done — Fix missing testimonials block content (quote mark, author info, stats)
 
 **Priority:** P1 (most visible content gap)  
 **Type:** Gap  
@@ -408,7 +416,7 @@ Additionally:
 
 ---
 
-### H15 — 🔲 Open — Fix missing text descriptions on 2nd carousel-slider (resources)
+### H15 — ✅ Done — Fix missing text descriptions on 2nd carousel-slider (resources)
 
 **Priority:** P1  
 **Type:** Gap  
@@ -430,7 +438,7 @@ Additionally:
 
 ---
 
-### H16 — 🔲 Open — Fix footer "Get started with Semrush today" alignment
+### H16 — ✅ Done — Fix footer "Get started with Semrush today" alignment (already left-aligned, no change needed)
 
 **Priority:** P2  
 **Type:** Gap  
@@ -445,7 +453,7 @@ Additionally:
 
 ---
 
-### H17 — 🔲 Open — Add social media icons to footer
+### H17 — ✅ Done — Add social media icons to footer
 
 **Priority:** P2  
 **Type:** Gap  
@@ -466,7 +474,7 @@ The social icons need CSS styling (size, spacing, hover effects).
 
 ---
 
-### H18 — 🔲 Open — Add Adobe logo to footer
+### H18 — ✅ Done — Add Adobe logo to footer
 
 **Priority:** P2  
 **Type:** Gap  
@@ -491,7 +499,7 @@ The social icons need CSS styling (size, spacing, hover effects).
 
 ---
 
-### H19 — 🔲 Open — Add language selector to footer
+### H19 — ✅ Done — Add language selector to footer
 
 **Priority:** P2  
 **Type:** Gap  
@@ -508,7 +516,7 @@ The social icons need CSS styling (size, spacing, hover effects).
 
 ---
 
-### H20 — 🔲 Open — Add SEMRUSH SVG wordmark to footer reveal
+### H20 — ✅ Done — Add SEMRUSH SVG wordmark to footer reveal
 
 **Priority:** P2  
 **Type:** Enhancement  
@@ -524,7 +532,7 @@ The social icons need CSS styling (size, spacing, hover effects).
 
 ---
 
-### H21 — 🔲 Open — Add vertical hatched background behind SEMRUSH reveal
+### H21 — ✅ Done — Add vertical hatched background behind SEMRUSH reveal
 
 **Priority:** P2  
 **Type:** Gap  
@@ -539,7 +547,7 @@ The social icons need CSS styling (size, spacing, hover effects).
 
 ---
 
-### H22 — 🔲 Open — Add external-link arrow icon on nav items pointing to other domains
+### H22 — ✅ Done — Add external-link arrow icon on nav items pointing to other domains
 
 **Priority:** P1  
 **Type:** Gap  

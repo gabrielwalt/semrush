@@ -366,7 +366,7 @@ header nav .nav-sections .nav-mega-panel ul li {
     margin-top: var(--space-xs);
   }
 
-  header nav .nav-sections .nav-items > .nav-item:last-child a::after {
+  header nav .nav-sections .nav-items > .nav-external .nav-item-label::after {
     content: '';
     display: inline-block;
     vertical-align: middle;

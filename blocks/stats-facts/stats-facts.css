@@ -28,6 +28,10 @@
   color: var(--stats-inactive-text);
 }
 
+.stats-facts > .stat-row + .stat-row {
+  margin-top: var(--space-xs);
+}
+
 .stats-facts > .stat-row > div {
   display: flex;
   align-items: center;

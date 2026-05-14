@@ -12,11 +12,11 @@
 
 /* background-image pattern is defined globally in styles.css as .section-pattern-bars */
 
-.section.section-dark.section-pattern-bars > .default-content-wrapper {
+.section.section-dark.section-ai-visibility > .default-content-wrapper {
   text-align: center;
 }
 
-.section.section-dark.section-pattern-bars > .default-content-wrapper::before {
+.section.section-dark.section-ai-visibility > .default-content-wrapper::before {
   content: '';
   display: block;
   width: 136px;
@@ -129,18 +129,18 @@
     padding: var(--section-padding) 0;
   }
 
-  .section.section-dark.section-pattern-bars > .default-content-wrapper > h2 {
+  .section.section-dark.section-ai-visibility > .default-content-wrapper > h2 {
     font-size: var(--font-size-display);
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 24px;
   }
 
-  .section.section-dark.section-pattern-bars > .default-content-wrapper > p {
+  .section.section-dark.section-ai-visibility > .default-content-wrapper > p {
     margin-bottom: 32px;
   }
 
-  .section.section-dark.section-pattern-bars > .default-content-wrapper > .button-wrapper {
+  .section.section-dark.section-ai-visibility > .default-content-wrapper > .button-wrapper {
     margin-bottom: 60px;
   }
 
@@ -150,7 +150,7 @@
 }
 
 @media (width < 768px) {
-  .section.section-dark.section-pattern-bars > .default-content-wrapper > h2 {
+  .section.section-dark.section-ai-visibility > .default-content-wrapper > h2 {
     font-size: var(--font-size-heading-l);
   }
 

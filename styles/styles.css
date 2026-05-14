@@ -396,7 +396,8 @@ main > .section {
 
 main > .section > div {
   max-width: var(--container-max-width);
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 var(--container-padding);
 }
 
@@ -442,8 +443,8 @@ main .section.section-dark {
   color: #fff;
 }
 
-/* section-pattern-bars: bar/stripe SVG pattern overlay — combine with section-dark for AI Visibility section */
-main .section.section-pattern-bars {
+/* section-ai-visibility: bar/stripe SVG pattern overlay at bottom of AI Visibility section */
+main .section.section-ai-visibility {
   background-image: url('/icons/pattern-ai-vis-index.svg');
   background-repeat: repeat-x;
   background-position: 0% 100%;

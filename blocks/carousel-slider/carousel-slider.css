@@ -326,11 +326,11 @@
 .carousel-slider-large-img {
   grid-column: 2 / 3;
   grid-row: 1 / -1;
-  align-self: center;
+  align-self: end;
   margin-right: -36px;
-  border-radius: 12px 0 0 12px;
+  margin-bottom: -24px;
+  border-radius: 12px 0 0;
   border-right: none;
-  max-height: 100%;
   transform: translateY(20px);
   opacity: 0;
   transition: transform 0.4s ease 0.1s, opacity 0.3s ease 0.1s;
@@ -344,7 +344,7 @@
 .carousel-slider.carousel-slider-expansible .carousel-slider-large-img img {
   width: 100%;
   height: auto;
-  max-height: 380px;
+  max-height: 320px;
   object-fit: contain;
   border-radius: 8px 0 0 8px;
 }

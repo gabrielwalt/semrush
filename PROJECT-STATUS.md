@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-14  
 **Branch:** `aem-merged-20260513`  
-**Active task:** Homepage visual fidelity iteration (H01–H21)  
-**Last completed:** All prior tasks T01–T18, E01–E04, V01–V02 complete  
-**Next up:** Execute H01 (broken images), then H02–H21 sequentially  
-**Blocker:** Semrush One content lost; Enterprise page not yet published in da.live
+**Active task:** All homepage visual tasks complete (H01–H24, H26)  
+**Last completed:** H14–H22 (testimonials, resource descriptions, footer social/adobe/language/reveal, nav arrow, spacing system)  
+**Next up:** H25 (import script consolidation), then push code + re-upload content to DA  
+**Blocker:** Content changes need DA re-upload: marquee logos, video hrefs, insights-widget spacing, testimonial role, resource descriptions, footer social/adobe/language
 
 ---
 
