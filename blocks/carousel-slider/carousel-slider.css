@@ -151,7 +151,8 @@
   font-size: var(--font-size-caption);
   font-weight: 500;
   color: var(--dark-color);
-  margin-top: 24px;
+  margin-top: auto;
+  padding-top: var(--space-s);
   line-height: 1.4;
   letter-spacing: var(--tracking-snug);
 }

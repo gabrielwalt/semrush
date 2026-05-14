@@ -50,6 +50,19 @@ export default async function decorate(block) {
 
   decorateSocialLinks(block);
 
+  const bottomInner = block.querySelector('.footer-bottom > div > div');
+  if (bottomInner) {
+    const copyrightP = bottomInner.querySelector('p');
+    const legalUl = [...bottomInner.querySelectorAll('ul')].find((ul) => !ul.classList.contains('footer-social'));
+    if (copyrightP && legalUl) {
+      const legalRow = document.createElement('div');
+      legalRow.className = 'footer-bottom-legal';
+      legalRow.appendChild(copyrightP);
+      legalRow.appendChild(legalUl);
+      bottomInner.appendChild(legalRow);
+    }
+  }
+
   const reveal = document.createElement('div');
   reveal.className = 'footer-reveal';
   const wordmark = document.createElement('img');

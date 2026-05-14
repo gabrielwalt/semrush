@@ -429,6 +429,12 @@ main > .section > *:has(> .spacing-bottom-none) + * { margin-top: 0; }
 main > .section > *:has(> .spacing-bottom-small) + * { margin-top: var(--space-s); }
 main > .section > *:has(> .spacing-bottom-large) + * { margin-top: var(--space-3xl); }
 
+/* flush section — no vertical padding (e.g. marquee) */
+main .section.section-flush {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 /* section metadata */
 main .section.light,
 main .section.highlight {

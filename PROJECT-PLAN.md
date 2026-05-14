@@ -763,7 +763,7 @@ These items CANNOT be reliably auto-imported and require manual content edits af
 | Video-card background SVG assets | V01 |
 | Hero section breakpoint verification | V02 |
 
-### R01 — 🔲 Open — Marquee section: add section style that removes all vertical padding
+### R01 — ✅ Done — Marquee section: add section style that removes all vertical padding
 
 **Priority:** P1  
 **Type:** Enhancement  
@@ -775,7 +775,7 @@ These items CANNOT be reliably auto-imported and require manual content edits af
 
 ---
 
-### R02 — 🔲 Open — Testimonials block: fix padding, add author role, add pink quote mark
+### R02 — ✅ Done — Testimonials block: fix padding, add author role, add pink quote mark
 
 **Priority:** P1  
 **Type:** Gap  
@@ -792,7 +792,7 @@ These items CANNOT be reliably auto-imported and require manual content edits af
 
 ---
 
-### R03 — 🔲 Open — Expandable carousel: match original site layout and placement
+### R03 — ✅ Done — Expandable carousel: match original site layout and placement
 
 **Priority:** P1  
 **Type:** Gap  
@@ -804,7 +804,7 @@ These items CANNOT be reliably auto-imported and require manual content edits af
 
 ---
 
-### R04 — 🔲 Open — Resources carousel: style card text (title, description, category)
+### R04 — ✅ Done — Resources carousel: style card text (title, description, category)
 
 **Priority:** P1  
 **Type:** Gap  
@@ -816,7 +816,7 @@ These items CANNOT be reliably auto-imported and require manual content edits af
 
 ---
 
-### R05 — 🔲 Open — Footer: fix broken columns and refine layout
+### R05 — ✅ Done — Footer: fix broken columns and refine layout
 
 **Priority:** P1  
 **Type:** Gap  
@@ -828,7 +828,7 @@ These items CANNOT be reliably auto-imported and require manual content edits af
 
 ---
 
-### R06 — 🔲 Open — Footer reveal: correct background image and reduce height
+### R06 — ✅ Done — Footer reveal: correct background image and reduce height
 
 **Priority:** P1  
 **Type:** Gap  
