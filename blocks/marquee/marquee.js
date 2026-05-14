@@ -1,7 +1,7 @@
 // Infinite-scroll logo marquee with cloned track for seamless loop
 export default async function decorate(block) {
   const wrapper = block.closest('.marquee-wrapper');
-  if (wrapper) wrapper.classList.add('full-width');
+  if (wrapper) wrapper.style.overflow = 'hidden';
 
   const row = block.querySelector(':scope > div');
   if (!row) return;

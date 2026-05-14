@@ -362,22 +362,14 @@ main {
 /* homepage hero pattern — only on pages with insights-widget (homepage) */
 body.homepage main {
   background:
-    url('/icons/pattern-hero.svg') 2px calc(50% + 100px) / auto repeat-x,
+    url('/icons/pattern-hero.svg') 2px 500px / auto repeat-x,
     linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
 }
 
 @media (width >= 1024px) {
   body.homepage main {
     background:
-      url('/icons/pattern-hero.svg') 2px calc(50% - 100px) / auto repeat-x,
-      linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
-  }
-}
-
-@media (width >= 1440px) {
-  body.homepage main {
-    background:
-      url('/icons/pattern-hero.svg') 2px calc(50% - 20px) / auto repeat-x,
+      url('/icons/pattern-hero.svg') 2px 550px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
   }
 }
@@ -385,7 +377,7 @@ body.homepage main {
 @media (width < 768px) {
   body.homepage main {
     background:
-      url('/icons/pattern-hero.svg') -2px 100% / auto repeat-x,
+      url('/icons/pattern-hero.svg') -2px 600px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
   }
 }
