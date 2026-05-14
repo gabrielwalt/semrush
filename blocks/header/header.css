@@ -39,7 +39,7 @@ header nav[aria-expanded='true'] {
 
 @media (width >= 1024px) {
   header .nav-wrapper {
-    background-color: transparent;
+    background-color: rgb(220 238 235);
     transition: background-color 0.2s ease-in-out;
   }
 

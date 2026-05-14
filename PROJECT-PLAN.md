@@ -31,7 +31,7 @@ Each task is self-contained: file paths, required values, and acceptance criteri
 
 ## Active tasks
 
-### H24 — 🔲 Open — Header background should match content gradient, not be transparent
+### H24 — ✅ Done — Header background should match content gradient, not be transparent
 
 **Priority:** P1  
 **Type:** Gap  
@@ -118,7 +118,7 @@ Alternatively, scope the pattern to only the first section (the hero `section-ce
 
 ---
 
-### H02 — 🔲 Open — Fix spacing between insights-widget and video block
+### H02 — ⏸ Pending clarification — Fix spacing between insights-widget and video block
 
 **Priority:** P1  
 **Type:** Gap  
@@ -134,7 +134,7 @@ Alternatively, scope the pattern to only the first section (the hero `section-ce
 
 ---
 
-### H03 — 🔲 Open — Fix wrong background of 1st video-card block (Semrush One)
+### H03 — ✅ Done — Fix wrong background of 1st video-card block (Semrush One)
 
 **Priority:** P1  
 **Type:** Gap  
@@ -193,7 +193,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H05 — 🔲 Open — Fix missing background of 2nd video-card block (Enterprise)
+### H05 — ✅ Done — Fix missing background of 2nd video-card block (Enterprise)
 
 **Priority:** P1  
 **Type:** Gap  
@@ -214,7 +214,7 @@ On the original site, all three videos autoplay.
 
 ---
 
-### H06 — 🔲 Open — Fix wrong background on carousel-slider-expansible items
+### H06 — ✅ Done — Fix wrong background on carousel-slider-expansible items
 
 **Priority:** P1  
 **Type:** Gap  

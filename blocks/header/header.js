@@ -265,4 +265,21 @@ export default async function decorate(block) {
     updateNavOffset();
     window.addEventListener('scroll', updateNavOffset, { passive: true });
   }
+
+  // Fade header bg from gradient start color to white over first 600px of scroll
+  if (isDesktop.matches) {
+    const start = [220, 238, 235];
+    const end = [255, 255, 255];
+    const fadeDistance = 600;
+    const updateHeaderBg = () => {
+      if (navWrapper.classList.contains('nav-open')) return;
+      const t = Math.min(window.scrollY / fadeDistance, 1);
+      const r = Math.round(start[0] + (end[0] - start[0]) * t);
+      const g = Math.round(start[1] + (end[1] - start[1]) * t);
+      const b = Math.round(start[2] + (end[2] - start[2]) * t);
+      navWrapper.style.backgroundColor = `rgb(${r} ${g} ${b})`;
+    };
+    updateHeaderBg();
+    window.addEventListener('scroll', updateHeaderBg, { passive: true });
+  }
 }

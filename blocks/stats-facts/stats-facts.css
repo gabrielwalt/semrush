@@ -149,6 +149,11 @@
     grid-template-columns: 1fr 2fr;
     align-items: start;
     gap: 0 var(--space-xl);
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
   }
 
   .section.stats-facts-container > .default-content-wrapper {
