@@ -53,7 +53,6 @@ export default async function decorate(block) {
   glassFrame.className = 'video-card-glass';
 
   if (mediaPart && mediaPart.sources.length > 0) {
-    // Show poster image first, replace with video on load (same pattern as hero video block)
     const { img } = mediaPart;
     if (img) {
       img.loading = 'eager';
@@ -67,7 +66,7 @@ export default async function decorate(block) {
       video.setAttribute('playsinline', '');
       video.muted = true;
       video.loop = true;
-      video.autoplay = true;
+      video.preload = 'auto';
       video.className = 'video-card-video';
       if (img) {
         video.poster = img.src;
@@ -85,20 +84,16 @@ export default async function decorate(block) {
       else glassFrame.appendChild(video);
 
       const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (mq.matches) {
-        video.pause();
-        video.removeAttribute('autoplay');
-      }
-      mq.addEventListener('change', (e) => {
-        if (e.matches) video.pause();
-        else video.play();
-      });
 
+      // IntersectionObserver is the sole play/pause controller — no autoplay attribute
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (mq.matches) return;
-          if (entry.isIntersecting) video.play();
-          else video.pause();
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
         });
       }, { threshold: 0.25 });
       observer.observe(block);
