@@ -39,7 +39,7 @@ header nav[aria-expanded='true'] {
 
 @media (width >= 1024px) {
   header .nav-wrapper {
-    background-color: rgb(220 238 235);
+    background-color: var(--color-teal);
     transition: background-color 0.2s ease-in-out;
   }
 
@@ -354,17 +354,10 @@ header nav .nav-sections .nav-mega-panel ul li {
     display: block;
     font-size: var(--font-size-body-s);
     font-weight: 400;
-    color: rgb(108 110 121);
+    color: var(--color-muted);
     line-height: 1.4;
   }
 
-  header nav .nav-sections .nav-mega-promo-meta {
-    display: block;
-    font-size: var(--font-size-body-s);
-    font-weight: 500;
-    color: var(--dark-color);
-    margin-top: var(--space-xs);
-  }
 
   header nav .nav-sections .nav-items > .nav-external .nav-item-label::after {
     content: '';
@@ -387,7 +380,7 @@ header nav .nav-sections .nav-mega-panel ul li {
 
   header nav[aria-expanded='true'] .nav-sections .nav-items > .nav-item {
     padding: 14px 0;
-    border-bottom: 1px solid rgb(230 230 230);
+    border-bottom: 1px solid var(--color-border);
     font-size: var(--font-size-body-l);
   }
 
@@ -439,7 +432,7 @@ header nav .nav-sections .nav-mega-panel ul li {
   header nav[aria-expanded='true'] .nav-sections .nav-mega-heading {
     font-weight: 600;
     font-size: var(--font-size-body-s);
-    color: rgb(108 110 121);
+    color: var(--color-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin: var(--space-s) 0 var(--space-xs);

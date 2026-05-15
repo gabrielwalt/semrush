@@ -8,7 +8,7 @@ Carousels use section-level overflow clipping, margin-based left alignment, and 
 ## Recipe
 1. **Section clips**: `.carousel-container { overflow: hidden }` — the section is the clipping boundary. Cards bleed past the visible area but are clipped, creating the "peek" effect where the next card is partially visible.
 2. **Wrapper escapes container**: `.carousel-wrapper.full-width` — JS adds `full-width` class to remove max-width constraints.
-3. **Slider left alignment via margin** (not padding): `margin: 0 0 0 var(--container-padding); padding: 0 0 var(--space-s)` — padding on `overflow-x: auto` flex containers does NOT reliably offset scroll-snap items. Use `margin-left` on the slider itself.
+3. **Slider left alignment via `max()` margin** (not padding): `margin: 0 0 0 max(var(--container-padding), calc((100vw - var(--container-max-width)) / 2))` — this formula ensures the first card aligns with the content area's left edge at ALL viewport widths. At narrow viewports, `container-padding` wins. At wide viewports (>1440px), the `calc` centers the offset to match the max-width container. Padding on `overflow-x: auto` flex containers does NOT reliably offset scroll-snap items — use `margin-left` on the slider itself.
 4. **Last card right spacing via margin**: `.carousel > div:last-child { margin-right: var(--container-padding) }` — instead of `padding-right` on the track (which has the same scroll-snap problem).
 5. **Track scrolls**: `display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none`
 6. **Cards**: `flex-shrink: 0; scroll-snap-align: start` — set card width to match design (e.g. 430px).

@@ -1,5 +1,4 @@
 import {
-  buildBlock,
   loadHeader,
   loadFooter,
   decorateIcons,
@@ -19,26 +18,6 @@ export function getContentRoot() {
     return `/${segments.slice(0, -1).join('/')}`;
   }
   return '';
-}
-
-/**
- * Builds hero block and prepends to main in a new section.
- * @param {Element} main The container element
- */
-function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
-  const picture = main.querySelector('picture');
-
-  if (main.querySelector('.insights-widget') || main.querySelector('.hero-video') || main.querySelector('.video')) return;
-  if (h1 && h1.closest('.section-metadata, .hero')) return;
-
-  // eslint-disable-next-line no-bitwise
-  if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    if (picture.closest('.hero')) return;
-    const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture, h1] }));
-    main.prepend(section);
-  }
 }
 
 /**
@@ -76,8 +55,6 @@ function buildAutoBlocks(main) {
         });
       });
     }
-
-    buildHeroBlock(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

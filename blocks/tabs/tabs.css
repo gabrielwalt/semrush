@@ -9,7 +9,7 @@
   gap: var(--space-s);
   overflow-x: auto;
   scrollbar-width: none;
-  border-bottom: 1px solid rgb(230 230 230);
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--space-l);
   padding-bottom: 0;
 }

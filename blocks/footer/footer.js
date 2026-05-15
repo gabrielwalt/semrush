@@ -40,7 +40,15 @@ function decorateSocialLinks(block) {
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : `${getContentRoot()}/footer`;
-  const fragment = await loadFragment(footerPath);
+  let fragment;
+  try {
+    fragment = await loadFragment(footerPath);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to load footer fragment', e);
+    return;
+  }
+  if (!fragment) return;
 
   block.textContent = '';
   const footer = document.createElement('div');

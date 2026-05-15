@@ -5,6 +5,32 @@ All blocks, variants, and non-obvious intent. For implementation details read th
 
 ---
 
+## Authoring Reference — Section Styles
+
+Apply via **Section Metadata** block with `Style` key in the content.
+
+| Style class | Effect | Use when |
+|-------------|--------|----------|
+| `section-centered` | Centered flex column, max-width on headings/paragraphs | Hero sections with centered text |
+| `section-dark` | Dark background (`--dark-color`), white text, inverted buttons | Dark-themed sections (e.g. AI Visibility) |
+| `section-ai-visibility` | Bar/stripe SVG pattern at bottom edge | AI Visibility Index section only |
+| `section-flush` | Zero padding top and bottom | Sections that need no breathing room (e.g. marquee) |
+
+## Authoring Reference — Block Spacing Variants
+
+Apply by adding the class to the block name, e.g. `Insights Widget (spacing-top-small)`.
+
+| Variant class | Effect |
+|---------------|--------|
+| `spacing-top-none` | Zero top margin on this block |
+| `spacing-top-small` | 16px top margin instead of default 60px |
+| `spacing-top-large` | 120px top margin |
+| `spacing-bottom-none` | Zero top margin on the NEXT block |
+| `spacing-bottom-small` | 16px top margin on the next block |
+| `spacing-bottom-large` | 120px top margin on the next block |
+
+---
+
 ## Blocks
 
 | Block | Variants | Used on | Notes |

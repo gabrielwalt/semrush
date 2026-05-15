@@ -14,9 +14,10 @@ export default function decorate(block) {
       const picture = img.closest('picture') || img;
       const wrapper = document.createElement('div');
       wrapper.className = 'case-study-video-wrapper';
-      const playBtn = document.createElement('div');
+      const playBtn = document.createElement('button');
       playBtn.className = 'case-study-play';
       playBtn.setAttribute('aria-label', 'Play video');
+      playBtn.type = 'button';
       wrapper.appendChild(picture.cloneNode(true));
       wrapper.appendChild(playBtn);
       cell.replaceWith(wrapper);

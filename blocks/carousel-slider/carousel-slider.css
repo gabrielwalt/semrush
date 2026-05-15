@@ -126,7 +126,7 @@
 
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child h3 {
   font-size: var(--font-size-body-m);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--dark-color);
   margin: 0;
   line-height: 1.5;
@@ -144,6 +144,7 @@
 
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child p {
   font-size: var(--font-size-body-m);
+  font-weight: 500;
   color: var(--dark-color);
   margin: 8px 0 0;
   line-height: 1.5;
@@ -153,7 +154,7 @@
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child p:last-of-type {
   font-size: var(--font-size-caption);
   font-weight: 500;
-  color: var(--dark-color);
+  color: var(--color-muted);
   margin-top: auto;
   padding-top: var(--space-s);
   line-height: 1.4;
@@ -197,7 +198,7 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
-  background-color: rgb(220 238 235);
+  background-color: var(--color-teal);
   background-image: url('/content/images/pattern-toolkit-card.svg');
   background-repeat: no-repeat;
   background-position: bottom right;

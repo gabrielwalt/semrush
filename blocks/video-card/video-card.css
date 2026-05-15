@@ -90,7 +90,7 @@ main .promo-cards .button-wrapper {
 .promo-cards.promo-cards-semrush-one .video-card-container {
   background:
     url('/content/images/semrush-one-bg.svg') no-repeat 50% 50%,
-    linear-gradient(182deg, rgb(193 144 255) -4.72%, rgb(220 238 235) 68.72%, rgb(255 255 255) 152.44%);
+    linear-gradient(182deg, rgb(193 144 255) -4.72%, var(--color-teal) 68.72%, rgb(255 255 255) 152.44%);
   color: var(--dark-color);
 }
 
@@ -147,7 +147,7 @@ main .promo-cards.promo-cards-enterprise a.button:any-link:focus-visible {
    Enterprise Platform Variant — light gradient, screenshot layout
    ============================================= */
 .video-card.video-card-enterprise-platform .video-card-container {
-  background: linear-gradient(135deg, rgb(220 238 235) 0%, rgb(240 234 255) 100%);
+  background: linear-gradient(135deg, var(--color-teal) 0%, rgb(240 234 255) 100%);
   color: var(--dark-color);
   padding: 64px 0 0 64px;
   align-items: end;

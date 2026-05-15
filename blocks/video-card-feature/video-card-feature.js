@@ -1,19 +1,4 @@
-function getVideoSources(cell) {
-  const sources = [];
-  cell.querySelectorAll('a[href$=".mp4"], a[href$=".webm"], a[href$=".ogg"]').forEach((link) => {
-    sources.push({ src: link.href, type: `video/${link.href.split('.').pop()}` });
-  });
-  if (sources.length) return sources;
-
-  cell.querySelectorAll('a').forEach((link) => {
-    const text = link.textContent.trim();
-    const match = text.match(/\.(mp4|webm|ogg)(\?|$)/);
-    if (match) {
-      sources.push({ src: text, type: `video/${match[1]}` });
-    }
-  });
-  return sources;
-}
+import getVideoSources from '../../scripts/video-utils.js';
 
 function buildVideo(sources, img) {
   const video = document.createElement('video');

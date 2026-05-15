@@ -22,6 +22,9 @@
   --link-hover-color: rgb(24 30 21);
   --accent-color: rgb(193 144 255);
   --accent-cyan: rgb(24 240 191);
+  --color-muted: rgb(108 110 121);
+  --color-border: rgb(230 230 230);
+  --color-teal: rgb(220 238 235);
 
   /* fonts */
   --body-font-family: "Inter", sans-serif;
@@ -385,9 +388,26 @@ body.homepage main {
 /*
  * Vertical Spacing System
  * --------------------------------
- * Sections: no margin (flush against each other), padding top/bottom for breathing room.
- * Blocks: evenly spaced via margin-top. First/last child have no top/bottom margin
- * (section padding covers that). Backgrounds on sections look seamless.
+ * Desktop: --section-padding: 60px, --block-padding: 60px
+ * Mobile (<768px): --section-padding: 30px, --block-padding: 30px
+ *
+ * Sections: margin: 0 (flush), padding: var(--section-padding) 0
+ * Blocks: margin-top: var(--block-padding) via `* + *` selector
+ * First block: margin-top: 0 (section padding covers top)
+ * Last block: margin-bottom: 0 (section padding covers bottom)
+ *
+ * Variants (via section metadata):
+ *   section-flush — padding: 0 (e.g. marquee)
+ *   section-dark — dark background with white text
+ *   section-centered — centered flex column for hero
+ *   section-ai-visibility — bar pattern at bottom edge
+ *
+ * Block spacing overrides (via block class name):
+ *   spacing-top-none / spacing-top-small / spacing-top-large
+ *   spacing-bottom-none / spacing-bottom-small / spacing-bottom-large
+ *
+ * Carousel alignment: left margin uses max() to match content area,
+ *   right edge extends to viewport edge (horizontal scroll bleed).
  */
 main > .section {
   margin: 0;
@@ -436,10 +456,6 @@ main .section.section-flush {
 }
 
 /* section metadata */
-main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
-}
 
 main .section.section-dark {
   background-color: var(--dark-color);

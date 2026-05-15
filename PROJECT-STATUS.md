@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-14  
 **Branch:** `aem-merged-20260513`  
-**Active task:** All homepage tasks complete (H01–H26)  
-**Last completed:** H25 (import script consolidation), footer reveal fix, Adobe wordmark, stats-facts layout, footer hr removal  
-**Next up:** Push code + re-upload content to DA  
-**Blocker:** Content changes need DA re-upload: marquee logos, video hrefs, insights-widget spacing, testimonial role, resource descriptions, footer single-section
+**Active task:** C01 — Codebase cleanup Phase 1 (dead code removal)  
+**Last completed:** R01–R06 (refinement), footer layout, carousel alignment, spacing unification  
+**Next up:** Execute cleanup plan C01–C15, then push code + re-upload content to DA  
+**Blocker:** Content changes need DA re-upload: marquee section-flush metadata, resource descriptions, testimonial role, footer single-section
 
 ---
 

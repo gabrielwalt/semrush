@@ -220,7 +220,15 @@ function buildNavFromHeadings(container) {
 export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : `${getContentRoot()}/nav`;
-  const fragment = await loadFragment(navPath);
+  let fragment;
+  try {
+    fragment = await loadFragment(navPath);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to load nav fragment', e);
+    return;
+  }
+  if (!fragment) return;
 
   block.textContent = '';
   const nav = document.createElement('nav');

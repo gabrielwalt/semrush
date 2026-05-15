@@ -43,11 +43,11 @@
   padding: 0;
   height: 100%;
   min-width: 0;
-  caret-color: rgb(108 110 121);
+  caret-color: var(--color-muted);
 }
 
 .insights-widget-input input::placeholder {
-  color: rgb(108 110 121);
+  color: var(--color-muted);
 }
 
 /* Blinking cursor next to placeholder */
@@ -57,7 +57,7 @@
   transform: translateY(-50%);
   width: 1px;
   height: 20px;
-  background: rgb(108 110 121);
+  background: var(--color-muted);
   animation: insights-cursor-blink 1s step-end infinite;
   pointer-events: none;
 }
@@ -144,7 +144,7 @@
 .insights-widget-dropdown-search-icon {
   display: flex;
   align-items: center;
-  color: rgb(108 110 121);
+  color: var(--color-muted);
   flex-shrink: 0;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .insights-widget-dropdown-search-input::placeholder {
-  color: rgb(108 110 121);
+  color: var(--color-muted);
 }
 
 /* Country list */

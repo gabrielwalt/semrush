@@ -1,6 +1,11 @@
 export default async function decorate(block) {
   const statRows = [...block.children];
 
+  function activateStat(idx) {
+    statRows.forEach((r) => r.classList.remove('active'));
+    if (statRows[idx]) statRows[idx].classList.add('active');
+  }
+
   statRows.forEach((row, index) => {
     row.classList.add('stat-row');
     if (index === 0) row.classList.add('active');
@@ -46,13 +51,16 @@ export default async function decorate(block) {
     descEl.textContent = descText;
     cell.appendChild(descEl);
 
+    row.setAttribute('role', 'button');
+    row.setAttribute('tabindex', '0');
     row.addEventListener('click', () => activateStat(index));
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateStat(index);
+      }
+    });
   });
-
-  function activateStat(idx) {
-    statRows.forEach((r) => r.classList.remove('active'));
-    if (statRows[idx]) statRows[idx].classList.add('active');
-  }
 
   function onScroll() {
     const rect = block.getBoundingClientRect();

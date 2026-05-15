@@ -64,5 +64,7 @@ header { height: var(--nav-height); } /* reserves flow space */
 - `position: sticky` silently fails if ANY ancestor has `overflow: hidden` — use `fixed` instead
 - Pages without announcement bar need `--nav-top-offset` to default to `0` (CSS fallback handles this)
 - Mobile: `closeOnFocusLost` fires with `e.relatedTarget === null` on tap — `nav.contains(null)` returns false, incorrectly closing menu. Fix: `if (!isDesktop.matches) return;` at top of `closeOnFocusLost`
+- Mobile click delegation: nav item click handlers must guard against mega-panel clicks with `if (e.target.closest('.nav-mega-panel')) return;` — otherwise clicking headings, text, or list items inside panels bubbles up and closes the menu
+- `overflow: hidden` on `html/body` breaks `position: sticky` — use `overflow-x: clip` instead (see `brand.css`)
 
-See also: `project-mega-menu-content-model` (nav content structure), `mobile-nav-click-handling` (click delegation)
+See also: `project-mega-menu-content-model` (nav content structure)

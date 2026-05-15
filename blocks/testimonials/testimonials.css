@@ -36,12 +36,6 @@
   font-family: var(--heading-font-family);
 }
 
-.quote-card .quote-logo img {
-  height: 32px;
-  width: auto;
-  display: block;
-}
-
 .quote-card blockquote {
   font-size: 26px;
   font-weight: 500;

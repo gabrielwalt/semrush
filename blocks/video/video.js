@@ -1,24 +1,4 @@
-function getVideoSources(cell) {
-  const sources = [];
-
-  // 1. Links with explicit video extension in href
-  cell.querySelectorAll('a[href$=".mp4"], a[href$=".webm"], a[href$=".ogg"]').forEach((link) => {
-    sources.push({ src: link.href, type: `video/${link.href.split('.').pop()}` });
-  });
-
-  if (sources.length) return sources;
-
-  // 2. Links whose text content is a video URL (EDS rewrites hrefs for external media)
-  cell.querySelectorAll('a').forEach((link) => {
-    const text = link.textContent.trim();
-    const match = text.match(/\.(mp4|webm|ogg)(\?|$)/);
-    if (match) {
-      sources.push({ src: text, type: `video/${match[1]}` });
-    }
-  });
-
-  return sources;
-}
+import getVideoSources from '../../scripts/video-utils.js';
 
 export default async function decorate(block) {
   block.closest('.video-wrapper')?.classList.add('full-width');

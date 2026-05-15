@@ -3,35 +3,33 @@ name: vertical-spacing-system
 description: EDS vertical spacing system. Use when blocks are touching with no gap, sections are too far apart, or page rhythm needs adjusting.
 ---
 
-Sections use padding (not margin) for vertical rhythm. Blocks spaced via `margin-top` on adjacent wrappers using `[class$="-wrapper"]` selector (not `* + *` — loses specificity).
+Sections use padding for vertical rhythm. Blocks are spaced via `margin-top` on the universal `* + *` sibling selector. First/last child margins are zeroed so section padding handles the edges.
 
-## The pattern (in styles.css)
+## Token values
+| Token | Desktop | Mobile (<768px) |
+|-------|---------|-----------------|
+| `--section-padding` | 60px | 30px |
+| `--block-padding` | 60px | 30px |
+
+## The pattern (styles.css)
 ```css
 main > .section { margin: 0; padding: var(--section-padding) 0; }
-
-main > .section > .default-content-wrapper + *,
-main > .section > [class$="-wrapper"] + [class$="-wrapper"],
-main > .section > [class$="-wrapper"] + .default-content-wrapper {
-  margin-top: var(--block-padding);
-}
+main > .section > * + * { margin-top: var(--block-padding); }
+main > .section > *:first-child { margin-top: 0; }
+main > .section > *:last-child { margin-bottom: 0; }
 ```
 
-## Token structure
-| Token | Controls |
-|-------|----------|
-| `--section-padding` | Section top/bottom padding |
-| `--block-padding` | Margin between blocks in a section |
+## Section style variants (via Section Metadata)
+- `section-flush` — `padding: 0` (e.g. marquee)
+- `section-dark` — dark bg, white text
+- `section-centered` — centered flex column (hero)
 
-See `PROJECT-DESIGN.md` for the project's token values (desktop and mobile).
-
-## Common overrides
-- **First section (hero):** `padding-top: 0` — starts directly at header bottom, no extra gap
-- **Full-bleed blocks (marquee):** `.section.marquee-container { padding: 0 }` — block handles its own internal spacing
-- **Centered hero section:** may need custom `padding-top` to control hero vertical position
+## Block spacing variants (via block class name)
+`spacing-top-none/small/large`, `spacing-bottom-none/small/large` — uses `:has()` selector to reach from wrapper to block class.
 
 ## Pitfalls
-- `main > .section > * + *` — universal `*` has zero specificity and loses
-- The `> div` inside a section is `.default-content-wrapper`, not a generic container
-- First and last items inside a section must have `margin-top: 0` / `margin-bottom: 0` — all inter-section gap comes from section padding only
+- `main > .section > div { margin: auto }` overrides `* + *` because `div` has higher specificity — use `margin-left: auto; margin-right: auto` instead
+- Block CSS must NOT set `padding-top/bottom` on the section container — the global rule handles it
+- `overflow: hidden` on `html/body` breaks `position: sticky` — use `overflow-x: clip` (see `brand.css`)
 
-See also: `eds-dom-structure` (full DOM tree), `css-specificity-eds` (why `* + *` loses)
+See also: `eds-dom-structure`, `full-width-escape-hatch`, `carousel-pattern-eds`

@@ -1,9 +1,8 @@
 export default async function decorate(block) {
   const rows = [...block.children];
+  if (rows.length < 1) return;
 
-  // Row 0: blockquote
-  // Row 1: author photo + name (+ optional role)
-  // Row 2: stats (number + label)
+  // Row 0: blockquote, Row 1: author photo + name (+ optional role), Row 2: stats
   const quoteRow = rows[0];
   const authorRow = rows[1];
   const statsRow = rows[2];
