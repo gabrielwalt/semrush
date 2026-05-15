@@ -10,16 +10,8 @@ description: CSS and JavaScript coding conventions for EDS blocks. Use when writ
 - No `!important` — use the `.full-width` escape hatch instead (see below)
 - See `css-specificity-eds` when a rule isn't applying as expected
 
-## Full-width escape hatch (no !important)
-When a block needs to escape the max-width container:
-```js
-// In decorate():
-block.closest('[class$="-wrapper"]')?.classList.add('full-width');
-```
-Defined globally in `styles.css` (do NOT repeat in block CSS):
-```css
-main > .section > .full-width { max-width: none; padding: 0; }
-```
+## Full-width escape hatch
+See `full-width-escape-hatch` skill for the complete pattern. Key point: add `.full-width` class to the wrapper via JS, never duplicate the CSS rule in block stylesheets.
 
 ## JavaScript
 - No layout coupling between blocks — each block is self-contained

@@ -1,8 +1,9 @@
+/* Testimonials — dark quote card + grey stats card (homepage) */
 export default async function decorate(block) {
   const rows = [...block.children];
   if (rows.length < 1) return;
 
-  // Row 0: blockquote, Row 1: author photo + name (+ optional role), Row 2: stats
+  // Row 0: optional logo + blockquote, Row 1: author photo + name + role, Row 2: stats
   const quoteRow = rows[0];
   const authorRow = rows[1];
   const statsRow = rows[2];
@@ -11,12 +12,12 @@ export default async function decorate(block) {
   const authorCell = authorRow?.querySelector(':scope > div');
   const statsCell = statsRow?.querySelector(':scope > div');
 
+  const logoImg = quoteCell?.querySelector('picture img');
   const blockquoteEl = quoteCell?.querySelector('blockquote');
   const authorImg = authorCell?.querySelector('img');
   const strongEl = authorCell?.querySelector('strong');
   const authorName = strongEl?.textContent?.trim();
 
-  // Author role: any paragraph in the author cell that isn't the picture or the strong name
   const authorParagraphs = authorCell ? [...authorCell.querySelectorAll(':scope > p')] : [];
   const roleP = authorParagraphs.find((p) => !p.querySelector('picture') && !p.querySelector('strong') && p.textContent.trim());
   const authorRole = roleP?.textContent?.trim();
@@ -26,9 +27,19 @@ export default async function decorate(block) {
   const layout = document.createElement('div');
   layout.className = 'testimonials-layout';
 
-  // Quote card (dark)
   const quoteCard = document.createElement('div');
   quoteCard.className = 'quote-card';
+
+  if (logoImg) {
+    const logoWrap = document.createElement('div');
+    logoWrap.className = 'quote-logo';
+    const img = document.createElement('img');
+    img.src = logoImg.getAttribute('src') || logoImg.src;
+    img.alt = logoImg.alt || '';
+    img.loading = 'lazy';
+    logoWrap.appendChild(img);
+    quoteCard.appendChild(logoWrap);
+  }
 
   if (blockquoteEl) {
     quoteCard.appendChild(blockquoteEl);
@@ -63,7 +74,6 @@ export default async function decorate(block) {
   quoteCard.appendChild(authorDiv);
   layout.appendChild(quoteCard);
 
-  // Stats card (grey)
   if (statsCell) {
     const statsCard = document.createElement('div');
     statsCard.className = 'stats-card';

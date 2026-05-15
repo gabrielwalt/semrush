@@ -36,6 +36,12 @@
   font-family: var(--heading-font-family);
 }
 
+.quote-card .quote-logo img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
 .quote-card blockquote {
   font-size: 26px;
   font-weight: 500;
@@ -46,18 +52,20 @@
   border: none;
 }
 
-.quote-card blockquote::before {
+.quote-card blockquote p::before {
   content: '';
   display: inline-block;
   width: 27px;
   height: 20px;
-  margin-bottom: var(--space-xs);
+  margin-right: 12px;
+  vertical-align: middle;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='19' height='14' viewBox='0 0 19 14' fill='none'%3E%3Cpath d='M7.53968 3.22472C6.58466 3.22472 5.78042 3.38202 5.12698 3.69663C4.47355 4.01124 4.14683 4.48315 4.14683 5.11236V5.74157H8.21826V14H0.0753967L0 5.74157C0 3.74906 0.703704 2.30712 2.11111 1.41573C3.56878 0.47191 5.37831 0 7.53968 0V3.22472ZM18.3214 3.22472C17.3664 3.22472 16.5622 3.38202 15.9087 3.69663C15.2553 4.01124 14.9286 4.48315 14.9286 5.11236V5.74157H19V14H10.8571L10.7817 5.74157C10.7817 3.74906 11.4855 2.30712 12.8929 1.41573C14.3505 0.47191 16.1601 0 18.3214 0V3.22472Z' fill='%23C190FF'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
 /* stylelint-disable no-descending-specificity */
 .quote-card blockquote p {
   margin: 0;
+  display: inline;
 }
 
 /* Author area */

@@ -29,9 +29,21 @@ grep -r "{old}" --include="*.js" --include="*.css" --include="*.html" --include=
 npm run lint
 ```
 
+## Remote content still uses old name?
+AEM CLI serves HTML from the remote server — you can't rename block classes in remote content without re-publishing. Keep a thin redirect at the old name:
+```js
+// blocks/{old}/{old}.js
+import decorate from '../{new}/{new}.js';
+export default decorate;
+```
+```css
+/* blocks/{old}/{old}.css */
+@import url('../{new}/{new}.css');
+```
+In the new block's CSS, include selectors for BOTH class names. Remove the redirect once content is re-published.
+
 ## Pitfalls
 - EDS auto-generates `.{block}-container` on the section — CSS targeting that class must update
 - Importer table header controls block name in imported content — capitalize correctly
 - PROJECT-BLOCKS.md and PROJECT-STATUS.md reference block names — update those too
-
-See also: `block-rename-in-eds` (workaround when remote content still uses old name)
+- `export { default } from '...'` triggers eslint `no-restricted-exports` — use `import` + `export default`

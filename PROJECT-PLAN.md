@@ -281,7 +281,7 @@ Before starting Phase 1:
 
 ## Phase 6 — Skills Library Improvement
 
-### S01 — 🔲 Open — Fix `vertical-spacing-system` skill (WRONG)
+### S01 — ✅ Done — Fix `vertical-spacing-system` skill (WRONG)
 
 **Priority:** P1 (skill gives incorrect advice)  
 **Files:** `skills/vertical-spacing-system/SKILL.md`  
@@ -290,7 +290,7 @@ Before starting Phase 1:
 
 ---
 
-### S02 — 🔲 Open — Fix `carousel-pattern-eds` skill (incomplete)
+### S02 — ✅ Done — Fix `carousel-pattern-eds` skill (incomplete)
 
 **Priority:** P2  
 **Files:** `skills/carousel-pattern-eds/SKILL.md`  
@@ -299,7 +299,7 @@ Before starting Phase 1:
 
 ---
 
-### S03 — 🔲 Open — Merge `mobile-nav-click-handling` into `nav-header-eds`
+### S03 — ✅ Done — Merge `mobile-nav-click-handling` into `nav-header-eds`
 
 **Priority:** P3  
 **Files:** Delete `skills/mobile-nav-click-handling/`, update `skills/nav-header-eds/SKILL.md`, update `skills/README.md`  
@@ -308,7 +308,7 @@ Before starting Phase 1:
 
 ---
 
-### S04 — 🔲 Open — Merge `block-rename-in-eds` into `block-rename-checklist`
+### S04 — ✅ Done — Merge `block-rename-in-eds` into `block-rename-checklist`
 
 **Priority:** P3  
 **Files:** Delete `skills/block-rename-in-eds/`, update `skills/block-rename-checklist/SKILL.md`, update `skills/README.md`  
@@ -326,7 +326,7 @@ Before starting Phase 1:
 
 ---
 
-### S06 — 🔲 Open — Remove `.full-width` duplication from `eds-code-conventions`
+### S06 — ✅ Done — Remove `.full-width` duplication from `eds-code-conventions`
 
 **Priority:** P3  
 **Files:** `skills/eds-code-conventions/SKILL.md`  
@@ -334,7 +334,7 @@ Before starting Phase 1:
 
 ---
 
-### S07 — 🔲 Open — Add missing knowledge to existing skills
+### S07 — ✅ Done — Add missing knowledge to existing skills
 
 **Priority:** P2  
 **Files:** Multiple skills  

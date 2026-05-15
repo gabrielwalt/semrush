@@ -59,8 +59,7 @@ Load these before making changes — they prevent regressions and guesswork.
 
 | Skill | Load when... |
 |-------|-------------|
-| [nav-header-eds](nav-header-eds/SKILL.md) | Header broken; nav invisible; mega menu won't animate; sticky not working; transparent bg issues |
-| [mobile-nav-click-handling](mobile-nav-click-handling/SKILL.md) | Mobile nav closes when tapping sub-items; click delegation issues; `closeOnFocusLost` closing early |
+| [nav-header-eds](nav-header-eds/SKILL.md) | Header broken; nav invisible; mega menu won't animate; sticky not working; transparent bg issues; mobile click delegation |
 
 ---
 
@@ -101,8 +100,7 @@ Load these before making changes — they prevent regressions and guesswork.
 
 | Skill | Load when... |
 |-------|-------------|
-| [block-rename-checklist](block-rename-checklist/SKILL.md) | Renaming a block — name propagates to 12+ locations |
-| [block-rename-in-eds](block-rename-in-eds/SKILL.md) | Renaming a block when remote content still uses the old name |
+| [block-rename-checklist](block-rename-checklist/SKILL.md) | Renaming a block — name propagates to 12+ locations; includes remote content redirect pattern |
 
 ---
 

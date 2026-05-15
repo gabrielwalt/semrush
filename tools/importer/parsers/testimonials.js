@@ -23,10 +23,23 @@ export default function parse(element, { document }) {
     wrapper.appendChild(h2);
   }
 
+  const logoImgEl = element.querySelector('img.mp-client-testimonials__logo-img, .mp-client-testimonials__logo img');
+
   const rows = [['Testimonials']];
 
-  // Row 1: quote
+  // Row 1: logo + quote
   const quoteCell = document.createElement('div');
+  if (logoImgEl) {
+    const pic = document.createElement('picture');
+    const img = document.createElement('img');
+    const logoSrc = logoImgEl.getAttribute('src') || '';
+    img.src = logoSrc.startsWith('/') ? `https://www.semrush.com${logoSrc}` : logoSrc;
+    img.alt = logoImgEl.alt || '';
+    pic.appendChild(img);
+    const p = document.createElement('p');
+    p.appendChild(pic);
+    quoteCell.appendChild(p);
+  }
   if (quote) {
     const bq = document.createElement('blockquote');
     bq.textContent = quote.textContent.trim();

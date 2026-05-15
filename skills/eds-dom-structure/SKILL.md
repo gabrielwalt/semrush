@@ -23,6 +23,17 @@ main > .section.{block}-container
 | Adjacent wrappers | `[class$="-wrapper"] + [class$="-wrapper"]` |
 | Block root in decorate() | `block` argument (already the `.block` element) |
 
+## Block table inner DOM (multi-cell rows)
+Inside the `.block` element, EDS transforms authored table rows into nested divs:
+```
+.block > div (row 1)
+  ├── div (cell 1)
+  └── div (cell 2)
+.block > div (row 2)
+  └── div (single cell)
+```
+For a single-row block with N cells: `.block > div > div:nth-child(1..N)`. The selector `.block > div > div` targets the FIRST cell, not the row. To target all cells, use `.block > div > div` (matches each cell div). For multi-cell blocks like footer-links (5 columns in one row), the 5 column `<div>`s are children of the single row `<div>`.
+
 ## Pitfalls
 - `.section.{block}-container` is on the **section**, not the block — confusing naming
 - Section metadata disappears from DOM after decoration — only its classes remain

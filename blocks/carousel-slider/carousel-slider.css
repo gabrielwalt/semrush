@@ -125,11 +125,11 @@
 }
 
 .carousel-slider:not(.carousel-slider-expansible) > div > div:last-child h3 {
-  font-size: var(--font-size-body-m);
+  font-size: 21px;
   font-weight: 600;
   color: var(--dark-color);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.35;
   letter-spacing: var(--tracking-snug);
 }
 
@@ -155,8 +155,7 @@
   font-size: var(--font-size-caption);
   font-weight: 500;
   color: var(--color-muted);
-  margin-top: auto;
-  padding-top: var(--space-s);
+  margin-top: var(--space-m);
   line-height: 1.4;
   letter-spacing: var(--tracking-snug);
 }

@@ -25,5 +25,7 @@ Always frame as a suggestion: *"The next step would be X — shall I go ahead?"*
 ## Pitfalls
 - Don't skip Phase 1 validation — broken content structure is harder to fix after styling
 - Re-import flattens section boundaries — maintain section-div structure by hand after
+- **`run-bulk-import.js` overwrites `content/*.plain.html` directly** with no output-dir flag. ALWAYS back up curated content before running, or restore from AEM endpoint after: `curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o content/<path>.plain.html`
+- Footer blocks must be in a **single section** (no `<hr>` separators) — otherwise EDS renders horizontal rules between them
 
 See also: `eds-content-modeling` (content decisions), `importer-parser-patterns` (writing parsers), `project-import-script-bundling` (running imports)
