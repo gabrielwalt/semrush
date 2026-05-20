@@ -80,22 +80,27 @@ function decorateButtons(main) {
     } catch { /* continue */ }
 
     // require authored formatting for buttonization
-    const strong = a.closest('strong');
-    const em = a.closest('em');
+    const strong = a.closest('strong') || a.querySelector(':scope > strong');
+    const em = a.closest('em') || a.querySelector(':scope > em');
     if (!strong && !em) return;
 
     p.className = 'button-wrapper';
     a.className = 'button';
     if (strong && em) { // high-impact call-to-action
       a.classList.add('accent');
-      const outer = strong.contains(em) ? strong : em;
-      outer.replaceWith(a);
+      const outer = a.closest('strong') || a.closest('em');
+      if (outer) outer.replaceWith(a);
+      else a.replaceChildren(a.textContent);
     } else if (strong) {
       a.classList.add('primary');
-      strong.replaceWith(a);
+      const outer = a.closest('strong');
+      if (outer) outer.replaceWith(a);
+      else a.replaceChildren(a.textContent);
     } else {
       a.classList.add('secondary');
-      em.replaceWith(a);
+      const outer = a.closest('em');
+      if (outer) outer.replaceWith(a);
+      else a.replaceChildren(a.textContent);
     }
   });
 }

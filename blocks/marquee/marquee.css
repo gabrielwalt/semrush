@@ -18,7 +18,8 @@
   gap: 60px;
   padding-right: 60px;
   flex-shrink: 0;
-  animation: marquee-scroll 100s linear infinite;
+  animation: marquee-scroll 25s linear infinite;
+  will-change: transform;
 }
 
 .marquee .marquee-track picture,

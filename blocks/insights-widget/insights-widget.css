@@ -222,8 +222,8 @@
 
 /* Submit button */
 .insights-widget-submit {
-  background: var(--accent-color);
-  color: var(--dark-color);
+  background: #000;
+  color: #fff;
   border: none;
   border-radius: var(--radius-pill);
   padding: 0 32px;
@@ -236,7 +236,7 @@
 }
 
 .insights-widget-submit:hover {
-  background: var(--accent-hover);
+  background: #222;
 }
 
 @media (width < 768px) {
