@@ -2,7 +2,7 @@
 
 Each skill is a directory with a `SKILL.md` file. Scan the "Load when..." column — if a trigger matches your situation, read that skill in full before proceeding.
 
-To create a new skill: see `writing-skills/SKILL.md` and copy `_template.md`.
+To create a new skill: **LOAD `writing-skills/SKILL.md` in full before writing anything.** Then copy `_template.md`.
 
 **Context budget:** Only the "Always load" skills are read every session. All other skills are loaded on demand via trigger matching. Do not load skills speculatively — load them when the trigger fires.
 
@@ -38,6 +38,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | [regression-guard](regression-guard/SKILL.md) | About to edit CSS in `styles.css`, block wrappers, or any shared selector |
 | [measure-first](measure-first/SKILL.md) | About to write a px value from memory; guessing at sizing, spacing, or color |
 | [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
+| [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content |
 
 ---
 

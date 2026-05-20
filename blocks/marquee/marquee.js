@@ -9,15 +9,10 @@ export default async function decorate(block) {
   if (!cell) return;
 
   const items = [];
-  cell.querySelectorAll(':scope > *').forEach((el) => {
+  cell.querySelectorAll('img, picture').forEach((el) => {
     if (el.tagName === 'PICTURE') {
       items.push(el);
-    } else if (el.querySelector('picture')) {
-      items.push(el.querySelector('picture'));
-    } else if (el.querySelector('img')) {
-      const img = el.querySelector('img');
-      if (img.src && img.src !== 'about:error') items.push(img);
-    } else if (el.textContent.trim()) {
+    } else if (!el.closest('picture')) {
       items.push(el);
     }
   });

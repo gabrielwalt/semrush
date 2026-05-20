@@ -31,7 +31,7 @@ Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to w
 - If you encounter the same problem or workaround twice, it's a skill gap — propose capturing it before moving on.
 - After solving a non-obvious problem or being corrected → propose a new skill or an update to an existing one.
 - After multi-step tasks → review surprises and propose distilling them into skills.
-- Skills live in `skills/` — each is a directory with a `SKILL.md` file. See `skills/writing-skills/SKILL.md` for the format guide.
+- Skills live in `skills/` — each is a directory with a `SKILL.md` file. **Before creating or updating any skill, LOAD `skills/writing-skills/SKILL.md` in full first. No exceptions.**
 - Generic skills (reusable across migrations) are named normally; project-specific ones are prefixed `project-`.
 - Generic skills must not hardcode project-specific values — reference `PROJECT-DESIGN.md` or `PROJECT-IMPORT.md`.
 - When creating or updating a skill, add or update its row in `skills/README.md`.

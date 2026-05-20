@@ -1,0 +1,42 @@
+---
+name: debug-block-decoration
+description: Debug blocks that render incorrectly (missing content, partial content, only first item shows). Use when block shows wrong output despite correct authored content. Also triggers on element_context with rendering complaints. Trigger phrases: "only shows one", "missing items", "block not rendering", "images not showing", "looks off", "not displaying".
+---
+
+Block shows partial/no content despite correct authored content → the bug is in `decorate()` JS selector logic. Never chase infrastructure.
+
+## Recipe
+
+1. **When you receive `<element_context>`, that IS the user's live preview.** Navigate to `http://localhost:3000/content/index` (or the relevant path) with playwright and inspect the DOM immediately. Don't navigate to `.html` — use the path without extension.
+2. **Read the block's JS file** — the `decorate()` function. It's usually under 50 lines. Read it before doing anything else.
+3. **Inspect the served DOM** for that block (playwright evaluate on the actual page):
+   - What HTML does the block element contain AFTER decoration?
+   - How many children does the cell have? What are their tags?
+   - Are items individually wrapped or all inside one `<p>`?
+4. **Trace `decorate()` line-by-line** against what you found:
+   - `:scope > *` → only direct children. If items are nested deeper, it misses them.
+   - `querySelector()` → returns FIRST match only. `querySelectorAll()` → returns ALL.
+   - `el.querySelector('img')` on a `<p>` with 12 images → returns only image #1.
+5. **Fix the selector.** Safest pattern for collecting all images:
+
+```js
+const items = [];
+cell.querySelectorAll('img, picture').forEach((el) => {
+  if (el.tagName === 'PICTURE') items.push(el);
+  else if (!el.closest('picture')) items.push(el);
+});
+```
+
+6. **Verify on localhost:3000** with playwright — confirm all items now render.
+
+## Pitfalls
+
+- `querySelector('img')` inside a wrapper with 12 images → returns only the first one. #1 cause of "only one item shows".
+- `:scope > *` misses nested content — if EDS wraps items in `<p>`, direct-child selectors skip them.
+- Never modify content files to work around a JS bug — if content is correct in the editor, block code is wrong.
+- Never hardcode fallback URLs in block JS — masks bugs, creates debt.
+- Don't theorize about CDN/auth/pipeline before reading the `decorate()` function. Read the code FIRST.
+- The user's preview IS localhost:3000 (proxied via preview-aemcoder.adobe.io). Same server, same content, same auth.
+- If your first theory is wrong, stop theorizing and read the block's `decorate()` function. Do not propose a second theory without having read the code.
+
+See also: `eds-dom-structure` (block DOM nesting), `verify-before-claiming` (confirm fix on user's URL)
