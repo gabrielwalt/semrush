@@ -1,6 +1,6 @@
 ---
 name: project-glass-surface-pattern
-description: Frosted glass/translucent frame effect for images and videos. Combines gradient, backdrop blur, border-radius, and semi-transparent border.
+description: Build a frosted-glass/translucent frame around an image or video (gradient + backdrop blur + border-radius + semi-transparent border). Use when a media element needs the glass-frame treatment, on light or dark backgrounds.
 ---
 
 ## Recipe

@@ -36,7 +36,6 @@ Load these before making changes — they prevent regressions and guesswork.
 | Skill | Load when... |
 |-------|-------------|
 | [regression-guard](regression-guard/SKILL.md) | About to edit CSS in `styles.css`, block wrappers, or any shared selector |
-| [measure-first](measure-first/SKILL.md) | About to write a px value from memory; guessing at sizing, spacing, or color |
 | [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
 | [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content |
 
@@ -49,8 +48,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | [css-specificity-eds](css-specificity-eds/SKILL.md) | A CSS rule isn't applying; computed style shows wrong value |
 | [eds-dom-structure](eds-dom-structure/SKILL.md) | Selector doesn't match; need to know where EDS puts blocks in the DOM |
 | [vertical-spacing-system](vertical-spacing-system/SKILL.md) | Blocks touching with no gap; sections too far apart; page rhythm wrong |
-| [full-width-escape-hatch](full-width-escape-hatch/SKILL.md) | Block needs to escape max-width container; tempted to write `!important` on wrapper |
-| [max-width-container-pattern](max-width-container-pattern/SKILL.md) | Setting up or debugging global layout constraints (max-width, centering) |
+| [full-width-escape-hatch](full-width-escape-hatch/SKILL.md) | Setting up the max-width container; block needs to escape it; tempted to write `!important` on wrapper |
 | [stylelint-no-descending-specificity](stylelint-no-descending-specificity/SKILL.md) | Fixing stylelint `no-descending-specificity` errors |
 | [eds-code-conventions](eds-code-conventions/SKILL.md) | Writing block CSS or JS; reviewing code for EDS standards |
 
@@ -82,8 +80,7 @@ Load these before making changes — they prevent regressions and guesswork.
 |-------|-------------|
 | [carousel-pattern-eds](carousel-pattern-eds/SKILL.md) | Building horizontal scrolling carousel with right-edge bleed |
 | [video-in-eds](video-in-eds/SKILL.md) | Implementing video; EDS rewrites video URLs in link hrefs |
-| [measure-then-implement](measure-then-implement/SKILL.md) | Need to match exact dimensions, colors, or hover states from the original site |
-| [responsive-verification](responsive-verification/SKILL.md) | Checking a component across viewport widths; original behaves differently at certain sizes |
+| [measure-then-implement](measure-then-implement/SKILL.md) | Matching exact dimensions, colors, hover states, or responsive behavior; about to write a px value from memory |
 
 ---
 
@@ -93,7 +90,6 @@ Load these before making changes — they prevent regressions and guesswork.
 |-------|-------------|
 | [importer-parser-patterns](importer-parser-patterns/SKILL.md) | Writing a block parser; parser validation failing; content structure questions |
 | [eds-migration-process](eds-migration-process/SKILL.md) | Starting a new page migration; deciding what to import next |
-| [eds-troubleshooting](eds-troubleshooting/SKILL.md) | Stuck on an EDS issue; need to search official docs |
 
 ---
 

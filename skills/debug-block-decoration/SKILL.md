@@ -1,6 +1,6 @@
 ---
 name: debug-block-decoration
-description: Debug blocks that render incorrectly (missing content, partial content, only first item shows). Use when block shows wrong output despite correct authored content. Also triggers on element_context with rendering complaints. Trigger phrases: "only shows one", "missing items", "block not rendering", "images not showing", "looks off", "not displaying".
+description: Debug a block whose decorate() JS emits wrong DOM — missing, partial, or duplicated items — even though the authored content is correct. Use when content is right in the editor but the rendered block drops items. Trigger phrases "only shows one", "missing items", "only the first image", "block not rendering items", "images not showing". NOT for styling/visual-mismatch issues (use css-specificity-eds or block-visual-iteration).
 ---
 
 Block shows partial/no content despite correct authored content → the bug is in `decorate()` JS selector logic. Never chase infrastructure.

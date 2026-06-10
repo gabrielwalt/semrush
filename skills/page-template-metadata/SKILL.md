@@ -1,6 +1,6 @@
 ---
 name: page-template-metadata
-description: Page-level template metadata in EDS. Use when applying page-level styles that differ between page types via metadata template classes.
+description: Apply page-wide styles in EDS via a template metadata class on <body>. Use when one page type needs different styling from another and you need a body-level class (e.g. body.homepage) to scope CSS — instead of :has() or per-block overrides.
 ---
 
 EDS reads `<meta name="template">` and applies it as a class on `document.body`.

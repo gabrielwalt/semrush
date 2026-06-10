@@ -1,6 +1,6 @@
 ---
 name: eds-dom-structure
-description: EDS section and block DOM structure. Use when a CSS selector doesn't match, block spacing is broken, or you need to understand where EDS places blocks in the DOM tree.
+description: EDS section and block DOM structure — the wrapper/container/block chain and how authored table rows become nested cell divs. Use when a CSS selector doesn't match, you need to know where EDS places blocks in the DOM tree, or you need to look up an EDS platform feature in the official aem.live docs.
 ---
 
 Blocks are NOT children of the section's inner `<div>`. They're **siblings** at the section level, each in their own `-wrapper > -container > .block` chain.
@@ -40,5 +40,15 @@ For a single-row block with N cells: `.block > div > div:nth-child(1..N)`. The s
 - Never add `{block}-wrapper` or `{block}-container` classes in JS — reserved by EDS
 - EDS wraps `<img>` in `<picture>` only when img is direct child of `<div>` — detect both: `el.querySelector('picture') || el.querySelector('img')`
 - Making a section `display: flex` for side-by-side blocks: the `[class$="-wrapper"] + [class$="-wrapper"]` spacing rule will misalign — override `margin-top: 0` on wrappers in that section
+
+## EDS docs lookup
+When stuck on a platform feature, full-text search the official docs (also in AGENTS.md):
+```bash
+curl -s https://www.aem.live/docpages-index.json | jq -r '.data[] | select(.content | test("KEYWORD"; "i")) | "\(.path): \(.title)"'
+```
+Or Google `site:www.aem.live <query>`.
+
+## Pitfall: local vs remote serving
+AEM CLI serves the main page from the remote origin — local `.plain.html` edits don't change `localhost:3000/path`. Only `localhost:3000/path.plain.html` serves the local file.
 
 See also: `css-specificity-eds` (why selectors don't apply), `vertical-spacing-system` (block spacing rules)

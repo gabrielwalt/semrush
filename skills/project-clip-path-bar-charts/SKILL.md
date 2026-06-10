@@ -1,6 +1,6 @@
 ---
 name: project-clip-path-bar-charts
-description: Horizontal bar charts with arrow/pyramid-shaped bars using clip-path polygon. Calculate widths proportionally from data values.
+description: Build horizontal bar charts with arrow/pyramid-shaped bars via clip-path polygon, widths calculated proportionally from data values. Use when implementing a ranked bar chart with angled/triangular bar ends (e.g. the AI Visibility Index).
 ---
 
 ## Recipe

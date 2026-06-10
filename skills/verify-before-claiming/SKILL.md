@@ -27,7 +27,7 @@ Never declare work complete based on having written the code. Verify the outcome
 ## Pitfalls
 - "It should work" is a guess, not verification.
 - Lint passing is necessary but not sufficient — visual verification is required.
-- Measuring your implementation instead of the original — load `measure-first` when matching values.
+- Measuring your implementation instead of the original — load `measure-then-implement` when matching values.
 - Verifying one instance of a repeated element and assuming all are fixed.
 - A prior verification becoming stale after subsequent code changes.
 - A fix that works locally but relies on non-tracked assets (gitignored files, local-only state).

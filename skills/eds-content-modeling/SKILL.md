@@ -1,6 +1,6 @@
 ---
 name: eds-content-modeling
-description: EDS content modeling and authoring structure. Use when deciding what goes in blocks vs default content, choosing between variants and new blocks, structuring rows and cells, or applying section/page styling context.
+description: Decisions about how to model authored content in EDS — what goes in a block vs default content, when to make a new block vs a variant, how to structure rows/cells, and which styling context (block variant, section style, page template) to use. Use when planning a block's authoring structure, not when debugging how EDS renders it (see eds-content-patterns for runtime decoration).
 ---
 
 Content structure decisions determine how easy a page is for authors to maintain. Every choice here affects the authoring experience months from now.
@@ -15,12 +15,7 @@ Content structure decisions determine how easy a page is for authors to maintain
 - Keep content structure consistent across similar blocks. If one uses `[h2, p, CTA]` in a text cell, don't make another use `[h2]` in row 1 and `[p, CTA]` in row 2 for the same logical content.
 
 ## CTA link formatting convention
-Links wrapped in formatting become buttons during decoration — everywhere, in default content and inside blocks:
-- `<strong><a>` → **primary** button (solid filled) — main action
-- `<em><a>` → **secondary** button (outline/ghost) — alternative action
-- `<strong><em><a>` → **accent** button (high-impact) — use sparingly
-- Block JS must not strip button formatting — style `.button` elements within the block's CSS scope
-- Import parsers must detect the visual weight of source CTAs and apply the matching wrapper — never hardcode one style
+Links wrapped in `<strong>`/`<em>`/`<strong><em>` become primary/secondary/accent buttons during decoration — in default content and inside blocks alike. Import parsers must detect the source CTA's visual weight and emit the matching wrapper; block JS must not strip the formatting. Full mapping and decoration rules: `eds-content-patterns`.
 
 ## Styling context: variants, section styles, page templates
 All three add a context-specific class name:

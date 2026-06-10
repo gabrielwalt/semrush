@@ -7,31 +7,15 @@ Before writing a single line of code, you must understand the task well enough t
 
 ## Step 1 — Read the task and classify it
 
-Check the **Type** label: `Gap` or `Enhancement`.
+Check the **Type** label (`Gap` or `Enhancement`); if absent, infer it. See `writing-plan-tasks` for the full Gap-vs-Enhancement definition and how to verify each.
 
-- **Gap** = current implementation differs from the original site. You verify by comparing both.
-- **Enhancement** = new behavior not on the original site. You verify by inspecting localhost only.
-
-If the task has no Type label, infer it: "fix", "missing", "wrong", "broken" → Gap. "Add", "change", "make it" → Enhancement.
+- **Gap** = differs from the original site → verify by comparing both sites.
+- **Enhancement** = new behavior not on the original → verify on localhost only.
 
 ## Step 2 — Confirm the problem exists (BEFORE coding)
 
-### For Gap tasks
-
-1. Open the **original site** at the URL noted in the task. Navigate to the section/element.
-2. Inspect the element — note the specific property, value, or DOM structure described.
-3. Open **localhost**. Navigate to the same area. Inspect the same element.
-4. **Confirm the delta is real and matches the task description.** If you see what the task describes, proceed. If not:
-   - Maybe the task was already fixed by a prior task → mark it `✅ Done` with a note.
-   - Maybe the description is wrong → re-inspect more carefully. Check parent/sibling elements.
-   - **If after careful inspection you still can't see the gap: STOP. Ask the user.** Do not implement a fix for a problem you can't see — you'll change something random and may introduce a regression.
-
-### For Enhancement tasks
-
-1. Open **localhost**. Navigate to the section/element.
-2. **Confirm the current state matches what the task describes.** If the task says "button is not rounded" and the button IS already rounded → the task may be stale or already done.
-3. **If the current state already matches the requested outcome:** STOP. Ask the user: "It appears [thing] is already [requested state] — should I still make changes?"
-4. If the current state matches the "before" description in the task, proceed.
+- **Gap:** inspect the element on the original AND localhost. Confirm the delta is real and matches the task. If already fixed → mark `✅ Done`. If you still can't see the gap after careful inspection → **STOP, ask the user.** Never fix a problem you can't see.
+- **Enhancement:** inspect localhost. Confirm the current state matches the task's "before". If it already matches the requested outcome → **STOP, ask the user.**
 
 ## Step 3 — Implement
 
@@ -76,4 +60,4 @@ Only after verification passes:
 - "It should work" is not verification. "I confirmed `margin-bottom` is now `12px`" is verification.
 - Iterating 3+ times on the same fix → you're going in circles. Stop and ask.
 
-See also: `writing-plan-tasks` (how tasks should be structured), `verify-before-claiming` (never say "done" without checking), `measure-first` (measure values, don't guess), `regression-guard` (check for side-effects), `block-visual-iteration` (systematic visual comparison workflow)
+See also: `writing-plan-tasks` (how tasks should be structured), `verify-before-claiming` (never say "done" without checking), `measure-then-implement` (measure values, don't guess), `regression-guard` (check for side-effects), `block-visual-iteration` (systematic visual comparison workflow)

@@ -6,11 +6,11 @@
 
 ## Current Focus
 
-**Last updated:** 2026-05-14  
+**Last updated:** 2026-06-10  
 **Branch:** `aem-merged-20260513`  
-**Active task:** C01 — Codebase cleanup Phase 1 (dead code removal)  
-**Last completed:** R01–R06 (refinement), footer layout, carousel alignment, spacing unification  
-**Next up:** Execute cleanup plan C01–C15, then push code + re-upload content to DA  
+**Active task:** Skill library audit complete (S08, S05)  
+**Last completed:** Audited skills against Anthropic best practices — 39→35 (merged 3, cut 1), fixed wrong `* + *` advice, de-duplicated repeated notes  
+**Next up:** Remaining open plan tasks C07, C09, Q08; then push code + re-upload content to DA  
 **Blocker:** Content changes need DA re-upload: marquee section-flush metadata, resource descriptions, testimonial role, footer single-section
 
 ---

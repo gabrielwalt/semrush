@@ -317,12 +317,20 @@ Before starting Phase 1:
 
 ---
 
-### S05 — 🔲 Open — Trim oversized skills
+### S05 — ✅ Done — Trim oversized skills
 
 **Priority:** P3  
-**Files:** `skills/writing-plan-tasks/SKILL.md` (133→~60 lines), `skills/executing-plan-tasks/SKILL.md` (79→~40 lines)  
-**Why:** Both exceed the ~40-line target by 2-3x due to duplicated Gap/Enhancement templates.  
-**Action:** Extract the shared template structure, remove repetition between Gap and Enhancement sections.
+**Files:** `skills/writing-plan-tasks/SKILL.md` (133→85 lines), `skills/executing-plan-tasks/SKILL.md` (79→63 lines)  
+**Why:** Both exceeded the ~40-line target due to duplicated Gap/Enhancement templates.  
+**Action:** Consolidated the per-type sections into shared structure; `writing-plan-tasks` now owns the Gap-vs-Enhancement definition, `executing-plan-tasks` references it.
+
+---
+
+### S08 — ✅ Done — Skill library audit (39 → 35 skills)
+
+**Priority:** P2  
+**Why:** Library had grown to 39 skills with duplication and low-value entries diluting context.  
+**Action:** Scored every skill against Anthropic's skill-authoring best practices (non-obviousness, EDS-specificity, recipe-ness, uniqueness, trigger quality). Merged `measure-first` + `responsive-verification` → `measure-then-implement`; merged `max-width-container-pattern` → `full-width-escape-hatch`; cut `eds-troubleshooting` (docs-search folded into `eds-dom-structure`). Fixed factually-wrong `* + *` advice in `css-specificity-eds`. De-duplicated the sticky/overflow, CTA-button, and run-bulk-import notes to single owners + cross-refs. Updated `skills/README.md` index.
 
 ---
 

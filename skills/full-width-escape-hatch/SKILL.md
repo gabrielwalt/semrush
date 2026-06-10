@@ -1,9 +1,20 @@
 ---
 name: full-width-escape-hatch
-description: Making a block span the full viewport width while the global container constrains everything else. Load when a block needs to escape max-width, about to write !important on a wrapper, or need full-bleed background.
+description: Global max-width container constraint and the full-width escape hatch. Load when setting up the container/centering pattern, a block needs to escape max-width, about to write !important on a wrapper, or need a full-bleed background.
 ---
 
 Never use `max-width: none !important` or `padding: 0 !important` on block wrappers. The `.full-width` utility class handles this globally and cleanly.
+
+## The container constraint (where max-width lives)
+Sections (`main > .section`) have NO max-width — they span the full viewport so backgrounds can bleed edge-to-edge. The constraint goes on the block wrapper div:
+```css
+main > .section > div {
+  max-width: var(--container-max-width);
+  margin: auto;
+  padding: 0 var(--container-padding);
+}
+```
+A full-width block opts out by adding `.full-width` to its wrapper (recipe below).
 
 ## Recipe
 ```js
@@ -33,4 +44,4 @@ That's it. No CSS changes needed in the block file.
 - Blocks without a `decorate()` JS file need a minimal JS file added to set the class
 - Using `!important` in block CSS — violates project rules, use this pattern instead
 
-See also: `max-width-container-pattern` (full layout constraint system), `eds-code-conventions` (no !important rule)
+See also: `eds-code-conventions` (no !important rule), `eds-dom-structure` (wrapper chain)

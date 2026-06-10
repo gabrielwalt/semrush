@@ -1,6 +1,6 @@
 ---
 name: vertical-spacing-system
-description: EDS vertical spacing system. Use when blocks are touching with no gap, sections are too far apart, or page rhythm needs adjusting.
+description: EDS vertical spacing system — section padding plus the `* + *` block-margin rule, and the section/block spacing variants. Use when blocks touch with no gap, sections are too far apart, page rhythm is off, or position:sticky fails because an ancestor has overflow:hidden.
 ---
 
 Sections use padding for vertical rhythm. Blocks are spaced via `margin-top` on the universal `* + *` sibling selector. First/last child margins are zeroed so section padding handles the edges.

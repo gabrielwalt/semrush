@@ -1,6 +1,6 @@
 ---
 name: eds-content-patterns
-description: How EDS decorates authored content into interactive elements. Use when CTA links aren't rendering as buttons, button styles are wrong, or decorateButtons() isn't triggering.
+description: How EDS's runtime decoration turns authored HTML into interactive elements — the strong/em-wrapped-link → button mapping in particular. Use when a CTA link isn't becoming a button, the button variant (primary/secondary/accent) is wrong, or decorateButtons() isn't firing. For choosing which CTA style to author, see eds-content-modeling.
 ---
 
 EDS transforms authored HTML patterns into decorated elements at runtime. The most common: links wrapped in `<strong>` or `<em>` become styled CTA buttons.

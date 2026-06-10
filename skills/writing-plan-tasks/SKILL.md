@@ -7,81 +7,33 @@ A plan task that the implementing agent can't independently verify will cause fi
 
 ## Step 0 — classify the task type
 
-Every task is one of two types. **Label it explicitly** in the task header.
+Every task is **Gap** or **Enhancement**. Label it `**Type:** Gap|Enhancement` right after the priority line.
 
 | Type | Meaning | How to verify |
 |------|---------|---------------|
-| **Gap** | Current implementation differs from the original site | Compare original site vs. localhost — the delta is visible on both |
-| **Enhancement** | New behavior or divergence from the original site | Only the current implementation matters — original site is irrelevant |
+| **Gap** | Current implementation differs from the original site | Compare original site vs. localhost — delta visible on both |
+| **Enhancement** | New behavior diverging from the original site | Only the current implementation matters — original is irrelevant |
 
-Infer the type from context: if the user says "fix", "missing", "wrong", "broken", "doesn't match" → **Gap**. If the user says "add", "change to", "make it", "I want" (something not on the original) → **Enhancement**.
+Infer from wording: "fix / missing / wrong / broken / doesn't match" → **Gap**. "add / change to / make it / I want" → **Enhancement**.
 
-**Label it:** put `**Type:** Gap` or `**Type:** Enhancement` right after the priority line.
+## Step 1 — Verify the premise yourself BEFORE writing the task
 
----
+Do not transcribe the user's words — confirm the situation first.
 
-## Writing a Gap task
+- **Gap:** open the original site AND localhost at the same section. Identify the specific delta (element, CSS property, missing node, wrong value). If you **can't see the gap** → STOP, ask the user to point to the exact difference.
+- **Enhancement:** open localhost. Confirm the thing to change exists in its current form. If the request is **ambiguous or already in the requested state** → STOP, ask the user to clarify.
 
-### 1. Verify the gap yourself BEFORE writing the task
+## Step 2 — Describe it in concrete terms
 
-Do not transcribe the user's words. First:
+- **Gap:** `What's wrong` (observable delta, actual vs expected) · `Evidence` (selector, computed values) · `Root cause` (missing rule / JS error / content gap) · `Fix approach`.
+- **Enhancement:** `Current state` · `Requested change` (specific outcome) · `Implementation` (what/where/value).
 
-1. **Open the original site** — navigate to the exact section/block the user describes.
-2. **Open the current implementation** — navigate to the same area on localhost.
-3. **Identify the specific delta** — what exactly differs? Name the element, CSS property, missing DOM node, wrong value.
-4. **If you cannot see the gap**: STOP. Ask the user: "I inspected [element] on both sites and they appear identical — could you point me to the exact difference?"
+## Step 3 — Write verifiable steps
 
-### 2. Describe the gap in concrete terms
+Numbered steps the implementing agent MUST do. Each step names an element, property, and concrete value — never "confirm it looks right".
 
-| Section | Purpose |
-|---------|---------|
-| **What's wrong** | Observable delta — element, property, actual vs. expected value. Specific enough that anyone can point to it. |
-| **Evidence** | How you confirmed it — computed styles, DOM inspection, measurements. Exact selector, property, values. |
-| **Root cause** | Why it's wrong — missing CSS rule, JS logic error, content gap. |
-| **Fix approach** | What to change, where, and what value. |
-
-### 3. Write verification steps for Gap tasks
-
-```
-**Verification (implementing agent MUST do all):**
-1. Open original site → navigate to [section]. Inspect [element]. Note [property] = [value].
-2. Open localhost → same section. Confirm gap: [property] = [wrong value].
-3. Implement fix in [file].
-4. Reload localhost → inspect same element. Confirm [property] now = [expected value].
-5. Visually compare both sites at same viewport. Confirm no regressions.
-6. If gap persists after fix: re-inspect original. After 2 failed attempts, stop and ask user.
-```
-
----
-
-## Writing an Enhancement task
-
-### 1. Verify you understand the request BEFORE writing the task
-
-The original site is irrelevant — only the current implementation matters.
-
-1. **Open localhost** — navigate to the area the user describes.
-2. **Confirm the current state** — verify the thing the user wants to change actually exists in its current form. If the user says "make the button rounded" and it's already rounded → ask the user what they mean rather than guessing.
-3. **If the request is ambiguous**: STOP. Ask the user: "I see [current state]. Could you clarify what you'd like changed?"
-
-### 2. Describe the enhancement in concrete terms
-
-| Section | Purpose |
-|---------|---------|
-| **Current state** | What exists now — element, property, current value. |
-| **Requested change** | What the user wants — specific outcome, not vague intent. |
-| **Implementation** | What to change, where, and what value. |
-
-### 3. Write verification steps for Enhancement tasks
-
-```
-**Verification (implementing agent MUST do all):**
-1. Open localhost → navigate to [section]. Confirm current state: [element] has [current property/value].
-2. Implement change in [file].
-3. Reload localhost → confirm [element] now has [new expected property/value].
-4. Confirm no regressions on surrounding elements.
-5. If unclear whether result matches intent: stop and ask user. Do NOT iterate on assumptions.
-```
+- **Gap:** inspect original → note value · confirm wrong value on localhost · fix in [file] · reload, confirm value now matches original · compare both sites for regressions · after 2 failed attempts, stop and ask.
+- **Enhancement:** confirm current value on localhost · change in [file] · reload, confirm new value · check siblings for regressions · if intent unclear, stop and ask — don't iterate on assumptions.
 
 ---
 
@@ -130,4 +82,4 @@ The original site is irrelevant — only the current implementation matters.
 - Verification steps that say "confirm it looks right" → subjective. Say "confirm `margin-bottom` computes to `12px`" or "confirm element has class `.foo`".
 - Huge tasks with 6+ sub-problems → split. Each task = one verifiable change.
 
-See also: `executing-plan-tasks` (how the implementing agent should work), `verify-before-claiming` (verifying before saying "done"), `measure-first` (measuring before guessing), `regression-guard` (checking for side-effects)
+See also: `executing-plan-tasks` (how the implementing agent should work), `verify-before-claiming` (verifying before saying "done"), `measure-then-implement` (measuring before guessing), `regression-guard` (checking for side-effects)
