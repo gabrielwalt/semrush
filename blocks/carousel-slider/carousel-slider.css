@@ -222,7 +222,7 @@
   grid-row: 1 / 2;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 14px;
   max-width: 330px;
 }
 
@@ -327,13 +327,12 @@
   pointer-events: auto;
 }
 
-/* Large image — absolutely positioned glass frame, overflows card right edge */
+/* Large image — absolutely positioned glass frame, hangs off card right edge (clipped) */
 .carousel-slider-large-img {
   position: absolute;
-  top: -34px;
-  bottom: 0;
-  left: 372px;
-  margin-top: 32px;
+  top: -10px;
+  right: -88px;
+  width: 388px;
   transform: translateX(80px);
   opacity: 0;
   transition: transform 0.4s ease 0.1s, opacity 0.3s ease 0.1s;
@@ -362,6 +361,19 @@
 /* CTA */
 .carousel-slider-content .button-wrapper {
   margin: 0;
+}
+
+/* Expanded-card CTA is black (not the global violet primary) */
+.carousel-slider-content a.button.primary {
+  border-color: var(--dark-color);
+  background: var(--dark-color);
+  color: var(--background-color);
+}
+
+.carousel-slider-content a.button.primary:hover,
+.carousel-slider-content a.button.primary:focus-visible {
+  border-color: rgb(24 30 21 / 85%);
+  background: rgb(24 30 21 / 85%);
 }
 
 /* ==========================================================================

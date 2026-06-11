@@ -50,6 +50,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | [vertical-spacing-system](vertical-spacing-system/SKILL.md) | Blocks touching with no gap; sections too far apart; page rhythm wrong |
 | [full-width-escape-hatch](full-width-escape-hatch/SKILL.md) | Setting up the max-width container; block needs to escape it; tempted to write `!important` on wrapper |
 | [stylelint-no-descending-specificity](stylelint-no-descending-specificity/SKILL.md) | Fixing stylelint `no-descending-specificity` errors |
+| [css-background-shorthand-reset](css-background-shorthand-reset/SKILL.md) | Consolidating background-* into one shorthand; a scaled background image suddenly renders at native size |
 | [eds-code-conventions](eds-code-conventions/SKILL.md) | Writing block CSS or JS; reviewing code for EDS standards |
 
 ---
