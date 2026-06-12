@@ -37,7 +37,7 @@ Load these before making changes — they prevent regressions and guesswork.
 |-------|-------------|
 | [regression-guard](regression-guard/SKILL.md) | About to edit CSS in `styles.css`, block wrappers, or any shared selector |
 | [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
-| [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content |
+| [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content; or a block renders differently across environments ("works on prod but not local") |
 
 ---
 

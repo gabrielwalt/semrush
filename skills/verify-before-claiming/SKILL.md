@@ -5,6 +5,11 @@ description: Protocol for verifying work before reporting it complete. Load ALWA
 
 Never declare work complete based on having written the code. Verify the outcome directly.
 
+## Before theorizing about a symptom
+- **Reproduce the user's exact symptom on the exact route they used.** A different observation on a different route/URL is not their bug — and a tool reporting "X is broken" may just mean your probe was pointed wrong (sanity-check it loaded the runtime / the file exists where you looked).
+- **Go find the disconfirming fact yourself.** "Other blocks work fine" kills a "decoration is broken" theory — don't wait to be corrected.
+- **Envs differ but code+content are byte-identical → stale cache, not a code bug.** Force-reload the specific resource first.
+
 ## After any code change
 1. Re-read the file you edited — confirm the change is exactly as intended.
 2. Run `npm run lint` — zero errors.

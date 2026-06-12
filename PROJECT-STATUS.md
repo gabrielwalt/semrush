@@ -6,12 +6,12 @@
 
 ## Current Focus
 
-**Last updated:** 2026-06-10  
+**Last updated:** 2026-06-11  
 **Branch:** `aem-merged-20260513`  
-**Active task:** Skill library audit complete (S08, S05)  
-**Last completed:** Audited skills against Anthropic best practices — 39→35 (merged 3, cut 1), fixed wrong `* + *` advice, de-duplicated repeated notes  
-**Next up:** Remaining open plan tasks C07, C09, Q08; then push code + re-upload content to DA  
-**Blocker:** Content changes need DA re-upload: marquee section-flush metadata, resource descriptions, testimonial role, footer single-section
+**Active task:** None — investigated two reported rendering discrepancies; both were stale caches, no code defect  
+**Last completed:** Confirmed nav/footer (aem.live) and testimonial role (local) are byte-identical code+content across all envs; nav/footer fixed by force-reloading the .plain.html fragments, role resolves on hard refresh  
+**Next up:** Open plan tasks C07, C09, Q08  
+**Blocker:** None
 
 ---
 
