@@ -198,7 +198,7 @@
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
   background-color: var(--color-teal);
-  background-image: url('/content/images/pattern-toolkit-card.svg');
+  background-image: url('/icons/pattern-toolkit-card.svg');
   background-repeat: no-repeat;
   background-position: bottom right;
   border-radius: var(--radius-s);

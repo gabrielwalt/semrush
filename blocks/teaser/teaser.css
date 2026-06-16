@@ -117,7 +117,7 @@ main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
    ============================================= */
 .teaser.teaser-oneoff-semrush-one .teaser-container {
   background:
-    url('/content/images/semrush-one-bg.svg') no-repeat 50% 50%,
+    url('/icons/semrush-one-bg.svg') no-repeat 50% 50%,
     linear-gradient(182deg, rgb(193 144 255) -4.72%, var(--color-teal) 68.72%, rgb(255 255 255) 152.44%);
   color: var(--dark-color);
 }
@@ -128,7 +128,7 @@ main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
    ============================================= */
 .teaser.teaser-oneoff-enterprise .teaser-container {
   background:
-    url('/content/images/enterprise-bg.webp') no-repeat 100% 100% / contain,
+    url('/icons/enterprise-bg.svg') no-repeat 100% 100% / contain,
     rgb(0 0 0);
 }
 

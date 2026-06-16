@@ -18,8 +18,10 @@ export default async function decorate(block) {
   const strongEl = authorCell?.querySelector('strong');
   const authorName = strongEl?.textContent?.trim();
 
-  const authorParagraphs = authorCell ? [...authorCell.querySelectorAll(':scope > p')] : [];
-  const roleP = authorParagraphs.find((p) => !p.querySelector('picture') && !p.querySelector('strong') && p.textContent.trim());
+  // Use all descendant <p> (not :scope > p) — EDS wrapTextNodes() may wrap the cell's
+  // picture+paragraphs in an outer <p>, so the role paragraph is no longer a direct child.
+  const authorParagraphs = authorCell ? [...authorCell.querySelectorAll('p')] : [];
+  const roleP = authorParagraphs.find((p) => !p.querySelector('picture, strong, p') && p.textContent.trim());
   const authorRole = roleP?.textContent?.trim();
 
   block.innerHTML = '';

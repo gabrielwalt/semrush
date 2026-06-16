@@ -40,7 +40,8 @@ Rules:
 - **Anything translatable or author-managed lives in the content** (`.plain.html`), never injected by JS/CSS. If an author or translator would ever want to change it, it is content.
 - **Scripts must not inject author-managed content** — block JS may build DOM structure, but the words/links inside come from the authored content. Exception: purely functional UI labels (e.g. "Previous slide" aria-labels) — not translatable editorial copy.
 - **Styles must not add content images.** CSS may add *decorative* imagery (background textures, icon glyphs, pattern SVGs). Any image that carries meaning the author manages (a logo, a product shot, a photo) is content and belongs in the authored markup.
-- Litmus test: "Would an author or translator ever need to edit this?" → yes = content; no/decorative = code.
+- **Decorative image files referenced from CSS/JS MUST live in `/icons/` (git-tracked code), never `/content/images/`.** `/content/images/` is author-managed content uploaded separately via the Console — files there are NOT in the code repo and 404 on the local dev server (it proxies them from remote). So a CSS `url()` pointing at `/content/images/` is both a content-ownership violation and a local-render bug. When you add or copy a decorative background, put the asset in `/icons/` and reference `/icons/<name>`. See `eds-section-style-icons`.
+- Litmus test: "Would an author or translator ever need to edit this?" → yes = content; no/decorative = code (in `/icons/`).
 
 ## Blocks vs default content
 - All user-facing text lives in `.plain.html` — never hardcode strings in JS/CSS. Exception: functional UI labels (e.g. "Previous slide" aria-labels).
