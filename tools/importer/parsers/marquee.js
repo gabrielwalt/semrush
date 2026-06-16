@@ -21,7 +21,16 @@ export default function parse(element, { document }) {
     content.appendChild(p);
   });
 
-  const cells = [['Marquee'], [content]];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  const wrapper = document.createElement('div');
+  const table = WebImporter.DOMUtils.createTable([['Marquee'], [content]], document);
+  wrapper.appendChild(table);
+
+  // The marquee always sits in a flush section (zero padding so the logo strip sits tight).
+  const sectionMeta = WebImporter.DOMUtils.createTable(
+    [['Section Metadata'], ['Style', 'section-flush']],
+    document,
+  );
+  wrapper.appendChild(sectionMeta);
+
+  element.replaceWith(wrapper);
 }

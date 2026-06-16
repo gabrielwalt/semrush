@@ -112,7 +112,7 @@ var CustomImportScript = (() => {
       pEl.appendChild(pic);
       videoCell.appendChild(pEl);
     }
-    const videoTable = WebImporter.DOMUtils.createTable([["Video"], [videoCell]], document);
+    const videoTable = WebImporter.DOMUtils.createTable([["Media"], [videoCell]], document);
     wrapper.appendChild(videoTable);
     const sectionMetaTable = WebImporter.DOMUtils.createTable(
       [["Section Metadata"], ["Style", "section-centered"]],
@@ -142,9 +142,15 @@ var CustomImportScript = (() => {
       p.appendChild(picture);
       content.appendChild(p);
     });
-    const cells = [["Marquee"], [content]];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    element.replaceWith(table);
+    const wrapper = document.createElement("div");
+    const table = WebImporter.DOMUtils.createTable([["Marquee"], [content]], document);
+    wrapper.appendChild(table);
+    const sectionMeta = WebImporter.DOMUtils.createTable(
+      [["Section Metadata"], ["Style", "section-flush"]],
+      document
+    );
+    wrapper.appendChild(sectionMeta);
+    element.replaceWith(wrapper);
   }
 
   // tools/importer/parsers/promo-cards-semrush-one.js
@@ -508,8 +514,20 @@ var CustomImportScript = (() => {
       h2.textContent = sectionSubtitle.textContent.trim();
       wrapper.appendChild(h2);
     }
+    const logoImgEl = element.querySelector("img.mp-client-testimonials__logo-img, .mp-client-testimonials__logo img");
     const rows = [["Testimonials"]];
     const quoteCell = document.createElement("div");
+    if (logoImgEl) {
+      const pic = document.createElement("picture");
+      const img = document.createElement("img");
+      const logoSrc = logoImgEl.getAttribute("src") || "";
+      img.src = logoSrc.startsWith("/") ? `https://www.semrush.com${logoSrc}` : logoSrc;
+      img.alt = logoImgEl.alt || "";
+      pic.appendChild(img);
+      const p = document.createElement("p");
+      p.appendChild(pic);
+      quoteCell.appendChild(p);
+    }
     if (quote) {
       const bq = document.createElement("blockquote");
       bq.textContent = quote.textContent.trim();
@@ -635,6 +653,10 @@ var CustomImportScript = (() => {
     element.querySelectorAll('[aria-hidden="true"], .mp-visually-hidden').forEach((el) => el.remove());
     const marquee = element.querySelector(".mp-logo-marquee, .mp-marquee");
     if (marquee) {
+      const hero = marquee.closest(".mp-hero");
+      if (hero && hero.parentElement) {
+        hero.after(marquee);
+      }
       const lists = marquee.querySelectorAll("ul");
       if (lists.length > 1) {
         for (let i = 1; i < lists.length; i++) lists[i].remove();
@@ -703,6 +725,11 @@ var CustomImportScript = (() => {
           }
         }
       });
+      const templateMeta = WebImporter.DOMUtils.createTable(
+        [["Metadata"], ["template", `template-${PAGE_TEMPLATE.name}`]],
+        document
+      );
+      main.append(templateMeta);
       WebImporter.rules.transformBackgroundImages(main, document);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const path = WebImporter.FileUtils.sanitizePath(

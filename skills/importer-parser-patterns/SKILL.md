@@ -39,4 +39,4 @@ export default function parse(element, { document }) {
 - Use `innerHTML` (not `textContent`) for headings that may contain inline markup
 - Section boundaries (`<hr>`) go in `beforeTransform`, not parsers
 
-See also: `project-import-script-bundling` (bundling and running), `plain-html-format` (output section structure), `eds-content-modeling` (content decisions)
+See also: `marker-driven-import` (the overall single-parser, marker-driven strategy + validation loop — read this first when designing a parser), `project-import-script-bundling` (bundling and running), `plain-html-format` (output section structure), `eds-content-modeling` (content decisions)

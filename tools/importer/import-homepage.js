@@ -31,6 +31,14 @@ function cleanupTransformer(hookName, element, payload) {
 
   const marquee = element.querySelector('.mp-logo-marquee, .mp-marquee');
   if (marquee) {
+    // The marquee is nested INSIDE .mp-hero on the source. The hero parser runs first
+    // and replaceWith()s .mp-hero, which would destroy the marquee. Move it out to be a
+    // sibling right after the hero so both blocks survive and keep source order.
+    const hero = marquee.closest('.mp-hero');
+    if (hero && hero.parentElement) {
+      hero.after(marquee);
+    }
+    // Keep only the first logo group (second is an animation duplicate).
     const lists = marquee.querySelectorAll('ul');
     if (lists.length > 1) {
       for (let i = 1; i < lists.length; i++) lists[i].remove();
@@ -107,6 +115,14 @@ export default {
         }
       }
     });
+
+    // Cascade level 1 — page template: emit the template metadata so the imported
+    // page carries body.template-homepage (matches the validated content).
+    const templateMeta = WebImporter.DOMUtils.createTable(
+      [['Metadata'], ['template', `template-${PAGE_TEMPLATE.name}`]],
+      document,
+    );
+    main.append(templateMeta);
 
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);

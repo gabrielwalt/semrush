@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-16  
 **Branch:** `main`  
-**Active task:** None — completed augmented-styles refactor of homepage blocks  
-**Last completed:** Renamed `video-card`→`teaser` (generic `teaser-dark` + `teaser-oneoff-*` backgrounds), `carousel-slider`→`carousel`, `video`→`media`; split `section-ai-visibility`→`section-oneoff-ai-visibility`; homepage now declares `template-homepage` via metadata; fixed promo CTA emphasis + dead enterprise-platform variant  
-**Next up:** Open plan tasks C07, C09, Q08  
+**Active task:** None — homepage import fully reproduces the validated reference  
+**Last completed:** Homepage import now marker-driven and verified via temp-diff loop — emits `template-homepage` metadata, and the marquee (was dropped because nested in `.mp-hero`; now relocated in cleanup) imports with logos + `section-flush`. Block/variant/section/template sequence === validated `index.plain.html`.  
+**Next up:** PROJECT-PLAN Phase A — choose next page (A02: pricing / a product-toolkit overview / Semrush One) and build its marker map (A01)  
 **Blocker:** None
 
 ---

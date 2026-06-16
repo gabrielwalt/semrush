@@ -3,6 +3,42 @@
 Import pipeline status and commands. For parser/transformer implementation, read `tools/importer/` directly.  
 **Update when scripts, parsers, or URL lists change.**
 
+Approach: ONE generic, marker-driven parser per page type that reproduces the **user-validated** `content/*.plain.html` exactly. Methodology + validation loop: `skills/marker-driven-import`.
+
+---
+
+## Validated reference pages
+
+These pages' content structure is **officially validated by the user** — `content/<page>.plain.html` is the reference truth. Never let an import overwrite them; import to a temp dir and diff (see Validation Loop below).
+
+| Page | File | Validated |
+|------|------|-----------|
+| Homepage | `content/index.plain.html` | ✅ 2026-06-16 |
+
+---
+
+## Homepage marker map (cascade)
+
+The homepage import resolves each level from these source-DOM markers (registry in `import-homepage.js`):
+
+| Level | Target | Marker (source DOM) |
+|-------|--------|---------------------|
+| 1 template | `template-homepage` (body class via Metadata) | page has `.mp-hero` (emitted unconditionally for this script) |
+| 4 block | `announcement-bar` | `.srf_announcement_banner`, `.srf_top_banner` |
+| 4 block | `insights-widget` + `media` (in hero) | `.mp-hero` → `hero.js` splits into widget + media |
+| 3 section style | `section-centered` | hero section (emitted by `hero.js`) |
+| 4 block | `marquee` | `.mp-logo-marquee` |
+| 3 section style | `section-flush` | marquee section |
+| 5 variant | `teaser teaser-oneoff-semrush-one` | `.mp-promo-cards.mp-semrush-one` |
+| 5 variant | `teaser teaser-dark teaser-oneoff-enterprise` | `.mp-promo-cards.mp-enterprise` |
+| 5 variant | `carousel carousel-expansible` | `.mp-section.mp-toolkits` |
+| 4 block | `stats-facts` | `.mp-section.mp-stats` |
+| 4 block + 3 style | `stats-visibility` + `section-dark, section-oneoff-ai-visibility` | `.mp-section.mp-ai-visibility-index` |
+| 4 block | `testimonials` | `.mp-section.mp-client-testimonials` |
+| 4 block | `carousel` (resources) | `.mp-section.mp-resources` |
+
+Last verified against validated content: 2026-06-16 — block/variant/section-style/template sequence reproduces exactly **except** marquee (see Known Gaps).
+
 ---
 
 ## Files
@@ -57,8 +93,8 @@ Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P conten
 
 ### Hero Parser
 
-- Output ordered structure: Section Metadata (`Style: centered`) → default content (`h1` + subtitle `<p>`) → `insights-widget` block (empty) → `video` block (link + poster format).
-- **`buildHeroBlock` must NOT inject a synthetic `hero` block** when `insights-widget` or `video` blocks are already detected on the page — they ARE the hero.
+- Output ordered structure: default content (`h1` + subtitle `<p>`) → `insights-widget` block (empty) → `media` block (link + poster format) → Section Metadata (`Style: section-centered`, last in section).
+- Emits the `Media` block (renamed from `Video`) — a generic image-or-video block.
 
 ### Stats Facts Parser
 
@@ -70,7 +106,7 @@ Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P conten
 
 - Extract eyebrow/title/CTA to **default content above the block**.
 - Auto-detect dark background from source DOM → emit `section-dark` in Section Metadata.
-- Auto-detect bar pattern presence → emit `section-pattern-bars` in Section Metadata alongside `section-dark`.
+- Emit `section-oneoff-ai-visibility` alongside `section-dark` (one-off: striped pattern + logo).
 - Block table rows: each row = bar label + bar value (e.g., pipe-separated `Google | 7.9`).
 
 ### Testimonials Parser
@@ -103,13 +139,22 @@ Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P conten
 These items cannot be reliably auto-imported and require manual content edits after import:
 
 1. **`spacing-top-small` on insights-widget** — Add class via block name: `Insights Widget (spacing-top-small)`. The parser can't detect this from source DOM.
-2. **Testimonials: author role** — Add "CRO at ZoomInfo" as a `<p>` after the author name in row 2. The `<cite><span>` may not render in time during import.
-3. **Carousel-slider-expansible: column 2 content** — Large images, descriptions, and CTAs are only rendered when a card is expanded on the source site. Import only captures collapsed state. Must be populated manually or by expanding each card before import.
-4. **Stats-visibility: 3rd header column** — "AI Platform: ChatGPT, April 2026" platform info. May not be in the DOM at import time.
-5. **DA media hashes** — Import produces source URLs (semrush.com). After DA upload, images get media hashes. This is the normal DA ingestion workflow — not a bug.
-6. **Footer: single-section structure** — The import script no longer emits `<hr>` between footer blocks. All three (footer-cta, footer-links, footer-bottom) are in one section.
-7. **Marquee logos** — SVGs may get stripped by the html2md pipeline. Verify all 12 logos render after DA upload.
-8. **Enterprise CTA style** — "Book a demo" should be `<strong><a>` (primary) in content but the source has `mp-button--outline` class, making the parser emit `<em><a>` (secondary). Verify and adjust after import.
+2. **`carousel-expansible`: column 2 content** — Large images, descriptions, and CTAs only render when a card is expanded on the source site. Import captures collapsed state only. Populate manually or expand each card before import.
+3. **Stats-visibility: 3rd header column** — "AI Platform: ChatGPT, April 2026" platform info. May not be in the DOM at import time.
+4. **DA media hashes** — Import produces source URLs (semrush.com). After DA upload, images get media hashes. Normal DA ingestion workflow — not a bug.
+5. **Footer: single-section structure** — The import script emits no `<hr>` between footer blocks. All three are in one section.
+
+## Known Gaps (import vs validated)
+
+- None for the homepage **structure** — the block/variant/section-style/template sequence reproduces the validated `index.plain.html` exactly (verified via the temp-diff loop).
+- Remaining differences are expected and not structural: image URLs are source `/static/` URLs (become DA media hashes on upload), and the expansible carousel's expanded-only content (see Post-Import #2).
+
+## Resolved (no longer manual)
+
+- **Marquee dropped** — root cause was NOT lazy-load: the marquee (`.mp-logo-marquee`) is nested **inside** `.mp-hero`, and the hero parser's `replaceWith()` destroyed it before `marquee.js` ran. Fixed in the cleanup transformer: it now moves the marquee out to be a sibling after `.mp-hero` before parsers run. `marquee.js` also now emits the `section-flush` Section Metadata. Marquee + logos + flush section now import correctly.
+- **`template-homepage` metadata** — auto-emitted by `import-homepage.js` (cascade level 1) as a page `Metadata` block.
+- **Testimonials author role** — `testimonials.js` extracts the role from any descendant `<p>` without strong/picture, robust to `wrapTextNodes` flattening. No manual add needed.
+- **Enterprise CTA** — both promo CTAs are authored `<em>` (secondary); `teaser-dark` recolors them. Parsers emit `<em><a>`. No manual adjust.
 
 ---
 
@@ -122,23 +167,30 @@ These items cannot be reliably auto-imported and require manual content edits af
   --importjs tools/importer/import-homepage.js
 ```
 
-### Run import
+### Validation loop (never overwrite the validated reference)
 
-**WARNING:** The import script writes directly to `content/*.plain.html`, overwriting any curated content.
-Always back up content files before running, or restore from the remote AEM endpoint after:
+`run-bulk-import.js` writes to `content/` directly (no `--output-dir` flag), so it WILL overwrite the validated reference. To verify a parser reproduces the validated content without destroying it:
 
 ```bash
-# Back up curated content first
-cp content/index.plain.html content/index.plain.html.bak
+# 1. Back up the validated reference
+cp content/index.plain.html /tmp/import-check/index.validated.plain.html
 
-# Run import
+# 2. Bundle + run (this overwrites content/index.plain.html)
+/home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/aem-import-bundle.sh \
+  --importjs tools/importer/import-homepage.js
 node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js \
   --import-script tools/importer/import-homepage.bundle.js \
   --urls tools/importer/urls-homepage.txt
 
-# Restore curated content from AEM if needed
-curl -s 'https://aem-merged-20260513--semrush--gabrielwalt.aem.page/index.plain.html' \
-  -o content/index.plain.html
+# 3. Capture the import output, then RESTORE the reference immediately
+cp content/index.plain.html /tmp/import-check/index.imported.plain.html
+cp /tmp/import-check/index.validated.plain.html content/index.plain.html
+
+# 4. Diff block/variant/section/template sequence (image URLs & DA hashes differ — compare structure)
+grep -oE 'class="(announcement-bar|insights-widget|media|marquee|teaser[^"]*|carousel[^"]*|stats-facts|stats-visibility|testimonials|section-metadata|metadata)"' \
+  /tmp/import-check/index.validated.plain.html | nl
+grep -oE 'class="(announcement-bar|insights-widget|media|marquee|teaser[^"]*|carousel[^"]*|stats-facts|stats-visibility|testimonials|section-metadata|metadata)"' \
+  /tmp/import-check/index.imported.plain.html | nl
 ```
 
-Output: `content/*.plain.html`
+Re-run this after every parser change — a fix for one page often regresses another. Restore URL if the local reference is lost: `curl -s 'https://main--semrush--gabrielwalt.aem.page/index.plain.html' -o content/index.plain.html`

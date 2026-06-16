@@ -89,7 +89,8 @@ Load these before making changes — they prevent regressions and guesswork.
 
 | Skill | Load when... |
 |-------|-------------|
-| [importer-parser-patterns](importer-parser-patterns/SKILL.md) | Writing a block parser; parser validation failing; content structure questions |
+| [marker-driven-import](marker-driven-import/SKILL.md) | User validated a page's content; designing ONE generic marker-driven parser; adding detection for a new block/variant/section-style/template; import doesn't reproduce validated content |
+| [importer-parser-patterns](importer-parser-patterns/SKILL.md) | Writing a block parser; parser validation failing; content structure questions (low-level table/DOM mechanics) |
 | [eds-migration-process](eds-migration-process/SKILL.md) | Starting a new page migration; deciding what to import next |
 
 ---

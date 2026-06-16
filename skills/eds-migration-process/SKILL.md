@@ -28,4 +28,4 @@ Always frame as a suggestion: *"The next step would be X — shall I go ahead?"*
 - **`run-bulk-import.js` overwrites `content/*.plain.html` directly** — back up first. Full warning and restore command: `project-import-script-bundling`
 - Footer blocks must be in a **single section** (no `<hr>` separators) — otherwise EDS renders horizontal rules between them
 
-See also: `eds-content-modeling` (content decisions), `importer-parser-patterns` (writing parsers), `project-import-script-bundling` (running imports)
+See also: `marker-driven-import` (once content is validated, design ONE generic marker-driven parser + diff against the reference), `eds-content-modeling` (content decisions), `importer-parser-patterns` (writing parsers), `project-import-script-bundling` (running imports)
