@@ -33,6 +33,6 @@ if (doc.querySelector('.some-page-specific-block')) {
 - Patterns in `/icons/` are local; `/content/images/` come from remote
 - Reaching for a template when a section style would do — a single page-wide difference (e.g. just a background) is a section style, not a template
 
-Naming: new templates use a `template-<page-type>` metadata value → `body.template-<page-type>`. The existing `homepage`/`semrush-one`/`enterprise` use bare classes (grandfathered). Full convention: `eds-content-modeling`.
+Naming: new templates use a `template-<page-type>` metadata value → `body.template-<page-type>`. Any pre-existing bare body classes are grandfathered (see `PROJECT-DESIGN.md`). Full convention: `eds-content-modeling`.
 
 See also: `eds-content-modeling` (the full augmented-styles ladder + section-style-vs-template decision)

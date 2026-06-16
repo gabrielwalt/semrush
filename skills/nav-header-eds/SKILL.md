@@ -10,7 +10,7 @@ Nav uses `aria-expanded='true'` on desktop (set by `toggleMenu` on init). Mobile
 |---------|-------|-----|
 | Nav items invisible on desktop | Mobile `display: block` beats desktop `display: flex` | Add `nav[aria-expanded='true']` to desktop selector |
 | Chevrons below text instead of inline | `li` is block-level | `display: inline-flex; align-items: center` on `.nav-item` |
-| Enterprise arrow not showing | `li > a::after` — `a` is inside `<p>` | Use `li:last-child a::after` (no `>` before `a`) |
+| Arrow/icon on a nav link not showing | `li > a::after` — `a` is wrapped in `<p>` | Use `li:last-child a::after` (no `>` before `a`) |
 | Mega menu snaps instead of animating | Using `display: none/flex` toggle | Use `visibility + opacity + transform` with `transition` |
 | Header not sticky | `position: sticky` broken by `overflow: hidden` ancestor | Use `position: fixed` with `top: var(--nav-top-offset, 0)` |
 | Fixed header covers announcement bar | Announcement bar height varies | JS scroll listener: set `--nav-top-offset` to `Math.max(0, announcementRect.bottom)` |
@@ -36,8 +36,9 @@ header { height: var(--nav-height); } /* reserves flow space */
 ```
 
 ## Transparent desktop background with open state
+Use the project's desktop breakpoint (see `PROJECT-DESIGN.md`) for the media query — nav may switch hamburger→full-nav at a different breakpoint than content.
 ```css
-@media (width >= 1024px) {
+@media (width >= <desktop-breakpoint>) {
   header .nav-wrapper { background-color: transparent; transition: background-color 0.2s ease-in-out; }
   /* Both selectors required — missing one causes gradient bleed through on the other */
   header.nav-open .nav-wrapper,
@@ -60,7 +61,7 @@ header { height: var(--nav-height); } /* reserves flow space */
 ```
 
 ## Pitfalls
-- Nav fragment loads as 3 sections: brand (0), sections (1), tools (2) — if content changes order, classes map wrong
+- The nav fragment loads as an ordered list of sections (typically brand / nav-sections / tools) and the decorate code maps classes by index — if the authored content reorders sections, the classes map to the wrong region. Check the project's nav block for the expected order.
 - `position: sticky` silently fails if ANY ancestor has `overflow: hidden` — use `fixed` instead
 - Pages without announcement bar need `--nav-top-offset` to default to `0` (CSS fallback handles this)
 - Mobile: `closeOnFocusLost` fires with `e.relatedTarget === null` on tap — `nav.contains(null)` returns false, incorrectly closing menu. Fix: `if (!isDesktop.matches) return;` at top of `closeOnFocusLost`

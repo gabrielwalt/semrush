@@ -1,7 +1,6 @@
 ---
 name: commit-message
-description: Rules for writing clear git commit messages in this project. Load before writing any commit line.
-type: project
+description: Rules for writing clear git commit messages. Load before writing any commit line.
 ---
 
 ## Key insight

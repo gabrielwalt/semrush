@@ -11,8 +11,8 @@ Carousels use section-level overflow clipping, margin-based left alignment, and 
 3. **Slider left alignment via `max()` margin** (not padding): `margin: 0 0 0 max(var(--container-padding), calc((100vw - var(--container-max-width)) / 2))` — this formula ensures the first card aligns with the content area's left edge at ALL viewport widths. At narrow viewports, `container-padding` wins. At wide viewports (>1440px), the `calc` centers the offset to match the max-width container. Padding on `overflow-x: auto` flex containers does NOT reliably offset scroll-snap items — use `margin-left` on the slider itself.
 4. **Last card right spacing via margin**: `.carousel > div:last-child { margin-right: var(--container-padding) }` — instead of `padding-right` on the track (which has the same scroll-snap problem).
 5. **Track scrolls**: `display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none`
-6. **Cards**: `flex-shrink: 0; scroll-snap-align: start` — set card width to match design (e.g. 430px).
-7. **Nav buttons** placed in `.default-content-wrapper` via JS, positioned with `position: absolute; right: container-padding; bottom: 0` to bottom-align with the section heading. Hidden below 1024px.
+6. **Cards**: `flex-shrink: 0; scroll-snap-align: start` — set card width to match the design (measure the original; see `measure-then-implement`).
+7. **Nav buttons** placed in `.default-content-wrapper` via JS, positioned with `position: absolute; right: container-padding; bottom: 0` to bottom-align with the section heading. Hidden below the project's desktop breakpoint (`PROJECT-DESIGN.md`).
 
 ## Pitfalls
 - **Never use `padding` on the scrollable container for first/last card offset** — `padding` on an `overflow-x: auto` flex container doesn't work reliably with `scroll-snap-type: x mandatory`. The first card snaps to position 0 of the scroll area, overlapping the padding. Use `margin-left` on the container and `margin-right` on the last child instead.

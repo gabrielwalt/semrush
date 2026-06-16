@@ -8,13 +8,23 @@ Migrate page-by-page, content first then design, then scale to bulk. Stop at two
 ## Flow
 0. **Scope the site** (new site, before page work) — discover URLs and group pages into templates so you know the full scope and which pages are representative. See EMA skills below.
 1. **Pick a representative page** — prefer one that introduces new blocks.
-2. **Phase 1 — Content.** Import via the import script; split into default content, blocks, sections.
+2. **Phase 1 — Content** (two ordered steps — see below).
 3. **🚦 GATE 1 — validate content structure** (below) before any design work.
-4. **Phase 2 — Design.** Import global styles (tokens, type, spacing) first, then per-block styling.
+4. **Phase 2 — Design** (two ordered steps — see below).
 5. **🚦 GATE 2 — validate design** (below).
 6. **Nav + footer** once the first page looks right.
 7. **More pages** — repeat, reusing validated blocks; prefer pages with new blocks.
 8. **Bulk import** once representative pages and all block variants are covered.
+
+## Phase 1 — Content (model first, script second)
+The order matters — **do NOT start by running the import script.**
+1. **Model the content (decisions, not the script).** Study the source page and make smart decisions about how to split it into **default content vs blocks vs sections** — which content stays default, what becomes a block, where sections break, and what each block is named. Climb the augmented-styles ladder from the bottom (`eds-content-modeling`). This produces the validated `.plain.html` reference.
+2. **Generate the import script to reproduce that validated structure.** Only after the split is decided, build ONE generic marker-driven parser that reproduces the validated `.plain.html` exactly (`marker-driven-import`). The script is generated *from* the modeling decisions, not the other way around.
+- **The import script is the source of truth thereafter.** Each time the user asks to modify the content (rename a block, re-split a section, add a variant), update the import script accordingly — edits to `.plain.html` are temporary; the script is authoritative.
+
+## Phase 2 — Design (global baseline first, blocks second)
+1. **Import global design — only if this is the first page or a new page template.** Bring in the brand tokens, type scale, and the vertical-spacing system to create a solid baseline of **default styles authors can use with default content** (titles, text, images, lists, links, spacing). Skip this step on later pages that reuse an already-styled template. See `vertical-spacing-system`, `eds-content-patterns`.
+2. **Import per-block styling.** Only after the global baseline looks right, style the individual blocks — and at each block decide whether the look is the bare block, an existing variant, a new variant, a section style, or a one-off, per the `eds-content-modeling` ladder.
 
 ## 🚦 GATE 1 — content structure
 Ask the user to roughly validate, and wait for confirmation:
@@ -44,6 +54,9 @@ Reach for these native EMA skills — suggest them to the user when they fit:
 - Consult `PROJECT-STATUS.md` to pick the next page or task.
 
 ## Pitfalls
+- Don't lead Phase 1 with the import script — model the default-content/block/section split first, generate the script to reproduce it second.
+- Don't style blocks before the global design baseline exists (first page / new template) — the baseline is what default content relies on.
+- Don't let `.plain.html` drift from the script — every content-structure change the user asks for must go back into the import script.
 - Don't skip GATE 1 — broken structure is far harder to fix after styling.
 - Re-import flattens section boundaries — restore section divs by hand after.
 - `run-bulk-import.js` overwrites `content/*.plain.html` — back up first (`project-import-script-bundling`).
