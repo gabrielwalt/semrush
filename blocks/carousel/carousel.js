@@ -1,6 +1,6 @@
 function createNav(scrollTarget, scrollAmount) {
   const nav = document.createElement('div');
-  nav.className = 'carousel-slider-nav';
+  nav.className = 'carousel-nav';
 
   const prevBtn = document.createElement('button');
   prevBtn.setAttribute('aria-label', 'Previous slide');
@@ -47,16 +47,16 @@ function decorateExpansible(block, rows) {
   block.textContent = '';
 
   const track = document.createElement('div');
-  track.className = 'carousel-slider-track';
+  track.className = 'carousel-track';
 
   items.forEach((item, i) => {
     const card = document.createElement('div');
-    card.className = 'carousel-slider-card';
+    card.className = 'carousel-card';
     card.setAttribute('role', 'group');
     card.setAttribute('aria-label', `${i + 1} / ${items.length}`);
 
     const header = document.createElement('div');
-    header.className = 'carousel-slider-header';
+    header.className = 'carousel-header';
     const h3 = document.createElement('h3');
     h3.textContent = item.eyebrow;
     const h4 = document.createElement('h4');
@@ -65,7 +65,7 @@ function decorateExpansible(block, rows) {
     header.appendChild(h4);
 
     const expandBtn = document.createElement('button');
-    expandBtn.className = 'carousel-slider-expand';
+    expandBtn.className = 'carousel-expand';
     expandBtn.setAttribute('aria-expanded', 'false');
     expandBtn.setAttribute('aria-label', 'Expand');
     expandBtn.textContent = '+';
@@ -74,24 +74,24 @@ function decorateExpansible(block, rows) {
 
     if (item.smallPic) {
       const poster = document.createElement('div');
-      poster.className = 'carousel-slider-glass carousel-slider-poster';
+      poster.className = 'carousel-glass carousel-poster';
       poster.appendChild(item.smallPic.cloneNode(true));
       card.appendChild(poster);
     }
 
     const content = document.createElement('div');
-    content.className = 'carousel-slider-content';
+    content.className = 'carousel-content';
 
     if (item.largePic) {
       const largeFrame = document.createElement('div');
-      largeFrame.className = 'carousel-slider-glass carousel-slider-large-img';
+      largeFrame.className = 'carousel-glass carousel-large-img';
       largeFrame.appendChild(item.largePic.cloneNode(true));
       content.appendChild(largeFrame);
     }
 
     if (item.description) {
       const p = document.createElement('p');
-      p.className = 'carousel-slider-description';
+      p.className = 'carousel-description';
       p.textContent = item.description;
       content.appendChild(p);
     }
@@ -111,20 +111,20 @@ function decorateExpansible(block, rows) {
 
     expandBtn.addEventListener('click', (ev) => {
       ev.stopPropagation();
-      const isExpanded = card.classList.contains('carousel-slider-card-expanded');
-      block.querySelectorAll('.carousel-slider-card-expanded').forEach((c) => {
-        c.classList.remove('carousel-slider-card-expanded');
-        c.querySelector('.carousel-slider-expand').setAttribute('aria-expanded', 'false');
+      const isExpanded = card.classList.contains('carousel-card-expanded');
+      block.querySelectorAll('.carousel-card-expanded').forEach((c) => {
+        c.classList.remove('carousel-card-expanded');
+        c.querySelector('.carousel-expand').setAttribute('aria-expanded', 'false');
       });
       if (!isExpanded) {
-        card.classList.add('carousel-slider-card-expanded');
+        card.classList.add('carousel-card-expanded');
         expandBtn.setAttribute('aria-expanded', 'true');
         card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
     });
 
     card.addEventListener('click', () => {
-      if (!card.classList.contains('carousel-slider-card-expanded')) {
+      if (!card.classList.contains('carousel-card-expanded')) {
         expandBtn.click();
       }
     });
@@ -151,17 +151,17 @@ function decorateDefault(block) {
   if (dcw) {
     dcw.appendChild(nav);
   } else {
-    const wrapper = block.closest('.carousel-slider-wrapper');
+    const wrapper = block.closest('.carousel-wrapper');
     if (wrapper) wrapper.before(nav);
   }
 }
 
 // Horizontal scrolling carousel — expansible (product cards) and default (resources) variants
 export default async function decorate(block) {
-  const wrapper = block.closest('.carousel-slider-wrapper');
+  const wrapper = block.closest('.carousel-wrapper');
   if (wrapper) wrapper.classList.add('full-width');
 
-  const isExpansible = block.classList.contains('carousel-slider-expansible');
+  const isExpansible = block.classList.contains('carousel-expansible');
 
   if (isExpansible) {
     const rows = [...block.children];

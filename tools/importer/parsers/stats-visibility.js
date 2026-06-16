@@ -66,7 +66,7 @@ export default function parse(element, { document }) {
   wrapper.appendChild(table);
 
   const sectionMeta = WebImporter.DOMUtils.createTable(
-    [['Section Metadata'], ['Style', 'section-dark, section-ai-visibility']],
+    [['Section Metadata'], ['Style', 'section-dark, section-oneoff-ai-visibility']],
     document,
   );
   wrapper.appendChild(sectionMeta);

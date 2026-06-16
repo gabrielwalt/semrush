@@ -1,3 +1,3 @@
-import decorate from '../video/video.js';
+import decorate from '../media/media.js';
 
 export default decorate;

@@ -47,7 +47,7 @@ Load these before making changes — they prevent regressions and guesswork.
 |-------|-------------|
 | [css-specificity-eds](css-specificity-eds/SKILL.md) | A CSS rule isn't applying; computed style shows wrong value |
 | [eds-dom-structure](eds-dom-structure/SKILL.md) | Selector doesn't match; need to know where EDS puts blocks in the DOM |
-| [vertical-spacing-system](vertical-spacing-system/SKILL.md) | Blocks touching with no gap; sections too far apart; page rhythm wrong |
+| [vertical-spacing-system](vertical-spacing-system/SKILL.md) | Foundation spacing + universal block-spacing variants; blocks touching with no gap; sections too far apart; page rhythm wrong |
 | [full-width-escape-hatch](full-width-escape-hatch/SKILL.md) | Setting up the max-width container; block needs to escape it; tempted to write `!important` on wrapper |
 | [stylelint-no-descending-specificity](stylelint-no-descending-specificity/SKILL.md) | Fixing stylelint `no-descending-specificity` errors |
 | [css-background-shorthand-reset](css-background-shorthand-reset/SKILL.md) | Consolidating background-* into one shorthand; a scaled background image suddenly renders at native size |
@@ -67,10 +67,10 @@ Load these before making changes — they prevent regressions and guesswork.
 
 | Skill | Load when... |
 |-------|-------------|
-| [eds-content-patterns](eds-content-patterns/SKILL.md) | Link not becoming a button; button style wrong; `decorateButtons()` not triggering |
-| [eds-content-modeling](eds-content-modeling/SKILL.md) | Deciding what goes in blocks vs default content; block vs variant; CTA type conventions |
+| [eds-content-patterns](eds-content-patterns/SKILL.md) | Auto-styles: link not becoming a CTA button; button style wrong; eyebrow not styling; `decorateButtons()` not triggering |
+| [eds-content-modeling](eds-content-modeling/SKILL.md) | **Augmented-styles hub** — block vs variant vs section style vs page template; naming; cell/column conventions; one-off discipline |
 | [plain-html-format](plain-html-format/SKILL.md) | Creating/editing `.plain.html`; sections not rendering; blocks unstyled |
-| [page-template-metadata](page-template-metadata/SKILL.md) | Applying page-level styles via metadata template classes |
+| [page-template-metadata](page-template-metadata/SKILL.md) | Applying page-level styles via metadata template classes; deciding whether a page template is warranted (be conservative) |
 | [eds-section-style-icons](eds-section-style-icons/SKILL.md) | Section needs a decorative icon or badge injected via CSS (not authored content) |
 
 ---

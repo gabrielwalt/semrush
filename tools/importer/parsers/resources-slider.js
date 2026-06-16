@@ -19,7 +19,7 @@ export default function parse(element, { document }) {
 
   // Build resources-slider block rows
   const articles = element.querySelectorAll('article, .mp-resources__item');
-  const rows = [['Carousel Slider']];
+  const rows = [['Carousel']];
 
   articles.forEach((article) => {
     const img = article.querySelector('img');

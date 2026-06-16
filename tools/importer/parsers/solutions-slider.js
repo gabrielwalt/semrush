@@ -18,7 +18,7 @@ export default function parse(element, { document }) {
     wrapper.appendChild(h2);
   }
 
-  const rows = [['Carousel Slider (carousel-slider-expansible)']];
+  const rows = [['Carousel (carousel-expansible)']];
 
   slides.forEach((slide) => {
     const title = slide.querySelector('h3');

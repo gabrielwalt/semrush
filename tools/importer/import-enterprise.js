@@ -199,7 +199,7 @@ function platformParser(el, { document }) {
   var link = el.querySelector('a[href*="discover"]');
   var img = el.querySelector('img[alt*="Connect"]') || el.querySelector('figure img');
 
-  var rows = [['Video Card (enterprise-platform)']];
+  var rows = [['Teaser (teaser-oneoff-enterprise-platform)']];
   var textCell = document.createElement('div');
 
   if (eyebrow) {

@@ -22,26 +22,26 @@ export default async function decorate(block) {
   block.textContent = '';
 
   const container = document.createElement('div');
-  container.className = 'video-card-container';
+  container.className = 'teaser-container';
 
   const textCol = document.createElement('div');
-  textCol.className = 'video-card-text';
+  textCol.className = 'teaser-text';
   textParts.forEach((cell) => {
     while (cell.firstChild) textCol.appendChild(cell.firstChild);
   });
   container.appendChild(textCol);
 
   const mediaCol = document.createElement('div');
-  mediaCol.className = 'video-card-media';
+  mediaCol.className = 'teaser-media';
 
   const glassFrame = document.createElement('div');
-  glassFrame.className = 'video-card-glass';
+  glassFrame.className = 'teaser-glass';
 
   if (mediaPart && mediaPart.sources.length > 0) {
     const { img } = mediaPart;
     if (img) {
       img.loading = 'eager';
-      img.classList.add('video-card-video');
+      img.classList.add('teaser-media-el');
       const picture = img.closest('picture') || img;
       glassFrame.appendChild(picture);
     }
@@ -52,7 +52,7 @@ export default async function decorate(block) {
       video.muted = true;
       video.loop = true;
       video.preload = 'auto';
-      video.className = 'video-card-video';
+      video.className = 'teaser-media-el';
       if (img) {
         video.poster = img.src;
         if (img.alt) video.setAttribute('aria-label', img.alt);
@@ -64,7 +64,7 @@ export default async function decorate(block) {
         video.appendChild(source);
       });
 
-      const poster = glassFrame.querySelector('.video-card-video');
+      const poster = glassFrame.querySelector('.teaser-media-el');
       if (poster) poster.replaceWith(video);
       else glassFrame.appendChild(video);
 
@@ -92,7 +92,7 @@ export default async function decorate(block) {
     }
   } else if (mediaPart && mediaPart.img) {
     const picture = mediaPart.img.closest('picture') || mediaPart.img;
-    picture.querySelector('img')?.classList.add('video-card-video');
+    picture.querySelector('img')?.classList.add('teaser-media-el');
     glassFrame.appendChild(picture);
   }
 

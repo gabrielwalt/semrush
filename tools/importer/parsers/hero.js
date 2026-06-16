@@ -81,7 +81,7 @@ export default function parse(element, { document }) {
     videoCell.appendChild(pEl);
   }
 
-  const videoTable = WebImporter.DOMUtils.createTable([['Video'], [videoCell]], document);
+  const videoTable = WebImporter.DOMUtils.createTable([['Media'], [videoCell]], document);
   wrapper.appendChild(videoTable);
 
   const sectionMetaTable = WebImporter.DOMUtils.createTable(

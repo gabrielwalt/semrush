@@ -45,7 +45,7 @@ export default function parse(element, { document }) {
     textContent.appendChild(p);
   }
 
-  const rows = [['Video Card (video-card-enterprise)'], [textContent]];
+  const rows = [['Teaser (teaser-dark, teaser-oneoff-enterprise)'], [textContent]];
 
   const mediaContent = document.createElement('div');
   if (video) {

@@ -188,7 +188,7 @@ var CustomImportScript = (() => {
       p.appendChild(wrapper);
       textContent.appendChild(p);
     }
-    const rows = [["Video Card (video-card-semrush-one)"], [textContent]];
+    const rows = [["Teaser (teaser-oneoff-semrush-one)"], [textContent]];
     const mediaContent = document.createElement("div");
     if (video) {
       const source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");
@@ -257,7 +257,7 @@ var CustomImportScript = (() => {
       p.appendChild(wrapper);
       textContent.appendChild(p);
     }
-    const rows = [["Video Card (video-card-enterprise)"], [textContent]];
+    const rows = [["Teaser (teaser-dark, teaser-oneoff-enterprise)"], [textContent]];
     const mediaContent = document.createElement("div");
     if (video) {
       const source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");
@@ -302,7 +302,7 @@ var CustomImportScript = (() => {
       h2.textContent = sectionSubtitle.textContent.trim();
       wrapper.appendChild(h2);
     }
-    const rows = [["Carousel Slider (carousel-slider-expansible)"]];
+    const rows = [["Carousel (carousel-expansible)"]];
     slides.forEach((slide) => {
       const title = slide.querySelector("h3");
       const subtitle = slide.querySelector("h4");
@@ -479,7 +479,7 @@ var CustomImportScript = (() => {
     const table = WebImporter.DOMUtils.createTable(rows, document);
     wrapper.appendChild(table);
     const sectionMeta = WebImporter.DOMUtils.createTable(
-      [["Section Metadata"], ["Style", "section-dark, section-ai-visibility"]],
+      [["Section Metadata"], ["Style", "section-dark, section-oneoff-ai-visibility"]],
       document
     );
     wrapper.appendChild(sectionMeta);
@@ -574,7 +574,7 @@ var CustomImportScript = (() => {
       wrapper.appendChild(h2);
     }
     const articles = element.querySelectorAll("article, .mp-resources__item");
-    const rows = [["Carousel Slider"]];
+    const rows = [["Carousel"]];
     articles.forEach((article) => {
       var _a;
       const img = article.querySelector("img");

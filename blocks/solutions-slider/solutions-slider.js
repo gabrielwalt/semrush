@@ -1,3 +1,3 @@
-import decorate from '../carousel-slider/carousel-slider.js';
+import decorate from '../carousel/carousel.js';
 
 export default decorate;

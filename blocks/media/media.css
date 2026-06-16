@@ -1,26 +1,26 @@
 /* full-width handled by .full-width class via JS */
 
-.video,
+.media,
 .hero-video {
   padding: 0 var(--space-m) 48px;
   display: flex;
   justify-content: center;
 }
 
-.video-frame {
+.media-frame {
   max-width: 1140px;
   width: 100%;
 }
 
-.video-frame .video-player,
-.video-frame picture {
+.media-frame .media-player,
+.media-frame picture {
   width: 100%;
   height: auto;
   border-radius: 6px;
   display: block;
 }
 
-.video-frame img {
+.media-frame img {
   width: 100%;
   height: auto;
   border-radius: 6px;

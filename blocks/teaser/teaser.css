@@ -1,0 +1,217 @@
+/* Teaser — heading + text + CTA alongside a glass-framed media (image or video).
+   Variants:
+     teaser-dark  — generic reusable dark inversion (white text + inverted buttons + dark glass)
+     teaser-oneoff-semrush-one        — ONE-OFF: branded teal/purple card bg (homepage + /one/)
+     teaser-oneoff-enterprise         — ONE-OFF: black + enterprise photo card bg (homepage); pair with teaser-dark
+     teaser-oneoff-enterprise-platform — ONE-OFF: light gradient + bottom-aligned screenshot (enterprise page) */
+
+/* Teaser section — stacked vertically */
+.section.teaser-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--block-padding);
+}
+
+.teaser-wrapper {
+  padding: 0 var(--container-padding);
+}
+
+/* Base card layout */
+.teaser .teaser-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  padding: 64px 0 64px 64px;
+}
+
+/* Text column */
+.teaser .teaser-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 32px 0 0;
+}
+
+.teaser h2 {
+  font-size: var(--font-size-heading-l);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.teaser p {
+  font-size: var(--font-size-body-m);
+  line-height: var(--line-height-relaxed);
+  margin-top: 0;
+  margin-bottom: 0.8em;
+}
+
+main .teaser .button-wrapper {
+  margin: var(--space-s) 0 0;
+}
+
+/* Media column — contains the glass wrapper */
+.teaser .teaser-media {
+  align-self: center;
+  display: flex;
+}
+
+/* Glass frame — shrink-wraps the video/image */
+.teaser .teaser-glass {
+  padding: 12px 0 12px 12px;
+  background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
+  backdrop-filter: blur(5px);
+  border-radius: 12px 0 0 12px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
+}
+
+.teaser .teaser-glass .teaser-media-el,
+.teaser .teaser-glass picture,
+.teaser .teaser-glass img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px 0 0 6px;
+}
+
+/* =============================================
+   teaser-dark — GENERIC reusable dark inversion
+   White text + secondary button recolored to white outline + dark-bg glass tint.
+   Does NOT set a background — pair with a bg variant (e.g. teaser-oneoff-enterprise).
+   ============================================= */
+.teaser.teaser-dark .teaser-container {
+  color: #fff;
+}
+
+.teaser.teaser-dark h2,
+.teaser.teaser-dark p {
+  color: #fff;
+}
+
+main .teaser.teaser-dark a.button.secondary:any-link {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+main .teaser.teaser-dark a.button.secondary:any-link:hover,
+main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
+  background-color: #fff;
+  color: rgb(0 0 0);
+  border-color: #fff;
+}
+
+.teaser.teaser-dark .teaser-glass {
+  background: linear-gradient(91deg, rgb(255 255 255 / 4%) 11.45%, rgb(255 255 255 / 8%) 88.55%);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
+}
+
+/* =============================================
+   teaser-oneoff-semrush-one — branded card background
+   ONE-OFF: homepage + /one/. Light gradient, dark text (no inversion).
+   ============================================= */
+.teaser.teaser-oneoff-semrush-one .teaser-container {
+  background:
+    url('/content/images/semrush-one-bg.svg') no-repeat 50% 50%,
+    linear-gradient(182deg, rgb(193 144 255) -4.72%, var(--color-teal) 68.72%, rgb(255 255 255) 152.44%);
+  color: var(--dark-color);
+}
+
+/* =============================================
+   teaser-oneoff-enterprise — black + enterprise photo card background
+   ONE-OFF: homepage. Pair with teaser-dark for white text + inverted buttons.
+   ============================================= */
+.teaser.teaser-oneoff-enterprise .teaser-container {
+  background:
+    url('/content/images/enterprise-bg.webp') no-repeat 100% 100% / contain,
+    rgb(0 0 0);
+}
+
+/* =============================================
+   teaser-oneoff-enterprise-platform — light gradient, bottom-aligned screenshot
+   ONE-OFF: enterprise page.
+   ============================================= */
+.teaser.teaser-oneoff-enterprise-platform .teaser-container {
+  background: linear-gradient(135deg, var(--color-teal) 0%, rgb(240 234 255) 100%);
+  color: var(--dark-color);
+  padding: 64px 0 0 64px;
+  align-items: end;
+}
+
+.teaser.teaser-oneoff-enterprise-platform .teaser-text {
+  padding: 0 32px var(--space-xl) 0;
+}
+
+.teaser.teaser-oneoff-enterprise-platform h2 {
+  color: var(--dark-color);
+  font-size: var(--font-size-heading-xl);
+}
+
+.teaser.teaser-oneoff-enterprise-platform .teaser-glass {
+  padding: 12px 0 0 12px;
+  background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
+  border-radius: 12px 0 0 12px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
+  border-bottom: none;
+}
+
+.teaser.teaser-oneoff-enterprise-platform .teaser-media {
+  align-self: end;
+}
+
+.teaser.teaser-oneoff-enterprise-platform .teaser-glass img {
+  border-radius: 8px 0 0;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (width < 768px) {
+  .section.teaser-container {
+    gap: var(--block-padding);
+  }
+
+  .teaser-wrapper {
+    padding: 0 16px;
+  }
+
+  .teaser .teaser-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: var(--space-l);
+  }
+
+  .teaser .teaser-text {
+    padding: 0;
+  }
+
+  .teaser .teaser-media {
+    margin: 0 calc(-1 * var(--space-l)) calc(-1 * var(--space-l));
+    min-height: 250px;
+  }
+
+  .teaser .teaser-glass {
+    padding: 12px;
+    border: 1px solid rgb(255 255 255 / 60%);
+    border-radius: 0 0 12px 12px;
+    width: 100%;
+  }
+
+  .teaser .teaser-glass .teaser-media-el,
+  .teaser .teaser-glass picture,
+  .teaser .teaser-glass img {
+    border-radius: 8px;
+  }
+}
+
+@media (width >= 1024px) {
+  .teaser h2 {
+    font-size: var(--font-size-heading-xl);
+  }
+}

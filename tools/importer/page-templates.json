@@ -60,7 +60,7 @@
       ],
       "blocks": [
         {
-          "name": "video-card-semrush-one",
+          "name": "teaser-semrush-one",
           "instances": ["section.main-screen"]
         },
         {
@@ -95,7 +95,7 @@
           "name": "Hero / Main Screen",
           "selector": "section.main-screen",
           "style": null,
-          "blocks": ["video-card-semrush-one"],
+          "blocks": ["teaser-semrush-one"],
           "defaultContent": [".main-screen__one"]
         },
         {
@@ -172,7 +172,7 @@
           "instances": ["[aria-label='Product overview with tabs']"]
         },
         {
-          "name": "video-card-enterprise-platform",
+          "name": "teaser-enterprise-platform",
           "instances": ["[aria-label='Connect marketing data, tools, and teams with one AI-powered platform']"]
         },
         {
@@ -218,7 +218,7 @@
           "name": "Enterprise Platform",
           "selector": "[aria-label='Connect marketing data, tools, and teams with one AI-powered platform']",
           "style": "dark",
-          "blocks": ["video-card-enterprise-platform"],
+          "blocks": ["teaser-enterprise-platform"],
           "defaultContent": []
         },
         {

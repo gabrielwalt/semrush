@@ -85,7 +85,7 @@ var CustomImportScript = (() => {
         }
       });
     }
-    var rows = [["Video Card (video-card-semrush-one)"], [wrapper]];
+    var rows = [["Teaser (teaser-oneoff-semrush-one)"], [wrapper]];
     if (mediaCell.children.length > 0) rows.push([mediaCell]);
     var table = WebImporter.DOMUtils.createTable(rows, document);
     element.querySelector(".main-screen__content").replaceWith(table);
@@ -328,7 +328,7 @@ var CustomImportScript = (() => {
     }
   }
   var parsers = {
-    "video-card-semrush-one": heroParser,
+    "teaser-semrush-one": heroParser,
     "video-card-feature": featureCardsParser,
     "columns-stats": statsColumnsParser,
     "cards-icon": iconsGridParser,
@@ -338,7 +338,7 @@ var CustomImportScript = (() => {
   var PAGE_TEMPLATE = {
     name: "semrush-one",
     blocks: [
-      { name: "video-card-semrush-one", instances: ["section.main-screen"] },
+      { name: "teaser-semrush-one", instances: ["section.main-screen"] },
       { name: "video-card-feature", instances: ["section.cards .cards__item", "section.cards-2 .cards__item"] },
       { name: "columns-stats", instances: ["section.numbers"] },
       { name: "cards-icon", instances: ["section.icons .icons__wrapper"] },

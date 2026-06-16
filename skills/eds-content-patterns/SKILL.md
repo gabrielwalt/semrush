@@ -1,9 +1,9 @@
 ---
 name: eds-content-patterns
-description: How EDS's runtime decoration turns authored HTML into interactive elements — the strong/em-wrapped-link → button mapping in particular. Use when a CTA link isn't becoming a button, the button variant (primary/secondary/accent) is wrong, or decorateButtons() isn't firing. For choosing which CTA style to author, see eds-content-modeling.
+description: How EDS's runtime decoration turns authored HTML into auto-styles — content combinations that decorate predictably without a block (strong/em-link → CTA button, small-text-before-heading → eyebrow). Use when a CTA link isn't becoming a button, the button variant is wrong, an eyebrow isn't styling, or decorateButtons() isn't firing. For choosing which style to author, see eds-content-modeling.
 ---
 
-EDS transforms authored HTML patterns into decorated elements at runtime. The most common: links wrapped in `<strong>` or `<em>` become styled CTA buttons.
+EDS transforms authored HTML patterns into decorated elements at runtime — these are **auto-styles** (rung 2 of the augmented-styles ladder in `eds-content-modeling`): specific combinations of *default content* that decorate predictably with no block needed. The principle: an auto-style must feel logical to authors and never surprise them — keep the trigger conditions tight so it never fires when unintended. The most common auto-style: links wrapped in `<strong>` or `<em>` become styled CTA buttons.
 
 ## CTA button decoration
 ```html
@@ -14,6 +14,20 @@ EDS transforms authored HTML patterns into decorated elements at runtime. The mo
 ```
 
 The wrapping element (`<strong>`, `<em>`) determines the button variant. Import parsers must detect the visual weight of source CTAs and apply the matching wrapper — never hardcode one style.
+
+## Eyebrow auto-style
+A small line of text immediately *before* a heading is the eyebrow (kicker/pre-title). Author it as a plain short paragraph directly above the heading in default content — not inside a block, and not as its own heading level.
+```html
+<p>Stats and facts</p>   → eyebrow (small, uppercase, brand accent)
+<h2>The data you need…</h2>
+```
+Style via the adjacency selector so it only fires in the intended position — keep the trigger tight (small text *directly* before a heading) so a normal paragraph never accidentally becomes an eyebrow:
+```css
+/* eyebrow = short <p> immediately preceding a heading */
+.default-content-wrapper > p:has(+ h2),
+.default-content-wrapper > p:has(+ h3) { /* eyebrow styling */ }
+```
+Project-specific eyebrow + heading treatment: `project-section-heading-pattern`.
 
 ## Why a link isn't becoming a button
 1. Missing wrapper — `<a>` must be inside `<strong>` or `<em>` inside a `<p>`

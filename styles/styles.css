@@ -363,14 +363,14 @@ main {
 }
 
 /* homepage hero pattern — only on pages with insights-widget (homepage) */
-body.homepage main {
+body.template-homepage main {
   background:
     url('/icons/pattern-hero.svg') 2px 500px / auto repeat-x,
     linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
 }
 
 @media (width >= 1024px) {
-  body.homepage main {
+  body.template-homepage main {
     background:
       url('/icons/pattern-hero.svg') 2px 550px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
@@ -378,7 +378,7 @@ body.homepage main {
 }
 
 @media (width < 768px) {
-  body.homepage main {
+  body.template-homepage main {
     background:
       url('/icons/pattern-hero.svg') -2px 600px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
@@ -398,9 +398,10 @@ body.homepage main {
  *
  * Variants (via section metadata):
  *   section-flush — padding: 0 (e.g. marquee)
- *   section-dark — dark background with white text
+ *   section-dark — dark background with white text (generic inversion)
  *   section-centered — centered flex column for hero
- *   section-ai-visibility — bar pattern at bottom edge
+ *   section-oneoff-ai-visibility — ONE-OFF (homepage AI Visibility Index only):
+ *     bar pattern at bottom edge + logo (see stats-visibility.css). Combine with section-dark.
  *
  * Block spacing overrides (via block class name):
  *   spacing-top-none / spacing-top-small / spacing-top-large
@@ -462,8 +463,9 @@ main .section.section-dark {
   color: #fff;
 }
 
-/* section-ai-visibility: bar/stripe SVG pattern overlay at bottom of AI Visibility section */
-main .section.section-ai-visibility {
+/* ONE-OFF (homepage AI Visibility Index section only): bar/stripe SVG pattern overlay at bottom.
+   Designed to be combined with section-dark. See also stats-visibility.css for the logo + heading treatment. */
+main .section.section-oneoff-ai-visibility {
   background-image: url('/icons/pattern-ai-vis-index.svg');
   background-repeat: repeat-x;
   background-position: 0% 100%;

@@ -6,10 +6,10 @@
 
 ## Current Focus
 
-**Last updated:** 2026-06-11  
-**Branch:** `aem-merged-20260513`  
-**Active task:** None — investigated two reported rendering discrepancies; both were stale caches, no code defect  
-**Last completed:** Confirmed nav/footer (aem.live) and testimonial role (local) are byte-identical code+content across all envs; nav/footer fixed by force-reloading the .plain.html fragments, role resolves on hard refresh  
+**Last updated:** 2026-06-16  
+**Branch:** `main`  
+**Active task:** None — completed augmented-styles refactor of homepage blocks  
+**Last completed:** Renamed `video-card`→`teaser` (generic `teaser-dark` + `teaser-oneoff-*` backgrounds), `carousel-slider`→`carousel`, `video`→`media`; split `section-ai-visibility`→`section-oneoff-ai-visibility`; homepage now declares `template-homepage` via metadata; fixed promo CTA emphasis + dead enterprise-platform variant  
 **Next up:** Open plan tasks C07, C09, Q08  
 **Blocker:** None
 
@@ -42,14 +42,14 @@
 | `announcement-bar` | ✅ Done | Purple accent bg, centered link |
 | `header` | ✅ Done | Sticky fixed, transparent/white toggle, mega-menu, mobile nav focusout fix |
 | `insights-widget` | ✅ Done | Searchable country dropdown (115 countries), blinking cursor, chevron, z-index layering |
-| `video` | ✅ Done | Detects video URL in link text, poster fallback, autoplay |
+| `media` | ✅ Done | Glass-framed image or video; detects video URL in link text, poster fallback, autoplay (was `video`) |
 | `marquee` | ✅ Done | Edge fade via CSS mask-image, 50px desktop / 32px mobile logo height |
-| `video-card` | ✅ Done | 64px padding, video autoplay, glass frame, stacked vertically |
-| `carousel-slider` | ✅✅ Refined | Overflow:hidden clipping, left-edge margin alignment, nav in header area (60×60px, 16px gap), hidden <1024px, section header 48px uppercase |
+| `teaser` | ✅ Done | Was `video-card`. 64px padding, glass frame, stacked; `teaser-dark` generic inversion + `teaser-oneoff-*` branded backgrounds |
+| `carousel` | ✅✅ Refined | Was `carousel-slider`. Overflow:hidden clipping, left-edge margin alignment, nav in header area (60×60px, 16px gap), hidden <1024px, section header 48px uppercase |
 | `stats-facts` | ✅✅ Refined | Up-arrow SVG via ::after, hatching pattern via ::before, section header 48px uppercase, "Learn more" CTA grid-positioned top-right |
-| `stats-visibility` | ✅ Done | 84px heading, alternating cyan/purple bars, dark section, section-pattern-bars |
+| `stats-visibility` | ✅ Done | 84px heading, alternating cyan/purple bars, dark section, section-oneoff-ai-visibility |
 | `testimonials` | ✅✅ Refined | Zoominfo logo, quote marks, author role, 26px Lazzer quote text, 2fr:1fr grid, stats pattern SVG |
-| `carousel-slider` (resources) | ✅✅ Refined | Descriptions added to content + parser, Lazzer font on cards, 24px image gap |
+| `carousel` (resources) | ✅✅ Refined | Descriptions added to content + parser, Lazzer font on cards, 24px image gap |
 | `footer` | ✅✅ Refined | Sticky reveal fixed (sibling of .footer), social icons, Adobe logo, Lazzer font, 1440px max-width, bottom bar with legal row |
 
 ### Global typography refinement (✅✅)

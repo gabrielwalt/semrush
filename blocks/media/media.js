@@ -1,7 +1,7 @@
 import getVideoSources from '../../scripts/video-utils.js';
 
 export default async function decorate(block) {
-  block.closest('.video-wrapper')?.classList.add('full-width');
+  block.closest('.media-wrapper')?.classList.add('full-width');
 
   const row = block.querySelector(':scope > div');
   if (!row) return;
@@ -14,20 +14,20 @@ export default async function decorate(block) {
   const sources = getVideoSources(cell);
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'video-frame glass-surface';
+  wrapper.className = 'media-frame glass-surface';
 
   if (existingVideo) {
     existingVideo.setAttribute('playsinline', '');
     existingVideo.muted = true;
     existingVideo.loop = true;
     existingVideo.autoplay = true;
-    existingVideo.className = 'video-player';
+    existingVideo.className = 'media-player';
     wrapper.appendChild(existingVideo);
   } else if (sources.length > 0) {
     // Show poster image immediately for performance
     if (img) {
       img.loading = 'eager';
-      img.className = 'video-player';
+      img.className = 'media-player';
       const picture = img.closest('picture') || img;
       wrapper.appendChild(picture);
     }
@@ -38,7 +38,7 @@ export default async function decorate(block) {
       video.muted = true;
       video.loop = true;
       video.autoplay = true;
-      video.className = 'video-player';
+      video.className = 'media-player';
       if (img) {
         video.poster = img.src;
         if (img.alt) video.setAttribute('aria-label', img.alt);
@@ -51,7 +51,7 @@ export default async function decorate(block) {
         video.appendChild(source);
       });
 
-      const poster = wrapper.querySelector('.video-player');
+      const poster = wrapper.querySelector('.media-player');
       if (poster) poster.replaceWith(video);
       else wrapper.appendChild(video);
 
@@ -74,7 +74,7 @@ export default async function decorate(block) {
     }
   } else if (img) {
     img.loading = 'eager';
-    img.className = 'video-player';
+    img.className = 'media-player';
     const picture = img.closest('picture') || img;
     wrapper.appendChild(picture);
   }

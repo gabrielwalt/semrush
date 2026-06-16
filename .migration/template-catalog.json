@@ -1,0 +1,265 @@
+{
+  "templates": [
+    {
+      "name": "homepage",
+      "representativePages": [
+        "https://www.semrush.com/"
+      ],
+      "urls": [
+        "https://www.semrush.com/"
+      ],
+      "description": "Marketing homepage: dark hero with search form, dual promo heroes, multiple card grids, expandable solutions carousel, stats facts, AI index table, and customer quote."
+    },
+    {
+      "name": "product-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/advertising/"
+      ],
+      "urls": [
+        "https://www.semrush.com/advertising/"
+      ],
+      "description": "Product/toolkit landing page: hero, alternating feature card grids, tabbed feature sections, and a feature comparison block."
+    },
+    {
+      "name": "ai-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/ai-seo/overview/"
+      ],
+      "urls": [
+        "https://www.semrush.com/ai-seo/overview/"
+      ],
+      "description": "AI Visibility toolkit overview landing page (client-rendered hero + feature sections)."
+    },
+    {
+      "name": "traffic-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/analytics/traffic/"
+      ],
+      "urls": [
+        "https://www.semrush.com/analytics/traffic/"
+      ],
+      "description": "Traffic & Market toolkit overview landing page (client-rendered feature sections)."
+    },
+    {
+      "name": "app-center-listing",
+      "representativePages": [
+        "https://www.semrush.com/apps/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/"
+      ],
+      "description": "App Center directory: repeating app card grids listing available apps."
+    },
+    {
+      "name": "app-detail",
+      "representativePages": [
+        "https://www.semrush.com/apps/adclarity-advertising-intelligence/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/adclarity-advertising-intelligence/"
+      ],
+      "description": "Individual app detail page: hero, column feature rows, and a carousel of related screenshots."
+    },
+    {
+      "name": "blog-index",
+      "representativePages": [
+        "https://www.semrush.com/blog/"
+      ],
+      "urls": [
+        "https://www.semrush.com/blog/"
+      ],
+      "description": "Blog landing/index: featured card grids and carousels of article cards."
+    },
+    {
+      "name": "company-about",
+      "representativePages": [
+        "https://www.semrush.com/company/"
+      ],
+      "urls": [
+        "https://www.semrush.com/company/"
+      ],
+      "description": "About/company page: hero plus a long stack of column rows (values, team, milestones) and card groups."
+    },
+    {
+      "name": "contact-page",
+      "representativePages": [
+        "https://www.semrush.com/company/contacts/"
+      ],
+      "urls": [
+        "https://www.semrush.com/company/contacts/"
+      ],
+      "description": "Company contacts page (client-rendered contact details and form)."
+    },
+    {
+      "name": "legal-document",
+      "representativePages": [
+        "https://www.semrush.com/company/legal/privacy-policy/"
+      ],
+      "urls": [
+        "https://www.semrush.com/company/legal/privacy-policy/"
+      ],
+      "description": "Legal/policy long-form text page (privacy policy)."
+    },
+    {
+      "name": "success-stories-index",
+      "representativePages": [
+        "https://www.semrush.com/company/stories/"
+      ],
+      "urls": [
+        "https://www.semrush.com/company/stories/"
+      ],
+      "description": "Customer success stories index: carousel and column/card rows of case-study entries."
+    },
+    {
+      "name": "content-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/content/"
+      ],
+      "urls": [
+        "https://www.semrush.com/content/"
+      ],
+      "description": "Content toolkit overview landing page (client-rendered feature sections)."
+    },
+    {
+      "name": "features-overview",
+      "representativePages": [
+        "https://www.semrush.com/features/"
+      ],
+      "urls": [
+        "https://www.semrush.com/features/"
+      ],
+      "description": "All-features overview: hero, tabbed sections, and a large repeating feature card grid."
+    },
+    {
+      "name": "conversion-landing",
+      "representativePages": [
+        "https://www.semrush.com/free-tools/"
+      ],
+      "urls": [
+        "https://www.semrush.com/free-tools/",
+        "https://www.semrush.com/semrush-free-trial/"
+      ],
+      "description": "Conversion-focused landing pages (free tools hub, free-trial signup) that render their content client-side with a minimal shell."
+    },
+    {
+      "name": "free-tool-detail",
+      "representativePages": [
+        "https://www.semrush.com/free-tools/ai-search-visibility-checker/"
+      ],
+      "urls": [
+        "https://www.semrush.com/free-tools/ai-search-visibility-checker/"
+      ],
+      "description": "Individual free-tool page: hero, feature cards, and alternating column explainer rows."
+    },
+    {
+      "name": "local-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/local-business/start/"
+      ],
+      "urls": [
+        "https://www.semrush.com/local-business/start/"
+      ],
+      "description": "Local toolkit overview landing page (client-rendered feature sections)."
+    },
+    {
+      "name": "news-index",
+      "representativePages": [
+        "https://www.semrush.com/news/"
+      ],
+      "urls": [
+        "https://www.semrush.com/news/"
+      ],
+      "description": "News/press release index page (hero plus client-rendered article list)."
+    },
+    {
+      "name": "semrush-one-product",
+      "representativePages": [
+        "https://www.semrush.com/one/"
+      ],
+      "urls": [
+        "https://www.semrush.com/one/"
+      ],
+      "description": "Semrush One flagship product page (video-led, mostly client-rendered)."
+    },
+    {
+      "name": "pr-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/pr-toolkit/"
+      ],
+      "urls": [
+        "https://www.semrush.com/pr-toolkit/"
+      ],
+      "description": "PR toolkit overview: hero plus stacked column feature rows."
+    },
+    {
+      "name": "pricing-page",
+      "representativePages": [
+        "https://www.semrush.com/pricing/"
+      ],
+      "urls": [
+        "https://www.semrush.com/pricing/"
+      ],
+      "description": "Pricing page with plan/tier comparison (client-rendered pricing tables)."
+    },
+    {
+      "name": "seo-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/seo/"
+      ],
+      "urls": [
+        "https://www.semrush.com/seo/"
+      ],
+      "description": "SEO toolkit overview: dual heroes, column rows, multiple feature carousels, and an FAQ accordion."
+    },
+    {
+      "name": "social-toolkit-overview",
+      "representativePages": [
+        "https://www.semrush.com/social-media/"
+      ],
+      "urls": [
+        "https://www.semrush.com/social-media/"
+      ],
+      "description": "Social toolkit overview landing page (client-rendered feature sections)."
+    },
+    {
+      "name": "stats-facts-page",
+      "representativePages": [
+        "https://www.semrush.com/stats/"
+      ],
+      "urls": [
+        "https://www.semrush.com/stats/"
+      ],
+      "description": "Stats & facts page: hero, stat cards, column rows, and data tables."
+    },
+    {
+      "name": "comparison-index",
+      "representativePages": [
+        "https://www.semrush.com/vs/"
+      ],
+      "urls": [
+        "https://www.semrush.com/vs/"
+      ],
+      "description": "Compare-Semrush hub listing competitor comparison links (client-rendered)."
+    },
+    {
+      "name": "comparison-detail",
+      "representativePages": [
+        "https://www.semrush.com/vs/semrush-vs-ahrefs/"
+      ],
+      "urls": [
+        "https://www.semrush.com/vs/semrush-vs-ahrefs/"
+      ],
+      "description": "Head-to-head competitor comparison page (Semrush vs Ahrefs)."
+    },
+    {
+      "name": "top-websites-ranking",
+      "representativePages": [
+        "https://www.semrush.com/website/top/"
+      ],
+      "urls": [
+        "https://www.semrush.com/website/top/"
+      ],
+      "description": "Top websites ranking page: filter form, ranked data columns, and an FAQ accordion."
+    }
+  ]
+}

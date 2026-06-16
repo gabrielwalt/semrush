@@ -125,8 +125,11 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  // Homepage styling is driven by the authored `template: template-homepage` metadata
+  // (applied as body.template-homepage by decorateTemplateAndTheme). Fallback: if a page
+  // carries the insights-widget but lacks the metadata, apply the class anyway.
   if (doc.querySelector('.insights-widget, main .insights-widget')) {
-    document.body.classList.add('homepage');
+    document.body.classList.add('template-homepage');
   }
   const main = doc.querySelector('main');
   if (main) {

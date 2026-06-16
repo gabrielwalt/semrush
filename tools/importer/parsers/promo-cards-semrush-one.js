@@ -45,7 +45,7 @@ export default function parse(element, { document }) {
     textContent.appendChild(p);
   }
 
-  const rows = [['Video Card (video-card-semrush-one)'], [textContent]];
+  const rows = [['Teaser (teaser-oneoff-semrush-one)'], [textContent]];
 
   const mediaContent = document.createElement('div');
   if (video) {

@@ -1,3 +1,3 @@
-import decorate from '../video-card/video-card.js';
+import decorate from '../teaser/teaser.js';
 
 export default decorate;
