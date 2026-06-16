@@ -6,6 +6,7 @@ description: EDS site/page migration workflow and its two validation gates. Use 
 Migrate page-by-page, content first then design, then scale to bulk. Stop at two validation gates and make the user confirm before continuing — never style content the user hasn't approved.
 
 ## Flow
+0. **Scope the site** (new site, before page work) — discover URLs and group pages into templates so you know the full scope and which pages are representative. See EMA skills below.
 1. **Pick a representative page** — prefer one that introduces new blocks.
 2. **Phase 1 — Content.** Import via the import script; split into default content, blocks, sections.
 3. **🚦 GATE 1 — validate content structure** (below) before any design work.
@@ -25,7 +26,17 @@ Ask the user to roughly validate, and wait for confirmation:
 Ask the user to compare against the source site in the Console preview:
 - Is the global look (tokens, type, spacing) right?
 - Does each styled block match — what needs further visual improvement?
-Iterate on their feedback before moving on.
+Use `excat-visual-critique` to compare migrated output against the original (block, section, full-page, or full-site) and drive fixes. Iterate on the user's feedback before moving on.
+
+## EMA skills by stage
+Reach for these native EMA skills — suggest them to the user when they fit:
+- **Scope the site (do this first for a new site):** `excat-site-scope` for a full scope report; `excat-site-catalog` to group pages into templates / page types; `excat-url-discovery` to list all URLs from the sitemap.
+- **Migrate content:** `excat-site-migration` orchestrates the migration; `excat-page-analysis` analyzes one page's structure; `excat-import-infrastructure` / `excat-import-script` build parsers + transformers; `excat-content-import` runs the import for one or many pages.
+- **Migrate design:** `excat-complete-design-expert` for site design tokens and block styling.
+- **Validate / critique:** `excat-visual-critique` (see GATE 2).
+- **Nav + footer:** `excat-navigation-orchestrator` (header/nav), `excat-footer-orchestrator` (footer) — require screenshots, run after the page is migrated.
+- **Forms:** `excat-form-migration` for HTML → EDS Form blocks.
+- **UI help:** `excat-ui-tour` when the user asks how to use the Console UI.
 
 ## Always
 - Frame the next action as a suggestion: *"Next would be X — shall I go ahead?"*
