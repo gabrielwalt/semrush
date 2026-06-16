@@ -40,4 +40,4 @@ cell.querySelectorAll('img, picture').forEach((el) => {
 - If your first theory is wrong, stop theorizing and read the block's `decorate()` function. Do not propose a second theory without having read the code.
 - One env renders differently but the block's JS/CSS and `.plain.html` are byte-identical (verify with `md5sum` / `curl --compressed`) → it's a **stale CDN/proxy cache**, not a code bug. Hard-reload the specific resource (`/nav.plain.html`, the block's `.js`) before changing anything.
 
-See also: `eds-dom-structure` (block DOM nesting), `verify-before-claiming` (confirm fix on user's URL)
+See also: `eds-dom-structure` (block DOM nesting), `verify-before-claiming` (confirm fix on user's URL). Native `excat-eds-debugger` runs a broader AEM troubleshooting workflow — **this read-the-`decorate()`-first recipe takes precedence** for the "renders partial/wrong DOM despite correct content" case.

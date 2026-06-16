@@ -68,4 +68,4 @@ Use the project's desktop breakpoint (see `PROJECT-DESIGN.md`) for the media que
 - Mobile click delegation: nav item click handlers must guard against mega-panel clicks with `if (e.target.closest('.nav-mega-panel')) return;` — otherwise clicking headings, text, or list items inside panels bubbles up and closes the menu
 - Sticky fails if an ancestor has `overflow: hidden` — see `vertical-spacing-system` for the `overflow-x: clip` fix
 
-See also: `project-mega-menu-content-model` (nav content structure), `vertical-spacing-system` (sticky/overflow rule)
+See also: `project-mega-menu-content-model` (nav content structure), `vertical-spacing-system` (sticky/overflow rule). To migrate/instrument header or footer from the source site (needs screenshots) use native `excat-navigation-orchestrator` / `excat-footer-orchestrator` — **this skill takes precedence** for debugging the CSS/JS of the resulting nav.

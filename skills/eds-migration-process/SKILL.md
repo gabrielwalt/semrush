@@ -36,10 +36,10 @@ Ask the user to roughly validate, and wait for confirmation:
 Ask the user to compare against the source site in the Console preview:
 - Is the global look (tokens, type, spacing) right?
 - Does each styled block match — what needs further visual improvement?
-Use `excat-visual-critique` to compare migrated output against the original (block, section, full-page, or full-site) and drive fixes. Iterate on the user's feedback before moving on.
+Use `excat-visual-critique` to compare migrated output against the original (block, section, full-page, or full-site) and surface the deltas, then close each one with the `block-visual-iteration` measure-first loop. Iterate on the user's feedback before moving on.
 
 ## EMA skills by stage
-Reach for these native EMA skills — suggest them to the user when they fit:
+Reach for these native EMA skills — suggest them to the user when they fit. **Where a project skill covers the same step (content modeling, parser strategy, visual QA), the project skill takes precedence** — see `skills/README.md` "Native EMA & EDS skills" for the full precedence map.
 - **Scope the site (do this first for a new site):** `excat-site-scope` for a full scope report; `excat-site-catalog` to group pages into templates / page types; `excat-url-discovery` to list all URLs from the sitemap.
 - **Migrate content:** `excat-site-migration` orchestrates the migration; `excat-page-analysis` analyzes one page's structure; `excat-import-infrastructure` / `excat-import-script` build parsers + transformers; `excat-content-import` runs the import for one or many pages.
 - **Migrate design:** `excat-complete-design-expert` for site design tokens and block styling.

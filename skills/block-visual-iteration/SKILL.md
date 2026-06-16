@@ -25,18 +25,12 @@ Create a property-by-property diff table. Flag any value that differs. This is m
 Apply CSS changes for ALL flagged properties at once, not one at a time.
 
 ### 5. Re-measure and verify
-Run step 2 again. Confirm all values match. Only THEN take a screenshot for final visual confirmation.
-
-## Key insight
-**Measure before implementing.** Screenshots are expensive (20-50k tokens) and imprecise. Computed style extraction is cheap (~2k tokens) and exact. Use screenshots only for final confirmation, not for discovery.
+Run step 2 again. Confirm all values match. Only THEN take a screenshot for final visual confirmation. Screenshots are expensive (20-50k tokens) and imprecise; computed-style extraction is cheap (~2k) and exact — use screenshots for final confirmation only, never discovery.
 
 ## Pitfalls
 - Don't compare active/hover states unless you trigger them first on both sites
 - Section header styles come from the section's `.default-content-wrapper`, not the block itself — measure both
 - Body-level inherited properties (font-weight, letter-spacing) affect all blocks — check global styles too
-- When fixing one element, verify you didn't regress adjacent elements (the "Learn more CTA regression" lesson)
+- When fixing one element, verify you didn't regress adjacent elements (load `regression-guard`)
 
-## Regression guard
-Before changing any existing element's CSS, snapshot its key properties. After the change, re-check the snapshot. If an untouched property changed, you introduced a regression.
-
-See also: `executing-plan-tasks` (Gap vs Enhancement verification workflow), `regression-guard` (full regression protocol), `measure-then-implement` (measure before guessing)
+See also: `measure-then-implement` (how to extract values + responsive verification), `regression-guard` (full regression protocol), `executing-plan-tasks` (Gap vs Enhancement verification). Native `excat-visual-critique` is **complementary**: after importing styles, run it to compare migrated output against the original and surface deltas, then use this measure-first loop to close each delta precisely. Critique finds the gaps; this loop fixes them.

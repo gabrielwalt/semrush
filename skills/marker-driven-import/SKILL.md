@@ -35,4 +35,4 @@ The validated `content/*.plain.html` is the reference — **never let the import
 - Reaching for a context exception before exhausting generic markers — exceptions are the last mile, not the first.
 - Changing a parser and not re-diffing ALL validated pages — silent cross-page regressions.
 
-See also: `importer-parser-patterns` (table/DOM mechanics), `project-import-script-bundling` (bundle + run + the overwrite warning), `eds-content-modeling` (what the markers should map TO — the augmented-styles ladder), `eds-migration-process` (where this fits in the per-page workflow)
+See also: `importer-parser-patterns` (table/DOM mechanics), `project-import-script-bundling` (bundle + run + the overwrite warning), `eds-content-modeling` (what the markers should map TO — the augmented-styles ladder), `eds-migration-process` (where this fits in the per-page workflow). Native `excat-import-infrastructure` / `excat-import-script` generate parsers + transformers — **this single marker-driven strategy takes precedence** over their per-block scaffolding; use them for the boilerplate, then consolidate into the one parser described here.

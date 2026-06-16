@@ -125,3 +125,32 @@ These skills contain Semrush-specific values and patterns. They help on this pro
 | [project-import-script-bundling](project-import-script-bundling/SKILL.md) | Import script not executing; `CustomImportScript.default` not found; bundling commands |
 | [project-mega-menu-content-model](project-mega-menu-content-model/SKILL.md) | Editing nav content; adding mega menu items; debugging dropdown columns |
 | [project-section-heading-pattern](project-section-heading-pattern/SKILL.md) | Adding eyebrow + uppercase heading to a new section; section heading CSS selectors |
+
+---
+
+## Native EMA & EDS skills (built-in — for discovery)
+
+These ship with the agent (the `excat:`, `edge-delivery-services:`, `forms-excat:`, `excat-commerce:`, `excat-figma:`, and `project-management:` plugins). They are **not** in `skills/` — invoke them directly by name. Use them for capabilities the project library doesn't cover (discovery, multi-agent orchestration, specialized page types, docs, handover).
+
+**Precedence:** where a project skill above covers the same ground, the **project skill wins** — it encodes our opinions (augmented-styles ladder, single marker-driven parser, clean-code rules). Load the project skill first; reach for the native one for the parts it points you to.
+
+**Complementary, not competing:** `excat-visual-critique` is the **review-and-refine step that follows style import**. After importing global or per-block styles, run it to compare the migrated output against the original, then drive fixes with the project's `block-visual-iteration` measure-first loop. The two work together: critique surfaces the deltas, the measure-first loop closes them precisely.
+
+| Native skill | Reach for it when... | Project skill that takes precedence |
+|--------------|----------------------|--------------------------------------|
+| `excat-site-scope`, `excat-site-catalog`, `excat-url-discovery`, `excat-site-analysis`, `excat-page-analysis` | Scoping a new site: discover URLs, group pages into templates, analyze one page's structure | — (no project equivalent) |
+| `excat-site-migration` | Orchestrating a full multi-page migration | `eds-migration-process` (our 2-gate flow) |
+| `excat-import-infrastructure`, `excat-import-script`, `excat-content-import` | Generating/running parsers + transformers, bulk import | `marker-driven-import`, `importer-parser-patterns`, `project-import-script-bundling` |
+| `block-mapping-manager`, `block-variant-manager` | Tracking block variants/mappings across many pages | `eds-content-modeling` (naming + variant tiers) |
+| `excat-complete-design-expert`, `excat-block-design-expert` | Extracting design tokens / styling a block from the source | `measure-then-implement`, `block-visual-iteration` |
+| `excat-visual-critique` | Reviewing/refining imported styles vs original (block/section/page/site) | **Complementary** — pairs with `block-visual-iteration`/`measure-then-implement` (see below) |
+| `excat-navigation-orchestrator`, `excat-footer-orchestrator` | Migrating/instrumenting header or footer from the source (needs screenshots) | `nav-header-eds` (CSS/JS debugging of the result) |
+| `excat-eds-developer`, `excat-eds-debugger` | General block development or debugging workflows | `eds-code-conventions`, `debug-block-decoration`, `css-specificity-eds` |
+| `excat-xwalk-expert` | Converting HTML → JCR XML for Universal Editor / AEM authoring | — |
+| `forms-excat:excat-form-migration` | Migrating an HTML form to an EDS Form block | — |
+| `excat-commerce:*` | Migrating a PDP or PLP (Adobe Commerce) | — |
+| `excat-figma:excat-figma-migration` | Building a block from a Figma design | — |
+| `edge-delivery-services:docs-search`, `block-collection-and-party` | Looking up an aem.live feature or a reference block implementation | `eds-dom-structure` (has a docs-lookup recipe) |
+| `edge-delivery-services:content-modeling`, `building-blocks`, `content-driven-development`, `testing-blocks`, `preview-import` | Generic EDS authoring/dev guidance | `eds-content-modeling`, `eds-code-conventions` |
+| `excat-ui-tour` | User asks how to use the Console UI | — |
+| `project-management:handover` (`admin`/`authoring`/`development`/`whitepaper`) | Generating handover/admin/author/dev docs or a branded PDF | — |

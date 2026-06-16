@@ -1,6 +1,6 @@
 ---
 name: importer-parser-patterns
-description: EDS import parser patterns. Use when writing a block parser, parser validation is failing, or content structure doesn't match EDS expectations.
+description: Low-level mechanics of an EDS import parser — createTable() block tables, replaceWith(), img/src attribute handling, picture wrapping, Section Metadata placement. Use when writing or fixing a block parser's table output. For the overall single-parser strategy, see marker-driven-import.
 ---
 
 Parser receives a source DOM element and outputs EDS block tables via `createTable()`. First row = block name. Use `element.replaceWith()` to swap in the result.

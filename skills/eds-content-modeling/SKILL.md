@@ -43,13 +43,9 @@ Rules:
 - **Decorative image files referenced from CSS/JS MUST live in `/icons/` (git-tracked code), never `/content/images/`.** `/content/images/` is author-managed content uploaded separately via the Console — files there are NOT in the code repo and 404 on the local dev server (it proxies them from remote). So a CSS `url()` pointing at `/content/images/` is both a content-ownership violation and a local-render bug. When you add or copy a decorative background, put the asset in `/icons/` and reference `/icons/<name>`. See `eds-section-style-icons`.
 - Litmus test: "Would an author or translator ever need to edit this?" → yes = content; no/decorative = code (in `/icons/`).
 
-## Blocks vs default content
-- All user-facing text lives in `.plain.html` — never hardcode strings in JS/CSS. Exception: functional UI labels (e.g. "Previous slide" aria-labels).
-- Prefer default content over blocks. Eyebrows, section headings, subtitles, and CTAs introducing a block belong in the section's default content above the block — not in the block's first row.
-
-## Block naming & content model
-- **Name by semantic meaning, generic and context-free.** Good: `teaser`, `carousel`, `cards`. Bad: `expansible-video-teaser`. The fact it holds a video is decided by the *content* (image → image teaser, video → video teaser); the fact it's expansible is a *variant*.
-- **Content determines materialization; variants/styles determine appearance & behavior.** Don't bake a one-off look or a behavior into a block's identity.
+## Blocks vs default content & content model
+- **Prefer default content over blocks.** Eyebrows, section headings, subtitles, and CTAs introducing a block belong in the section's default content above the block — not in the block's first row.
+- **Content determines materialization; variants/styles determine appearance & behavior.** Don't bake a one-off look or behavior into a block's identity (image → image teaser, video → video teaser is content's call; "expansible" is a variant).
 - **Cell conventions, so a block can be transformed into a sibling block.** Keep row/cell layout systematic across similar blocks. If one uses `[h2, p, CTA]` in a text cell, don't split another into `[h2]` + `[p, CTA]` for the same logical content.
 - **Columns are expensive for authors; rows are cheap.** Prefer 1–2 columns. 3–4 only with a strong reason. Never more. Good 2-column uses: image-left / content-right (image always left), or condensed-content-left / expanded-content-right.
 
@@ -97,4 +93,4 @@ Some blocks are **placeholders for an interactive feature** whose substance is *
 - Missing source content at import time → leave empty, don't invent.
 - Reaching for a template/variant when default content + an auto-style would do — climb the ladder from the bottom.
 
-See also: `eds-content-patterns` (auto-styles: CTA + eyebrow decoration), `vertical-spacing-system` (foundation + universal spacing variants), `page-template-metadata` (template mechanism + conservative-creation rule), `importer-parser-patterns` (parser implementation), `PROJECT-BLOCKS.md` (block inventory + one-off registry)
+See also: `eds-content-patterns` (auto-styles: CTA + eyebrow decoration), `vertical-spacing-system` (foundation + universal spacing variants), `page-template-metadata` (template mechanism + conservative-creation rule), `importer-parser-patterns` (parser implementation), `PROJECT-BLOCKS.md` (block inventory + one-off registry). Native `edge-delivery-services:content-modeling` and `block-mapping-manager`/`block-variant-manager` cover generic modeling and cross-page variant tracking — **this augmented-styles ladder and naming convention take precedence** on this project.

@@ -31,4 +31,4 @@ See `full-width-escape-hatch` skill for the complete pattern. Key point: add `.f
 - Verify visually at `localhost:3000`
 - Screenshots under `/tmp/` only
 
-See also: `full-width-escape-hatch` (detailed recipe), `css-specificity-eds` (when rules don't apply)
+See also: `full-width-escape-hatch` (detailed recipe), `css-specificity-eds` (when rules don't apply). Native `excat-eds-developer` covers generic block development — **these conventions take precedence** for this project's clean-and-lean and no-`!important` rules.
