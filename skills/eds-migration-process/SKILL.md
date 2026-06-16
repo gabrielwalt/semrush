@@ -1,31 +1,41 @@
 ---
 name: eds-migration-process
-description: EDS page migration workflow. Use when starting a new page migration, deciding what to import next, or checking migration progress.
+description: EDS site/page migration workflow and its two validation gates. Use when starting a migration, deciding what to import next, checking progress, or guiding the user through content/design validation.
 ---
 
-Work through each page in two phases — content first, then styles — before scaling to bulk import.
+Migrate page-by-page, content first then design, then scale to bulk. Stop at two validation gates and make the user confirm before continuing — never style content the user hasn't approved.
 
-## Phase 1 — Content
-1. Import page content using the import script
-2. Verify block names and cell structure make sense to an author
-3. Refine the import script and re-import until correct
+## Flow
+1. **Pick a representative page** — prefer one that introduces new blocks.
+2. **Phase 1 — Content.** Import via the import script; split into default content, blocks, sections.
+3. **🚦 GATE 1 — validate content structure** (below) before any design work.
+4. **Phase 2 — Design.** Import global styles (tokens, type, spacing) first, then per-block styling.
+5. **🚦 GATE 2 — validate design** (below).
+6. **Nav + footer** once the first page looks right.
+7. **More pages** — repeat, reusing validated blocks; prefer pages with new blocks.
+8. **Bulk import** once representative pages and all block variants are covered.
 
-## Phase 2 — Styles
-1. Import styles — distinguish general styles (tokens, typography, spacing) from block-specific styles
-2. Ask the user to compare against the source site in the Console preview
+## 🚦 GATE 1 — content structure
+Ask the user to roughly validate, and wait for confirmation:
+- How content was split into **default content vs blocks vs sections**.
+- **Block names** — any to rename?
+- **Reuse/refactor** — use an existing set of blocks instead, or a different structure?
 
-## After each page
-Consult `PROJECT-STATUS.md` and suggest the logical next step:
-- Nav/footer not yet imported → suggest those
-- More pages remain → suggest the next one (prefer pages introducing new blocks)
-- All representative pages done → suggest bulk import
+## 🚦 GATE 2 — design (after global styles, and after each block's styling)
+Ask the user to compare against the source site in the Console preview:
+- Is the global look (tokens, type, spacing) right?
+- Does each styled block match — what needs further visual improvement?
+Iterate on their feedback before moving on.
 
-Always frame as a suggestion: *"The next step would be X — shall I go ahead?"*
+## Always
+- Frame the next action as a suggestion: *"Next would be X — shall I go ahead?"*
+- Actively invite feedback at each gate — the user's validation drives the next step.
+- Consult `PROJECT-STATUS.md` to pick the next page or task.
 
 ## Pitfalls
-- Don't skip Phase 1 validation — broken content structure is harder to fix after styling
-- Re-import flattens section boundaries — maintain section-div structure by hand after
-- **`run-bulk-import.js` overwrites `content/*.plain.html` directly** — back up first. Full warning and restore command: `project-import-script-bundling`
-- Footer blocks must be in a **single section** (no `<hr>` separators) — otherwise EDS renders horizontal rules between them
+- Don't skip GATE 1 — broken structure is far harder to fix after styling.
+- Re-import flattens section boundaries — restore section divs by hand after.
+- `run-bulk-import.js` overwrites `content/*.plain.html` — back up first (`project-import-script-bundling`).
+- Footer blocks must be in one section (no `<hr>`) or EDS renders rules between them.
 
-See also: `marker-driven-import` (once content is validated, design ONE generic marker-driven parser + diff against the reference), `eds-content-modeling` (content decisions), `importer-parser-patterns` (writing parsers), `project-import-script-bundling` (running imports)
+See also: `marker-driven-import` (design ONE generic parser once content is validated), `eds-content-modeling` (block vs variant vs section vs template decisions), `importer-parser-patterns` (writing parsers), `project-import-script-bundling` (running imports)
