@@ -87,12 +87,14 @@ Tablet breakpoint (< 1024px) reduces `--font-size-display` to 56px and `--font-s
 
 | Token | Desktop | Mobile | Usage |
 |-------|---------|--------|-------|
-| `--section-padding` | 120px | 60px | Between sections |
-| `--block-padding` | 64px | 32px | Within blocks |
+| `--section-padding` | 60px | 30px | Between sections (top+bottom padding on each `.section`) |
+| `--block-padding` | 60px | 30px | Block-to-block rhythm (applied as `margin-top` via the `* + *` rule) |
 | `--container-padding` | 32px | 16px | Page edge |
 | `--container-max-width` | 1440px | — | Outermost cap |
 | `--nav-height` | 84px | — | Fixed nav bar |
 | `--cta-height` | 60px | — | Standard button height |
+
+> Values measured 2026-06-17 on index/one/enterprise at 1440px desktop and verified against `styles/styles.css` `:root`. The `--section-padding`/`--block-padding` pair is a single rhythm value (60/30), not two different ones. Per-section overrides exist (e.g. `/one/` uses 90px on one section) — those are page-level one-offs, NOT foundation.
 
 ---
 
@@ -121,6 +123,27 @@ Hover: all transition to `--accent-hover` (#b072ff), 0.2s ease.
 **Nav CTA sizes:** "Log In" button uses compact height with `padding: 16px 24px` (outlined); "Sign Up" uses the same compact height, solid dark fill.
 
 ---
+
+## Named Foundation Rules
+
+The de-facto global system, **measured across the style-validated/keeper pages (index, one, enterprise) on 2026-06-17** at 1440px desktop and cross-checked against `styles/styles.css`. A value is a *foundation rule* only because it **recurs across all three pages** — one-page values (e.g. `/one/`'s 90px section, enterprise's 46px hero h2) are explicitly NOT foundation and are excluded. Cite these by name when styling the remaining pages so they stay consistent.
+
+| Rule | Value | Evidence (recurs on) | Notes |
+|------|-------|----------------------|-------|
+| **Type-scale ratio** | ~**1.31** between the top steps: display **84** → xl **64** → l **48** | index, one, enterprise | 84/64 = 1.31, 64/48 = 1.33. Below that the scale drops to h4 **24px** and body **18px**. Tablet (<1024px) collapses display→56, xl/l→32. |
+| **Display/H1 size** | **84px** desktop / 56px <1024px, line-height **1.1**, weight 600 | index h1, one h1 | The page's largest type. |
+| **Heading tracking** | **-0.04em** (`--tracking-tight`) on h1/h2/h3; **-0.02em** (`--tracking-snug`) on h4 | index, one, enterprise | Headings are optically tightened; h4 less so. Line-height 1.1 on headings (h4 = 1.2). |
+| **Body type** | Inter **500**, **18px**, line-height **1.5** (27px), tracking **-0.02em** | index, one, enterprise (all body `<p>`) | Body is weight 500, NOT 400 — matches the source. Line-height 1.5 is the relaxed reading measure. |
+| **Body-contrast floor** | **≥ 4.5:1**, currently **17:1** everywhere | index, one, enterprise — light AND dark sections | Ink `rgb(24 30 21)` on white and white on `--dark-color` both measure 17:1. Any new surface color must keep body text ≥ 4.5:1. |
+| **Section-spacing rhythm** | **60px** desktop / **30px** mobile, applied symmetrically (`padding: var(--section-padding) 0`) + block `margin-top: var(--block-padding)` via `* + *` | index, one, enterprise | One rhythm value drives both section padding and block gap. See `vertical-spacing-system`. |
+| **Button system** | pill (`--radius-pill` 100px), **60px** height, `padding: 0 32px`, **16px / 600** | index, one, enterprise | Primary (purple), secondary (outline), accent (dark fill); all hover → `--accent-hover`. |
+| **Heading font** | Lazzer, with `Inter` fallback | declared in `:root` on all pages | ⚠️ **No `@font-face` for Lazzer is loaded** (only Inter 400/500/600/700 in `fonts.css`) — headings currently render in the Inter fallback. Flagged as a proposed additive fix below; not part of the validated look until resolved. |
+
+## Proposed additive fixes (await approval — do NOT apply)
+
+Discovered during the 2026-06-17 foundation audit. Each is non-destructive and would be applied additively per the Frozen-Tools Rule. **Not applied** — listed for review (craft/a11y items are also being filed as PROJECT-PLAN tasks under Task C).
+
+1. **Lazzer is never loaded.** `--heading-font-family` is `"Lazzer", "Inter", sans-serif` but `styles/fonts.css` declares no `@font-face` for Lazzer, so every heading on every page falls back to Inter. Either add the Lazzer `@font-face` (restores the intended brand heading voice) or formally drop Lazzer from the token and standardize on Inter for headings. Decision needed — this changes the look of the frozen pages, so it needs explicit sign-off.
 
 ## Adding a Token
 

@@ -53,26 +53,44 @@ Apply by adding the class to the block name, e.g. `Insights Widget (spacing-top-
 
 ## Blocks
 
+Each block listed once, with every variant it owns. **Used on** reflects the 5 keeper pages only (index, one, enterprise, nav, footer) after the 2026-06-17 scope reset — verified against the `class="…"` block tables in `content/*.plain.html`.
+
 | Block | Variants | Used on | Notes |
 |-------|----------|---------|-------|
 | `announcement-bar` | — | Homepage | Dismissible top banner |
 | `insights-widget` | — | Homepage | Search form with searchable country dropdown (115 countries), blinking cursor, glass surface |
-| `media` | — | Homepage | Glass-framed image OR video (image alone = image; +video link = video). Detects video URLs in link text (EDS pattern for external media). Shares `.glass-surface` |
-| `marquee` | — | Homepage | Infinite-scroll logo strip with edge fade mask |
-| `teaser` | `teaser-oneoff-semrush-one`, `teaser-oneoff-enterprise`, `teaser-oneoff-enterprise-platform` | Homepage, Semrush One, Enterprise | 2-column block: media one side, text the other. **Content format = TWO rows, one cell each** (a content row + a media row; never two cells in one row — block JS reads only the first cell per row, so a 2-cell row silently drops the media). **Column side follows authored row order** — content-row-first → media right (default); media-row-first → `teaser.js` adds `teaser-media-left` and columns flip (glass frame mirrors to the left edge). `/one/` feature teasers alternate (media-left on the 1st & 3rd of the first group) to match the original. Mobile stacks text-above-media for both. TWO archetypes. **Default (bare `.teaser`)** = violet-gradient feature card on a LIGHT surface (`linear-gradient(#d4b1ff 0%, transparent 72.43%)`; 8px radius, 40px h3 / 21px body, optional 30px icon above heading) with a systematic full glass frame. **CONTEXT-ADAPTIVE**: a bare teaser dropped on a dark surface (a `section-dark` section OR a `template-dark` page) AUTO-INVERTS — violet box drops, text→white, buttons+glass invert — with NO variant (see `context-adaptive-blocks`). Used by `/seo/` (section-dark) and the enterprise tab panels (template-dark). **Glass-media one-offs (any `teaser-oneoff-*`)** = self-styled branded card whose own surface is painted (context-INDEPENDENT — looks identical on any surface, never auto-inverts). Feature-card + auto-invert rules are scoped `:not([class*='oneoff'])` so one-offs stay frozen. **Text-only**: if no media row is authored, `teaser.js` adds `teaser-text-only` and the grid collapses to one column |
-| `carousel` | `carousel-expansible` | Homepage | Default (resource cards) and expansible (solutions accordion); extends to right viewport edge |
+| `media` | — | Homepage, Enterprise | Glass-framed image OR video (image alone = image; +video link = video). Detects video URLs in link text (EDS pattern for external media). Shares `.glass-surface` |
+| `marquee` | — | Homepage, Enterprise | Infinite-scroll logo strip with edge fade mask. Enterprise re-skins logos white/28px additively (`body.template-enterprise`) |
+| `teaser` | `teaser-oneoff-semrush-one`, `teaser-oneoff-enterprise`, `teaser-oneoff-enterprise-platform` | Homepage, Semrush One, Enterprise | 2-column block: media one side, text the other. **Content format = TWO rows, one cell each** (a content row + a media row; never two cells in one row — block JS reads only the first cell per row, so a 2-cell row silently drops the media). **Column side follows authored row order** — content-row-first → media right (default); media-row-first → `teaser.js` adds `teaser-media-left` and columns flip (glass frame mirrors to the left edge). `/one/` feature teasers alternate (media-left on the 1st & 3rd of the first group) to match the original. Mobile stacks text-above-media for both. TWO archetypes. **Default (bare `.teaser`)** = violet-gradient feature card on a LIGHT surface (`linear-gradient(#d4b1ff 0%, transparent 72.43%)`; 8px radius, 40px h3 / 21px body, optional 30px icon above heading) with a systematic full glass frame. **CONTEXT-ADAPTIVE**: a bare teaser dropped on a dark surface (a `section-dark` section OR a `template-dark` page) AUTO-INVERTS — violet box drops, text→white, buttons+glass invert — with NO variant (see `context-adaptive-blocks`). Used by the enterprise tab panels (template-dark). **Glass-media one-offs (any `teaser-oneoff-*`)** = self-styled branded card whose own surface is painted (context-INDEPENDENT — looks identical on any surface, never auto-inverts). Feature-card + auto-invert rules are scoped `:not([class*='oneoff'])` so one-offs stay frozen. **Text-only**: if no media row is authored, `teaser.js` adds `teaser-text-only` and the grid collapses to one column |
+| `carousel` | `carousel-expansible`, `carousel-testimonials` | Homepage (resources + solutions), Enterprise (resources + testimonials) | Single horizontal scrolling row of cards with ‹/› nav; extends to right viewport edge. **Default** = image+text resource cards. **`carousel-expansible`** = product cards that expand/collapse one at a time (430→798px, "+" rotates to "×"); homepage solutions accordion. **`carousel-testimonials`** = portrait (4:5, 318px) image-only customer cards (enterprise "How leaders…") |
 | `stats-facts` | — | Homepage | Click/scroll-to-expand stat rows; diagonal-line arrow pattern, 180px numbers |
 | `stats-visibility` | — | Homepage | Dark section, bar chart with purple-to-teal gradient clip-path arrows, 84px heading |
+| `case-study` | — | Enterprise | Customer-story block: video-thumbnail row (with play button) + stat rows (number + label). Rendered on the white enterprise case-study section |
 | `testimonials` | `testimonials-oneoff-one` | Homepage, Semrush One | Quote card (dark) + stat card (grey), 2fr:1fr grid. One-off on `/one/` flips to a giant stat number beside a dark author card |
-| `columns-stats` | — | Semrush One | Large stat number columns (10M / 35% / 21) |
-| `cards-icon` | — | Semrush One | Icon + title + description feature grid |
-| `cards-awards` | — | Semrush One | Award badge display for dark CTA section |
-| `carousel` | `carousel-expansible`, `carousel-testimonials` | Homepage (resources, solutions), Enterprise (resources + testimonials) | Single horizontal scrolling row of cards with ‹/› nav. Default = image+text resource cards; `carousel-expansible` = product cards that expand; **`carousel-testimonials`** = portrait (4:5, 318px) image-only customer cards (enterprise "How leaders…"). |
-| `cards-icon` | `cards-icon-feature` | Semrush One | Icon/image + title + description grid (3-col). **`cards-icon-feature`** variant: the leading image is a full product SCREENSHOT (not a 48px icon) — shown full-width + rounded at the card top, with a fixed `aspect-ratio: 3/2` so the card reserves height before the image loads. (Variant currently unused by a keeper after the scope reset; kept for re-use.) |
-| `columns-stats` | — | Semrush One | Large stat number columns (one row, h3 number + label) |
+| `columns-stats` | — | Semrush One | Large stat number columns (10M / 35% / 21); one row, h3 number + label |
+| `cards-icon` | `cards-icon-feature` | Semrush One | Icon + title + description feature grid (3-col). **`cards-icon-feature`** variant: leading image is a full product SCREENSHOT (not a 48px icon) — full-width + rounded at card top, fixed `aspect-ratio: 3/2` so the card reserves height before load. (Variant currently UNUSED by any keeper after the scope reset; kept for re-use — see consolidation candidates) |
+| `cards-awards` | — | Semrush One | Award badge display for the dark CTA section |
 | `header` | — | All | Sticky nav with mega-menu dropdowns |
-| `footer` | — | All | CTA + link columns + social/legal bottom bar + SEMRUSH reveal |
+| `footer` | — | All | Orchestrates the footer fragment: CTA + link columns + social/legal bottom bar + SEMRUSH reveal. Composes the three `footer-*` sub-blocks below |
+| `footer-cta` | — | Footer fragment | "Get started" CTA sub-block inside the footer. Pure styling — JS is a no-op decorator |
+| `footer-links` | — | Footer fragment | Footer link columns. JS adds a mobile accordion (heading → `role=button`, `aria-expanded`, Enter/Space toggle) |
+| `footer-bottom` | — | Footer fragment | Social row + legal/copyright bottom bar. JS is a no-op; `footer.js` post-processes `.footer-bottom > div > div` into the legal row |
 | `fragment` | — | — | Utility — `loadFragment()` used by header/footer |
+
+---
+
+## Consolidation candidates (propose only — do NOT execute)
+
+Flagged during the 2026-06-17 toolbox inventory. These are *proposals for review* — nothing deleted, merged, or renamed. The frozen pages (index, one) must not move, so any consolidation that touches a tool they use is additive-only or deferred.
+
+| # | Candidate | Observation | Proposed action | Risk |
+|---|-----------|-------------|-----------------|------|
+| 1 | `cards-icon-feature` variant | **One-off masquerading as reusable.** Built for the deleted toolkit pages; UNUSED by any of the 5 keepers. Carries CSS weight for nothing. | Either keep explicitly as a "parked, reusable" variant (document as such — done above) OR move to the one-off registry / remove if no near-term page needs a screenshot-card grid. Decision, not urgent. | Low — unused, so removal can't regress a keeper. |
+| 2 | `footer-cta` + `footer-bottom` (no-op JS) | Both are pure-CSS sub-blocks whose `decorate()` is empty; `footer.js` already post-processes `.footer-bottom`. Three separate block folders for one footer fragment is heavier than needed. | Consider collapsing the footer sub-blocks into `footer` (styling via `.footer-cta`/`.footer-bottom` classes the parent applies) so the footer is one block, not four. | Medium — footer is shared by ALL pages incl. frozen ones; only worth doing if it stays byte-identical. Defer unless footer is reworked. |
+| 3 | `case-study` vs `testimonials` vs `carousel-testimonials` | Three different tools all present "customer proof" (quote/stat/portrait). Not duplicates (different layouts) but overlapping in PURPOSE — worth watching as more pages import, so we don't grow a 4th. | No action now. Re-evaluate when the next page needs social proof: prefer extending one of these over adding a new block. | Low — informational. |
+| 4 | `teaser` one-off proliferation | Three `teaser-oneoff-*` variants exist; two (`-semrush-one`, `-enterprise-platform`) are single-page. This is by design (one-off registry) but the count is climbing. | Keep, but when re-creating deleted pages prefer the context-adaptive bare `teaser` over new one-offs. | Low — already governed by the one-off registry. |
+
+No true duplicate blocks were found in `blocks/` — the earlier duplicate ROWS in this file's inventory table (carousel/cards-icon/columns-stats listed twice) were a documentation artifact, now corrected.
 
 ---
 
