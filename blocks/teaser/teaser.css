@@ -130,26 +130,26 @@ main .teaser .button-wrapper {
   background:
     url('/icons/enterprise-bg.svg') no-repeat 100% 100% / contain,
     rgb(0 0 0);
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 .teaser.teaser-oneoff-enterprise h2,
 .teaser.teaser-oneoff-enterprise h3,
 .teaser.teaser-oneoff-enterprise p {
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link {
-  border-color: #fff;
+  border-color: var(--color-inverse);
   background-color: transparent;
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:hover,
 main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible {
-  background-color: #fff;
+  background-color: var(--color-inverse);
   color: rgb(0 0 0);
-  border-color: #fff;
+  border-color: var(--color-inverse);
 }
 
 .teaser.teaser-oneoff-enterprise .teaser-glass {
@@ -175,7 +175,7 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
 
 .teaser.teaser-oneoff-enterprise-platform h2 {
   color: var(--dark-color);
-  font-size: var(--font-size-heading-xl);
+  font-size: 64px; /* fixed; NOT --font-size-heading-xl, which drops to 32px <1024px (this variant has no matching responsive override) */
 }
 
 .teaser.teaser-oneoff-enterprise-platform .teaser-glass {
@@ -207,9 +207,9 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
 .teaser:not([class*='oneoff']) .teaser-container {
   background: linear-gradient(180deg, rgb(212 177 255) 0%, rgb(212 177 255 / 0%) 72.43%);
   color: var(--dark-color);
-  border-radius: 8px;
-  padding: 64px;
-  gap: 64px;
+  border-radius: var(--radius-m);
+  padding: var(--space-2xl);
+  gap: var(--space-2xl);
   align-items: center;
 }
 
@@ -218,7 +218,7 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
 }
 
 .teaser:not([class*='oneoff']) h3 {
-  font-size: 40px;
+  font-size: var(--font-size-heading-ml);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: var(--tracking-tight);
@@ -226,7 +226,7 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
 }
 
 .teaser:not([class*='oneoff']) p {
-  font-size: 21px;
+  font-size: var(--font-size-heading-s);
   font-weight: 500;
   line-height: 1.5;
   margin: 0;
@@ -246,16 +246,16 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
    sits centered inside the padded card, so unlike the variant teasers it doesn't bleed
    off an edge. Same systematic glass surface used elsewhere on the site. */
 .teaser:not([class*='oneoff']) .teaser-glass {
-  padding: 12px;
+  padding: var(--space-xxs);
   background: linear-gradient(0deg, rgb(108 110 121 / 10%) 0%, rgb(209 210 213 / 10%) 100%);
   backdrop-filter: blur(26px);
   border: 1px solid rgb(255 255 255 / 60%);
-  border-radius: 12px;
+  border-radius: var(--radius-l);
 }
 
 .teaser:not([class*='oneoff']) .teaser-glass img,
 .teaser:not([class*='oneoff']) .teaser-glass picture {
-  border-radius: 6px;
+  border-radius: var(--radius-s);
 }
 
 /* =============================================
@@ -324,7 +324,7 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
   }
 
   .teaser .teaser-glass {
-    padding: 12px;
+    padding: var(--space-xxs);
     border: 1px solid rgb(255 255 255 / 60%);
     border-radius: 0 0 12px 12px;
     width: 100%;
@@ -333,13 +333,13 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
   .teaser .teaser-glass .teaser-media-el,
   .teaser .teaser-glass picture,
   .teaser .teaser-glass img {
-    border-radius: 8px;
+    border-radius: var(--radius-m);
   }
 
   /* DEFAULT feature card — mobile: tighter padding, no media bleed, plain image kept */
   .teaser:not([class*='oneoff']) .teaser-container {
     padding: 40px 24px;
-    gap: 32px;
+    gap: var(--space-l);
   }
 
   .teaser:not([class*='oneoff']) h3 {
@@ -347,7 +347,7 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
   }
 
   .teaser:not([class*='oneoff']) p {
-    font-size: 18px;
+    font-size: var(--font-size-body-l);
   }
 
   .teaser:not([class*='oneoff']) .teaser-media {
@@ -386,7 +386,7 @@ main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible 
 main .section.section-dark .teaser:not([class*='oneoff']) .teaser-container,
 body.template-dark main .teaser:not([class*='oneoff']) .teaser-container {
   background: none;
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 main .section.section-dark .teaser:not([class*='oneoff']) h2,
@@ -395,23 +395,23 @@ main .section.section-dark .teaser:not([class*='oneoff']) p,
 body.template-dark main .teaser:not([class*='oneoff']) h2,
 body.template-dark main .teaser:not([class*='oneoff']) h3,
 body.template-dark main .teaser:not([class*='oneoff']) p {
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 main .section.section-dark .teaser:not([class*='oneoff']) a.button.secondary:any-link,
 body.template-dark main .teaser:not([class*='oneoff']) a.button.secondary:any-link {
-  border-color: #fff;
+  border-color: var(--color-inverse);
   background-color: transparent;
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 main .section.section-dark .teaser:not([class*='oneoff']) a.button.secondary:any-link:hover,
 main .section.section-dark .teaser:not([class*='oneoff']) a.button.secondary:any-link:focus-visible,
 body.template-dark main .teaser:not([class*='oneoff']) a.button.secondary:any-link:hover,
 body.template-dark main .teaser:not([class*='oneoff']) a.button.secondary:any-link:focus-visible {
-  background-color: #fff;
+  background-color: var(--color-inverse);
   color: rgb(0 0 0);
-  border-color: #fff;
+  border-color: var(--color-inverse);
 }
 
 main .section.section-dark .teaser:not([class*='oneoff']) .teaser-glass,

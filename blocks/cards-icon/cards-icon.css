@@ -40,7 +40,7 @@
   font-family: var(--heading-font-family);
   color: var(--dark-color);
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-snug);
 }
 
 .cards-icon .cards-icon-card-body p:not(:has(strong)) {

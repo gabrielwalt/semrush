@@ -31,11 +31,15 @@
   --body-font-family: "Inter", sans-serif;
   --heading-font-family: "Lazzer", "Inter", sans-serif;
 
-  /* typography scale — desktop */
+  /* typography scale — desktop. Title roles run display → xl → l → ml → m → s,
+     then body l/m/s and label. ml(40) and s(21) fill the recurring gaps between
+     the original steps (feature-card / tab-panel headlines and card titles). */
   --font-size-display: 84px;
   --font-size-heading-xl: 64px;
   --font-size-heading-l: 48px;
+  --font-size-heading-ml: 40px;
   --font-size-heading-m: 24px;
+  --font-size-heading-s: 21px;
   --font-size-body-l: 18px;
   --font-size-body-m: 16px;
   --font-size-body-s: 14px;
@@ -51,8 +55,11 @@
   --tracking-snug: -0.02em;
   --tracking-wide: 0.02em;
 
-  /* spacing scale */
+  /* spacing scale (ascending): xs 8 · xxs 12 · s 16 · m 24 · l 32 · xl 40 · 2xl 64 · 3xl 120.
+     NOTE: --space-xxs (12px) sits ABOVE xs and below s — a recurring small gap/glass-frame
+     padding used ~11×. Named xxs (not 2xs) to read as "between xs and s", not smaller than xs. */
   --space-xs: 8px;
+  --space-xxs: 12px;
   --space-s: 16px;
   --space-m: 24px;
   --space-l: 32px;
@@ -255,7 +262,7 @@ main .default-content-wrapper p a:not(.button) {
 
 /* buttons */
 p.button-wrapper {
-  margin: 12px 0;
+  margin: var(--space-xxs) 0;
 }
 
 /* stylelint-disable no-descending-specificity */
@@ -582,7 +589,7 @@ body.template-one main .columns-stats > div > div p {
    and 21px titles per the original. On the original these white cards sit on a tinted
    band; our page is white here, so a hairline border keeps them legible. */
 body.template-one main .cards-icon > ul {
-  gap: 12px;
+  gap: var(--space-xxs);
 }
 
 body.template-one main .cards-icon .cards-icon-card-body {
@@ -599,7 +606,7 @@ body.template-one main .cards-icon .cards-icon-card-body picture img {
 }
 
 body.template-one main .cards-icon .cards-icon-card-body p strong {
-  font-size: 21px;
+  font-size: var(--font-size-heading-s);
   line-height: 1.5;
 }
 
@@ -608,7 +615,7 @@ body.template-one main .cards-icon .cards-icon-card-body p strong {
    surface and inverts text to white — so the block no longer carries its own band. */
 body.template-one main .cards-awards > ul {
   justify-content: stretch;
-  gap: 12px;
+  gap: var(--space-xxs);
 }
 
 body.template-one main .cards-awards > ul > li {
@@ -619,7 +626,7 @@ body.template-one main .cards-awards .cards-awards-card-body {
   flex-direction: row;
   align-items: flex-start;
   text-align: left;
-  gap: 12px;
+  gap: var(--space-xxs);
 }
 
 /* Each award gets the decorative shield badge to the LEFT of its label, as on the
@@ -756,7 +763,7 @@ body.template-one main .default-content-wrapper h4 + p + h2 {
 /* glass surface utility */
 .glass-surface {
   position: relative;
-  padding: 12px;
+  padding: var(--space-xxs);
   border-radius: var(--radius-l);
   background: linear-gradient(135deg, rgb(5 5 5 / 4%) 11%, rgb(255 255 255 / 4%) 89%);
   backdrop-filter: blur(12px);
@@ -886,7 +893,7 @@ body.template-enterprise main .section > .default-content-wrapper > h2 {
 /* Eyebrow: the small uppercase label that precedes section headings (first <p> in a
    default-content wrapper that also has an h2). */
 body.template-enterprise main .default-content-wrapper > p:first-child {
-  font-size: 14px;
+  font-size: var(--font-size-body-s);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -936,7 +943,7 @@ body.template-enterprise main .section.section-hero h1 {
 /* Subtitle = the paragraph that is NOT the eyebrow (the eyebrow is the first <p>, styled
    by the generic 14px rule above; this 24px rule must not catch it). */
 body.template-enterprise main .section.section-hero h1 ~ p {
-  font-size: 24px;
+  font-size: 24px; /* hero subtitle — intentional fixed 24px (see section comment); NOT --font-size-heading-m, which shrinks to 18px on mobile */
   line-height: 1.2;
   color: rgb(244 244 244);
   max-width: 26em;
@@ -946,7 +953,7 @@ body.template-enterprise main .section.section-hero h1 ~ p {
 /* Eyebrow inside the hero stays 14px uppercase (re-asserted at section-hero specificity
    so the subtitle rule can't bleed onto it). */
 body.template-enterprise main .section.section-hero .default-content-wrapper > p:first-child {
-  font-size: 14px;
+  font-size: var(--font-size-body-s);
   line-height: 1.2;
 }
 
@@ -988,14 +995,14 @@ body.template-enterprise main .section.section-tabs .tabs-nav {
   margin: 0 auto var(--space-2xl);
   flex-wrap: nowrap;
   gap: var(--space-s);
-  padding: 12px;
+  padding: var(--space-xxs);
   border-radius: var(--radius-pill);
   background: rgb(255 255 255 / 8%);
 }
 
 body.template-enterprise main .section.section-tabs .tabs-nav-tab {
   color: var(--color-inverse);
-  font-size: 16px;
+  font-size: var(--font-size-body-m);
   font-weight: 500;
   padding: var(--space-xs) var(--space-m);
   border-radius: var(--radius-pill);
@@ -1023,7 +1030,7 @@ body.template-enterprise main .section.section-tabs .teaser .teaser-container {
 }
 
 body.template-enterprise main .section.section-tabs .teaser .teaser-text > p:first-child {
-  font-size: 40px;
+  font-size: var(--font-size-heading-ml);
   font-weight: 600;
   line-height: 1.15;
   font-family: var(--heading-font-family);
@@ -1070,7 +1077,7 @@ body.template-enterprise main .case-study-stat {
 }
 
 body.template-enterprise main .case-study-stat-number {
-  font-size: 64px;
+  font-size: 64px; /* stat number — fixed display size; NOT --font-size-heading-xl, which shrinks to 32px on mobile */
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.03em;
@@ -1097,7 +1104,7 @@ body.template-enterprise main .teaser-oneoff-enterprise-platform a.button.second
 /* --- Resources carousel (SHARED block — enterprise override). Card title sizing; the
    text colors are set in the LIGHT-section block below (the resources section is white). */
 body.template-enterprise main .carousel h3 {
-  font-size: 21px;
+  font-size: var(--font-size-heading-s);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -1125,7 +1132,7 @@ body.template-enterprise main .section.section-dark h2 {
    holds the `carousel-testimonials` variant via :not(:has(...)). ----------------------- */
 body.template-enterprise main .section.case-study-container,
 body.template-enterprise main .section.carousel-container:not(:has(.carousel-testimonials)) {
-  background-color: #fff;
+  background-color: var(--background-color);
   color: var(--text-color);
 }
 

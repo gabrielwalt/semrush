@@ -273,7 +273,9 @@ These were surfaced by reviewing the style system against `craft-floor` (the ant
 
 **Sequencing:** G1 (rule IDs) is the contract the detector enforces, so it comes first. G2 (detector) and G3 (signals) are independent builds. G4 wires everything into the always-on skills + docs. Each script MUST be runnable with `node` and verified against the real repo before its task is `✅ Done` — a checker that doesn't run is not done.
 
-### G1 — 🔲 Open — Refactor `craft-floor` into an ID'd, tightened, executable ruleset
+### G1 — ✅ Done — Refactor `craft-floor` into an ID'd, tightened, executable ruleset
+
+> **Done (status flag was stale — work completed during the G/HP build, verified 2026-06-17).** `craft-floor` now carries a stable `<!-- rule:craft-* -->` ID on every checkable rule (**30 unique IDs**, no dups), the tightened impeccable thresholds (display ceiling ≤6rem, tracking floor ≥−0.04em, `text-wrap` balance/pretty, semantic z-index, cards-are-lazy, flex/grid), an **"Enforced by"** section pointing at `tools/quality/detect.mjs` with `[auto]` tags, and an updated README row. All prior context retained. (Later augmented in HP5 with Identity-Preservation + side-stripe + light-on-dark.)
 
 **Priority:** P1
 **Type:** Enhancement
@@ -453,6 +455,42 @@ These were surfaced by reviewing the style system against `craft-floor` (the ant
 3. `quality-tooling` lists the new matcher; `global-style-foundation` points into the three craft skills.
 
 **Acceptance criteria:** craft-floor gains the Identity-Preservation + side-stripe + light-on-dark rules, the side-stripe rule is deterministically enforced and clean on the repo, and `global-style-foundation` orchestrates the new craft skills.
+
+---
+
+## Phase I — Exercise the craft skills on the unfrozen pages + capture field notes (2026-06-17)
+
+**Why:** The HP craft skills (`typography-craft`/`color-craft`/`layout-craft`/`responsive-adaptation`) have never been run against real EDS pages. The user unfroze index/nav/footer and reopened one/enterprise is in-progress — so we can dogfood the skills on actual pages, fix genuine improvements, AND learn which guidance fits a typical Edge Delivery project vs which clashes (vanilla CSS, no build, block model, author content, EDS perf budget). All learnings → `skills/craft-skills-field-notes.md`. **Constraints:** identity-preservation (don't "correct" deliberate Semrush brand decisions); shared blocks ripple (a homepage teaser edit changes one/enterprise — verify all three, per `regression-guard`); run `detect.mjs` after every CSS change; lint clean; preview-verify. Fidelity = Refined.
+
+> **✅ Phase I complete 2026-06-17.** All 7 sub-tasks done. **Code outcome:** detector findings 26→5 (the 5 are accepted Semrush brand gradient stops); tokenized 7 inverse `#fff`→`--color-inverse` + 4 exact-match radii (all zero-visual, lint clean, preview-verified on all 3 pages). **Skill outcomes (dogfooding fed back):** `typography-craft` gained the "body already ≥500 → weight axis pre-satisfied" caveat; `layout-craft` gained the "EDS uniform `--section-padding` IS the rhythm" caveat; **`tools/quality/rules.mjs` `craft-radius-raw` matcher refined** to flag only token-matching radii (killed false-noise on intentional off-scale radii); `quality-tooling` doc updated. **Key learnings** (full notes in `skills/craft-skills-field-notes.md`): the raw-inverse→`--color-inverse` rule is the best EDS-block fit; the nav is touch-correct (click-based); Identity-Preservation repeatedly drove correct "accept, don't fix" triage; the executable detector made the whole pass fast and objective. **Solo decisions + 3 open questions** logged in the notes for user review (overflow-wrap global, the matcher refinement, Lazzer F01).
+
+### I1 — ✅ Done — Baseline capture
+**Type:** Enhancement · **Files:** notes only
+Run `project-state.mjs` + `detect.mjs --all`; record current computed type scale / colors / spacing on index, /one/, /enterprise/ at desktop+mobile as the regression baseline. Acceptance: baseline values + current detector findings logged in field notes.
+
+### I2 — ✅ Done — typography-craft lens
+**Type:** Enhancement · **Files:** `styles/*.css`, blocks as needed, notes
+Apply `typography-craft` to the 3 pages: check scale-ratio coherence, weight roles, measure (45–75ch on prose), light-on-dark 3-axis on dark sections/enterprise. Fix only genuine, identity-preserving improvements; note anything that's a Semrush brand decision to leave alone. Acceptance: real type issues fixed + verified non-regressing on all 3 pages; ≥3 field-note entries on EDS fit.
+
+### I3 — ✅ Done — color-craft lens
+**Type:** Enhancement · **Files:** `blocks/*/*.css`, `styles/*.css`, notes
+Apply `color-craft`: tackle the block-CSS `craft-color-raw-inverse` backlog (tokenize genuine inverse `#fff`→`--color-inverse`), check palette roles + tinted-neutral cohesion + dark-mode handling. Triage each detector finding (real vs allow-list gap). Acceptance: raw-inverse backlog reduced where it's a true win, detector re-run, all 3 pages non-regressing; field notes on what EDS block CSS does/doesn't fit.
+
+### I4 — ✅ Done — layout-craft lens
+**Type:** Enhancement · **Files:** notes, CSS only if a real win
+Apply `layout-craft`: squint test on each page, hierarchy/rhythm evaluation, card-grid monotony check. Mostly evaluative (these pages are validated-ish) — change only on a clear win. Acceptance: squint-test verdict per page logged; any fix verified; field notes on layout-craft EDS fit.
+
+### I5 — ✅ Done — responsive-adaptation lens
+**Type:** Enhancement · **Files:** `blocks/header/*`, CSS, notes
+Apply `responsive-adaptation`: the highest-value real check is the **nav hover-vs-touch** path (mega-menu must not be hover-only on touch); also spot-check mobile reflow + a long-author-string overflow on a couple of blocks. Fix genuine touch/overflow bugs. Acceptance: nav touch path assessed (+fixed if broken), overflow guards added where missing, verified; field notes.
+
+### I6 — ✅ Done — Clear the radius backlog where it's a genuine win
+**Type:** Enhancement · **Files:** `blocks/*/*.css`, notes
+The detector's `craft-radius-raw` backlog (raw `border-radius` literals where a `--radius-*` token exists) — tokenize the clear-cut single-value ones (zero-visual), leave intentional/structural ones. Re-run detector. Acceptance: radius backlog reduced, computed radii unchanged in preview, all 3 pages non-regressing.
+
+### I7 — ✅ Done — Write up field notes + fold EDS learnings back into the skills
+**Type:** Enhancement · **Files:** `skills/craft-skills-field-notes.md`, the craft skills, notes
+Consolidate the notes into the three buckets (works / doesn't-fit / open-questions). For any learning that's a durable EDS truth, fold a concise line into the matching craft skill (Pitfalls or a note) so the skill improves from the dogfooding. Acceptance: field notes complete; ≥1 craft skill improved from a real learning; README unaffected unless a skill's trigger changed.
 
 ---
 

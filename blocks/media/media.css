@@ -16,13 +16,13 @@
 .media-frame picture {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-s);
   display: block;
 }
 
 .media-frame img {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-s);
   display: block;
 }

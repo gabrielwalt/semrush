@@ -78,7 +78,22 @@ All other pages (One, Enterprise, SEO, Content, Pricing, Local, Social, PR, Comp
 - **Body letter-spacing:** `-0.02em` (`--tracking-snug`) globally
 - **Eyebrow/pre-title letter-spacing:** `+0.02em` (`--tracking-wide`) — used for section eyebrow labels
 
-Key size tokens: `--font-size-display` (84/56px), `--font-size-heading-xl` (64/32px at tablet), `--font-size-heading-l` (48/32px), `--font-size-body-l` (18px), `--font-size-body-m` (16px).
+**Title / font-size scale (full, desktop → mobile):**
+
+| Token | Desktop | Responsive | Role |
+|-------|---------|-----------|------|
+| `--font-size-display` | 84px | 56px <1024 | h1 / hero |
+| `--font-size-heading-xl` | 64px | 32px <1024 | h2 / big section headings |
+| `--font-size-heading-l` | 48px | 32px <1024 | h3 / section headings |
+| `--font-size-heading-ml` | 40px | fixed | feature-card + tab-panel headlines |
+| `--font-size-heading-m` | 24px | 18px <768 | h4 / subheads |
+| `--font-size-heading-s` | 21px | fixed | card titles, lead/emphasis body |
+| `--font-size-body-l` | 18px | fixed | body / lead paragraph |
+| `--font-size-body-m` | 16px | fixed | body |
+| `--font-size-body-s` | 14px | fixed | small / captions (`--font-size-caption` is an alias) |
+| `--font-size-label` | 12px | fixed | labels, eyebrows |
+
+**⚠️ Responsive-token hazard:** `display`/`heading-xl`/`heading-l`/`heading-m` SHRINK under `@media`. Only tokenize a `font-size` literal with one of these if the element *should* shrink on mobile AND the literal isn't a fixed display value (stat number, icon glyph) or inside a `@media` block. The `ml`/`s`/`body-*`/`label` tokens are fixed → always safe. (See `typography-craft`.) Bespoke big stat numbers (180/137/110/96/80px) stay literals — they're a per-block display treatment, not a reusable title role.
 
 Heading letter-spacing: H1/H2/H3 use `--tracking-tight` (-0.04em), H4 uses `--tracking-snug` (-0.02em). H4 line-height is 1.2 (not 1.1 like other headings).
 
@@ -96,6 +111,10 @@ Tablet breakpoint (< 1024px) reduces `--font-size-display` to 56px and `--font-s
 | `--container-max-width` | 1440px | — | Outermost cap |
 | `--nav-height` | 84px | — | Fixed nav bar |
 | `--cta-height` | 60px | — | Standard button height |
+
+**`--space-*` scale (ascending, fixed):** `xs` 8 · `xxs` 12 · `s` 16 · `m` 24 · `l` 32 · `xl` 40 · `2xl` 64 · `3xl` 120. ⚠️ `--space-xxs` (12px) sits ABOVE `xs` and below `s` — named `xxs` (not `2xs`) to read as "between xs and s", not smaller. It's a recurring small gap / glass-frame padding (~13 uses). All `--space-*` are fixed (no `@media` shrink) → always safe to tokenize a matching single-value `padding`/`gap`/`margin`.
+
+**`--radius-*` scale:** `s` 5 · `m` 8 · `l` 12 · `pill` 100. The former 6px literals were snapped to `--radius-s` (5px) as near-matches. Off-scale one-offs (2px hairline, 16px) stay literal.
 
 > Values measured 2026-06-17 on index/one/enterprise at 1440px desktop and verified against `styles/styles.css` `:root`. The `--section-padding`/`--block-padding` pair is a single rhythm value (60/30), not two different ones. Per-section overrides exist (e.g. `/one/` uses 90px on one section) — those are page-level one-offs, NOT foundation.
 >

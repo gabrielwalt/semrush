@@ -218,6 +218,7 @@ export default async function decorate(block) {
   searchInput.type = 'text';
   searchInput.className = 'insights-widget-dropdown-search-input';
   searchInput.placeholder = 'Enter country';
+  searchInput.setAttribute('aria-label', 'Search countries');
   searchInput.setAttribute('role', 'combobox');
   searchInput.setAttribute('aria-autocomplete', 'list');
   searchInput.setAttribute('aria-expanded', 'true');

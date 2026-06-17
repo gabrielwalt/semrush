@@ -25,6 +25,8 @@ Equal padding everywhere = no rhythm (and the AI tell). Vary it:
 - **Generous separation** between distinct sections (48–96px).
 - **Vary within sections** — not every row needs the same gap.
 - Spacing comes from a coherent scale (`craft-floor` One-Spacing-Scale owns the rule); on our EDS sections the section/block rhythm is mechanized — see `vertical-spacing-system`.
+- **Every spacing/radius value is a token (craft-floor Systematic-Tokenization Rule).** Single-value `gap`/`padding`/`margin` and `border-radius` use a `--space-*`/`--radius-*` token; snap near-matches (6px→`--radius-s`), add a token for a recurring off-scale gap (12px→`--space-xxs`), leave one-offs literal. Enforced by `craft-token-literal` + `craft-radius-raw` in `detect.mjs`.
+- **EDS caveat (field-tested):** "vary the spacing" does NOT mean hand-tuning each section's outer padding. On EDS the **uniform `--section-padding` IS the foundation rhythm** — varying it per-section breaks the system and any validated page. Get rhythm from *within-section* variation (block gaps, card spacing) and the **section-style spacing variants** (`section-flush`, `spacing-*`), not from bespoke per-section padding.
 
 ## Choose the right layout tool
 - **Flexbox for 1D** (rows/columns of items: navs, button groups, card internals). Don't reach for Grid when `flex-wrap` is simpler.

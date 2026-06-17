@@ -9,7 +9,7 @@ header .nav-wrapper {
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: #fff;
+  background-color: var(--background-color);
   width: 100%;
 }
 
@@ -40,15 +40,15 @@ header nav[aria-expanded='true'] {
 @media (width >= 1024px) {
   header .nav-wrapper {
     background-color: var(--color-teal);
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color var(--transition-fast) ease-in-out;
   }
 
   header.nav-open {
-    background-color: #fff;
+    background-color: var(--background-color);
   }
 
   header .nav-wrapper.nav-open {
-    background-color: #fff;
+    background-color: var(--background-color);
   }
 
   header nav {
@@ -245,7 +245,7 @@ header nav .nav-sections .nav-mega-panel ul li {
 
   header nav .nav-sections .nav-items {
     display: flex;
-    gap: 24px;
+    gap: var(--space-m);
     margin: 0;
   }
 
@@ -262,17 +262,17 @@ header nav .nav-sections .nav-mega-panel ul li {
     right: 0;
     top: 100%;
     padding: 40px max(32px, calc((100vw - 1440px) / 2 + 32px));
-    background-color: #fff;
+    background-color: var(--background-color);
     white-space: initial;
     box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
     clip-path: inset(0 -40px -40px -40px);
-    gap: 40px;
+    gap: var(--space-xl);
     z-index: 10;
     border-radius: 0 0 24px 24px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
-    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s;
+    transition: opacity var(--transition-fast) ease-in-out, transform var(--transition-fast) ease-in-out, visibility var(--transition-fast);
     display: flex;
     overflow: hidden;
   }
@@ -280,7 +280,7 @@ header nav .nav-sections .nav-mega-panel ul li {
   header nav .nav-sections .nav-items > .nav-item > .nav-mega-panel li {
     padding: 6px 0;
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--font-size-body-s);
   }
 
   header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel {
@@ -303,7 +303,7 @@ header nav .nav-sections .nav-mega-panel ul li {
   header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-column ul li {
     padding: 6px 0;
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--font-size-body-s);
   }
 
   header nav .nav-sections .nav-items > .nav-item[aria-expanded='true'] > .nav-mega-panel .nav-mega-column ul li a {
@@ -486,7 +486,7 @@ header nav .nav-tools a:any-link {
   border-radius: var(--radius-pill);
   padding: 16px 24px;
   line-height: 1;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color var(--transition-fast) ease-in-out, border-color var(--transition-fast) ease-in-out, color var(--transition-fast) ease-in-out;
 }
 
 header nav .nav-tools a:first-of-type {
@@ -497,7 +497,7 @@ header nav .nav-tools a:first-of-type {
 
 header nav .nav-tools a:last-of-type {
   background-color: var(--dark-color);
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 header nav .nav-tools a:first-of-type:hover {

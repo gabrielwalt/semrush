@@ -4,7 +4,7 @@ description: CSS and JavaScript coding conventions for EDS blocks. Use when writ
 ---
 
 ## CSS
-- Use tokens from `styles.css`; add new tokens when values repeat
+- **Tokens, not literals (systematic tokenization).** Every `font-size`, `border-radius`, single-value `padding`/`margin`/`gap`, `letter-spacing`, `color`, and `transition` duration uses a `var(--token)` from `styles.css` — the style system only works if the same values are reused. Snap a near-match to the nearest token; add a NEW token (in `:root` + PROJECT-DESIGN) when a value recurs for one role with no token; leave only genuine one-offs as literals. **Don't swap a fixed literal for a responsive token** that shrinks under `@media` (see `typography-craft`). Run `node tools/quality/detect.mjs <files>` — `craft-token-literal` / `craft-radius-raw` flag missed swaps. Full rule: `craft-floor` Systematic-Tokenization Rule.
 - Class names: `{block}-{part}` in kebab-case
 - No positional selectors (`nth-child`) — use `decorate()` to add semantic classes
 - No `!important` — use the `.full-width` escape hatch instead (see below)

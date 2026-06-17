@@ -1,5 +1,3 @@
-/* global WebImporter */
-
 /**
  * Wraps a CTA link in the correct EDS button markup.
  * Outline/ghost/secondary buttons → <em><a> (secondary)

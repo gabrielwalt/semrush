@@ -18,7 +18,7 @@
 .insights-widget-search {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-xxs);
 }
 
 .insights-widget-input {
@@ -92,7 +92,7 @@
   background: #fff;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--font-size-body-s);
   font-weight: 500;
   color: var(--dark-color);
   padding: 0 6px;
@@ -107,7 +107,7 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none'%3E%3Cpath stroke='%23181e15' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m3 5 3 3 3-3'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-fast) ease;
 }
 
 .insights-widget-country[aria-expanded='true'] .insights-widget-country-arrow {
@@ -121,7 +121,7 @@
   right: 0;
   width: 250px;
   background: #fff;
-  border-radius: 8px;
+  border-radius: var(--radius-m);
   border: 1px solid rgb(220 220 225);
   box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
   z-index: 100;
@@ -138,7 +138,7 @@
   align-items: center;
   padding: 8px 12px;
   border-bottom: 1px solid rgb(220 220 225);
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .insights-widget-dropdown-search-icon {
@@ -155,7 +155,7 @@
 .insights-widget-dropdown-search input.insights-widget-dropdown-search-input {
   border: none;
   outline: none;
-  font-size: 13px;
+  font-size: var(--font-size-body-s);
   font-family: var(--body-font-family);
   background: transparent;
   width: 100%;
@@ -180,12 +180,12 @@
 .insights-widget-option {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
   padding: 6px 12px;
   height: 32px;
   box-sizing: border-box;
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--font-size-body-s);
   line-height: 18px;
 }
 
@@ -209,7 +209,7 @@
 }
 
 .insights-widget-option-flag {
-  font-size: 14px;
+  font-size: var(--font-size-body-s);
   line-height: 1;
   flex-shrink: 0;
 }
@@ -223,7 +223,7 @@
 /* Submit button */
 .insights-widget-submit {
   background: #000;
-  color: #fff;
+  color: var(--color-inverse);
   border: none;
   border-radius: var(--radius-pill);
   padding: 0 32px;
@@ -232,7 +232,7 @@
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color var(--transition-fast) ease-in-out;
 }
 
 .insights-widget-submit:hover {

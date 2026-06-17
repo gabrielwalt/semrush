@@ -99,6 +99,12 @@ export function loadAllowList(root = process.cwd()) {
   const colors = [];
   const radii = new Set();
   const tokenNames = new Set();
+  // px-value → token-name maps for FIXED (non-responsive) tokens only. A token
+  // redefined under @media with a different value is "responsive" and must NOT be
+  // suggested for a fixed literal (it would shrink on mobile — the documented hazard).
+  const fontByPx = {}; // e.g. {'21':'--font-size-heading-s'}
+  const spaceByPx = {}; // e.g. {'12':'--space-xxs'}
+  const tokenDefs = {}; // name → Set of distinct values (to detect responsive tokens)
 
   const harvestColors = (str) => {
     for (const hit of [...(str.match(HEX_RE) || []), ...(str.match(RGB_RE) || [])]) {
@@ -117,19 +123,33 @@ export function loadAllowList(root = process.cwd()) {
     const css = readFileSync(p, 'utf8').replace(/\/\*[\s\S]*?\*\//g, ' ');
     harvestColors(css);
     for (const m of css.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/gi)) {
-      tokenNames.add(m[1]);
-      if (/--radius-/.test(m[1])) {
-        const px = m[2].match(/(\d+)px/);
+      const name = m[1];
+      const val = m[2].trim();
+      tokenNames.add(name);
+      (tokenDefs[name] = tokenDefs[name] || new Set()).add(val);
+      if (/--radius-/.test(name)) {
+        const px = val.match(/(\d+)px/);
         if (px) radii.add(px[1]);
       }
     }
+  }
+
+  // Build fixed-token px maps: only tokens with a SINGLE distinct value (no @media
+  // override) qualify. First-writer-wins so the base/desktop value is canonical.
+  for (const [name, vals] of Object.entries(tokenDefs)) {
+    if (vals.size !== 1) continue; // responsive (multi-value) → skip
+    const val = [...vals][0];
+    const px = /^(\d+)px$/.exec(val);
+    if (!px) continue;
+    if (/--font-size-/.test(name) && !(px[1] in fontByPx)) fontByPx[px[1]] = name;
+    if (/--space-/.test(name) && !(px[1] in spaceByPx)) spaceByPx[px[1]] = name;
   }
 
   // PROJECT-DESIGN.md: any hex/rgb named in the design doc is an allowed brand color
   const designPath = join(root, 'PROJECT-DESIGN.md');
   if (existsSync(designPath)) harvestColors(readFileSync(designPath, 'utf8'));
 
-  return { colors, radii, tokenNames };
+  return { colors, radii, tokenNames, fontByPx, spaceByPx };
 }
 
 /* ----------------------------------------------------------------------------
@@ -267,9 +287,52 @@ export const RULES = [
         const px = m[1].trim().match(/^(\d+)px$/);
         if (!px) continue;
         if (px[1] === '0') continue;
-        // if a --radius token with this px exists, flag the raw literal
-        if (allow.radii.has(px[1]) || allow.radii.size > 0) {
-          out.push({ line: n, snippet: line.trim(), detail: `raw ${px[1]}px radius; a --radius-* token system exists` });
+        // Flag ONLY when the literal EQUALS an existing --radius token value — that's
+        // the actionable, zero-visual swap. An off-scale radius (no matching token) is
+        // an intentional component value, not slop (field-tested: flagging those was
+        // noise). If a project wants every radius tokenized, add the token first.
+        if (allow.radii.has(px[1])) {
+          out.push({ line: n, snippet: line.trim(), detail: `raw ${px[1]}px radius equals an existing --radius-* token — use the token` });
+        }
+      }
+      return out;
+    },
+  },
+  {
+    id: 'craft-token-literal',
+    area: 'tokens',
+    name: 'Single-value font-size/spacing literal that equals a FIXED token',
+    severity: 'warn',
+    appliesTo: 'css',
+    run({ cssNoComments, allow }) {
+      // Systematic tokenization: a single-value font-size / padding / margin / gap
+      // literal that EXACTLY equals a FIXED (non-responsive) token value should use
+      // the token. Only fixed tokens are suggested (allow.fontByPx / spaceByPx are
+      // built from single-definition tokens), so we never push a literal toward a
+      // responsive token that would shrink it on mobile (the documented hazard).
+      // Single-value only — multi-value shorthands (`12px 0`, `0 32px`) are skipped
+      // to stay conservative (favor false-negatives).
+      const out = [];
+      for (const { n, line } of eachLine(cssNoComments)) {
+        // skip custom-property DEFINITIONS (`--container-padding: 32px;`) — those ARE
+        // the tokens; we only flag literal USAGES on real properties.
+        if (/^\s*--[a-z0-9-]+\s*:/.test(line)) continue;
+        // font-size (leading boundary so `--font-size` defs / sub-props don't match)
+        let m = line.match(/(?:^|[\s;{])font-size\s*:\s*([^;]+);?/i);
+        if (m && !/var\(--/.test(m[1])) {
+          const px = m[1].trim().match(/^(\d+)px$/);
+          if (px && allow.fontByPx[px[1]]) {
+            out.push({ line: n, snippet: line.trim(), detail: `font-size ${px[1]}px equals ${allow.fontByPx[px[1]]} — use the token` });
+          }
+        }
+        // single-value padding / margin / gap — leading boundary so `scroll-margin`,
+        // `--container-padding`, `column-gap`-as-`gap` etc. aren't substring-matched.
+        m = line.match(/(?:^|[\s;{])(padding|margin|gap|row-gap|column-gap)\s*:\s*([^;]+);?/i);
+        if (m && !/var\(--/.test(m[2])) {
+          const px = m[2].trim().match(/^(\d+)px$/); // single value only
+          if (px && allow.spaceByPx[px[1]]) {
+            out.push({ line: n, snippet: line.trim(), detail: `${m[1]} ${px[1]}px equals ${allow.spaceByPx[px[1]]} — use the token` });
+          }
         }
       }
       return out;

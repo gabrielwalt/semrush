@@ -45,7 +45,7 @@
   }
 
   .marquee .marquee-track {
-    gap: 40px;
+    gap: var(--space-xl);
     padding-right: 40px;
   }
 }

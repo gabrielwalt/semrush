@@ -30,7 +30,7 @@
 }
 
 .carousel {
-  --slider-gap: 12px;
+  --slider-gap: var(--space-xxs);
   --card-width: 430px;
   --card-radius: var(--radius-s);
   --img-height: 286px;
@@ -67,14 +67,14 @@
   border-radius: var(--radius-pill);
   border: 1px solid var(--dark-color);
   background: transparent;
-  font-size: 24px;
+  font-size: 24px; /* nav arrow glyph; not a heading (hidden <1024px anyway) */
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--dark-color);
-  transition: background-color 0.2s;
+  transition: background-color var(--transition-fast);
 }
 
 .carousel-nav button:hover {
@@ -125,7 +125,7 @@
 }
 
 .carousel:not(.carousel-expansible) > div > div:last-child h3 {
-  font-size: 21px;
+  font-size: var(--font-size-heading-s);
   font-weight: 600;
   color: var(--dark-color);
   margin: 0;
@@ -220,7 +220,7 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   border-radius: var(--radius-s);
-  padding: 24px;
+  padding: var(--space-m);
   box-sizing: border-box;
   overflow: clip;
   cursor: pointer;
@@ -250,7 +250,7 @@
   margin: 0;
   font-family: var(--heading-font-family);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-wide);
   line-height: 1;
 }
 
@@ -272,13 +272,13 @@
   background: transparent;
   border-radius: 50%;
   padding: 0;
-  font-size: 24px;
+  font-size: 24px; /* expand-icon glyph sized to the 40px button; not a heading, and must stay fixed on mobile */
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s, transform 0.3s;
+  transition: background-color var(--transition-fast), transform 0.3s;
 }
 
 .carousel-expand:hover {
@@ -294,7 +294,7 @@
   background: linear-gradient(91deg, rgb(5 5 5 / 4%) 11.45%, rgb(255 255 255 / 4%) 88.55%);
   backdrop-filter: blur(5px);
   border-radius: var(--radius-l);
-  padding: 12px;
+  padding: var(--space-xxs);
   border: 1px solid rgb(255 255 255 / 60%);
   box-shadow: 0 2px 12px rgb(0 0 0 / 5%);
 }
@@ -302,7 +302,7 @@
 .carousel.carousel-expansible .carousel-glass img {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-s);
   display: block;
 }
 
@@ -330,7 +330,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 32px;
+  gap: var(--space-l);
   position: relative;
   overflow: visible;
   opacity: 0;
@@ -364,7 +364,7 @@
 .carousel.carousel-expansible .carousel-large-img img {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-s);
   display: block;
 }
 
