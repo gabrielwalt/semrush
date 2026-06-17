@@ -59,7 +59,9 @@ All other pages (One, Enterprise, SEO, Content, Pricing, Local, Social, PR, Comp
 
 **Semrush One page gradient (`body.template-one`):** `linear-gradient(rgb(193 144 255) 5%, var(--color-teal) 42%, var(--color-teal) 64%, #fff 92%)` over white, capped at `100% 1250px` so it fades to white before the "Built for how people search today" title. The hero teaser is transparent on this page so its purple comes from this background. A **second gradient region** is layered on `main` lower down (white→teal→purple behind "The only tool…" → icon cards → testimonial), ended by the decorative comb-fade image `/icons/one-gradient-fade.png` (purple→white striped band). Both are background LAYERS on `main` (vertically positioned with explicit `Npx` offsets) — not z-index:-1 pseudo-elements, which render behind main's white base.
 
-**Enterprise tab panels (`body.template-enterprise .section-tabs .teaser`):** each panel is a CARD — `1px solid rgb(255 255 255 / 12%)` border, `--radius-m` (8px) corners, `var(--space-xl)` padding, `rgb(255 255 255 / 4%)` translucent fill over the dark glass. Image sits on the LEFT (parser emits media-row-first → `teaser-media-left`). NOTE: radius tokens are only `--radius-s` (5px), `--radius-m` (8px), `--radius-pill` — there is **no `--radius-l`**; referencing it silently resolves to 0 (caught once on these cards).
+**Enterprise tab panels (`body.template-enterprise .section-tabs .teaser`):** each panel is a CARD — `1px solid rgb(255 255 255 / 12%)` border, `--radius-m` (8px) corners, `var(--space-xl)` padding, `rgb(255 255 255 / 4%)` translucent fill over the dark glass. Image sits on the LEFT (parser emits media-row-first → `teaser-media-left`).
+
+**Radius scale:** `--radius-s` (5px), `--radius-m` (8px), `--radius-l` (12px), `--radius-pill` (100px). `--radius-l` is the card/glass-frame corner (glass surface, carousel/media glass, /one/ icon cards) — added in F07 to replace scattered raw `12px`/`10px` literals. (Historical note: `--radius-l` did NOT exist before 2026-06-17; older code that referenced it resolved to 0 — that token now exists, so the hazard is gone.)
 
 **Dark-template header inversion (`body.template-dark header`):** the header inverts fully with the page, not just its text. The text already inherits white from `body.template-dark`; three rules in `styles.css` add the rest — `.nav-wrapper` background → `--dark-color`, the logo `<img>` → `filter: brightness(0) invert(1)` (white), and the two `.nav-tools` CTAs invert (Log In → white-outline/transparent, Sign Up → white fill + dark text). `header.js` skips its desktop scroll-fade (which writes an inline light background) when `body.template-dark` is present, so the dark header bg isn't overwritten on scroll. Scoped to `template-dark`, so only enterprise inverts; the frozen homepage/`/one/` headers stay white.
 
@@ -95,6 +97,8 @@ Tablet breakpoint (< 1024px) reduces `--font-size-display` to 56px and `--font-s
 | `--cta-height` | 60px | — | Standard button height |
 
 > Values measured 2026-06-17 on index/one/enterprise at 1440px desktop and verified against `styles/styles.css` `:root`. The `--section-padding`/`--block-padding` pair is a single rhythm value (60/30), not two different ones. Per-section overrides exist (e.g. `/one/` uses 90px on one section) — those are page-level one-offs, NOT foundation.
+>
+> **The `--space-*` scale** is `8 / 16 / 24 / 32 / 40 / 64 / 120` (xs→3xl). Note **`12px` is a de-facto additional step** used 30+ times as a small intra-component gap/padding (glass-frame padding+radius, carousel `--slider-gap`, insights-widget, testimonials) — it is intentional and load-bearing, not an off-scale accident (reviewed in F08). `--space-l` (32) and `--space-xl` (40) are both in active use and visually distinct — keep both.
 
 ---
 

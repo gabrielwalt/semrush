@@ -22,6 +22,7 @@
   --link-hover-color: rgb(24 30 21);
   --accent-color: rgb(193 144 255);
   --accent-cyan: rgb(24 240 191);
+  --color-inverse: #fff;
   --color-muted: rgb(108 110 121);
   --color-border: rgb(230 230 230);
   --color-teal: rgb(220 238 235);
@@ -75,40 +76,17 @@
   /* radii */
   --radius-s: 5px;
   --radius-m: 8px;
+  --radius-l: 12px;
   --radius-pill: 100px;
 
   /* transitions */
   --transition-duration: 0.42s;
   --transition-easing: ease-in-out;
   --transition-fast: 0.2s;
-
-  /* backward-compat aliases */
-  --heading-font-size-xxl: var(--font-size-display);
-  --heading-font-size-xl: var(--font-size-heading-xl);
-  --heading-font-size-l: var(--font-size-heading-l);
-  --heading-font-size-m: var(--font-size-heading-m);
-  --heading-font-size-s: var(--font-size-body-m);
-  --heading-font-size-xs: var(--font-size-body-m);
-  --body-font-size-m: var(--font-size-body-l);
-  --body-font-size-s: var(--font-size-body-m);
-  --body-font-size-xs: var(--font-size-body-s);
 }
 
 /* EDS button container */
 main .button-container { display: inline; }
-
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
 
 @media (width < 1024px) {
   :root {
@@ -133,7 +111,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
+  font-size: var(--font-size-body-l);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: var(--tracking-snug);
@@ -173,28 +151,28 @@ h6 {
 }
 
 h1 {
-  font-size: var(--heading-font-size-xxl);
+  font-size: var(--font-size-display);
   letter-spacing: var(--tracking-tight);
 }
 
 h2 {
-  font-size: var(--heading-font-size-xl);
+  font-size: var(--font-size-heading-xl);
   letter-spacing: var(--tracking-tight);
 }
 
 h3 {
-  font-size: var(--heading-font-size-l);
+  font-size: var(--font-size-heading-l);
   letter-spacing: var(--tracking-tight);
 }
 
 h4 {
-  font-size: var(--heading-font-size-m);
+  font-size: var(--font-size-heading-m);
   letter-spacing: var(--tracking-snug);
   line-height: 1.2;
 }
 
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
+h5 { font-size: var(--font-size-body-l); }
+h6 { font-size: var(--font-size-body-m); }
 
 p,
 dl,
@@ -208,7 +186,7 @@ blockquote {
 
 code,
 pre {
-  font-size: var(--body-font-size-s);
+  font-size: var(--font-size-body-m);
 }
 
 pre {
@@ -249,6 +227,32 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Prose links — a bare link inside authored body copy (a default-content paragraph) must be
+   visually distinct from surrounding text, not just on hover (craft-floor Distinct-Link Rule).
+   Scoped to genuine prose: default-content paragraphs only — NOT buttons, NOT links that ARE a
+   heading (e.g. resource-card <h3><a>), NOT nav link columns, NOT the announcement bar. A
+   persistent underline (rather than a color shift) reads as a link on both light and dark
+   surfaces. Footer/nav link LISTS are understood as links by context and stay un-underlined. */
+main .default-content-wrapper p a:not(.button) {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* Global keyboard focus — a consistent, visible :focus-visible ring on EVERY interactive
+   element, not just buttons (craft-floor All-Elements-Focus Rule). Low-specificity :where()
+   so the bespoke .button focus rules (and any dark-surface override) still win; this is the
+   baseline for plain links, inputs, selects, and custom-button controls (carousel nav, stats
+   rows, country combobox). Keyboard-only (:focus-visible), so mouse clicks are unaffected. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* On dark surfaces the purple ring has weak contrast — use the cyan accent instead. */
+:where(.section-dark, body.template-dark) :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: var(--accent-cyan);
+}
+
 /* buttons */
 p.button-wrapper {
   margin: 12px 0;
@@ -277,7 +281,7 @@ button.button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color var(--transition-fast) ease-in-out, border-color var(--transition-fast) ease-in-out, color var(--transition-fast) ease-in-out;
 }
 
 a.button[aria-disabled="true"],
@@ -457,7 +461,7 @@ main .section.section-flush {
 
 main .section.section-dark {
   background-color: var(--dark-color);
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 /* ONE-OFF (homepage AI Visibility Index section only): bar/stripe SVG pattern overlay at bottom.
@@ -474,18 +478,18 @@ main .section.section-dark h3,
 main .section.section-dark h4,
 main .section.section-dark h5,
 main .section.section-dark h6 {
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 main .section.section-dark a.button:any-link {
-  border-color: #fff;
+  border-color: var(--color-inverse);
   background-color: transparent;
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 main .section.section-dark a.button:any-link:hover,
 main .section.section-dark a.button:any-link:focus-visible {
-  background-color: #fff;
+  background-color: var(--color-inverse);
   color: var(--dark-color);
 }
 
@@ -571,7 +575,7 @@ body.template-one main .columns-stats > div > div {
 
 body.template-one main .columns-stats > div > div h3,
 body.template-one main .columns-stats > div > div p {
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 /* cards-icon: white rounded cards (toolkit default is borderless/no-card). 30px icons
@@ -584,7 +588,7 @@ body.template-one main .cards-icon > ul {
 body.template-one main .cards-icon .cards-icon-card-body {
   background: #fff;
   border: 1px solid rgb(24 30 21 / 8%);
-  border-radius: 10px;
+  border-radius: var(--radius-l);
   padding: var(--space-m);
   height: 100%;
 }
@@ -690,8 +694,8 @@ body.template-one main .section.section-dark a.button:any-link {
 
 body.template-one main .section.section-dark a.button:any-link:hover,
 body.template-one main .section.section-dark a.button:any-link:focus-visible {
-  border-color: #fff;
-  background-color: #fff;
+  border-color: var(--color-inverse);
+  background-color: var(--color-inverse);
   color: var(--dark-color);
 }
 
@@ -699,7 +703,7 @@ body.template-one main .section.section-dark a.button:any-link:focus-visible {
    vanish on the dark band — make them readable, and space them apart since they sit
    inline in one paragraph with no separators. */
 body.template-one main .section.section-dark a:not(.button):any-link {
-  color: #fff;
+  color: var(--color-inverse);
   text-decoration: underline;
 }
 
@@ -753,7 +757,7 @@ body.template-one main .default-content-wrapper h4 + p + h2 {
 .glass-surface {
   position: relative;
   padding: 12px;
-  border-radius: 12px;
+  border-radius: var(--radius-l);
   background: linear-gradient(135deg, rgb(5 5 5 / 4%) 11%, rgb(255 255 255 / 4%) 89%);
   backdrop-filter: blur(12px);
   box-shadow:
@@ -798,7 +802,7 @@ body.template-one main .default-content-wrapper h4 + p + h2 {
 /* stylelint-disable no-descending-specificity */
 body.template-dark {
   background-color: var(--dark-color);
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 body.template-dark main {
@@ -811,19 +815,19 @@ body.template-dark main h3,
 body.template-dark main h4,
 body.template-dark main h5,
 body.template-dark main h6 {
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 /* Plain (non-button) links stay readable on the dark surface. */
 body.template-dark main a:not(.button):any-link {
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 /* Secondary CTA (em-wrapped link) → outline-white on the dark surface. */
 body.template-dark main a.button.secondary:any-link {
   border-color: rgb(255 255 255 / 40%);
   background-color: transparent;
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 /* Header inverts with the page: dark surface, white logo, inverted nav buttons.
@@ -842,12 +846,12 @@ body.template-dark header nav .nav-brand img {
 body.template-dark header nav .nav-tools a:first-of-type {
   border-color: rgb(255 255 255 / 40%);
   background-color: transparent;
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 /* Sign Up (solid) → inverted to a white fill with dark text. */
 body.template-dark header nav .nav-tools a:last-of-type {
-  background-color: #fff;
+  background-color: var(--color-inverse);
   color: var(--dark-color);
 }
 /* stylelint-enable no-descending-specificity */
@@ -886,7 +890,7 @@ body.template-enterprise main .default-content-wrapper > p:first-child {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: var(--color-inverse);
   margin-bottom: var(--space-s);
 }
 
@@ -899,8 +903,8 @@ body.template-enterprise main a.button:any-link {
 
 body.template-enterprise main a.button:any-link:hover,
 body.template-enterprise main a.button:any-link:focus-visible {
-  border-color: #fff;
-  background-color: #fff;
+  border-color: var(--color-inverse);
+  background-color: var(--color-inverse);
   color: var(--dark-color);
 }
 
@@ -959,7 +963,7 @@ body.template-enterprise main .marquee picture img {
    so recolor them white-on-transparent here. ------------------------------------------ */
 body.template-enterprise main .carousel-container:has(.carousel-testimonials) .carousel-nav button {
   border-color: rgb(255 255 255 / 40%);
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 body.template-enterprise main .carousel-container:has(.carousel-testimonials) .carousel-nav button:hover {
@@ -990,7 +994,7 @@ body.template-enterprise main .section.section-tabs .tabs-nav {
 }
 
 body.template-enterprise main .section.section-tabs .tabs-nav-tab {
-  color: #fff;
+  color: var(--color-inverse);
   font-size: 16px;
   font-weight: 500;
   padding: var(--space-xs) var(--space-m);
@@ -1087,7 +1091,7 @@ body.template-enterprise main .teaser-oneoff-enterprise-platform a.button.second
 body.template-enterprise main .teaser-oneoff-enterprise-platform a.button.secondary:any-link:hover,
 body.template-enterprise main .teaser-oneoff-enterprise-platform a.button.secondary:any-link:focus-visible {
   background-color: var(--dark-color);
-  color: #fff;
+  color: var(--color-inverse);
 }
 
 /* --- Resources carousel (SHARED block — enterprise override). Card title sizing; the
@@ -1156,3 +1160,20 @@ body.template-enterprise main .section.carousel-container:not(:has(.carousel-tes
 }
 
 /* stylelint-enable no-descending-specificity */
+
+/* Reduced-motion baseline — honor the user's OS setting (craft-floor Reduced-Motion-Baseline
+   Rule). Several blocks animate without their own guard (the marquee's 25s infinite scroll,
+   the insights-widget cursor blink, carousel/stats transitions). This global fallback near-
+   instantly settles all animations/transitions and disables smooth scrolling for anyone who
+   asked for less motion. The blocks that DO branch on reduced-motion in JS (media, teaser)
+   are unaffected. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

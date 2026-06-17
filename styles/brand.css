@@ -1,14 +1,8 @@
-:root {
-  /* brand colors */
-  --color-muted: rgb(51 51 51);
-
-  /* fonts */
-  --heading-font-family: "Lazzer", "Inter", sans-serif;
-  --body-font-family: "Inter", sans-serif;
-
-  /* spacing */
-  --nav-height: 84px;
-}
+/* Brand-level tokens (colors, fonts, layout caps) are defined once in styles.css `:root`
+   to keep a single source of truth (craft-floor One-Token-One-Home Rule). This file
+   previously re-declared --color-muted / --heading-font-family / --body-font-family /
+   --nav-height, but those duplicated (and in the case of --color-muted, conflicted with
+   and lost to) the styles.css definitions. Removed to avoid two homes for one token. */
 
 html,
 body {

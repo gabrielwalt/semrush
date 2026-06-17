@@ -75,7 +75,7 @@ main > .section > .default-content-wrapper > p:first-child:has(+ h2) {
   white-space: nowrap;
   border-radius: var(--radius-pill);
   letter-spacing: var(--tracking-snug);
-  transition: color 0.2s, background-color 0.2s;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .section.section-tabs .tabs-nav-tab[aria-selected='true'] {
