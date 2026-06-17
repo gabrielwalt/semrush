@@ -22,6 +22,18 @@ Place the icon SVG in `/icons/`. The pseudo-element is purely decorative — no 
 
 **Note:** Always bind to the section's style class(es), not to a block-specific class. This makes the icon reusable across any block in sections with that style.
 
+## Variant — same glyph repeated per item (e.g. a badge before every list item)
+When the original shows the SAME decorative mark on every card/row (e.g. an award badge left of each label), it's still code, not content (one repeated glyph the author doesn't manage). Bind `::before` to the REPEATING element and size it with `flex: 0 0` so it sits inline beside the text:
+```css
+.cards-awards .cards-awards-card-body::before {
+  content: '';
+  flex: 0 0 50px;      /* fixed track so the label flows beside it */
+  width: 50px; height: 54px;
+  background: url('/icons/award-badge.svg') no-repeat center / contain;
+}
+```
+First copy the source's inline SVG verbatim into `/icons/` (the html2md import pipeline strips inline SVGs, so they never reach the content). If badges DIFFER per item, they're author-managed content — author them as images instead.
+
 ## Pitfalls
 - Icons in `/icons/` are served locally by the dev server. Icons in `/content/images/` come from remote and may 404 locally.
 - Use `::before` for icons above the heading, `::after` for below.

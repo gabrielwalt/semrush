@@ -52,6 +52,19 @@ Rules:
 ## Blocks vs variants
 - Prefer reuse + variants over new blocks. New block only when structure is fundamentally different or a variant needs >50% new JS/CSS.
 - A variant is a CSS/JS toggle (class name) over the **same content structure** — not a different content model. Different row/cell layout = different block.
+- **Reuse before inventing.** Before inventing any new block/variant/section-style, try to reproduce the target look with what already exists — rename, switch variant, add a section style, combine them. Only add a new item for what the existing blocks/variants/section-styles genuinely can't express. See `styling-additively`.
+
+## Variant vs. extending base styles — a key distinction
+A **variant** is for a different *look* of the same content. A **new content shape** (the same block fed a combination it hasn't handled before — e.g. a `teaser` with image-only, or title+video, or an extra heading level) is NOT a variant: handle it by **adding additive rules to the base block's CSS/JS**, not by minting a variant. Litmus test: "Is the difference *how it looks* (→ variant) or *what content it contains* (→ extend base styles)?" Keep such base additions additive so blocks on already-validated pages don't move (`styling-additively`, `regression-guard`).
+
+## Context-adaptive vs. variant — DON'T make the author restate the surface
+Before adding any `*-dark` / `*-inverse` / `*-light` variant, ask **who owns the color**:
+- The block looks dark only because the **surface behind it** is dark (a `section-dark` section or a dark page template)? → it's the CONTAINER's color, not the block's. Make the block **auto-adapt**: add container-scoped rules (`section-dark .<block>`, `body.template-dark .<block>`) so a *bare* block dropped on a dark surface inverts on its own. **No variant** — the author should never restate, on the block, a color the section/template already declares.
+- The block's **own card** is painted dark (stays dark even on a light section)? → bake the dark surface into that self-styled variant so it's context-INDEPENDENT, and EXCLUDE it from the auto-adapt rules.
+This is the block-level twin of the section-style color rule above ("which surface does the color touch?"). Smart, surface-aware blocks keep authoring lean: fewer variants, smaller test matrix. Full step-by-step + conversion recipe in `context-adaptive-blocks`.
+
+## Stacked page templates — generic inversion + page specifics
+A page template's metadata value is comma-split into multiple body classes, so templates **stack**: `template: template-dark, template-page` → `body.template-dark.template-page`. Factor a reusable, single-concern template (e.g. a generic `template-dark` that ONLY inverts colors) and apply it alongside a thin page-specific template (type, spacing, bespoke section looks). Any page can then opt into the generic inversion without copying it. A dark template that inverts colors means blocks inside it auto-adapt (above) — the page content needs no per-block dark variants.
 
 ## Placeholder blocks (interactive / data-driven)
 Some blocks are **placeholders for an interactive feature** whose substance is *data*, not content — e.g. a widget where a visitor enters their website and a backend returns insights. The author places the block to position the feature; they don't author the data.
@@ -93,4 +106,4 @@ Some blocks are **placeholders for an interactive feature** whose substance is *
 - Missing source content at import time → leave empty, don't invent.
 - Reaching for a template/variant when default content + an auto-style would do — climb the ladder from the bottom.
 
-See also: `eds-content-patterns` (auto-styles: CTA + eyebrow decoration), `vertical-spacing-system` (foundation + universal spacing variants), `page-template-metadata` (template mechanism + conservative-creation rule), `importer-parser-patterns` (parser implementation), `PROJECT-BLOCKS.md` (block inventory + one-off registry). Native `edge-delivery-services:content-modeling` and `block-mapping-manager`/`block-variant-manager` cover generic modeling and cross-page variant tracking — **this augmented-styles ladder and naming convention take precedence** on this project.
+See also: `container-block-vs-section-style` (deciding if a tabs/accordion/carousel container should be a block or a section style — a block can't hold other decorated blocks), `styling-additively` (add new blocks/variants/section-styles, don't edit existing ones — protects validated pages), `eds-content-patterns` (auto-styles: CTA + eyebrow decoration), `vertical-spacing-system` (foundation + universal spacing variants), `page-template-metadata` (template mechanism + conservative-creation rule), `importer-parser-patterns` (parser implementation), `PROJECT-BLOCKS.md` (block inventory + one-off registry). Native `edge-delivery-services:content-modeling` and `block-mapping-manager`/`block-variant-manager` cover generic modeling and cross-page variant tracking — **this augmented-styles ladder and naming convention take precedence** on this project.

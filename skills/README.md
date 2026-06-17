@@ -36,6 +36,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | Skill | Load when... |
 |-------|-------------|
 | [regression-guard](regression-guard/SKILL.md) | About to edit CSS in `styles.css`, block wrappers, or any shared selector |
+| [styling-additively](styling-additively/SKILL.md) | Styling any page after the first; matching a new page to its original; tempted to edit an existing block/variant/section-style CSS (add new ones instead) |
 | [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
 | [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content; or a block renders differently across environments ("works on prod but not local") |
 
@@ -69,6 +70,8 @@ Load these before making changes — they prevent regressions and guesswork.
 |-------|-------------|
 | [eds-content-patterns](eds-content-patterns/SKILL.md) | Auto-styles: link not becoming a CTA button; button style wrong; eyebrow not styling; `decorateButtons()` not triggering |
 | [eds-content-modeling](eds-content-modeling/SKILL.md) | **Augmented-styles hub** — block vs variant vs section style vs page template; naming; cell/column conventions; one-off discipline |
+| [container-block-vs-section-style](container-block-vs-section-style/SKILL.md) | A container (tabs/accordion/carousel) must hold a variety of content or reuse existing blocks; inner block content renders unstyled; "block or section style?" |
+| [context-adaptive-blocks](context-adaptive-blocks/SKILL.md) | A block needs a dark/inverted look only because its CONTAINER (section style / page template) is dark; deciding whether to add a `*-dark`/`*-inverse` variant; "do authors really need the dark variant", "template already inverts colors" |
 | [plain-html-format](plain-html-format/SKILL.md) | Creating/editing `.plain.html`; sections not rendering; blocks unstyled |
 | [page-template-metadata](page-template-metadata/SKILL.md) | Applying page-level styles via metadata template classes; deciding whether a page template is warranted (be conservative) |
 | [eds-section-style-icons](eds-section-style-icons/SKILL.md) | Section needs a decorative icon or badge injected via CSS (not authored content) |

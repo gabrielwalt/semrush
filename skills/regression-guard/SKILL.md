@@ -3,7 +3,7 @@ name: regression-guard
 description: How to prevent introducing new bugs while fixing existing ones. Load before any CSS or JS change that touches shared or global code (styles.css, block wrappers, section classes).
 ---
 
-Every CSS edit on shared selectors risks affecting elements you didn't intend to change.
+Every CSS edit on shared selectors risks affecting elements you didn't intend to change. The highest-stakes case: a block/variant/section-style used by a page whose **look is already validated** — editing its CSS to fix a new page silently breaks the validated one. Prefer adding new styles over editing shared ones (`styling-additively`); when you must edit shared CSS, this recipe is mandatory.
 
 ## Recipe
 1. Before editing: identify all elements that share the selector you're about to change
@@ -27,4 +27,4 @@ Every CSS edit on shared selectors risks affecting elements you didn't intend to
 - "It looks fine in the block I'm working on" — check ALL sections, not just the one
 - Removing a CSS custom property — silently breaks all blocks that inherit it
 
-See also: `verify-before-claiming` (always load after changes), `css-specificity-eds` (specificity debugging)
+See also: `styling-additively` (add new blocks/variants/section-styles instead of editing existing ones — protects validated pages), `verify-before-claiming` (always load after changes), `css-specificity-eds` (specificity debugging)
