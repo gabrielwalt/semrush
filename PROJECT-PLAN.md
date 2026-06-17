@@ -267,11 +267,200 @@ These were surfaced by reviewing the style system against `craft-floor` (the ant
 
 ---
 
+## Phase G — Executable rules + structured context (impeccable.style integration, 2026-06-17)
+
+**Why:** A review of impeccable.style (cloned, studied) showed our craft *knowledge* is on par but our *mechanization* is absent. Their power is that rules are **executable** (a deterministic detector enforces them and feeds findings back) and project state is **structured** (machine-readable signals + committed token files), so the agent acts on facts not memory. This phase makes our rules executable and our context structured — per **The Executable-Rule Rule** (AGENTS.md). **Bold-but-safe:** refactor our skills toward IDs + checkers, but RETAIN every piece of hard-won context already in them, and never move a frozen page.
+
+**Sequencing:** G1 (rule IDs) is the contract the detector enforces, so it comes first. G2 (detector) and G3 (signals) are independent builds. G4 wires everything into the always-on skills + docs. Each script MUST be runnable with `node` and verified against the real repo before its task is `✅ Done` — a checker that doesn't run is not done.
+
+### G1 — 🔲 Open — Refactor `craft-floor` into an ID'd, tightened, executable ruleset
+
+**Priority:** P1
+**Type:** Enhancement
+**Affected files:** `skills/craft-floor/SKILL.md`, `skills/README.md`
+
+**Current state:** `craft-floor` holds the right named rules (One-Ratio, No-Twin-Sizes, Distinct-Link, One-Token-One-Home, Tokenize-Inverse, One-Spacing-Scale, One-Radius, All-Elements-Focus, Reduced-Motion-Baseline, Distill) but as prose only — no stable IDs, so nothing can enforce or cite them mechanically; and it's missing several exact thresholds impeccable states.
+**Requested change:** (1) Give every checkable rule a stable `<!-- rule:craft-<area>-<slug> -->` ID (the contract the G2 detector keys on). (2) Tighten with impeccable's exact numbers we don't yet state, folded into our existing rules (NOT a rewrite — additive): hero/display clamp **ceiling ≤ 6rem**, display tracking **floor ≥ −0.04em**, `text-wrap: balance` on h1–h3 / `pretty` on long prose, semantic **z-index scale** (never 999/9999), "cards are the lazy answer / nested cards always wrong", flexbox-1D/grid-2D. (3) Add a short "Enforced by" line pointing at `tools/quality/detect.mjs` for the rules G2 covers. RETAIN all existing prose, pitfalls, and the See-also chain.
+**Implementation:** Edit in place. Keep the section structure (Typography/Color/Spacing/State/Distill). Append `<!-- rule:id -->` to each checkable bullet. Add the new thresholds under the matching section. Add an "## Enforced by" section near the top once G2 exists (or stub it now, fill the file list in G2).
+
+**Verification (implementing agent MUST do all):**
+1. Every checkable rule line ends with a unique `<!-- rule:craft-... -->` ID (grep the file; count IDs = count of checkable rules; no dup IDs).
+2. The new thresholds (6rem ceiling, −0.04em floor, text-wrap, z-index scale, cards-are-lazy) are present, each as a citable rule.
+3. No existing rule, pitfall, or See-also line was deleted (diff shows additions, not removals).
+4. `skills/README.md` row for craft-floor still matches; update its one-liner if the trigger changed.
+
+**Acceptance criteria:** `craft-floor` carries a stable ID on every mechanically-checkable rule, includes impeccable's tightened thresholds, retains all prior context, and names its enforcing tool — making it the citable source of truth the detector keys on.
+
+### G2 — ✅ Done — Build `tools/quality/detect.mjs`, a deterministic CSS/HTML slop + regression checker
+
+> **Done 2026-06-17.** Built `tools/quality/rules.mjs` (registry + live allow-list loader + contrast math) and `tools/quality/detect.mjs` (CLI). 6 matchers, all keyed to G1 rule IDs and all proven against scratch violations: `craft-color-raw-inverse`, `craft-color-off-palette`, `craft-color-token-dup` (cross-file, base-`:root`-only via brace-matched ranges — ignores legit `@media :root` responsive overrides, catches real two-owner dups single- AND multi-line), `craft-radius-raw`, `craft-motion-reduced` (suppressed when styles.css has the global `*` guard), `craft-cruft-placeholder`. Allow-list is LIVE: harvested from `styles/*.css` (all colors the validated sheets use) + hex/rgb in `PROJECT-DESIGN.md` + `--radius-*` scale; structural near-grays/black/white skipped; ±6/channel tolerance. Verified: clean on `styles/styles.css` (exit 0); accent-purple proof (live token → allowed); full `--all` scan finds 26 warns/0 errors, ALL in block CSS (the F06/F07-deferred block-level literals — the detector's intended backlog, not regressions); `--json` valid; exit 0 clean / 2 findings. No deps, no network, `node --check` clean.
+
+**Priority:** P1
+**Type:** Enhancement
+**Affected files:** NEW `tools/quality/detect.mjs`, NEW `tools/quality/rules.mjs` (rule registry), NEW `skills/quality-tooling/SKILL.md`, `skills/README.md`
+
+**Current state:** We have ZERO deterministic detection. Every craft check (off-palette color, contrast, dead token, twin sizes, raw `#fff`, missing focus/reduced-motion, off-scale gap) is done by the agent manually — exactly the F01–F10 manual pass. Nothing catches a regression on a frozen page automatically.
+**Requested change:** A Node (ESM, no deps, no network) CLI that scans given CSS/HTML files and emits findings keyed to the G1 rule IDs. It loads the allow-list from `PROJECT-DESIGN.md` + the `:root` tokens in `styles/*.css` (off-palette / off-scale lint binds to OUR committed tokens, never hardcoded). Output: human table by default, `--json` for machines, exit 0 = clean, exit 2 = findings.
+**Implementation:** Mirror impeccable's split: `rules.mjs` = a central registry array `{ id, area, name, description, severity, test }` (regex/text matchers, real contrast math via relative luminance, token-set membership); `detect.mjs` = CLI that reads files, runs matchers, formats. Seed the registry from the G1 IDs. Concrete first matchers (all already hand-verified in F01–F10, so each has a known-true case in this repo): `craft-color-raw-inverse` (raw `#fff`/`#ffffff` as a color value outside an allow-list of glass/gradient contexts), `craft-color-off-palette` (a hex/rgb color not in the DESIGN.md set, tolerance ±6/channel), `craft-token-dup` (same `--token:` defined in >1 `:root`), `craft-token-dead` (a `--token` defined but `var()`-referenced 0×), `craft-radius-raw` (literal `10px`/`12px` `border-radius` where a `--radius-*` token exists), `craft-contrast-floor` (body/muted color vs its bg < 4.5:1 — needs the color pairs, start with the token-level check), `craft-motion-unguarded` (a `@keyframes`/`animation:` with no `prefers-reduced-motion` block in the same file). Keep matchers conservative (favor false-negatives over false-positives; an over-eager checker gets ignored).
+**Verification (implementing agent MUST do all):**
+1. `node tools/quality/detect.mjs styles/styles.css` runs, exits 0/2 cleanly, prints a readable table.
+2. `--json` emits valid JSON: array of `{ file, line, ruleId, name, severity, snippet }`.
+3. Prove each seeded matcher works: temporarily reintroduce a known violation (e.g. a duplicate `--color-muted`, a raw `border-radius: 10px`, a `#ffffff` color, a `@keyframes` with no reduced-motion guard in a scratch file under `/tmp`) and confirm the matcher flags it at the right line with the right ruleId; confirm the clean current repo files do NOT false-positive on the glass/gradient `#fff` (those are allow-listed).
+4. Confirm it loads tokens from `PROJECT-DESIGN.md`/`styles` and that removing a color from the allow-list makes a previously-clean color flag (allow-list is live, not hardcoded).
+5. Run it across ALL of `styles/*.css` + `blocks/*/*.css` and record the finding count in `quality-tooling`; triage any hit on a frozen page (must be a real issue or an allow-list gap, never a forced change to a frozen page).
+6. After 2 failed attempts, stop and ask.
+
+**Acceptance criteria:** `node tools/quality/detect.mjs [files] [--json]` deterministically flags craft-floor violations keyed to G1 rule IDs, binds its allow-list to our committed tokens, runs clean on the current (validated) repo, and is documented in `quality-tooling`.
+
+### G3 — ✅ Done — Build `tools/quality/project-state.mjs`, a structured project-state probe
+
+> **Done 2026-06-17.** Built `tools/quality/project-state.mjs` — emits JSON: `pages` (each parsed from the PROJECT-STATUS Pages table with content/style gate + `frozen` derived from style-validated), `frozen` (paths), `contentFiles` (glob of `content/**/*.plain.html`), `changedFiles` (read-only `git status --porcelain`), `tokenFiles` (the `:root` definers), `scanTargets`+`scanVia` (changed CSS first, else all foundation+blocks — pipes into detect.mjs). `--scan` prints the ready detect.mjs command. Verified: `frozen` = exactly index/nav/footer (NOT the 🔲 one/enterprise); contentFiles = the 5 real files; tokenFiles = styles.css+brand.css. `changedFiles` proven in a throwaway git repo (reports modified + untracked CSS, `scanVia: git-changes`); in THIS repo git's safe.directory guard blocks it so it degrades to `[]` gracefully (try/catch, stderr ignored). Read-only — only `git status --porcelain`, never mutating git. `node --check` clean.
+
+**Priority:** P2
+**Type:** Enhancement
+**Affected files:** NEW `tools/quality/project-state.mjs`, `skills/quality-tooling/SKILL.md`, `skills/session-startup/SKILL.md`
+
+**Current state:** At session start and before tasks, the agent *guesses* project state by reading prose in PROJECT-STATUS.md (which pages are frozen, which gate each is at, what changed). Impeccable's `context-signals.mjs` proves a JSON probe of ground truth is far more reliable.
+**Requested change:** A Node CLI emitting JSON facts the agent routes on: `pages` (each content file → content-validated / style-validated / frozen, parsed from the PROJECT-STATUS Pages table), `frozen` (the list of frozen page paths), `changedFiles` (working-tree changes vs the served baseline, via the read-only git plumbing already allowed — `git status --porcelain`/`diff --name-only`, NOT mutating git), `tokenFiles` (the `styles/*.css` that define `:root`), `scanTargets` (block/style files to feed G2). No network.
+**Implementation:** Parse the PROJECT-STATUS.md Pages table for the validation flags (it's a fixed markdown table); glob `content/**/*.plain.html`; read-only git for changes. Emit `{ pages: [...], frozen: [...], changedFiles: [...], scanTargets: [...] }`. Pair with G2: `project-state.mjs --scan` could pipe `scanTargets` into `detect.mjs`.
+**Verification (implementing agent MUST do all):**
+1. `node tools/quality/project-state.mjs` emits valid JSON.
+2. `frozen` correctly lists the pages marked style-validated ✅ in PROJECT-STATUS (currently index, nav, footer) and NOT the in-progress ones (one, enterprise) — cross-check against the Pages table by hand.
+3. `changedFiles` reflects the actual working tree (make a trivial scratch edit, confirm it appears; revert).
+4. Uses only read-only git (no `add`/`commit`/`push`/`checkout`); confirm by reading the source.
+5. After 2 failed attempts, stop and ask.
+
+**Acceptance criteria:** `node tools/quality/project-state.mjs` returns ground-truth JSON for frozen pages, per-page validation gate, and changed files — so the agent routes on facts, documented in `quality-tooling`.
+
+### G4 — ✅ Done — Wire the tooling into the always-on skills + docs (make it the default reflex)
+
+> **Done 2026-06-17.** Created the hub skill `quality-tooling` (documents both scripts: purpose, flags, exit codes, the live allow-list, the loop, pitfalls) + README row. Threaded the exact commands into the reflexes: `verify-before-claiming` (new step 3 — run detect on changed files + project-state to confirm no frozen file was touched), `regression-guard` (project-state for the frozen set before, detect on shared-file consumers after, + an "Unfrozen ≠ unshared" caution), `session-startup` (run project-state at startup for ground-truth state), `styling-additively` (read `frozen` from the probe before touching a shared tool, + unfrozen-still-ripples note). Added an AGENTS.md Troubleshooting "Quality tooling" block. Verified: end-to-end dry-run of the verify loop runs both scripts and reports; all 4 reflex skills name the exact command; README + AGENTS reference the hub; spot-checked that every edited skill RETAINED its prior sections (additive only).
+
+**Priority:** P2
+**Type:** Enhancement
+**Affected files:** `skills/verify-before-claiming/SKILL.md`, `skills/regression-guard/SKILL.md`, `skills/session-startup/SKILL.md`, `skills/styling-additively/SKILL.md`, `skills/quality-tooling/SKILL.md`, `AGENTS.md`, `skills/README.md`
+
+**Current state:** The checkers from G2/G3 exist but nothing tells the agent to run them, so they'd be as forgettable as the prose rules they replace. The loop only closes when the always-load skills point at them.
+**Requested change:** Thread the tools into the reflexes that already fire: (a) `verify-before-claiming` — before claiming a CSS/style task done, run `detect.mjs` on the changed files + `project-state.mjs` to confirm no frozen page regressed; (b) `regression-guard` — run `detect.mjs` on the shared file's consumers after editing shared CSS; (c) `session-startup` — run `project-state.mjs` to load ground-truth state instead of only reading prose; (d) `styling-additively` — check `frozen` from the probe before touching any shared tool. Keep all existing content; add a short "Run the checker" step to each. `quality-tooling` is the hub skill documenting both tools (when/how/flags/exit codes). RETAIN all existing skill content.
+**Implementation:** Additive edits — one new step/section per skill pointing at the exact command. Create `quality-tooling/SKILL.md` (the hub) and add its README row. Add a one-line pointer in AGENTS.md Troubleshooting.
+**Verification (implementing agent MUST do all):**
+1. Each of the 4 always-on/guard skills names the exact command to run and when.
+2. `quality-tooling` documents both scripts: purpose, invocation, flags, exit codes, and that the allow-list is the committed tokens.
+3. `skills/README.md` lists `quality-tooling`; the "Load when…" trigger matches its job.
+4. Re-read each edited skill: no prior recipe/pitfall was dropped.
+5. Dry-run the loop end-to-end: pretend a CSS task just finished → follow `verify-before-claiming` literally → it tells you to run the two scripts → they run and report. Confirm the wiring is real, not described.
+
+**Acceptance criteria:** Running the checkers is now a documented default step in the verify, regression-guard, session-startup, and styling-additively reflexes, with `quality-tooling` as the hub — so executable enforcement happens by reflex, not memory.
+
+---
+
+## Phase HP — Port impeccable's design-craft references (rebuild a meaningful brand guideline) (2026-06-17)
+
+**Why (user-steered):** Every import must *rebuild a meaningful, best-practice brand guideline + default style from the original site* — at Refined/Reimagined this is obvious, but even a Faithful pixel-match still needs a solid default-content foundation. impeccable's `skill/reference/` deep-craft files (typeset, colorize, layout, adapt, the brand register) are gold for exactly this. We have a *floor* (`craft-floor`) and a *process* (`global-style-foundation`) but lack the deep **positive craft criteria** that turn a passable foundation into an elegant one. Phase HP ports those criteria into reusable, migration-framed skills. **Performance/CWV dropped** — EDS best practices cover it. **Not wholesale:** we adapt the *criteria for elegance*, framed for FAITHFUL reproduction (the source brand's committed identity always wins over a generic "best practice"); we do NOT port impeccable's invent/amplify verbs (bolder/delight/overdrive). Each new skill stays in our format, cross-links the library, and hardcodes no project values (reference `PROJECT-DESIGN.md`).
+
+**The orchestration:** `global-style-foundation` stays the *entry point* (the capture-the-essence pass). The three new craft skills (`typography-craft`, `color-craft`, `layout-craft`) are the *deep references* it points into when building each dimension of the foundation. `craft-floor` remains the *minimum bar* the result must clear. `responsive-adaptation` covers the cross-device dimension. So: foundation (process) → craft skills (how to do each dimension well) → craft-floor (did it clear the floor?).
+
+### HP1 — ✅ Done — New skill `typography-craft` (rebuild the type system well)
+> Done 2026-06-17. `skills/typography-craft/SKILL.md`: read-source-first + identity-preservation; 5-role scale + one-ratio commitment + semantic tokens + weight roles; 45–75ch measure + context line-heights + light-on-dark 3-axis (owns `craft-typo-light-on-dark`); font-loading-without-shift; Reimagined-only font-selection + reflex-reject list. Defers thresholds to craft-floor. README row added.
+
+**Priority:** P1
+**Type:** Enhancement
+**Affected files:** NEW `skills/typography-craft/SKILL.md`, `skills/README.md`
+**Source:** impeccable typeset.md + brand.md (font-selection procedure, reflex-reject list)
+
+**Current state:** `craft-floor` states type *thresholds* (ratio ≥1.25, no twin sizes, tracking floor) but not the *positive method* for rebuilding a brand's type system: how to read the source's type voice, pick/confirm the scale ratio, assign weight roles, set measure + light-on-dark compensation, and load fonts without shift. `global-style-foundation` gestures at "type scale + ratio" without the depth.
+**Requested change:** A migration-framed skill: (1) **read the source first** — extract the actual fonts/weights/sizes the original uses (`measure-then-implement`); the source's committed identity wins (identity-preservation). (2) **Rebuild as a clean system**: 5-role scale (caption/secondary/body/subheading/heading), commit to ONE ratio (1.25/1.333/1.5), semantic token names (`--text-body` not `--font-16`), ≤3–4 weights with defined roles, body ≥16px. (3) **Readability**: 45–75ch measure via `ch`, line-height tighter for headings (1.1–1.2) / looser body (1.5–1.7), **light-on-dark three-axis compensation** (+0.05–0.1 line-height, +0.01–0.02em tracking, +1 weight step). (4) **Loading without shift**: `font-display: optional|swap`, metric-matched fallback (`size-adjust`/`ascent-override`/`descent-override`), preload critical weight only, ALL-CAPS needs +5–12% tracking. (5) For a Reimagined page only, the **font-selection procedure + reflex-reject list** (don't *invent* Inter/Roboto/Fraunces/Playfair etc.) — but NEVER reject what the source brand already committed to. Cross-link `craft-floor`, `global-style-foundation`, `measure-then-implement`, `vertical-spacing-system`.
+**Implementation:** New SKILL.md in our format. Frame every rule as "reproduce the source's intent, then regularize toward this criterion." Keep generic.
+
+**Verification:**
+1. Skill covers: read-source-first, 5-role scale + ratio commitment, weight roles, measure/line-height, light-on-dark 3-axis, font-loading-without-shift, and the reflex-reject list scoped to Reimagined-only + identity-preservation.
+2. It defers thresholds to `craft-floor` (cross-link, no duplication of the numbers it owns).
+3. README row, trigger ("type system", "typography", "fonts", "type scale", "rebuild the type").
+
+**Acceptance criteria:** `typography-craft` gives the positive method for rebuilding an elegant, on-brand type system from a source site, deferring hard thresholds to craft-floor, indexed + cross-linked.
+
+### HP2 — ✅ Done — New skill `color-craft` (rebuild the palette well)
+> Done 2026-06-17. `skills/color-craft/SKILL.md`: extract-source-first; role structure (primary/neutral/semantic/surface); 60-30-10 by visual weight; tinted neutrals toward the brand hue (not reflex warm/cool); OKLCH ramps; dark-mode-is-not-inversion; alpha-is-a-smell; Reimagined-only strategy + named reference. Defers contrast/side-stripe/distinct-link to craft-floor. README row added.
+
+**Priority:** P1
+**Type:** Enhancement
+**Affected files:** NEW `skills/color-craft/SKILL.md`, `skills/README.md`
+**Source:** impeccable colorize.md + brand.md (color strategy, named reference)
+
+**Current state:** `craft-floor` owns anti-slop color *prohibitions* (distinct-link, tokenize-inverse, contrast floor, off-palette) but not the *positive palette-construction method*: roles, the 60-30-10 weight rule, tinted neutrals toward the brand hue, OKLCH ramp construction, dark-mode-is-not-inversion, alpha-is-a-smell.
+**Requested change:** A migration-framed skill: (1) **extract the source palette first** — the brand's committed colors win. (2) **Structure into roles**: Primary (1 color, 3–5 shades) / Neutral (9–11 scale) / Semantic (success/error/warning/info) / Surface (2–3 elevations); skip secondary/tertiary unless needed. (3) **60-30-10 by visual weight** (not pixel count) — neutrals 60 / secondary 30 / accent 10; the accent works *because* it's rare. (4) **Tinted neutrals**: add chroma 0.005–0.015 toward THIS brand's hue (never reflex warm-orange/cool-blue — that's the AI cream/sand tell). (5) **OKLCH ramps**: hold hue+chroma, vary lightness, reduce chroma near white/black. (6) **Dark mode ≠ inverted**: depth via surface-lightness (3-step scale), desaturate accents, −1 body weight step; "alpha is a design smell" → define explicit overlay colors. (7) **color strategy** (Restrained/Committed/Full/Drenched) named against a real reference, but ONLY when Reimagined; Faithful/Refined reproduce the source's strategy. Cross-link `craft-floor` (the prohibitions + contrast), `context-adaptive-blocks` (dark surfaces), `project-background-layering`.
+**Implementation:** New SKILL.md. Defer the contrast numbers + side-stripe ban + distinct-link to craft-floor; this skill is construction method, not the floor.
+
+**Verification:**
+1. Skill covers: extract-source-first, role structure, 60-30-10-by-weight, tinted-neutrals-toward-brand-hue, OKLCH ramp method, dark-mode-not-inverted, alpha-smell, strategy-named-reference scoped to Reimagined.
+2. Defers contrast/side-stripe/distinct-link thresholds to craft-floor (cross-link, no dup).
+3. README row, trigger ("palette", "color system", "brand colors", "dark mode", "tinted neutrals").
+
+**Acceptance criteria:** `color-craft` gives the positive method for rebuilding an elegant, on-brand palette, deferring prohibitions/thresholds to craft-floor, indexed + cross-linked.
+
+### HP3 — ✅ Done — New skill `layout-craft` (rhythm, hierarchy, spatial structure)
+> Done 2026-06-17. `skills/layout-craft/SKILL.md`: squint test; hierarchy via 2–3 combined dimensions (table); rhythm (tight 8–12px groupings + generous 48–96px separations); flex-1D/grid-2D/container-query tool choice; cards-are-lazy; 44px hit-area expansion + optical alignment. Defers scale/radius to craft-floor and EDS section/block mechanics to vertical-spacing-system. README row added.
+
+**Priority:** P2
+**Type:** Enhancement
+**Affected files:** NEW `skills/layout-craft/SKILL.md`, `skills/README.md`
+**Source:** impeccable layout.md
+
+**Current state:** We have `vertical-spacing-system` (the EDS section/block mechanics) and `craft-floor`'s One-Spacing-Scale rule, but not the *positive composition criteria*: the squint test, hierarchy via 2–3 combined dimensions, rhythm (tight groupings + generous separations), flex-1D/grid-2D, container queries, the 44px hit-area expansion, optical alignment.
+**Requested change:** A skill: (1) **squint test** for verifying hierarchy (blur — can you still find primary/secondary/groupings?). (2) **Hierarchy via combined dimensions** (size 3:1, weight bold-vs-regular, space, position) — the table; space alone is often enough. (3) **Rhythm not uniformity**: tight grouping 8–12px between siblings, generous 48–96px between sections, vary within sections. (4) **Tool choice**: flex for 1D, grid for 2D, named grid-areas for page layout, **container queries for components** (a card adapts to its container, not the viewport). (5) **Optical**: 44×44px hit area via `::before { inset: -10px }` when the visual element is smaller; negative-margin optical text alignment; nudge geometrically-centered glyphs. Defers the scale-coherence rule + radius to craft-floor; defers EDS section/block margin mechanics to `vertical-spacing-system`. Cross-link both + `measure-then-implement` + `carousel-pattern-eds`.
+**Implementation:** New SKILL.md. Frame for reproduction: match the source's spatial rhythm, regularize to a coherent scale. No project values.
+
+**Verification:**
+1. Skill covers: squint test, hierarchy-dimensions table, rhythm values, flex/grid/container-query choice, 44px hit-area + optical alignment.
+2. Defers scale/radius to craft-floor and section/block mechanics to vertical-spacing-system (cross-links, no dup).
+3. README row, trigger ("layout", "hierarchy", "spacing rhythm", "composition", "grid vs flex").
+
+**Acceptance criteria:** `layout-craft` gives positive composition criteria (hierarchy, rhythm, tool choice, optical) for rebuilding elegant layout, deferring mechanics/thresholds to the owning skills, indexed + cross-linked.
+
+### HP4 — ✅ Done — New skill `responsive-adaptation` (adapt for device + input, not just scale)
+> Done 2026-06-17. `skills/responsive-adaptation/SKILL.md`: adapt≠scale; input-method queries (`pointer: coarse` → ≥44px targets, `hover: none` forbids hover-only reveals — flagged for our nav); content-driven mobile-first breakpoints (points at PROJECT-DESIGN); srcset/`<picture>` art-direction; author-content overflow guards (`min-width:0`, `overflow-wrap`, line-clamp); safe-area insets. README row added (Layout & CSS).
+
+**Priority:** P2
+**Type:** Enhancement
+**Affected files:** NEW `skills/responsive-adaptation/SKILL.md`, `skills/README.md`
+**Source:** impeccable adapt.md + harden.md (text-overflow)
+
+**Current state:** "Mobile polish" is a standing priority; we have breakpoints in PROJECT-DESIGN but no skill on *adapting* (rethinking, not scaling) an imported desktop page for touch/small screens, nor text-overflow guards for author-entered content.
+**Requested change:** A skill: (1) **adapt ≠ scale** — rethink for the new context (single column, stacked, full-width; progressive disclosure). (2) **Detect input method, not just screen size**: `@media (pointer: coarse)` → bigger touch targets (≥44×44px), `@media (hover: hover)` gates hover affordances, `@media (hover: none)` forbids hover-only reveals — *touch users can't hover* (directly relevant to our mega-menu/nav). (3) **Content-driven breakpoints** mobile-first (`min-width`; start narrow, add a breakpoint where the design breaks; 640/768/1024 usually suffice) — reference PROJECT-DESIGN's breakpoints. (4) **Responsive images**: `srcset`+`sizes` for resolution, `<picture>` for art-direction crops. (5) **Author-content overflow guards**: `min-width:0` on flex/grid children, `overflow-wrap:break-word`, `-webkit-line-clamp` — so long author-entered strings don't blow out a block. (6) `env(safe-area-inset-*)` for notches. Cross-link `nav-header-eds` (hover/touch nav), `measure-then-implement` (measure each breakpoint), `vertical-spacing-system`.
+**Implementation:** New SKILL.md, generic. Point at PROJECT-DESIGN breakpoints, don't hardcode.
+
+**Verification:**
+1. Skill states the `pointer`/`hover` reflexes, the 44px touch target, content-driven mobile-first breakpoints, srcset/picture, and the author-content overflow guards.
+2. README row, trigger ("responsive", "mobile", "touch", "hover on mobile", "text overflow on narrow", "adapt for device").
+
+**Acceptance criteria:** `responsive-adaptation` captures adapt-don't-scale + input-method-aware reflexes + author-content overflow guards, indexed + cross-linked.
+
+### HP5 — ✅ Done — Augment `craft-floor` (identity-preservation + side-stripe [auto]) and wire the foundation orchestration
+> Done 2026-06-17. craft-floor: added the prominent **Identity-Preservation Rule** (`craft-identity-preservation`, near the fidelity gate — source brand identity always beats a generic floor rule), the **Side-Stripe Ban** (`craft-color-side-stripe` [auto]), and a light-on-dark pointer (`craft-typo-light-on-dark`, full method in typography-craft). 30 unique rule IDs now, no dups, all prior content retained. Added the `craft-color-side-stripe` matcher to `tools/quality/rules.mjs` — flags `border-left/right ≥2px solid` in a brand/non-gray color (var(--accent*) too), skips 1px + gray dividers + full borders; proven against scratch violations, **zero false positives on the validated repo** (still 26 block-CSS warns, no new). Documented in `quality-tooling`. `global-style-foundation` now routes into typography-craft/color-craft/layout-craft/responsive-adaptation per dimension, then clears craft-floor. Scripts lint clean.
+
+**Priority:** P1
+**Type:** Enhancement
+**Affected files:** `skills/craft-floor/SKILL.md`, `tools/quality/rules.mjs`, `skills/quality-tooling/SKILL.md`, `skills/global-style-foundation/SKILL.md`
+**Source:** impeccable brand.md (identity-preservation scoping) + colorize.md (side-stripe absolute ban) + typeset.md (light-on-dark)
+
+**Current state:** craft-floor lacks three high-value impeccable rules and the new craft skills aren't yet wired into the foundation entry point. (a) **Identity-Preservation note** — anti-slop bans apply to *invented* choices, NOT a source brand's committed identity (so we never "correct" a faithfully-reproduced font/lane/palette); already half-present in pitfalls, needs to be a named, prominent rule. (b) **Side-stripe ban** (`border-left/right ≥2px` as a colored accent → full hairline/tint/leading glyph) — impeccable's #1 absolute ban, and **regex-checkable**. (c) **Light-on-dark** cross-reference to typography-craft.
+**Requested change:** (1) Add to craft-floor: a prominent **Identity-Preservation Rule** (`craft-identity-preservation`) near the fidelity gate, the **side-stripe ban** (`craft-color-side-stripe`), and a light-on-dark pointer (`craft-typo-light-on-dark`) deferring detail to `typography-craft`. (2) Add a `craft-color-side-stripe` **[auto]** matcher to `tools/quality/rules.mjs`: flag `border-left`/`border-right` ≥2px solid with a non-structural (non-near-gray) color. (3) Document the matcher in `quality-tooling`. (4) In `global-style-foundation`, add a "deep references" pointer so the foundation pass routes into typography-craft/color-craft/layout-craft per dimension, and clears craft-floor at the end. RETAIN all existing content in every file.
+**Implementation:** Additive edits. Matcher follows the existing registry pattern (reuse `isStructural`); favor false-negatives. Prove against a scratch violation; confirm the validated repo stays clean.
+
+**Verification:**
+1. craft-floor has the 3 new ID'd rules; Identity-Preservation is prominent near the fidelity discussion; all prior rules + the 27 existing IDs retained.
+2. `node tools/quality/detect.mjs` flags a scratch `border-left: 4px solid <brand-purple>` on a card AND runs clean on the current `styles/` + `blocks/` (no new false positives — verify the existing repo has no real side-stripes).
+3. `quality-tooling` lists the new matcher; `global-style-foundation` points into the three craft skills.
+
+**Acceptance criteria:** craft-floor gains the Identity-Preservation + side-stripe + light-on-dark rules, the side-stripe rule is deterministically enforced and clean on the repo, and `global-style-foundation` orchestrates the new craft skills.
+
+---
+
 ## Standing priorities (not yet scheduled)
 
-- **PageSpeed 100** — performance validation on the feature branch.
-- **Accessibility WCAG 2.1 AA** — audit and fix (ARIA on interactive blocks; focus-visible covered by F02).
-- **Mobile polish** — responsive refinement pass at <768px and 768–1023px across migrated pages.
+- **PageSpeed 100** — performance validation on the feature branch (EDS best practices cover the mechanics; no dedicated skill needed).
+- **Accessibility WCAG 2.1 AA** — audit and fix (ARIA on interactive blocks; focus-visible covered by F02; contrast enforced by `craft-floor`/`detect.mjs`).
+- **Mobile polish** — responsive refinement pass across migrated pages (now backed by `responsive-adaptation`, HP4).
 
 ---
 

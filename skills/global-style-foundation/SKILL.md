@@ -23,6 +23,14 @@ A single page's styling is a tool; the *foundation* is what's common to **all** 
 
 The test that you've found the *foundation* and not a page quirk: **a value earns a token only if it recurs across the sampled pages.** A value seen on one page is a candidate one-off, not foundation.
 
+**Build each dimension with its deep-craft skill.** This skill is the *orchestration* (measure → which values are foundation → record). The *positive method* for rebuilding each dimension well lives in a dedicated skill — load the matching one when you build that dimension:
+- **Type** → `typography-craft` (scale ratio, weight roles, measure, light-on-dark, font-loading-without-shift)
+- **Color** → `color-craft` (role structure, 60-30-10, tinted neutrals, OKLCH ramps, dark mode)
+- **Spacing/Layout** → `layout-craft` (hierarchy, rhythm, tool choice) + `vertical-spacing-system` (EDS mechanics)
+- **Cross-device** → `responsive-adaptation` (input-method queries, breakpoints, overflow guards)
+
+Then **clear the floor**: run `craft-floor` (+ its `tools/quality/detect.mjs` checker) over the result. Foundation = build it well (craft skills) AND clear the bar (craft-floor).
+
 ## Apply fidelity — how much to uplevel
 Read the **site-default fidelity** from `PROJECT-DESIGN.md` (**first-match-wins**: per-page override → site default → Faithful). It governs how much license you have while building the foundation:
 

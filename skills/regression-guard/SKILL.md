@@ -6,11 +6,14 @@ description: How to prevent introducing new bugs while fixing existing ones. Loa
 Every CSS edit on shared selectors risks affecting elements you didn't intend to change. The highest-stakes case: a block/variant/section-style used by a page whose **look is already validated** — editing its CSS to fix a new page silently breaks the validated one. Prefer adding new styles over editing shared ones (`styling-additively`); when you must edit shared CSS, this recipe is mandatory.
 
 ## Recipe
-1. Before editing: identify all elements that share the selector you're about to change
+1. Before editing: identify all elements that share the selector you're about to change. **Run `node tools/quality/project-state.mjs`** (`quality-tooling`) to see which pages are `frozen` (do-not-touch) vs `unfrozen`/in-progress — that tells you whose look you must not move.
 2. Record their current key values (font-size, margin, padding, color, display)
 3. Make the change
-4. Check ALL identified elements — not just the one you were fixing
+4. Check ALL identified elements — not just the one you were fixing. **Run `node tools/quality/detect.mjs <the shared file + its consumers>`** to catch token/contrast/radius regressions a script can see; triage every finding.
 5. If any untouched element changed: undo, find a more specific selector, try again
+
+## Unfrozen ≠ unshared
+A page being `🔓 unfrozen` (design-open) lifts the *don't-touch* rule, **not** the *check-the-ripple* rule. The homepage shares `teaser` / `carousel` / `marquee` / `header` / `footer` with One and Enterprise — editing a shared block to improve the (unfrozen) homepage still changes those pages. After any shared-block edit, re-verify every page that uses it, frozen or not.
 
 ## Common regression triggers
 | What you change | What it can break |

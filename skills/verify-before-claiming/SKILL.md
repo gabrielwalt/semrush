@@ -18,11 +18,12 @@ Before touching anything, restate the request as **concrete, verifiable success 
 ## After any code change
 1. Re-read the file you edited — confirm the change is exactly as intended.
 2. Run `npm run lint` — zero errors.
-3. Load the page at `localhost:3000` — confirm the component renders correctly.
-4. Compare against original site (for Gap tasks) or confirm requested state (for Enhancement tasks). Load `executing-plan-tasks` if working from a plan.
-5. After CSS changes: check that untouched sibling/parent values didn't change. If they did, you introduced a regression — load `regression-guard`.
-6. **Re-check each success criterion you opened the task with.** Tick them off one by one against observed reality. An unticked criterion means the task is not done.
-7. Only THEN write "done".
+3. **After CSS/style changes, run the deterministic checker** (`quality-tooling`): `node tools/quality/detect.mjs <changed files>` → exit 0, or every finding triaged (real fix vs allow-list gap). Don't eyeball craft rules a script can check (**The Executable-Rule Rule**). Then `node tools/quality/project-state.mjs` and confirm none of your changed files are in `frozen` — a frozen file you touched is a regression unless the change was explicitly authorized.
+4. Load the page at `localhost:3000` — confirm the component renders correctly.
+5. Compare against original site (for Gap tasks) or confirm requested state (for Enhancement tasks). Load `executing-plan-tasks` if working from a plan.
+6. After CSS changes: check that untouched sibling/parent values didn't change. If they did, you introduced a regression — load `regression-guard`.
+7. **Re-check each success criterion you opened the task with.** Tick them off one by one against observed reality. An unticked criterion means the task is not done.
+8. Only THEN write "done".
 
 ## Verification must be end-to-end
 - **Test EVERY affected element**, not just one instance. If the task says "fix all videos", verify ALL videos — not just the first one.

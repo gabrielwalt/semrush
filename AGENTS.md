@@ -88,6 +88,7 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 - **The Frozen-Tools Rule.** Once a page's style is user-validated, every tool it uses is frozen. Style later pages **additively** so a shared tool never shifts under an already-validated page. → `styling-additively`, `regression-guard`
 - **The Bookend-Verification Rule (must enforce).** Bracket every task with verification. *Open* by restating the request as concrete, checkable success criteria and confirming you understood it correctly. *Close* by verifying each of those criteria is actually met before claiming done. Skipping either bookend is incomplete work, not a shortcut. → `verify-before-claiming`
 - **The Anti-Pattern-Capture Rule.** When the user corrects something you built that was *clearly* a bad idea — obvious in hindsight, not merely a taste preference — name it as an anti-pattern and capture it match-and-refuse (what it looks like → the rewrite) in the relevant skill. Not every correction qualifies; only the ones where the wrongness is self-evident. → `writing-skills`
+- **The Executable-Rule Rule.** A rule the agent must *remember* is weaker than one a script *enforces*. Any rule that's mechanically checkable (a contrast threshold, an off-palette color, a dead token, a frozen-page regression) should be enforced by a deterministic checker under `tools/quality/`, not left to recall. Likewise read project state (frozen pages, per-page gate, working-tree scope) from a structured signals script, not by parsing prose. Scripts own the *mechanics*; the agent owns the *judgment*. → `writing-skills`, `quality-tooling`
 - **The Heavy-SVG-In-Code Rule.** Any image asset ≥ 80KB (graphs, screenshots, full illustrations) must be hosted in the code repo under `/svg/` and referenced from content with a plain link — never embedded in the document. DA/html2md rejects oversized embedded images with a (409) validation error on preview/publish. Parsers must emit the `/svg/` reference, not an embedded picture, so re-import never reintroduces it. → `repo-hosted-svg-references`
 
 ---
@@ -122,3 +123,9 @@ Maintain a skill library in `skills/`. Skills prevent re-solving problems. Each 
 
 - EDS docs: `site:www.aem.live`
 - Full-text search: `curl -s https://www.aem.live/docpages-index.json | jq -r '.data[] | select(.content | test("KEYWORD"; "i")) | "\(.path): \(.title)"'`
+
+## Quality tooling (deterministic checkers — `quality-tooling` skill)
+
+Per **The Executable-Rule Rule**, run these instead of eyeballing craft rules or guessing project state:
+- `node tools/quality/detect.mjs <files> [--json] [--all]` — craft-floor linter (exit 0 clean / 2 findings). Allow-list loads live from `PROJECT-DESIGN.md` + `styles/*.css`.
+- `node tools/quality/project-state.mjs [--scan]` — structured project-state JSON (`frozen` pages, per-page gate, changed files, scan targets). Read-only git.

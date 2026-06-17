@@ -36,6 +36,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | Skill | Load when... |
 |-------|-------------|
 | [regression-guard](regression-guard/SKILL.md) | About to edit CSS in `styles.css`, block wrappers, or any shared selector |
+| [quality-tooling](quality-tooling/SKILL.md) | Verifying a CSS/style change, guarding a frozen page, or starting a session — run the deterministic checkers (`tools/quality/detect.mjs`, `project-state.mjs`) instead of eyeballing rules or guessing state |
 | [styling-additively](styling-additively/SKILL.md) | Styling any page after the first; matching a new page to its original; tempted to edit an existing block/variant/section-style CSS (add new ones instead) |
 | [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
 | [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content; or a block renders differently across environments ("works on prod but not local") |
@@ -54,6 +55,19 @@ Load these before making changes — they prevent regressions and guesswork.
 | [stylelint-no-descending-specificity](stylelint-no-descending-specificity/SKILL.md) | Fixing stylelint `no-descending-specificity` errors |
 | [css-background-shorthand-reset](css-background-shorthand-reset/SKILL.md) | Consolidating background-* into one shorthand; a scaled background image suddenly renders at native size |
 | [eds-code-conventions](eds-code-conventions/SKILL.md) | Writing block CSS or JS; reviewing code for EDS standards |
+| [responsive-adaptation](responsive-adaptation/SKILL.md) | Making an imported page work on mobile/touch; a hover-only interaction breaks on touch; long author text overflows a block; any responsive refinement pass |
+
+---
+
+## Design craft (rebuild an elegant brand foundation)
+
+The *positive method* for building each foundation dimension well, from impeccable.style. Pair with `craft-floor` (the minimum bar) and `global-style-foundation` (the orchestration).
+
+| Skill | Load when... |
+|-------|-------------|
+| [typography-craft](typography-craft/SKILL.md) | Rebuilding a brand's type system from a source; building the type half of the foundation; type feels generic/muddy (scale ratio, weight roles, measure, light-on-dark, font-loading) |
+| [color-craft](color-craft/SKILL.md) | Rebuilding a brand palette; building the color half of the foundation; color feels flat/timid/chaotic (roles, 60-30-10, tinted neutrals, OKLCH ramps, dark mode) |
+| [layout-craft](layout-craft/SKILL.md) | Building a page/block's composition; layout feels "off" despite right colors/fonts; hierarchy unclear (squint test, rhythm, flex/grid/container-query, optical alignment) |
 
 ---
 

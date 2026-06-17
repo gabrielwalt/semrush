@@ -28,6 +28,7 @@ First-match-wins: an override here beats the site default. Empty = the page uses
 | Page / template | Fidelity | Why |
 |-----------------|----------|-----|
 | App-shell SPA pages — `advertising`, `traffic`, `ai-seo`, `features` | **Reimagined** | Weak legacy templates that import thin / time out. Treat as redesign candidates: capture the essence and rebuild on our foundation with real liberties. |
+| Homepage, Nav, Footer | **Refined, design-open** | **Unfrozen 2026-06-17** by the user: previously style-validated/frozen, now reopened so I may take design liberties and improve them. Still Refined (keep the brand), but the Frozen-Tools Rule is suspended for them. ⚠️ These share blocks (`teaser`, `carousel`, `marquee`, `header`, `footer`) with One/Enterprise — a change to a shared block still ripples; verify those pages too (the *check-the-ripple* discipline survives the unfreeze). |
 
 All other pages (One, Enterprise, SEO, Content, Pricing, Local, Social, PR, Company) use the **Refined** site default — no override.
 

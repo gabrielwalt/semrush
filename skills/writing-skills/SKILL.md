@@ -101,6 +101,21 @@ These seven habits separate a skill the agent *follows reliably* from one it ski
 
 Don't force all seven into every skill — a 20-line CSS-pitfall skill needs #2/#3/#4, not an interview cadence. Reach for the ones that fit the skill's job.
 
+## Make rules executable, not just readable (The Executable-Rule Rule)
+
+**A rule the agent must *remember* to apply is weaker than a rule a script *enforces*.** Distilled from studying impeccable.style: their power isn't better rules than ours — it's that their rules are **executable** (a deterministic detector flags violations and feeds them back) and their project context is **structured** (machine-readable signals + committed token files), so the agent operates on *facts*, not *memory*. Prose-only skills decay into "the agent should have remembered." Apply this when authoring or upgrading any skill whose rules are mechanically checkable:
+
+| Habit | What it means |
+|-------|---------------|
+| **Give every checkable rule a stable ID** | A rule with a threshold (`tracking ≥ -0.04em`, `body ≥ 4.5:1`) gets a citable ID like `<!-- rule:craft-typo-tracking-floor -->`. The ID is the contract between the prose rule and any script/test that enforces it. Same idea as a Named Rule, but machine-addressable. |
+| **Ask "could a script check this?"** | If yes, the skill should *point at* the script (`run \`node tools/quality/detect.mjs <files>\``), not just describe the rule. The script is the source of truth for the *check*; the skill explains the *why* and the *fix*. Don't duplicate the threshold in both — the script owns the number. |
+| **Prefer structured signals over prose state** | When a skill needs to know project state (what's frozen, which gate a page is at, what changed), read it from a machine-readable probe, not by parsing a prose status doc. Prose drifts; a script reads ground truth (git, the filesystem, the tokens). |
+| **Bind rules to the committed design tokens** | Project-specific values (palette, scale, spacing) live in `PROJECT-DESIGN.md` / token files and are loaded by the checker as lint input — never hardcoded into a generic skill (rule #4 above). The tokens are the allow-list. |
+
+**The division of labor:** scripts handle *deterministic mechanics* (grep for off-palette colors, diff the git tree, parse frontmatter, probe a port); the agent handles *judgment* (is this delta intentional? does this serve the brand?). A skill that asks the agent to do a script's job (eyeball every `#fff`, remember every threshold) is a skill that will be skipped under load.
+
+When a generic skill's rules become executable this way, note the enforcing command in the skill body and add the tool to `quality-tooling` (the skill that documents our deterministic checkers). A rule with an ID but no enforcer is fine — the ID marks it *ready* to be enforced later.
+
 ## Capturing anti-patterns from user corrections
 
 This is the recipe behind **The Anti-Pattern-Capture Rule** (AGENTS.md). When the user corrects something you built:

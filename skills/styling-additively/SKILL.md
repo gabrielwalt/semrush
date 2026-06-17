@@ -10,6 +10,8 @@ This skill operationalizes two Named Rules (AGENTS.md): **The Toolbox-First Rule
 ## Why
 Each page tracks two flags: **content validated** and **style/look validated** (see `PROJECT-STATUS.md`). Once a page's look is validated, the blocks/variants/section-styles/templates it uses are **load-bearing** — they must keep rendering identically. The only safe way to make a new page look right is to add styling that the validated pages don't see.
 
+**Know the frozen set before you touch anything — don't guess it.** Run `node tools/quality/project-state.mjs` (`quality-tooling`) and read `frozen`: those page files are the do-not-move set. A page marked `🔓 unfrozen` (design-open) is NOT in `frozen` — you may take design liberties there. **But unfrozen lifts only the *don't-touch* rule, not the *check-the-ripple* rule:** a shared block (`teaser`, `carousel`, `marquee`, `header`, `footer`) edited to improve an unfrozen page still changes every other page that uses it, so re-verify those too (`regression-guard`).
+
 ## The two-step process for styling a new page
 **Step 1 — Toolbox-First: reproduce the look with what already exists.** Before writing any CSS, take stock of every block, variant, section style, and combination you already have. Try to reproduce the original page's look by *only* choosing among them: rename a block, switch to an existing variant, add a section style, combine them. Re-import / re-author the content with those choices. Even a content-validated page deserves this step — its structure may match the original with just different block names or variants. **Threshold to forge a new tool:** you can state, in one sentence, the specific look the existing toolbox cannot express. If you can't name what's missing, Step 1 isn't finished.
 
