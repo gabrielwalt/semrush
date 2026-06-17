@@ -15,6 +15,23 @@ These pages' content structure is **officially validated by the user** — `cont
 |------|------|-----------|
 | Homepage | `content/index.plain.html` | ✅ 2026-06-16 |
 
+**Imported (not yet user-validated)** — 9 more pages via the toolkit parsers: `one`, `enterprise`, `seo`, `content`, `pricing`, `local-business/start`, `social-media`, `pr-toolkit`, `company`. Structure is sound and renders cleanly; awaiting per-page user validation before treating as reference truth.
+
+## Toolkit import scripts
+
+Two templates emerged for product/toolkit pages — one parser each:
+
+| Script | Handles | Detection |
+|--------|---------|-----------|
+| `import-toolkit.js` (v1) | `/seo/` (older `.landing > .wrapper` design) | Class markers: `.hero`, `.ai-banner`, `.discoveries`, `.infographics`, `.howmany`, `.faq` |
+| `import-toolkit2.js` (v2) | newer toolkit/marketing pages with CSS-module-obfuscated classes (content, pricing, social-media, pr-toolkit, local, company) | **Content-shape** detection (not class): section walker classifies each `<section>`/`[role=region]` by shape → hero / cards / testimonials / table / faq / default |
+
+Both emit blocks: hero → `Insights Widget` placeholder + `Marquee`; value-prop → `Teaser (teaser-dark)`; feature/step groups → `Cards Icon`; stats → `Columns Stats`; FAQ → `Accordion`; + `template-toolkit` page metadata (own section).
+
+**v2 shape rules** (`classify`): table→comparison table; ≥2 question-buttons/h3→FAQ accordion; ≥2 quote items→testimonials; ≥2 card items (`<article>`/`<li>`/div-grid with h3)→cards; else default centered.
+
+**Known limitation:** app-shell SPA pages (`/advertising/`, `/analytics/traffic/`, `/ai-seo/overview/`, `/features/`) render too sparsely or too slowly for the headless importer (deep obfuscated nesting / networkidle timeouts) — they import thin. Need a tailored approach or longer render wait.
+
 ---
 
 ## Homepage marker map (cascade)
@@ -48,8 +65,8 @@ Last verified against validated content: 2026-06-16 — block/variant/section-st
 | `tools/importer/import-homepage.js` | Main import script (imports from `parsers/*.js`, ES module export) |
 | `tools/importer/import-nav.js` | Nav fragment import (parses `srf-header` structure) |
 | `tools/importer/import-footer.js` | Footer fragment import (parses `srf-footer` structure) |
-| `tools/importer/import-semrush-one.js` | Semrush One page import (video-card-feature, columns-stats, cards-icon, cards-awards parsers) |
-| `tools/importer/import-enterprise.js` | Enterprise page import (case-study, tabs, testimonials variations) |
+| `tools/importer/import-semrush-one.js` | Semrush One page import (teaser feature-cards, columns-stats, cards-icon, cards-awards parsers) |
+| `tools/importer/import-enterprise.js` | Enterprise page import → `/enterprise/index`. Builds a FRESH output container (parsers RETURN wrappers; main appends each + `<hr>`/Section Metadata in order — do NOT mutate in place, that collapses all into one section). `findRegion(label, headingText, {minDescendants})` locates Builder.io client-rendered regions by aria-label then heading-text fallback, climbing to an ancestor big enough to hold the body. Hero/resources/CTA carry published-copy fallbacks (those regions are client-rendered/lazy). Emits `template-enterprise` + `section-hero`/`section-dark` |
 | `tools/importer/parsers/*.js` | Standalone parsers (11 total) |
 | `tools/importer/transformers/cleanup.js` | DOM cleanup transformer |
 | `tools/importer/page-templates.json` | Page template definitions for Semrush One and Enterprise (190 lines) |
@@ -155,6 +172,11 @@ These items cannot be reliably auto-imported and require manual content edits af
 - **`template-homepage` metadata** — auto-emitted by `import-homepage.js` (cascade level 1) as a page `Metadata` block.
 - **Testimonials author role** — `testimonials.js` extracts the role from any descendant `<p>` without strong/picture, robust to `wrapTextNodes` flattening. No manual add needed.
 - **Enterprise CTA** — both promo CTAs are authored `<em>` (secondary); `teaser-dark` recolors them. Parsers emit `<em><a>`. No manual adjust.
+- **`/one/` testimonial quote cell** — `testimonialsParser` queried the Coalition `logoImg` but never appended it, leaving the quote cell holding only the blockquote (and earlier imports dropped the quote entirely when the scroll-lazy DOM hadn't rendered). Fixed: the parser now prepends the brand logo (`.icons__testimonial--testimonial-logo img`) before the blockquote in the quote cell. The block JS reads logo (`picture img`) + `blockquote` from quote row 0. Logo lives on `cdn.semrush.com` (absolute URL, passes through `absUrl`).
+- **Teaser 2-row format** — every teaser table is TWO rows, one cell each: a content row + a media row. Never emit `[textCell, imgCell]` as a single row — the block JS reads only the first cell per row and silently drops the media (this was the enterprise-platform image bug, now fixed). Row ORDER sets the media side: content-row-first → media right (default); media-row-first → media left (block adds `teaser-media-left`). `featureCardsParser` (import-semrush-one) emits media-row-first when the source `.cards__item` has `.reverse`, reproducing the original's alternation.
+- **Section breaks require a fresh output container OR in-place `<hr>` between siblings.** An importer that parses with `el.replaceWith()` AND appends section-metadata/`<hr>` to the end of `main` collapses everything into ONE giant section (the parsed blocks stay at their original position; the breaks pile up at the bottom → empty `<div>`s). Two correct patterns: (a) build a NEW container and append each parser's returned wrapper followed by its `<hr>`/Section Metadata in order (enterprise); (b) insert the `<hr>`/metadata as a SIBLING at the right DOM position relative to surviving landmarks (`/one/` closing-section split). Either way verify with `python3` top-level-`<div>` count + `awk` line sizes.
+- **`/one/` closing section-dark split** — `ctaParser`/`awardsParser` `replaceWith()` their `section.cta`/`section.awards` before the afterTransformer runs, so querying those selectors there finds nothing. Keyed the split off the surviving "Win every search" heading instead: insert `<hr>` before its block, append section-dark metadata at the end.
+- **`import-semrush-one.js` afterTransformer emits two things** (so re-import reproduces hand-validated structure): (1) a `section-dark` Section Metadata before the closing CTA/awards/legal region; (2) a `template-one` page `Metadata` block as the last section — the PRIMARY mechanism for `body.template-one` (scripts.js only carries a fallback keyed off `.testimonials-oneoff-one`). Rebundle after editing. The closing `cards-awards` carries labels only — the repeated G2 shield badge is decorative, injected by CSS from `/icons/one-award-badge.svg` (the source's inline SVGs are stripped by html2md), so `awardsParser` deliberately drops base64/inline badge images.
 
 ---
 

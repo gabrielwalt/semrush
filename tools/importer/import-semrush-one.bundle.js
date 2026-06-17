@@ -131,7 +131,8 @@ var CustomImportScript = (() => {
     var imgCell = document.createElement("div");
     var graphImg = graphDiv ? graphDiv.querySelector("img") : null;
     if (graphImg) imgCell.appendChild(wrapImg(graphImg.getAttribute("src"), graphImg.alt, document));
-    var rows = [["Video Card Feature"], [textCell, imgCell]];
+    var mediaLeft = element.classList.contains("reverse");
+    var rows = mediaLeft ? [["Teaser"], [imgCell], [textCell]] : [["Teaser"], [textCell], [imgCell]];
     var table = WebImporter.DOMUtils.createTable(rows, document);
     element.replaceWith(table);
   }
@@ -194,8 +195,11 @@ var CustomImportScript = (() => {
     var authorImg = element.querySelector(".testimonial-photo");
     var authorName = element.querySelector(".testimonial-info .name");
     var authorRole = element.querySelector(".testimonial-info .position");
-    var rows = [["Testimonials"]];
+    var rows = [["Testimonials (testimonials-oneoff-one)"]];
     var quoteCell = document.createElement("div");
+    if (logoImg) {
+      quoteCell.appendChild(wrapImg(logoImg.getAttribute("src"), logoImg.getAttribute("alt") || "", document));
+    }
     if (quoteText) {
       var bq = document.createElement("blockquote");
       bq.textContent = quoteText.textContent.trim();
@@ -307,6 +311,10 @@ var CustomImportScript = (() => {
     element.querySelectorAll(".mobile-awards").forEach(function(el) {
       el.remove();
     });
+    element.querySelectorAll('.gradient, img[src*="/gradient."], img[alt="gradient" i]').forEach(function(el) {
+      var parent = el.closest(".gradient") || el.closest("p") || el;
+      parent.remove();
+    });
     element.querySelectorAll('img[src*="analytics"], img[src*="bat.bing"], img[src*="pixel"]').forEach(function(el) {
       var parent = el.closest("p") || el.closest("picture") || el;
       parent.remove();
@@ -315,21 +323,28 @@ var CustomImportScript = (() => {
   function afterTransformer(hookName, element, payload) {
     if (hookName !== "afterTransform") return;
     var document = payload.document;
-    var ctaSection = element.querySelector("section.cta");
-    if (ctaSection) {
+    var closingHeading = null;
+    element.querySelectorAll("h2").forEach(function(h) {
+      if (/win every search/i.test(h.textContent || "")) closingHeading = h;
+    });
+    if (closingHeading) {
+      var closingBlock = closingHeading.closest("div") || closingHeading;
+      closingBlock.parentNode.insertBefore(document.createElement("hr"), closingBlock);
       var sectionMeta = WebImporter.DOMUtils.createTable(
         [["Section Metadata"], ["Style", "section-dark"]],
         document
       );
-      var awardsSection = element.querySelector("section.awards");
-      if (awardsSection && awardsSection.nextSibling) {
-        awardsSection.parentNode.insertBefore(sectionMeta, awardsSection.nextSibling);
-      }
+      element.appendChild(sectionMeta);
     }
+    var templateMeta = WebImporter.DOMUtils.createTable(
+      [["Metadata"], ["template", "template-one"]],
+      document
+    );
+    element.appendChild(templateMeta);
   }
   var parsers = {
     "teaser-semrush-one": heroParser,
-    "video-card-feature": featureCardsParser,
+    "teaser": featureCardsParser,
     "columns-stats": statsColumnsParser,
     "cards-icon": iconsGridParser,
     "testimonials": testimonialsParser,
@@ -339,7 +354,7 @@ var CustomImportScript = (() => {
     name: "semrush-one",
     blocks: [
       { name: "teaser-semrush-one", instances: ["section.main-screen"] },
-      { name: "video-card-feature", instances: ["section.cards .cards__item", "section.cards-2 .cards__item"] },
+      { name: "teaser", instances: ["section.cards .cards__item", "section.cards-2 .cards__item"] },
       { name: "columns-stats", instances: ["section.numbers"] },
       { name: "cards-icon", instances: ["section.icons .icons__wrapper"] },
       { name: "testimonials", instances: [".icons__testimonial"] },

@@ -161,6 +161,24 @@
 }
 
 /* ==========================================================================
+   TESTIMONIALS VARIANT — portrait, image-only customer cards (one per row).
+   Single scrolling row, narrower 4:5 cards, no light placeholder behind the
+   pre-composed card art.
+   ========================================================================== */
+
+.carousel.carousel-testimonials {
+  --card-width: 318px;
+}
+
+.carousel.carousel-testimonials > div > div:first-child {
+  height: auto;
+  aspect-ratio: 318 / 378;
+  background: none;
+  border-radius: var(--radius-m);
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
    EXPANSIBLE VARIANT — rich cards with expand/collapse
    ========================================================================== */
 

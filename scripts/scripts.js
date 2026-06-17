@@ -10,6 +10,7 @@ import {
   loadSections,
   loadCSS,
 } from './aem.js';
+import decorateTabsSections from './section-tabs.js';
 
 export function getContentRoot() {
   const { pathname } = window.location;
@@ -116,6 +117,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  decorateTabsSections(main);
 }
 
 /**
@@ -130,6 +132,18 @@ async function loadEager(doc) {
   // carries the insights-widget but lacks the metadata, apply the class anyway.
   if (doc.querySelector('.insights-widget, main .insights-widget')) {
     document.body.classList.add('template-homepage');
+  }
+  // Semrush One styling: the page-wide gradient (fading to white past the hero) lives on the
+  // template, so the hero teaser shows no box of its own. Fallback when metadata is absent:
+  // the testimonials-oneoff-one block is unique to /one/.
+  if (doc.querySelector('.testimonials-oneoff-one')) {
+    document.body.classList.add('template-one');
+  }
+  // Enterprise (enterprise.semrush.com root) styling lives on its stacked template
+  // (template-dark + template-enterprise). Fallback when the metadata is absent: the
+  // enterprise-platform teaser variant is unique to that page.
+  if (doc.querySelector('.teaser-oneoff-enterprise-platform')) {
+    document.body.classList.add('template-dark', 'template-enterprise');
   }
   const main = doc.querySelector('main');
   if (main) {

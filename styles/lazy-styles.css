@@ -49,3 +49,40 @@ main > .section > .default-content-wrapper > p:first-child:has(+ h2) {
     margin-top: var(--space-s);
   }
 }
+
+/* section-tabs — generic structure for the section style (see scripts/section-tabs.js).
+   Each top-level block in the section is a tab panel; only the selected one is shown.
+   The tab list is a centered horizontal row. Appearance (pill segmented control, colors)
+   is layered per page/template; this just handles layout + visibility. */
+.section.section-tabs .tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s);
+  margin-bottom: var(--space-2xl);
+}
+
+.section.section-tabs .tabs-nav-tab {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: var(--space-xs) var(--space-m);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-body-m);
+  font-weight: 600;
+  color: var(--text-color);
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+  letter-spacing: var(--tracking-snug);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.section.section-tabs .tabs-nav-tab[aria-selected='true'] {
+  color: var(--dark-color);
+  background-color: var(--accent-color);
+}
+
+.section.section-tabs [role='tabpanel'][hidden] {
+  display: none;
+}

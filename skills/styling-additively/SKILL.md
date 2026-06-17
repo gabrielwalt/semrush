@@ -1,0 +1,34 @@
+---
+name: styling-additively
+description: How to style a newly-imported page without breaking pages whose look is already validated. Use when starting to design/style any page after the first, when matching a new page to its original, or when tempted to edit an existing block/variant/section-style CSS. Treats the existing blocks, variants, and section styles as fixed building blocks you extend, not edit.
+---
+
+The blocks, variants, and section styles you already have are **fixed building blocks you extend, never edit.** Editing a shared style to fix the page in front of you silently breaks every validated page that uses it. Add new building blocks instead, so new CSS only touches the new page.
+
+## Why
+Each page tracks two flags: **content validated** and **style/look validated** (see `PROJECT-STATUS.md`). Once a page's look is validated, the blocks/variants/section-styles/templates it uses are **load-bearing** — they must keep rendering identically. The only safe way to make a new page look right is to add styling that the validated pages don't see.
+
+## The two-step process for styling a new page
+**Step 1 — Reproduce the look with what already exists, first.** Before writing any CSS, take stock of every block, variant, section style, and combination you already have. Try to reproduce the original page's look by *only* choosing among them: rename a block, switch to an existing variant, add a section style, combine them. Re-import / re-author the content with those choices. Even a content-validated page deserves this step — its structure may match the original with just different block names or variants.
+
+**Step 2 — Add only what's genuinely missing.** Whatever the existing blocks, variants, and section styles can't express becomes a *new* item:
+- a brand-new block (a structure that never appeared on a validated page), or
+- a new variant / section style / one-off (per the `eds-content-modeling` ladder), or
+- a new page template (conservatively).
+New items are seen only by the new page → validated pages can't move.
+
+## Editing existing styles — the exception, handled with care
+Sometimes a lean addition *to a base block's CSS* is correct rather than a new variant: when the block simply receives a **content shape it hasn't handled before** (e.g. a `teaser` with image-only, or title+video, or an extra `h3`). Handling a new content combination in the base styles is fine and preferred over a variant — a variant is for a different *look*, not a different *content set*. But:
+- Only do this when the new rule is **additive** (targets elements/shapes the validated pages don't contain). A `.teaser h3` rule is safe if no validated teaser has an `h3`.
+- If you must change an *existing* declaration, **measure the validated instances before and after** and confirm they didn't move (`regression-guard`).
+
+## Verify the freeze held
+After styling the new page, if there's any doubt the change was purely additive, re-check each already-validated page that shares a touched block: load it, measure the key values (grid, sizes, colors) on the shared block, confirm unchanged. Cheap insurance against a silent regression.
+
+## Pitfalls
+- Editing a shared variant/section-style/`styles.css` rule "just a little" to fix the new page — the classic validated-page breaker.
+- Reaching for a new variant when the difference is only a new *content shape* → extend base styles additively instead.
+- Inventing a new block/variant before checking the existing blocks/variants/section-styles can already express the look (Step 1 skipped).
+- Assuming additive = safe without checking: an additive selector can still match a validated page if that page has the same element. Confirm it doesn't.
+
+See also: `eds-content-modeling` (the block/variant/section/template ladder + naming), `context-adaptive-blocks` (before adding a `*-dark`/`*-inverse` variant — make the block adapt to its dark container instead), `regression-guard` (measure-before/after when touching shared CSS), `eds-migration-process` (per-page content/style validation gates), `measure-then-implement` (measure the original, don't guess)

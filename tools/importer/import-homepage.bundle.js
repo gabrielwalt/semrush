@@ -263,7 +263,7 @@ var CustomImportScript = (() => {
       p.appendChild(wrapper);
       textContent.appendChild(p);
     }
-    const rows = [["Teaser (teaser-dark, teaser-oneoff-enterprise)"], [textContent]];
+    const rows = [["Teaser (teaser-oneoff-enterprise)"], [textContent]];
     const mediaContent = document.createElement("div");
     if (video) {
       const source = video.querySelector('source[type="video/mp4"]') || video.querySelector("source");

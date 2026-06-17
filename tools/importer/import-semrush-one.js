@@ -128,7 +128,12 @@ function featureCardsParser(element, { document }) {
   var graphImg = graphDiv ? graphDiv.querySelector('img') : null;
   if (graphImg) imgCell.appendChild(wrapImg(graphImg.getAttribute('src'), graphImg.alt, document));
 
-  var rows = [['Video Card Feature'], [textCell, imgCell]];
+  // Media side follows authored order: source `.reverse` cards show media on the LEFT,
+  // expressed by emitting the media row BEFORE the text row (block JS → teaser-media-left).
+  var mediaLeft = element.classList.contains('reverse');
+  var rows = mediaLeft
+    ? [['Teaser'], [imgCell], [textCell]]
+    : [['Teaser'], [textCell], [imgCell]];
   var table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
@@ -199,9 +204,13 @@ function testimonialsParser(element, { document }) {
   var authorName = element.querySelector('.testimonial-info .name');
   var authorRole = element.querySelector('.testimonial-info .position');
 
-  var rows = [['Testimonials']];
+  var rows = [['Testimonials (testimonials-oneoff-one)']];
 
   var quoteCell = document.createElement('div');
+  // Brand logo first (block JS reads it from the quote cell's picture), then the quote.
+  if (logoImg) {
+    quoteCell.appendChild(wrapImg(logoImg.getAttribute('src'), logoImg.getAttribute('alt') || '', document));
+  }
   if (quoteText) {
     var bq = document.createElement('blockquote');
     bq.textContent = quoteText.textContent.trim();
@@ -312,6 +321,12 @@ function cleanupTransformer(hookName, element, payload) {
   });
   // Remove duplicate mobile awards
   element.querySelectorAll('.mobile-awards').forEach(function(el) { el.remove(); });
+  // Drop the decorative comb-fade gradient image (.gradient / img[src*="gradient"]) — it is
+  // page chrome, reconstructed in CSS via /icons/one-gradient-fade.png, not authored content.
+  element.querySelectorAll('.gradient, img[src*="/gradient."], img[alt="gradient" i]').forEach(function(el) {
+    var parent = el.closest('.gradient') || el.closest('p') || el;
+    parent.remove();
+  });
   // Remove tracking pixels
   element.querySelectorAll('img[src*="analytics"], img[src*="bat.bing"], img[src*="pixel"]').forEach(function(el) {
     var parent = el.closest('p') || el.closest('picture') || el;
@@ -324,25 +339,42 @@ function afterTransformer(hookName, element, payload) {
   if (hookName !== 'afterTransform') return;
   var document = payload.document;
 
-  // Add section-dark metadata before the CTA section
-  var ctaSection = element.querySelector('section.cta');
-  if (ctaSection) {
+  // Split the closing region ("Win every search…" → CTA → awards → legal) into its own
+  // section-dark section. NOTE: ctaParser + awardsParser already ran and replaceWith()'d
+  // section.cta / section.awards, so those selectors no longer exist here — key off the
+  // surviving "Win every search" heading instead. Insert an <hr> before it (the pipeline
+  // turns <hr> into a section break) so the dark style scopes ONLY to the closing region,
+  // then append the section-dark Section Metadata at the very end of that region.
+  var closingHeading = null;
+  element.querySelectorAll('h2').forEach(function(h) {
+    if (/win every search/i.test(h.textContent || '')) closingHeading = h;
+  });
+  if (closingHeading) {
+    // The heading sits inside ctaParser's wrapper div — break before that wrapper.
+    var closingBlock = closingHeading.closest('div') || closingHeading;
+    closingBlock.parentNode.insertBefore(document.createElement('hr'), closingBlock);
+
     var sectionMeta = WebImporter.DOMUtils.createTable(
       [['Section Metadata'], ['Style', 'section-dark']],
       document
     );
-    // Find the awards section and append meta after it
-    var awardsSection = element.querySelector('section.awards');
-    if (awardsSection && awardsSection.nextSibling) {
-      awardsSection.parentNode.insertBefore(sectionMeta, awardsSection.nextSibling);
-    }
+    element.appendChild(sectionMeta);
   }
+
+  // Apply the page template (body.template-one). Authored as a Metadata block so EDS's
+  // decorateTemplateAndTheme sets the body class — primary mechanism; scripts.js only
+  // carries a fallback. Emit it as the last section, mirroring template-homepage.
+  var templateMeta = WebImporter.DOMUtils.createTable(
+    [['Metadata'], ['template', 'template-one']],
+    document
+  );
+  element.appendChild(templateMeta);
 }
 
 // CONFIGURATION
 var parsers = {
   'teaser-semrush-one': heroParser,
-  'video-card-feature': featureCardsParser,
+  'teaser': featureCardsParser,
   'columns-stats': statsColumnsParser,
   'cards-icon': iconsGridParser,
   'testimonials': testimonialsParser,
@@ -353,7 +385,7 @@ var PAGE_TEMPLATE = {
   name: 'semrush-one',
   blocks: [
     { name: 'teaser-semrush-one', instances: ['section.main-screen'] },
-    { name: 'video-card-feature', instances: ['section.cards .cards__item', 'section.cards-2 .cards__item'] },
+    { name: 'teaser', instances: ['section.cards .cards__item', 'section.cards-2 .cards__item'] },
     { name: 'columns-stats', instances: ['section.numbers'] },
     { name: 'cards-icon', instances: ['section.icons .icons__wrapper'] },
     { name: 'testimonials', instances: ['.icons__testimonial'] },

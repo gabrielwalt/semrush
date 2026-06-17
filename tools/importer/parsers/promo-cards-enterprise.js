@@ -45,7 +45,9 @@ export default function parse(element, { document }) {
     textContent.appendChild(p);
   }
 
-  const rows = [['Teaser (teaser-dark, teaser-oneoff-enterprise)'], [textContent]];
+  // teaser-oneoff-enterprise is now a self-contained dark card (white text + inverted
+  // buttons baked into the variant), so no separate teaser-dark pairing is needed.
+  const rows = [['Teaser (teaser-oneoff-enterprise)'], [textContent]];
 
   const mediaContent = document.createElement('div');
   if (video) {

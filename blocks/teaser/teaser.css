@@ -1,8 +1,25 @@
-/* Teaser — heading + text + CTA alongside a glass-framed media (image or video).
+/* Teaser — heading + text + CTA alongside a media element.
+   Two archetypes:
+     1. DEFAULT (bare .teaser) — violet-gradient feature card with a plain image
+        (the common Semrush "feature" card: gradient box, large screenshot, optional icon).
+        CONTEXT-ADAPTIVE: this violet look is the LIGHT-surface default. When a bare teaser
+        sits on a dark surface (a `section-dark` section OR a `template-dark` page), it
+        AUTO-INVERTS — the violet box drops away, text turns white, buttons + glass invert —
+        with NO variant needed from the author. See the "context-adaptive dark" block below.
+     2. GLASS-MEDIA (any teaser-oneoff-* variant) — a SELF-styled card whose own surface is
+        branded (its background paints the card, not the section). These are context-INDEPENDENT
+        by design: they look the same on a light or dark section, so they never auto-invert.
+   Feature-card rules below are scoped with :not([class*='oneoff']) so they ONLY affect bare
+   teasers — every self-styled oneoff is left untouched and frozen.
+   Layout: a 2-column block — media on one side, text on the other. CONTENT FORMAT is
+   TWO ROWS, one cell each: a content row and a media row (never two cells in one row —
+   the block JS reads only the first cell per row, so a 2-cell row drops the media).
+   Column side follows AUTHORED ROW ORDER: content row first → media right (default);
+   media row first → teaser.js adds `teaser-media-left` and the columns flip. On mobile
+   both stack text-above-media.
    Variants:
-     teaser-dark  — generic reusable dark inversion (white text + inverted buttons + dark glass)
      teaser-oneoff-semrush-one        — ONE-OFF: branded teal/purple card bg (homepage + /one/)
-     teaser-oneoff-enterprise         — ONE-OFF: black + enterprise photo card bg (homepage); pair with teaser-dark
+     teaser-oneoff-enterprise         — ONE-OFF: black + enterprise photo card bg, white text (homepage)
      teaser-oneoff-enterprise-platform — ONE-OFF: light gradient + bottom-aligned screenshot (enterprise page) */
 
 /* Teaser section — stacked vertically */
@@ -38,6 +55,14 @@
   font-weight: 600;
   line-height: var(--line-height-snug);
   letter-spacing: var(--tracking-tight);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.teaser h3 {
+  font-size: var(--font-size-heading-m);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
   margin-top: 0;
   margin-bottom: 0.5em;
 }
@@ -78,37 +103,10 @@ main .teaser .button-wrapper {
   border-radius: 6px 0 0 6px;
 }
 
-/* =============================================
-   teaser-dark — GENERIC reusable dark inversion
-   White text + secondary button recolored to white outline + dark-bg glass tint.
-   Does NOT set a background — pair with a bg variant (e.g. teaser-oneoff-enterprise).
-   ============================================= */
-.teaser.teaser-dark .teaser-container {
-  color: #fff;
-}
-
-.teaser.teaser-dark h2,
-.teaser.teaser-dark p {
-  color: #fff;
-}
-
-main .teaser.teaser-dark a.button.secondary:any-link {
-  border-color: #fff;
-  background-color: transparent;
-  color: #fff;
-}
-
-main .teaser.teaser-dark a.button.secondary:any-link:hover,
-main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
-  background-color: #fff;
-  color: rgb(0 0 0);
-  border-color: #fff;
-}
-
-.teaser.teaser-dark .teaser-glass {
-  background: linear-gradient(91deg, rgb(255 255 255 / 4%) 11.45%, rgb(255 255 255 / 8%) 88.55%);
-  border: 1px solid rgb(255 255 255 / 60%);
-  border-right: none;
+/* Text-only teaser (no media authored, e.g. a tab panel awaiting its illustration):
+   collapse the 2-column grid so the text spans the card instead of leaving an empty half. */
+.teaser.teaser-text-only .teaser-container {
+  grid-template-columns: 1fr;
 }
 
 /* =============================================
@@ -123,13 +121,41 @@ main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
 }
 
 /* =============================================
-   teaser-oneoff-enterprise — black + enterprise photo card background
-   ONE-OFF: homepage. Pair with teaser-dark for white text + inverted buttons.
+   teaser-oneoff-enterprise — black + enterprise photo card background, WHITE text
+   ONE-OFF: homepage. Self-styled dark card: its black surface + white text + inverted
+   buttons are intrinsic to the variant (was previously split across a teaser-dark pairing;
+   now self-contained so the card looks identical on any section/template).
    ============================================= */
 .teaser.teaser-oneoff-enterprise .teaser-container {
   background:
     url('/icons/enterprise-bg.svg') no-repeat 100% 100% / contain,
     rgb(0 0 0);
+  color: #fff;
+}
+
+.teaser.teaser-oneoff-enterprise h2,
+.teaser.teaser-oneoff-enterprise h3,
+.teaser.teaser-oneoff-enterprise p {
+  color: #fff;
+}
+
+main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:hover,
+main .teaser.teaser-oneoff-enterprise a.button.secondary:any-link:focus-visible {
+  background-color: #fff;
+  color: rgb(0 0 0);
+  border-color: #fff;
+}
+
+.teaser.teaser-oneoff-enterprise .teaser-glass {
+  background: linear-gradient(91deg, rgb(255 255 255 / 4%) 11.45%, rgb(255 255 255 / 8%) 88.55%);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
 }
 
 /* =============================================
@@ -167,6 +193,107 @@ main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
 
 .teaser.teaser-oneoff-enterprise-platform .teaser-glass img {
   border-radius: 8px 0 0;
+}
+
+/* =============================================
+   DEFAULT feature card — violet gradient box + plain image (LIGHT-surface look)
+   Scoped to BARE teasers only (no oneoff) so the self-styled oneoff cards are untouched.
+   On a dark container the context-adaptive dark block above wins (higher specificity:
+   it adds a container ancestor) and strips this violet box — that's intentional.
+   Matches the Semrush "feature" card: gradient box, large screenshot, optional
+   icon above the heading, big h3 + 21px body. Placed after the variants so its
+   higher :not() specificity doesn't trip no-descending-specificity.
+   ============================================= */
+.teaser:not([class*='oneoff']) .teaser-container {
+  background: linear-gradient(180deg, rgb(212 177 255) 0%, rgb(212 177 255 / 0%) 72.43%);
+  color: var(--dark-color);
+  border-radius: 8px;
+  padding: 64px;
+  gap: 64px;
+  align-items: center;
+}
+
+.teaser:not([class*='oneoff']) .teaser-text {
+  padding: 0;
+}
+
+.teaser:not([class*='oneoff']) h3 {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: 24px;
+}
+
+.teaser:not([class*='oneoff']) p {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Optional icon above the heading (carried inside the text column) */
+.teaser:not([class*='oneoff']) .teaser-text p:has(img) {
+  margin-bottom: 24px;
+}
+
+.teaser:not([class*='oneoff']) .teaser-text img {
+  width: 30px;
+  height: auto;
+}
+
+/* Feature-card media: FULL glass frame (all four sides, fully rounded) — the media
+   sits centered inside the padded card, so unlike the variant teasers it doesn't bleed
+   off an edge. Same systematic glass surface used elsewhere on the site. */
+.teaser:not([class*='oneoff']) .teaser-glass {
+  padding: 12px;
+  background: linear-gradient(0deg, rgb(108 110 121 / 10%) 0%, rgb(209 210 213 / 10%) 100%);
+  backdrop-filter: blur(26px);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-radius: 12px;
+}
+
+.teaser:not([class*='oneoff']) .teaser-glass img,
+.teaser:not([class*='oneoff']) .teaser-glass picture {
+  border-radius: 6px;
+}
+
+/* =============================================
+   teaser-media-left — mirror layout: media column on the LEFT, text on the RIGHT.
+   Added by teaser.js when the media row is authored before the text. The DOM order
+   stays text-then-media, so we only reorder columns + mirror the glass frame; the
+   default (media-right) rules are untouched, keeping every current teaser frozen.
+   Placed last so its higher specificity doesn't trip no-descending-specificity.
+   ============================================= */
+.teaser.teaser-media-left .teaser-text {
+  order: 2;
+}
+
+.teaser.teaser-media-left .teaser-media {
+  order: 1;
+}
+
+/* Glass-media teasers (variants): mirror the text gap, container padding and glass
+   frame so the frame still bleeds to the card edge — now the LEFT edge. */
+.teaser.teaser-media-left:is([class*='oneoff']) .teaser-text {
+  padding: 0 0 0 32px;
+}
+
+.teaser.teaser-media-left:is([class*='oneoff']) .teaser-container {
+  padding: 64px 64px 64px 0;
+}
+
+.teaser.teaser-media-left:is([class*='oneoff']) .teaser-glass {
+  padding: 12px 12px 12px 0;
+  border-radius: 0 12px 12px 0;
+  border-left: none;
+  border-right: 1px solid rgb(255 255 255 / 60%);
+}
+
+.teaser.teaser-media-left:is([class*='oneoff']) .teaser-glass .teaser-media-el,
+.teaser.teaser-media-left:is([class*='oneoff']) .teaser-glass picture,
+.teaser.teaser-media-left:is([class*='oneoff']) .teaser-glass img {
+  border-radius: 0 6px 6px 0;
 }
 
 /* =============================================
@@ -208,6 +335,34 @@ main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
   .teaser .teaser-glass img {
     border-radius: 8px;
   }
+
+  /* DEFAULT feature card — mobile: tighter padding, no media bleed, plain image kept */
+  .teaser:not([class*='oneoff']) .teaser-container {
+    padding: 40px 24px;
+    gap: 32px;
+  }
+
+  .teaser:not([class*='oneoff']) h3 {
+    font-size: 28px;
+  }
+
+  .teaser:not([class*='oneoff']) p {
+    font-size: 18px;
+  }
+
+  .teaser:not([class*='oneoff']) .teaser-media {
+    margin: 0;
+    min-height: 0;
+  }
+
+  /* Stacked single-column on mobile: always text above media, even for media-left */
+  .teaser.teaser-media-left .teaser-text {
+    order: 0;
+  }
+
+  .teaser.teaser-media-left .teaser-media {
+    order: 0;
+  }
 }
 
 @media (width >= 1024px) {
@@ -215,3 +370,54 @@ main .teaser.teaser-dark a.button.secondary:any-link:focus-visible {
     font-size: var(--font-size-heading-xl);
   }
 }
+
+/* =============================================
+   CONTEXT-ADAPTIVE DARK — a BARE teaser auto-inverts when its CONTAINER is dark.
+   No variant needed: the author drops a plain teaser into a `section-dark` section or a
+   `template-dark` page and it turns white-text + inverted-button + dark-glass on its own.
+   This replaces the old explicit `teaser-dark` variant — a block should adapt to the surface
+   it sits on, not ask the author to restate the surface's color (see eds-content-modeling
+   "context-adaptive blocks"). Scoped to BARE teasers (:not([class*='oneoff'])) so self-styled
+   oneoff cards, which paint their own surface, are never touched. Placed LAST so its higher
+   specificity (it adds a dark-container ancestor) sits after the light feature-card defaults.
+   Selector = dark CONTAINER + bare teaser. The two container forms (section-dark vs
+   template-dark) intentionally co-target the same elements, so disable the ordering rule. */
+/* stylelint-disable no-descending-specificity */
+main .section.section-dark .teaser:not([class*='oneoff']) .teaser-container,
+body.template-dark main .teaser:not([class*='oneoff']) .teaser-container {
+  background: none;
+  color: #fff;
+}
+
+main .section.section-dark .teaser:not([class*='oneoff']) h2,
+main .section.section-dark .teaser:not([class*='oneoff']) h3,
+main .section.section-dark .teaser:not([class*='oneoff']) p,
+body.template-dark main .teaser:not([class*='oneoff']) h2,
+body.template-dark main .teaser:not([class*='oneoff']) h3,
+body.template-dark main .teaser:not([class*='oneoff']) p {
+  color: #fff;
+}
+
+main .section.section-dark .teaser:not([class*='oneoff']) a.button.secondary:any-link,
+body.template-dark main .teaser:not([class*='oneoff']) a.button.secondary:any-link {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+main .section.section-dark .teaser:not([class*='oneoff']) a.button.secondary:any-link:hover,
+main .section.section-dark .teaser:not([class*='oneoff']) a.button.secondary:any-link:focus-visible,
+body.template-dark main .teaser:not([class*='oneoff']) a.button.secondary:any-link:hover,
+body.template-dark main .teaser:not([class*='oneoff']) a.button.secondary:any-link:focus-visible {
+  background-color: #fff;
+  color: rgb(0 0 0);
+  border-color: #fff;
+}
+
+main .section.section-dark .teaser:not([class*='oneoff']) .teaser-glass,
+body.template-dark main .teaser:not([class*='oneoff']) .teaser-glass {
+  background: linear-gradient(91deg, rgb(255 255 255 / 4%) 11.45%, rgb(255 255 255 / 8%) 88.55%);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-right: none;
+}
+/* stylelint-enable no-descending-specificity */

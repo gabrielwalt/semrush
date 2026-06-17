@@ -64,7 +64,7 @@
           "instances": ["section.main-screen"]
         },
         {
-          "name": "video-card-feature",
+          "name": "teaser",
           "instances": ["section.cards .cards__item", "section.cards-2 .cards__item"]
         },
         {
@@ -103,7 +103,7 @@
           "name": "Feature Cards - Search Benefits",
           "selector": "section.cards:not(.cards-2)",
           "style": null,
-          "blocks": ["video-card-feature"],
+          "blocks": ["teaser"],
           "defaultContent": [".cards__title"]
         },
         {
@@ -135,7 +135,7 @@
           "name": "Feature Cards - Capabilities",
           "selector": "section.cards.cards-2",
           "style": null,
-          "blocks": ["video-card-feature"],
+          "blocks": ["teaser"],
           "defaultContent": [".cards__title"]
         },
         {
@@ -168,8 +168,8 @@
           "instances": ["[aria-label='How leaders get ahead and stay untouchable']"]
         },
         {
-          "name": "tabs",
-          "instances": ["[aria-label='Product overview with tabs']"]
+          "name": "teaser",
+          "instances": ["[aria-label='Product overview with tabs'] [role='tabpanel']"]
         },
         {
           "name": "teaser-enterprise-platform",
@@ -209,9 +209,9 @@
           "id": "solutions",
           "name": "Solutions Tabs",
           "selector": "[aria-label='Product overview with tabs']",
-          "style": null,
-          "blocks": ["tabs"],
-          "defaultContent": []
+          "style": "section-tabs",
+          "blocks": ["teaser"],
+          "defaultContent": ["p", "h2"]
         },
         {
           "id": "platform",

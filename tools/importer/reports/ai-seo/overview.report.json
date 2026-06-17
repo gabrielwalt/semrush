@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "url": "https://www.semrush.com/ai-seo/overview/",
+  "path": "ai-seo/overview",
+  "timestamp": "2026-06-16T14:32:04.212Z",
+  "error": "page.evaluate: Target page, context or browser has been closed",
+  "errorStack": "page.evaluate: Target page, context or browser has been closed\n    at processUrl (/home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:430:16)\n    at async main (/home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:600:22)"
+}

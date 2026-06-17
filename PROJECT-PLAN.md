@@ -25,63 +25,33 @@ The homepage (`content/index.plain.html`) is the **validated reference** and the
 
 ---
 
-## Phase A — Extend the augmented-styles model (analysis)
+## ✅ Batch complete — 10 pages imported (autonomous run, 2026-06-16)
 
-### A01 — 🔲 Open — Build the project-wide marker map from the catalog
+Imported & rendering with structured augmented-styles content: **index** (validated), **one**, **enterprise**, **seo**, **content**, **pricing**, **local-business**, **social-media**, **pr-toolkit**, **company**. Built `accordion` block, two toolkit parsers (v1 class-marker for `/seo/`, v2 content-shape for newer pages), `template-toolkit` styling. Details in `PROJECT-IMPORT.md`.
 
-**Why:** We catalogued 26 page templates and 68 block variants (in `catalog/`), but only the homepage's blocks/variants/section-styles/template are mapped to reliable DOM markers. Before importing more pages we need the marker map for the next target.
-**Action:**
-- Pick the next target page (see A02) and, from its original DOM, identify the marker set for each block, variant, section style, and the page template — the smallest reliable DOM signal per element (tag/class/attribute/position). Follow `marker-driven-import` (the 6-level cascade).
-- Record markers in `PROJECT-IMPORT.md` (extend the "marker map" table pattern established for the homepage).
-- Flag which existing blocks/variants/section-styles the page reuses vs. what genuinely needs a new one (apply the `eds-content-modeling` reuse rules — new block only if structure differs or a variant needs >50% new code).
-**Acceptance:** A marker table for the target page in `PROJECT-IMPORT.md`; a short reuse-vs-new list.
+## Phase A — Polish the imported batch (next)
 
----
+### A01 — 🔲 Open — Per-page visual compare vs original
 
-### A02 — 🔲 Open — Choose the next page to migrate
+**Why:** Content is structured and renders cleanly, but not yet pixel-compared to the original on each page.
+**Action:** For each of the 10 pages, load `/content/<page>` at 1440px + 375px, compare to the original with `block-visual-iteration` + `measure-then-implement`. Fix spacing/typography/color gaps. No regressions on index.
+**Acceptance:** Each page visually matches the original at desktop + mobile.
 
-**Why:** Pick the page that adds the most coverage with the least new surface. Candidates from the catalog, in rough priority:
-- **`/pricing/`** — pricing table/tiers; introduces a likely-new `pricing`/`cards` pattern. High value, distinct template.
-- **A product/toolkit overview** (`/seo/`, `/features/`, `/advertising/`) — these share one template (`product-toolkit-overview`); migrating one unlocks the whole family. Reuses `teaser`, `carousel`, `cards`, `tabs`.
-- **`/one/` (Semrush One)** — flagship product page; content was previously lost and needs re-import. Reuses `teaser`/`media`.
-**Action:** Confirm the target with the user, then proceed to A01 for that page if not already done.
-**Acceptance:** Target page agreed; its URL added to a `tools/importer/urls-<page>.txt`.
+### A02 — ✅ Done — Fix v2 testimonials extraction
 
----
+Testimonials were collapsing into one run-on paragraph. Fixed `classify` (detect `h2 === "Testimonials"`, straight + curly quotes, quote-paragraph fallback) and `buildTestimonials` (quote→name→role rhythm splitting, slide-marker skip, outermost-wrapper dedup). Re-imported content (5 cards), pricing (7), social-media, company — all render as separate quote cards with photo + name + role.
 
-## Phase B — Migrate the next page (content first, then style)
+### A03 — ✅ Done — De-duplicate v2 feature-card sub-bullets
 
-### B01 — 🔲 Open — Model + author the next page's content structure
+`findCardItems` was emitting a card's own sub-bullets as separate cards. Fixed by excluding `<li>`s nested inside another `<li>`/`<article>`. `/content/` now shows 5 clean feature cards (was over-extracting bullet items).
 
-**Why:** Decide the content model before writing the parser. Apply the augmented-styles ladder; prefer default content and existing blocks; add new variants/section-styles/templates only when markers justify them, naming per the convention in `eds-content-modeling`.
-**Action:** Draft the target `content/<page>.plain.html` structure (sections, blocks, variants, section styles, page-template metadata). Get user validation that this is the intended structure before building the parser.
-**Acceptance:** User validates the content structure (record it in `PROJECT-IMPORT.md` → Validated reference pages).
+## Phase B — App-shell pages (deferred)
 
----
+### B01 — 🔲 Open — Handle SPA/app-shell toolkit pages
 
-### B02 — 🔲 Open — Build/extend the marker-driven parser for the page
-
-**Why:** Reproduce the validated structure generically. Reuse the single import script + parser registry pattern (`import-homepage.js`); add parsers/branches only for genuinely new blocks. Aim for ~90% via generic markers, context-exceptions only for the last mile.
-**Action:** Add the page's blocks to the registry with their markers (from A01); write/extend parsers; emit the page-template metadata (cascade level 1). Run the temp-diff validation loop until the block/variant/section/template sequence matches the validated content exactly.
-**Acceptance:** Validation loop shows identical sequence; reference never overwritten.
-
----
-
-### B03 — 🔲 Open — Style the page to match the original
-
-**Why:** Content correct ≠ pixel-correct. Reuse existing block CSS/variants; add new variant/section-style CSS only as modeled in B01.
-**Action:** Reload the preview (`/content/<page>`), compare against the original site, iterate. Use `measure-then-implement` for exact values; `block-visual-iteration` for the compare loop. Keep decorative bg assets in `/icons/` (code), not `content/images/`.
-**Acceptance:** Page renders identically to the original at desktop + mobile; no regressions on already-migrated pages.
-
----
-
-## Phase C — Scale
-
-### C01 — 🔲 Open — Bulk-import a template family
-
-**Why:** Once one page of a template (e.g. a product/toolkit overview) reproduces exactly, the same parser should handle its siblings.
-**Action:** Add the family's URLs, run the import to a temp location, diff a sample against expectations, and only then promote. Never overwrite validated references.
-**Acceptance:** Multiple pages of one template import correctly with the same parser.
+**Why:** `/advertising/`, `/analytics/traffic/`, `/ai-seo/overview/`, `/features/` are client-rendered SPAs with deep obfuscated nesting; they import thin or time out under the headless importer.
+**Action:** Either add a longer render-wait/scroll step before capture, or build a tailored parser per page. Validate structure before adding to the set.
+**Acceptance:** Each renders with its full content.
 
 ---
 
@@ -109,4 +79,5 @@ The homepage (`content/index.plain.html`) is the **validated reference** and the
 | S01–S08 | Skills-library audit & fixes | 8 |
 | — | Augmented-styles refactor (teaser/carousel/media renames, section-oneoff split, template-homepage, content-ownership asset moves) | — |
 | — | Homepage import: marker-driven parser reproduces validated content exactly (incl. marquee + template metadata) | — |
+| — | 10-page autonomous batch: accordion block, toolkit v1+v2 parsers, columns-stats, template-toolkit styling; imported seo/content/pricing/local/social/pr/company + one/enterprise | — |
 | **Total** | | **100+ tasks** |

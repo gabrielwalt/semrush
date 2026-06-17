@@ -4,6 +4,9 @@ export default async function decorate(block) {
   const rows = [...block.children];
   const textParts = [];
   let mediaPart = null;
+  // Track authored order: if the media row precedes the text rows, the author wants
+  // the media on the LEFT. Default (text authored first) keeps media on the right.
+  let mediaAuthoredFirst = false;
 
   rows.forEach((row) => {
     const cell = row.querySelector(':scope > div');
@@ -14,10 +17,15 @@ export default async function decorate(block) {
 
     if (hasVideo || (hasImage && !cell.querySelector('h2, h3, p > a'))) {
       mediaPart = { cell, sources, img: cell.querySelector('img') };
+      if (textParts.length === 0) mediaAuthoredFirst = true;
     } else {
       textParts.push(cell);
     }
   });
+
+  // DOM is always built text-then-media (so the default media-right path is unchanged);
+  // media-left is expressed purely via this modifier class + CSS column flip.
+  if (mediaAuthoredFirst) block.classList.add('teaser-media-left');
 
   block.textContent = '';
 
@@ -96,7 +104,13 @@ export default async function decorate(block) {
     glassFrame.appendChild(picture);
   }
 
-  mediaCol.appendChild(glassFrame);
-  container.appendChild(mediaCol);
+  // No media authored → text-only teaser. Skip the (empty) glass frame and let the text
+  // span the card; frozen teasers all carry media, so this branch never affects them.
+  if (mediaPart) {
+    mediaCol.appendChild(glassFrame);
+    container.appendChild(mediaCol);
+  } else {
+    block.classList.add('teaser-text-only');
+  }
   block.appendChild(container);
 }
