@@ -280,8 +280,10 @@ export default async function decorate(block) {
     window.addEventListener('scroll', updateNavOffset, { passive: true });
   }
 
-  // Fade header bg from gradient start color to white over first 600px of scroll
-  if (isDesktop.matches) {
+  // Fade header bg from gradient start color to white over first 600px of scroll.
+  // Skip on dark page templates — the header stays a dark surface (set in CSS),
+  // so the light fade must not overwrite it with an inline background-color.
+  if (isDesktop.matches && !document.body.classList.contains('template-dark')) {
     const start = [220, 238, 235];
     const end = [255, 255, 255];
     const fadeDistance = 600;

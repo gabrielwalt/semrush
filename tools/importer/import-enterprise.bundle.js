@@ -57,7 +57,12 @@ var CustomImportScript = (() => {
     h1: "Scale your brand visibility, everywhere search happens",
     sub: "Discovery has changed. Dominate SEO and AI search with the industry\u2019s leading data and decisive automations. Meet your new unfair advantage.",
     ctaText: "Book a demo",
-    ctaHref: ORIGIN + "/demo/"
+    ctaHref: ORIGIN + "/demo/",
+    // The hero shows an autoplay/loop/muted product video between the CTA and the logo
+    // marquee. It's a Builder.io CDN asset with NO file extension, so video-utils.js has a
+    // Builder.io-specific detector. The hero is lazy client-rendered, so fall back to the
+    // published asset URL when the live capture doesn't include the <video>.
+    videoSrc: "https://cdn.builder.io/o/assets%2Fe84d911e96f94ac7a1e880168d3b5cba%2F4ab951832c0a464092ffc919287efd06?alt=media&token=a62a77ef-83bf-4803-80ff-56669f18abbf&apiKey=e84d911e96f94ac7a1e880168d3b5cba"
   };
   function heroParser(el, { document }) {
     var wrapper = document.createElement("div");
@@ -90,22 +95,34 @@ var CustomImportScript = (() => {
     cstrong.appendChild(ca);
     cp.appendChild(cstrong);
     wrapper.appendChild(cp);
+    var liveVideo = el.querySelector("video");
+    var liveSrc = liveVideo && (liveVideo.getAttribute("src") || liveVideo.querySelector("source") && liveVideo.querySelector("source").getAttribute("src"));
+    var videoSrc = liveSrc || HERO_FALLBACK.videoSrc;
+    var mediaCell = document.createElement("div");
+    var va = document.createElement("a");
+    va.href = videoSrc;
+    va.textContent = videoSrc;
+    mediaCell.appendChild(va);
+    wrapper.appendChild(WebImporter.DOMUtils.createTable(
+      [["Media"], [mediaCell]],
+      document
+    ));
     return wrapper;
   }
   function marqueeParser(el, { document }) {
     var logos = el.querySelectorAll("img");
     var seen = {};
-    var rows = [["Marquee"]];
+    var cell = document.createElement("div");
     for (var i = 0; i < logos.length; i++) {
       var src = logos[i].getAttribute("src");
       var alt = logos[i].getAttribute("alt") || "";
       if (!src || src === "about:error" || seen[alt]) continue;
       seen[alt] = true;
       var pic = createImg(document, src, alt.replace(" logo", ""));
-      if (pic) rows.push([pic]);
+      if (pic) cell.appendChild(pic);
       if (Object.keys(seen).length >= 7) break;
     }
-    var table = WebImporter.DOMUtils.createTable(rows, document);
+    var table = WebImporter.DOMUtils.createTable([["Marquee"], [cell]], document);
     return table;
   }
   function testimonialsCarouselParser(el, { document }) {

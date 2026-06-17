@@ -44,6 +44,11 @@ var HERO_FALLBACK = {
   sub: 'Discovery has changed. Dominate SEO and AI search with the industry’s leading data and decisive automations. Meet your new unfair advantage.',
   ctaText: 'Book a demo',
   ctaHref: ORIGIN + '/demo/',
+  // The hero shows an autoplay/loop/muted product video between the CTA and the logo
+  // marquee. It's a Builder.io CDN asset with NO file extension, so video-utils.js has a
+  // Builder.io-specific detector. The hero is lazy client-rendered, so fall back to the
+  // published asset URL when the live capture doesn't include the <video>.
+  videoSrc: 'https://cdn.builder.io/o/assets%2Fe84d911e96f94ac7a1e880168d3b5cba%2F4ab951832c0a464092ffc919287efd06?alt=media&token=a62a77ef-83bf-4803-80ff-56669f18abbf&apiKey=e84d911e96f94ac7a1e880168d3b5cba',
 };
 
 function heroParser(el, { document }) {
@@ -83,23 +88,44 @@ function heroParser(el, { document }) {
   cstrong.appendChild(ca);
   cp.appendChild(cstrong);
   wrapper.appendChild(cp);
+
+  // Hero video (autoplay/loop/muted, glass-framed) between the CTA and the marquee.
+  // Prefer the live <video> source; fall back to the published Builder.io asset.
+  var liveVideo = el.querySelector('video');
+  var liveSrc = liveVideo
+    && (liveVideo.getAttribute('src')
+      || (liveVideo.querySelector('source') && liveVideo.querySelector('source').getAttribute('src')));
+  var videoSrc = liveSrc || HERO_FALLBACK.videoSrc;
+  // The `media` block reads the URL from the link's textContent (EDS rewrites the href),
+  // so put the raw URL as the visible text. See the video-in-eds skill.
+  var mediaCell = document.createElement('div');
+  var va = document.createElement('a');
+  va.href = videoSrc;
+  va.textContent = videoSrc;
+  mediaCell.appendChild(va);
+  wrapper.appendChild(WebImporter.DOMUtils.createTable(
+    [['Media'], [mediaCell]], document,
+  ));
   return wrapper;
 }
 
 function marqueeParser(el, { document }) {
   var logos = el.querySelectorAll('img');
   var seen = {};
-  var rows = [['Marquee']];
+  // marquee.js reads the FIRST cell and moves every picture in it into the scroll
+  // track. All logos must therefore live in ONE cell, not one row each (one-row-each
+  // leaves only the first logo in the decorated track). See blocks/marquee/marquee.js.
+  var cell = document.createElement('div');
   for (var i = 0; i < logos.length; i++) {
     var src = logos[i].getAttribute('src');
     var alt = logos[i].getAttribute('alt') || '';
     if (!src || src === 'about:error' || seen[alt]) continue;
     seen[alt] = true;
     var pic = createImg(document, src, alt.replace(' logo', ''));
-    if (pic) rows.push([pic]);
+    if (pic) cell.appendChild(pic);
     if (Object.keys(seen).length >= 7) break;
   }
-  var table = WebImporter.DOMUtils.createTable(rows, document);
+  var table = WebImporter.DOMUtils.createTable([['Marquee'], [cell]], document);
   return table;
 }
 
@@ -273,8 +299,10 @@ function tabsParser(el, { document }) {
       cell.appendChild(lp);
     }
 
-    // Media cell: the panel illustration. Two ROWS (text, then media) so the teaser block
-    // renders both columns (a single 2-cell row is not read by the block JS).
+    // Media cell: the panel illustration. Two ROWS so the teaser block renders both
+    // columns (a single 2-cell row is not read by the block JS). The MEDIA row is emitted
+    // FIRST so teaser.js adds `teaser-media-left` → image on the LEFT, matching the
+    // original tab layout (all panels have the illustration on the left).
     var mediaCell = document.createElement('div');
     var imgSrc = (useLive && liveImg) ? liveImg.getAttribute('src') : fb.img;
     var imgAlt = (useLive && liveImg) ? liveImg.getAttribute('alt') : fb.imgAlt;
@@ -283,10 +311,10 @@ function tabsParser(el, { document }) {
       if (pic) mediaCell.appendChild(pic);
     }
 
-    // Bare teaser (no variant) — auto-inverts on the dark template.
+    // Bare teaser (no variant) — auto-inverts on the dark template. Media-row-first.
     var rows = [['Teaser']];
-    rows.push([cell]);
     if (mediaCell.children.length > 0) rows.push([mediaCell]);
+    rows.push([cell]);
     var table = WebImporter.DOMUtils.createTable(rows, document);
     wrapper.appendChild(table);
   }

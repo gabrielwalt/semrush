@@ -27,7 +27,9 @@ First-match-wins: an override here beats the site default. Empty = the page uses
 
 | Page / template | Fidelity | Why |
 |-----------------|----------|-----|
-| _(none yet)_ | — | — |
+| App-shell SPA pages — `advertising`, `traffic`, `ai-seo`, `features` | **Reimagined** | Weak legacy templates that import thin / time out. Treat as redesign candidates: capture the essence and rebuild on our foundation with real liberties. |
+
+All other pages (One, Enterprise, SEO, Content, Pricing, Local, Social, PR, Company) use the **Refined** site default — no override.
 
 ---
 
@@ -56,6 +58,8 @@ First-match-wins: an override here beats the site default. Empty = the page uses
 **Page gradient (default):** `linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%)` with `background-size: 100% 2814px`.
 
 **Semrush One page gradient (`body.template-one`):** `linear-gradient(rgb(193 144 255) 5%, var(--color-teal) 42%, var(--color-teal) 64%, #fff 92%)` over white, capped at `100% 1250px` so it fades to white before the "Built for how people search today" title. The hero teaser is transparent on this page so its purple comes from this background. A **second gradient region** is layered on `main` lower down (white→teal→purple behind "The only tool…" → icon cards → testimonial), ended by the decorative comb-fade image `/icons/one-gradient-fade.png` (purple→white striped band). Both are background LAYERS on `main` (vertically positioned with explicit `Npx` offsets) — not z-index:-1 pseudo-elements, which render behind main's white base.
+
+**Dark-template header inversion (`body.template-dark header`):** the header inverts fully with the page, not just its text. The text already inherits white from `body.template-dark`; three rules in `styles.css` add the rest — `.nav-wrapper` background → `--dark-color`, the logo `<img>` → `filter: brightness(0) invert(1)` (white), and the two `.nav-tools` CTAs invert (Log In → white-outline/transparent, Sign Up → white fill + dark text). `header.js` skips its desktop scroll-fade (which writes an inline light background) when `body.template-dark` is present, so the dark header bg isn't overwritten on scroll. Scoped to `template-dark`, so only enterprise inverts; the frozen homepage/`/one/` headers stay white.
 
 **Semrush One closing section (`body.template-one .section.section-dark`):** the closing "Win every search…" region inverts to dark. Customized for template-one only (the shared `section-dark` on homepage/seo is untouched): 90px top/bottom padding, centered default-content, heading 46px/line-height 1 uppercase (36px <768px), and a FILLED purple-pill CTA (`--accent-color` bg, `--dark-color` text) overriding the generic outline-white dark-section button. Plain legal links inverted to white + underlined. Each award shows the decorative G2 shield badge `/icons/one-award-badge.svg` (50×54px) injected via `.cards-awards-card-body::before` — a single repeated glyph, so it's code not content.
 

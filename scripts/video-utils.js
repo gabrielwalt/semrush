@@ -22,5 +22,17 @@ export default function getVideoSources(cell) {
     }
   });
 
+  if (sources.length) return sources;
+
+  // Builder.io CDN video assets have no file extension: `cdn.builder.io/o/...?alt=media`.
+  // The `/o/` path + `alt=media` distinguishes a stored asset (video here) from the
+  // `/api/v1/image/` image transform endpoint. Default to mp4 (Builder serves H.264).
+  cell.querySelectorAll('a').forEach((link) => {
+    const text = link.textContent.trim();
+    if (/cdn\.builder\.io\/o\/.*alt=media/.test(text)) {
+      sources.push({ src: text, type: 'video/mp4' });
+    }
+  });
+
   return sources;
 }

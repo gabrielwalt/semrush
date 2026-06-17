@@ -867,6 +867,31 @@ body.template-dark main a.button.secondary:any-link {
   background-color: transparent;
   color: #fff;
 }
+
+/* Header inverts with the page: dark surface, white logo, inverted nav buttons.
+   The text already inherits white from body.template-dark; these add the bg, the
+   logo, and the two nav-tools CTAs so the whole header reads dark. The JS scroll
+   fade is disabled for dark templates in header.js, so this bg is not overridden. */
+body.template-dark header .nav-wrapper {
+  background-color: var(--dark-color);
+}
+
+body.template-dark header nav .nav-brand img {
+  filter: brightness(0) invert(1);
+}
+
+/* Log In (outline) → white outline + white text on the dark header. */
+body.template-dark header nav .nav-tools a:first-of-type {
+  border-color: rgb(255 255 255 / 40%);
+  background-color: transparent;
+  color: #fff;
+}
+
+/* Sign Up (solid) → inverted to a white fill with dark text. */
+body.template-dark header nav .nav-tools a:last-of-type {
+  background-color: #fff;
+  color: var(--dark-color);
+}
 /* stylelint-enable no-descending-specificity */
 
 /* =============================================================================
@@ -931,12 +956,19 @@ body.template-enterprise main .section.section-hero {
   padding-bottom: var(--space-2xl);
 }
 
+/* Centered hero: eyebrow, headline, subtitle, and CTA all centered (the max-width'd
+   h1/subtitle need margin-inline auto so they center instead of staying left-anchored). */
+body.template-enterprise main .section.section-hero .default-content-wrapper {
+  text-align: center;
+}
+
 body.template-enterprise main .section.section-hero h1 {
   font-size: clamp(48px, 6.5vw, 84px);
   font-weight: 600;
   line-height: 1.05;
   letter-spacing: -0.045em;
   max-width: 11em;
+  margin-inline: auto;
 }
 
 /* Subtitle = the paragraph that is NOT the eyebrow (the eyebrow is the first <p>, styled
@@ -946,6 +978,7 @@ body.template-enterprise main .section.section-hero h1 ~ p {
   line-height: 1.2;
   color: rgb(244 244 244);
   max-width: 26em;
+  margin-inline: auto;
 }
 
 /* Eyebrow inside the hero stays 14px uppercase (re-asserted at section-hero specificity
