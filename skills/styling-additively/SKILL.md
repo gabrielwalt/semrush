@@ -3,13 +3,15 @@ name: styling-additively
 description: How to style a newly-imported page without breaking pages whose look is already validated. Use when starting to design/style any page after the first, when matching a new page to its original, or when tempted to edit an existing block/variant/section-style CSS. Treats the existing blocks, variants, and section styles as fixed building blocks you extend, not edit.
 ---
 
-The blocks, variants, and section styles you already have are **fixed building blocks you extend, never edit.** Editing a shared style to fix the page in front of you silently breaks every validated page that uses it. Add new building blocks instead, so new CSS only touches the new page.
+The blocks, variants, and section styles you already have are your **toolbox** — fixed tools you extend, never edit. Editing a shared style to fix the page in front of you silently breaks every validated page that uses it. Add new tools instead, so new CSS only touches the new page.
+
+This skill operationalizes two Named Rules (AGENTS.md): **The Toolbox-First Rule** (reach for existing tools before forging new ones) and **The Frozen-Tools Rule** (a validated page's tools must never shift).
 
 ## Why
 Each page tracks two flags: **content validated** and **style/look validated** (see `PROJECT-STATUS.md`). Once a page's look is validated, the blocks/variants/section-styles/templates it uses are **load-bearing** — they must keep rendering identically. The only safe way to make a new page look right is to add styling that the validated pages don't see.
 
 ## The two-step process for styling a new page
-**Step 1 — Reproduce the look with what already exists, first.** Before writing any CSS, take stock of every block, variant, section style, and combination you already have. Try to reproduce the original page's look by *only* choosing among them: rename a block, switch to an existing variant, add a section style, combine them. Re-import / re-author the content with those choices. Even a content-validated page deserves this step — its structure may match the original with just different block names or variants.
+**Step 1 — Toolbox-First: reproduce the look with what already exists.** Before writing any CSS, take stock of every block, variant, section style, and combination you already have. Try to reproduce the original page's look by *only* choosing among them: rename a block, switch to an existing variant, add a section style, combine them. Re-import / re-author the content with those choices. Even a content-validated page deserves this step — its structure may match the original with just different block names or variants. **Threshold to forge a new tool:** you can state, in one sentence, the specific look the existing toolbox cannot express. If you can't name what's missing, Step 1 isn't finished.
 
 **Step 2 — Add only what's genuinely missing.** Whatever the existing blocks, variants, and section styles can't express becomes a *new* item:
 - a brand-new block (a structure that never appeared on a validated page), or

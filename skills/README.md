@@ -92,6 +92,8 @@ Load these before making changes — they prevent regressions and guesswork.
 
 | Skill | Load when... |
 |-------|-------------|
+| [migration-orientation](migration-orientation/SKILL.md) | Starting a NEW migration before any import; user says "let's migrate X" / "start a new site"; `PROJECT-DESIGN.md` has no `## Migration Strategy` section. Establishes scope, content/design source, fidelity, reuse, constraints |
+| [global-style-foundation](global-style-foundation/SKILL.md) | Right after orientation, before any block styling; building the global *workbench* (brand tokens, type scale, spacing, default-content styling) from the visual gist of ≥3 representative pages; global foundation missing or weak |
 | [marker-driven-import](marker-driven-import/SKILL.md) | User validated a page's content; designing ONE generic marker-driven parser; adding detection for a new block/variant/section-style/template; import doesn't reproduce validated content |
 | [importer-parser-patterns](importer-parser-patterns/SKILL.md) | Writing a block parser; parser validation failing; content structure questions (low-level table/DOM mechanics) |
 | [eds-migration-process](eds-migration-process/SKILL.md) | Starting a migration; deciding what to import next; checking progress; guiding the user through content/design validation gates |

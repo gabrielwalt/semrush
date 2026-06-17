@@ -3,7 +3,12 @@ name: verify-before-claiming
 description: Protocol for verifying work before reporting it complete. Load ALWAYS before saying "done", "fixed", "implemented", or any similar completion claim.
 ---
 
-Never declare work complete based on having written the code. Verify the outcome directly.
+Never declare work complete based on having written the code. Verify the outcome directly. This is the close of **The Bookend-Verification Rule** (AGENTS.md) — and the rule has *two* bookends.
+
+## Open the task: state checkable success criteria (must enforce)
+Before touching anything, restate the request as **concrete, verifiable success criteria** — the exact conditions that will prove the task done. Then confirm you read the request correctly (assert-then-confirm if any ambiguity remains). You cannot verify completion against a goal you never made checkable.
+- Vague: "fix the hero spacing." Checkable: "hero top padding = 120px desktop / 60px mobile, matching the original; sibling sections unchanged."
+- Carry these criteria to the close — step 6 below verifies each one. The criteria you open with ARE the checklist you close against.
 
 ## Before theorizing about a symptom
 - **Reproduce the user's exact symptom on the exact route they used.** A different observation on a different route/URL is not their bug — and a tool reporting "X is broken" may just mean your probe was pointed wrong (sanity-check it loaded the runtime / the file exists where you looked).
@@ -16,7 +21,8 @@ Never declare work complete based on having written the code. Verify the outcome
 3. Load the page at `localhost:3000` — confirm the component renders correctly.
 4. Compare against original site (for Gap tasks) or confirm requested state (for Enhancement tasks). Load `executing-plan-tasks` if working from a plan.
 5. After CSS changes: check that untouched sibling/parent values didn't change. If they did, you introduced a regression — load `regression-guard`.
-6. Only THEN write "done".
+6. **Re-check each success criterion you opened the task with.** Tick them off one by one against observed reality. An unticked criterion means the task is not done.
+7. Only THEN write "done".
 
 ## Verification must be end-to-end
 - **Test EVERY affected element**, not just one instance. If the task says "fix all videos", verify ALL videos — not just the first one.

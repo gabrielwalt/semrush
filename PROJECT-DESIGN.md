@@ -1,7 +1,33 @@
-# PROJECT-DESIGN.md — Design System
+# PROJECT-DESIGN.md — Design Foundation & System
 
-Design intent and token inventory. For actual values read `styles/brand.css` and `styles/styles.css`.  
-**Update when tokens are added, renamed, or removed.**
+The **guiding design document** for this migration — not just a record of what was built, but the direction that shapes what gets built. Two layers:
+1. **Migration Strategy** (below) — scope, sources, fidelity, constraints. Decided up front via `migration-orientation`, before any import. This is what later styling work consults to know *how literally to match* each page.
+2. **Design System** (tokens, type, spacing, buttons) — the global *workbench* every block is built on. For actual values read `styles/brand.css` and `styles/styles.css`.
+
+**Update when:** the migration strategy changes (fidelity, a new per-page override, a new constraint), or tokens are added, renamed, or removed.
+
+---
+
+## Migration Strategy
+
+> Established via `migration-orientation` before the first import (**The Brand-Foundation-First Rule**). Reconstructed from work already done; **site-default fidelity confirmed by the user as Refined.**
+
+| Input | Decision |
+|-------|----------|
+| **Scope** | Semrush marketing site — homepage (validated reference) + toolkit/landing/enterprise pages. ~12 representative pages tracked in `PROJECT-STATUS.md`. |
+| **Content source** | The live source site (`https://www.semrush.com/` and subdomains), imported via the marker-driven script. |
+| **Design source** | **Same site** — the look comes from the live Semrush pages themselves. No separate Figma or reference site. |
+| **Site-default fidelity** | **Refined** — keep the Semrush brand essence and page structure, fix weak spots and uplevel craft to serve the global foundation. Improve rhythm, hierarchy, and states; never change the brand identity. The validated homepage is the design touchstone. |
+| **Copy / improve / inspire** | **Improve.** Treat each original page as a strong reference, not a pixel spec — reproduce its intent and structure, then strengthen it toward the foundation. |
+| **Reuse** | EDS Block Collection + the project's own growing toolbox (`PROJECT-BLOCKS.md`). Reuse-first before building new (**The Toolbox-First Rule**). |
+| **Constraints** | Fast/lean/clean, author-friendly, accessible (WCAG 2.1 AA target), mobile-ready, PageSpeed 100 target. |
+
+### Per-page fidelity overrides
+First-match-wins: an override here beats the site default. Empty = the page uses the site default.
+
+| Page / template | Fidelity | Why |
+|-----------------|----------|-----|
+| _(none yet)_ | — | — |
 
 ---
 

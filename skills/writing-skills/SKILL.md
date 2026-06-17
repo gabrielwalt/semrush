@@ -85,6 +85,31 @@ description: What this does. When to use it. Key trigger phrases.
 - **Scannable**: tables and code blocks beat paragraphs
 - **No history, no justification**: just what works now
 
+## Make skills operational
+
+These seven habits separate a skill the agent *follows reliably* from one it skims and ignores. Distilled from studying skill libraries that drive agents well (e.g. impeccable.style). Apply them on top of the Quality bar above.
+
+| Habit | What it means | Test |
+|-------|---------------|------|
+| **1. Gate the work, don't just describe it** | If a skill must happen before something else, open with a short ordered precondition: *"Before X, you MUST: (1)… (2)…"*. A gate is an instruction the agent executes, not background it absorbs. | Does the skill tell the agent what to do *first*, or only what's true? |
+| **2. Name and number your rules** | Give a load-bearing rule a citable handle: `**The Reuse-First Rule.** Reproduce the look with existing blocks before adding any new one.` Named rules are stickier and quotable in later reasoning than an anonymous bullet. | Could the agent cite this rule by name in a later turn? |
+| **3. Every rule carries a threshold or a precise trigger** | Replace "consider", "prefer", "might" with a number or an exact condition. `tracking ≥ -0.04em`, `body text ≥ 4.5:1`, "fires when a lower-specificity selector follows a higher one on the same element". A rule with no threshold can't be obeyed or checked. | Could two people disagree on whether the rule was followed? If yes, add the number/condition. |
+| **4. List anti-patterns as match-and-refuse** | Name what the failure *looks like* and the rewrite: *"If you're about to write `border-left > 1px` as a colored accent — stop, use a full border or background tint instead."* Anti-references are first-class content, not an afterthought. | Does the skill say what NOT to do, concretely enough to recognize it mid-edit? |
+| **5. Interview = assert-then-confirm** | For any step that asks the user: 2–3 questions per round, then wait. Never synthesize a whole doc from a one-line prompt for blanket sign-off. When one answer is obvious, name it and ask to confirm — *"This reads as Faithful, confirm?"* beats a four-option menu. | Is the agent proposing a default to confirm, or dumping a menu / guessing silently? |
+| **6. Resolve ambiguity with first-match-wins** | When a choice has competing signals, give an *ordered* tie-breaker: *"Pick by first match: (1) explicit user instruction; (2) per-page override; (3) site default."* Ordered beats "it depends". | If two signals conflict, does the skill say which wins? |
+| **7. Forceful voice for load-bearing rules** | "Never", "always", "MUST", "prohibited" for the rules that protect frozen work or prevent regressions. Reserve softer phrasing for genuine judgment calls. Forcefulness signals which rules are non-negotiable. | Does the strength of the verb match the cost of getting it wrong? |
+
+Don't force all seven into every skill — a 20-line CSS-pitfall skill needs #2/#3/#4, not an interview cadence. Reach for the ones that fit the skill's job.
+
+## Capturing anti-patterns from user corrections
+
+This is the recipe behind **The Anti-Pattern-Capture Rule** (AGENTS.md). When the user corrects something you built:
+
+1. **Qualify it.** Capture only when the wrongness is *self-evident in hindsight* — a thing no one would defend once seen ("don't edit a frozen block's CSS to fix a new page", "don't animate the image on card hover"). **Do NOT capture taste/judgment calls** ("I'd prefer more spacing here", "use blue not green") — those are preferences, not anti-patterns. Litmus test: would any competent migrator agree this was a mistake, not just a different choice? If no, skip it.
+2. **Write it match-and-refuse** (habit #4): name what the bad version *looks like* so you can recognize it mid-edit, then the rewrite. *"If you're about to write `<the bad pattern>` — stop, do `<the fix>` instead."*
+3. **Put it where it'll fire.** Add it to the Pitfalls (or a `## Anti-patterns` section) of the skill that owns that domain — not a generic dumping ground. If no skill owns it, that's a skill gap; create one.
+4. **Name it if it's load-bearing.** A recurring, costly anti-pattern earns a citable handle and a row in AGENTS.md Named Rules.
+
 ## Improving an existing skill
 
 | Signal | Action |

@@ -78,6 +78,19 @@ When code or content needs to go live, tell the user they can use the Console UI
 
 ---
 
+## Named Rules
+
+The migration's load-bearing doctrine, named so you can **cite them by name** in your reasoning ("per the Toolbox-First Rule…"). Each rule states a non-negotiable; the linked skill owns the full recipe. Do not restate the recipe here — these are handles, not the manual.
+
+- **The Workbench-Before-Tools Rule.** The global design foundation (brand tokens, type scale, spacing system, default-content styling) is the *workbench*; every block, variant, section style, and template is a *tool*. Level the workbench before forging tools — establish the global foundation before building or styling any block. → `eds-migration-process`, `vertical-spacing-system`
+- **The Brand-Foundation-First Rule.** Never begin implementation — not content import, not styling — until the site's global look & feel is defined and recorded in `PROJECT-DESIGN.md`. A migration that starts by importing a page has skipped its foundation. → `eds-migration-process`, `PROJECT-DESIGN.md`
+- **The Toolbox-First Rule.** A tool exists to be used. When styling a new page, first reach into the existing *toolbox* — every block, variant, section style, and template already built — and apply or combine them to get the page as close to target as possible. Forge a new tool *only* for what the toolbox genuinely cannot express. → `styling-additively`
+- **The Frozen-Tools Rule.** Once a page's style is user-validated, every tool it uses is frozen. Style later pages **additively** so a shared tool never shifts under an already-validated page. → `styling-additively`, `regression-guard`
+- **The Bookend-Verification Rule (must enforce).** Bracket every task with verification. *Open* by restating the request as concrete, checkable success criteria and confirming you understood it correctly. *Close* by verifying each of those criteria is actually met before claiming done. Skipping either bookend is incomplete work, not a shortcut. → `verify-before-claiming`
+- **The Anti-Pattern-Capture Rule.** When the user corrects something you built that was *clearly* a bad idea — obvious in hindsight, not merely a taste preference — name it as an anti-pattern and capture it match-and-refuse (what it looks like → the rewrite) in the relevant skill. Not every correction qualifies; only the ones where the wrongness is self-evident. → `writing-skills`
+
+---
+
 ## Skills System
 
 Maintain a skill library in `skills/`. Skills prevent re-solving problems. Each skill is a directory with a `SKILL.md` file. The full index and trigger phrases are in `skills/README.md` — that is the single source of truth for skill lookup.
