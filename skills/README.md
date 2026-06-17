@@ -84,6 +84,7 @@ Load these before making changes — they prevent regressions and guesswork.
 |-------|-------------|
 | [carousel-pattern-eds](carousel-pattern-eds/SKILL.md) | Building horizontal scrolling carousel with right-edge bleed |
 | [video-in-eds](video-in-eds/SKILL.md) | Implementing video; EDS rewrites video URLs in link hrefs |
+| [repo-hosted-svg-references](repo-hosted-svg-references/SKILL.md) | DA/html2md (409) "Images … failed validation" on preview/publish; an SVG too large for the document; author-friendly link that a global script expands into an `<img>` |
 | [measure-then-implement](measure-then-implement/SKILL.md) | Matching exact dimensions, colors, hover states, or responsive behavior; about to write a px value from memory |
 
 ---

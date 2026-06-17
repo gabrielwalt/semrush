@@ -13,6 +13,10 @@ export default function decorate(block) {
     ul.append(li);
   });
   ul.querySelectorAll('picture > img').forEach((img) => {
+    // SVGs are resolution-independent and can't be rasterized to WebP by the image
+    // service — running them through createOptimizedPicture yields a broken <source>.
+    // Leave SVG sources (incl. repo /svg/ references) as-is.
+    if (/\.svg(\?|$)/i.test(img.src)) return;
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     img.closest('picture').replaceWith(optimizedPic);
   });

@@ -28,6 +28,21 @@ function pic(document, src, alt) {
   return picture;
 }
 
+// Heavy SVGs can't live in the document — DA/html2md rejects oversized images during
+// validation. The big SEO feature screenshots are committed to the repo under /svg/ and
+// referenced from content with a plain link that scripts.js (decorateSvgReferences) expands
+// into an <img> at render time. Map a known source filename stem to its /svg/ link.
+// Returns an <a> reference when the src is a known repo SVG, else null.
+const SVG_REF_NAMES = ['competitors', 'backlinks', 'audit', 'content', 'positions', 'health'];
+function svgRef(document, src, alt) {
+  const m = (src || '').match(/\/img\/([a-z0-9]+)\./i);
+  if (!m || !SVG_REF_NAMES.includes(m[1])) return null;
+  const a = document.createElement('a');
+  a.href = `/svg/seo-${m[1]}.svg`;
+  a.textContent = alt && alt !== 'icon' && alt !== 'card' ? alt : m[1];
+  return a;
+}
+
 function ctaPara(document, text, href, primary) {
   const p = document.createElement('p');
   const wrap = document.createElement(primary ? 'strong' : 'em');
@@ -140,7 +155,11 @@ function parseFeatures(section, document) {
   items.forEach((it) => {
     const cell = document.createElement('div');
     const img = it.querySelector('img');
-    if (img) cell.appendChild(pic(document, img.getAttribute('src'), img.alt));
+    if (img) {
+      const src = img.getAttribute('src');
+      // Heavy feature SVGs → /svg/ link reference; everything else stays an embedded image.
+      cell.appendChild(svgRef(document, src, img.alt) || pic(document, src, img.alt));
+    }
     const h = it.querySelector('h2, h3');
     if (h) { const el = document.createElement('p'); const s = document.createElement('strong'); s.textContent = h.textContent.trim(); el.appendChild(s); cell.appendChild(el); }
     const desc = [...it.querySelectorAll('p, div')].map((d) => d.childNodes.length === 1 ? d.textContent.trim() : '').find((t) => t.length > 25);

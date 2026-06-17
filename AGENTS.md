@@ -88,6 +88,7 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 - **The Frozen-Tools Rule.** Once a page's style is user-validated, every tool it uses is frozen. Style later pages **additively** so a shared tool never shifts under an already-validated page. → `styling-additively`, `regression-guard`
 - **The Bookend-Verification Rule (must enforce).** Bracket every task with verification. *Open* by restating the request as concrete, checkable success criteria and confirming you understood it correctly. *Close* by verifying each of those criteria is actually met before claiming done. Skipping either bookend is incomplete work, not a shortcut. → `verify-before-claiming`
 - **The Anti-Pattern-Capture Rule.** When the user corrects something you built that was *clearly* a bad idea — obvious in hindsight, not merely a taste preference — name it as an anti-pattern and capture it match-and-refuse (what it looks like → the rewrite) in the relevant skill. Not every correction qualifies; only the ones where the wrongness is self-evident. → `writing-skills`
+- **The Heavy-SVG-In-Code Rule.** Any image asset ≥ 80KB (graphs, screenshots, full illustrations) must be hosted in the code repo under `/svg/` and referenced from content with a plain link — never embedded in the document. DA/html2md rejects oversized embedded images with a (409) validation error on preview/publish. Parsers must emit the `/svg/` reference, not an embedded picture, so re-import never reintroduces it. → `repo-hosted-svg-references`
 
 ---
 

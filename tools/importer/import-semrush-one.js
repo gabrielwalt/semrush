@@ -19,6 +19,22 @@ function wrapImg(src, alt, document) {
   return p;
 }
 
+// Heavy SVGs (the graph illustrations) can't live in the document — DA/html2md rejects
+// oversized images during validation. They're committed to the code repo under /svg/ and
+// referenced from content with a plain link; scripts.js (decorateSvgReferences) expands the
+// link into an <img> at render time. Map the source graph-N_en.* file to its /svg/ link.
+// Returns a <p><a> reference when the src is a known repo SVG, else null.
+function svgRef(src, alt, document) {
+  var m = (src || '').match(/graph-(\d)_en/);
+  if (!m) return null;
+  var p = document.createElement('p');
+  var a = document.createElement('a');
+  a.href = '/svg/graph-' + m[1] + '.svg';
+  a.textContent = alt && alt !== 'icon' && alt !== 'card' ? alt : 'graph ' + m[1];
+  p.appendChild(a);
+  return p;
+}
+
 function wrapCta(link, document) {
   var p = document.createElement('p');
   var a = document.createElement('a');
@@ -126,7 +142,12 @@ function featureCardsParser(element, { document }) {
 
   var imgCell = document.createElement('div');
   var graphImg = graphDiv ? graphDiv.querySelector('img') : null;
-  if (graphImg) imgCell.appendChild(wrapImg(graphImg.getAttribute('src'), graphImg.alt, document));
+  if (graphImg) {
+    var gSrc = graphImg.getAttribute('src');
+    // Graphs are heavy SVGs: emit a /svg/ link reference instead of an embedded image.
+    imgCell.appendChild(svgRef(gSrc, graphImg.alt, document)
+      || wrapImg(gSrc, graphImg.alt, document));
+  }
 
   // Media side follows authored order: source `.reverse` cards show media on the LEFT,
   // expressed by emitting the media row BEFORE the text row (block JS → teaser-media-left).

@@ -38,6 +38,15 @@ var CustomImportScript = (() => {
     picture.appendChild(img);
     return picture;
   }
+  var SVG_REF_NAMES = ["competitors", "backlinks", "audit", "content", "positions", "health"];
+  function svgRef(document, src, alt) {
+    const m = (src || "").match(/\/img\/([a-z0-9]+)\./i);
+    if (!m || !SVG_REF_NAMES.includes(m[1])) return null;
+    const a = document.createElement("a");
+    a.href = `/svg/seo-${m[1]}.svg`;
+    a.textContent = alt && alt !== "icon" && alt !== "card" ? alt : m[1];
+    return a;
+  }
   function ctaPara(document, text, href, primary) {
     const p = document.createElement("p");
     const wrap = document.createElement(primary ? "strong" : "em");
@@ -169,7 +178,10 @@ var CustomImportScript = (() => {
     items.forEach((it) => {
       const cell = document.createElement("div");
       const img = it.querySelector("img");
-      if (img) cell.appendChild(pic(document, img.getAttribute("src"), img.alt));
+      if (img) {
+        const src = img.getAttribute("src");
+        cell.appendChild(svgRef(document, src, img.alt) || pic(document, src, img.alt));
+      }
       const h = it.querySelector("h2, h3");
       if (h) {
         const el = document.createElement("p");

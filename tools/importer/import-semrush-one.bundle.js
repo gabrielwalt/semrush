@@ -37,6 +37,16 @@ var CustomImportScript = (() => {
     p.appendChild(pic);
     return p;
   }
+  function svgRef(src, alt, document) {
+    var m = (src || "").match(/graph-(\d)_en/);
+    if (!m) return null;
+    var p = document.createElement("p");
+    var a = document.createElement("a");
+    a.href = "/svg/graph-" + m[1] + ".svg";
+    a.textContent = alt && alt !== "icon" && alt !== "card" ? alt : "graph " + m[1];
+    p.appendChild(a);
+    return p;
+  }
   function wrapCta(link, document) {
     var p = document.createElement("p");
     var a = document.createElement("a");
@@ -130,7 +140,10 @@ var CustomImportScript = (() => {
     }
     var imgCell = document.createElement("div");
     var graphImg = graphDiv ? graphDiv.querySelector("img") : null;
-    if (graphImg) imgCell.appendChild(wrapImg(graphImg.getAttribute("src"), graphImg.alt, document));
+    if (graphImg) {
+      var gSrc = graphImg.getAttribute("src");
+      imgCell.appendChild(svgRef(gSrc, graphImg.alt, document) || wrapImg(gSrc, graphImg.alt, document));
+    }
     var mediaLeft = element.classList.contains("reverse");
     var rows = mediaLeft ? [["Teaser"], [imgCell], [textCell]] : [["Teaser"], [textCell], [imgCell]];
     var table = WebImporter.DOMUtils.createTable(rows, document);
