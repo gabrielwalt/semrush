@@ -34,6 +34,56 @@ async function loadFonts() {
 }
 
 /**
+ * Inlines repo-hosted SVGs referenced from authored content.
+ *
+ * Large SVGs can't live in the document (DA/html2md rejects oversized images during
+ * validation), so they're committed to the code repo under `/svg/` and referenced from
+ * content with a plain link to the file. This converts every such link into an <img>
+ * (wrapped in <picture>, matching EDS's image shape) so blocks that scan for `picture, img`
+ * keep working. Generic + block-agnostic: runs on the whole `main`, works anywhere.
+ *
+ * Authoring syntax (deliberately minimal): a normal link whose href is an `.svg` path under
+ * `/svg/`. The link TEXT becomes the alt. Examples:
+ *   /svg/graph-1.svg            → <img src="<codeBase>/svg/graph-1.svg" alt="">
+ *   [Own every result](/svg/graph-1.svg) → alt="Own every result"
+ * @param {Element} main The container element
+ */
+function decorateSvgReferences(main) {
+  main.querySelectorAll('a[href]').forEach((a) => {
+    let path;
+    try {
+      path = new URL(a.href, window.location.href).pathname;
+    } catch {
+      return;
+    }
+    // Only our repo SVG convention: a path under /svg/ ending in .svg.
+    if (!/\/svg\/[^/]+\.svg$/i.test(path)) return;
+
+    const alt = a.textContent.trim();
+    // Skip when the link text is itself the URL (EDS's media-link display form): no alt then.
+    const altText = (() => {
+      try { return new URL(alt, window.location.href).pathname === path ? '' : alt; } catch { return alt; }
+    })();
+
+    const img = document.createElement('img');
+    img.src = `${window.hlx.codeBasePath}${path}`;
+    img.alt = altText;
+    img.loading = 'lazy';
+    const picture = document.createElement('picture');
+    picture.append(img);
+
+    // Replace the link in place. If the link was the sole content of its <p>, swap the <p>
+    // too so we don't leave an empty paragraph wrapper around the image.
+    const p = a.closest('p');
+    if (p && p.textContent.trim() === alt && !p.querySelector(':scope > :not(a)')) {
+      p.replaceWith(picture);
+    } else {
+      a.replaceWith(picture);
+    }
+  });
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -113,6 +163,7 @@ function decorateButtons(main) {
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   decorateIcons(main);
+  decorateSvgReferences(main);
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);

@@ -1049,9 +1049,15 @@ body.template-enterprise main .section.section-tabs .tabs-nav-tab[aria-selected=
    teaser block supplies the 2-column grid; the context-adaptive dark inversion supplies the
    white text + dark glass. section-tabs.js lifts each panel's leading h3 (the tab label) into
    the tab button, so the panel's lead line is its subtitle <p> — rendered as the 40px headline
-   the original uses. */
+   the original uses.
+
+   The panel is a CARD: subtle white border + radius + inner padding over the translucent
+   dark glass surface the dark template provides. */
 body.template-enterprise main .section.section-tabs .teaser .teaser-container {
-  padding: 0;
+  padding: var(--space-xl);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: var(--radius-m);
+  background-color: rgb(255 255 255 / 4%);
 }
 
 body.template-enterprise main .section.section-tabs .teaser .teaser-text > p:first-child {

@@ -275,8 +275,8 @@ var CustomImportScript = (() => {
         if (pic) mediaCell.appendChild(pic);
       }
       var rows = [["Teaser"]];
-      rows.push([cell]);
       if (mediaCell.children.length > 0) rows.push([mediaCell]);
+      rows.push([cell]);
       var table = WebImporter.DOMUtils.createTable(rows, document);
       wrapper.appendChild(table);
     }
