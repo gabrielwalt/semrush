@@ -30,7 +30,7 @@ Read the **site-default fidelity** from `PROJECT-DESIGN.md` (**first-match-wins*
 - **Refined** — keep the brand's identity (its colors, its type voice, its spatial feel) but **regularize** it: snap an uneven type scale to a clean ratio, unify near-duplicate spacings into one system, raise body contrast to ≥4.5:1, give links/buttons consistent states. The source is a strong reference; the foundation is the source *done right*.
 - **Reimagined** — keep the essence and the strongest concepts, rebuild the system to be graphically excellent. Most freedom, but still on-brand and still rock-solid.
 
-At all three levels the result must be graphically solid — fidelity is *how close to the source*, never *how much craft*.
+At all three levels the result must be graphically solid — fidelity is *how close to the source*, never *how much craft*. **At Refined or Reimagined, load `craft-floor` and clear every threshold in it** (type-scale ratio, no-twin-sizes, distinct links, one spacing scale, focus + reduced-motion). At Faithful, skip the craft floor and mirror the source.
 
 ## Formalize into the foundation
 1. **Write the tokens** into the project's global style files (brand colors/fonts, type scale, spacing, layout caps) — read the project's token files from `PROJECT-DESIGN.md`'s "Token Files" table.
@@ -53,4 +53,4 @@ Success criteria, all checkable:
 - Styling blocks before the workbench exists — blocks then fight the foundation you add later. Foundation first.
 - Eyeballing values instead of measuring — load `measure-then-implement`.
 
-See also: `migration-orientation` (sets the fidelity this skill reads), `eds-migration-process` (Phase: foundation before blocks), `vertical-spacing-system` (the spacing half of the foundation), `eds-content-patterns` (default-content auto-styles), `measure-then-implement` (measure the source, don't guess), `styling-additively` (Toolbox-First per-block styling, which comes after this)
+See also: `craft-floor` (the anti-slop thresholds to clear at Refined/Reimagined fidelity), `migration-orientation` (sets the fidelity this skill reads), `eds-migration-process` (Phase: foundation before blocks), `vertical-spacing-system` (the spacing half of the foundation), `eds-content-patterns` (default-content auto-styles), `measure-then-implement` (measure the source, don't guess), `styling-additively` (Toolbox-First per-block styling, which comes after this)
