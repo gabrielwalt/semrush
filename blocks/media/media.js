@@ -1,4 +1,4 @@
-import getVideoSources from '../../scripts/video-utils.js';
+import getVideoSources, { createVideo } from '../../scripts/video-utils.js';
 
 export default async function decorate(block) {
   block.closest('.media-wrapper')?.classList.add('full-width');
@@ -33,23 +33,8 @@ export default async function decorate(block) {
     }
 
     const buildVideo = () => {
-      const video = document.createElement('video');
-      video.setAttribute('playsinline', '');
-      video.muted = true;
-      video.loop = true;
+      const video = createVideo(sources, img, 'media-player');
       video.autoplay = true;
-      video.className = 'media-player';
-      if (img) {
-        video.poster = img.src;
-        if (img.alt) video.setAttribute('aria-label', img.alt);
-      }
-
-      sources.forEach(({ src, type }) => {
-        const source = document.createElement('source');
-        source.src = src;
-        source.type = type;
-        video.appendChild(source);
-      });
 
       const poster = wrapper.querySelector('.media-player');
       if (poster) poster.replaceWith(video);

@@ -13,6 +13,9 @@ export default function decorate(block) {
     ul.append(li);
   });
   ul.querySelectorAll('picture > img').forEach((img) => {
+    // SVGs can't be rasterized to WebP by the image service — skip optimization
+    // (matches cards-icon.js; see repo-hosted-svg-references skill).
+    if (/\.svg(\?|$)/i.test(img.src)) return;
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     img.closest('picture').replaceWith(optimizedPic);
   });

@@ -36,3 +36,33 @@ export default function getVideoSources(cell) {
 
   return sources;
 }
+
+/**
+ * Builds a muted, looping, inline <video> from extracted sources, with the poster image's
+ * src as the video poster and its alt as aria-label. Shared by blocks that show an autoplay
+ * background video (teaser, media). Does NOT set the `autoplay` attribute or attach a play
+ * controller — the caller owns play/pause (IntersectionObserver, matchMedia, etc.), which
+ * differs per block. Returns the <video> element.
+ * @param {{src:string,type:string}[]} sources video sources
+ * @param {HTMLImageElement|null} posterImg image whose src/alt seed poster + aria-label
+ * @param {string} className class to set on the <video>
+ */
+export function createVideo(sources, posterImg, className) {
+  const video = document.createElement('video');
+  video.setAttribute('playsinline', '');
+  video.muted = true;
+  video.loop = true;
+  video.preload = 'auto';
+  if (className) video.className = className;
+  if (posterImg) {
+    video.poster = posterImg.src;
+    if (posterImg.alt) video.setAttribute('aria-label', posterImg.alt);
+  }
+  sources.forEach(({ src, type }) => {
+    const source = document.createElement('source');
+    source.src = src;
+    source.type = type;
+    video.appendChild(source);
+  });
+  return video;
+}

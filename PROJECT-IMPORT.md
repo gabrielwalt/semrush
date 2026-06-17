@@ -15,20 +15,9 @@ These pages' content structure is **officially validated by the user** — `cont
 |------|------|-----------|
 | Homepage | `content/index.plain.html` | ✅ 2026-06-16 |
 
-**Imported (not yet user-validated)** — 9 more pages via the toolkit parsers: `one`, `enterprise`, `seo`, `content`, `pricing`, `local-business/start`, `social-media`, `pr-toolkit`, `company`. Structure is sound and renders cleanly; awaiting per-page user validation before treating as reference truth.
+**Imported (not yet user-validated)** — `one`, `enterprise`. Structure sound; awaiting per-page user validation before treating as reference truth.
 
-## Toolkit import scripts
-
-Two templates emerged for product/toolkit pages — one parser each:
-
-| Script | Handles | Detection |
-|--------|---------|-----------|
-| `import-toolkit.js` (v1) | `/seo/` (older `.landing > .wrapper` design) | Class markers: `.hero`, `.ai-banner`, `.discoveries`, `.infographics`, `.howmany`, `.faq` |
-| `import-toolkit2.js` (v2) | newer toolkit/marketing pages with CSS-module-obfuscated classes (content, pricing, social-media, pr-toolkit, local, company) | **Content-shape** detection (not class): section walker classifies each `<section>`/`[role=region]` by shape → hero / cards / testimonials / table / faq / default |
-
-Both emit blocks: hero → `Insights Widget` placeholder + `Marquee`; value-prop → `Teaser (teaser-dark)`; feature/step groups → `Cards Icon`; stats → `Columns Stats`; FAQ → `Accordion`; + `template-toolkit` page metadata (own section).
-
-**v2 shape rules** (`classify`): table→comparison table; ≥2 question-buttons/h3→FAQ accordion; ≥2 quote items→testimonials; ≥2 card items (`<article>`/`<li>`/div-grid with h3)→cards; else default centered.
+> **Scope reset 2026-06-17:** the toolkit pages (seo, content, pricing, local-business, social-media, pr-toolkit, company) + app-shell pages were deleted, and with them the two **toolkit import parsers** (`import-toolkit.js` v1 + `import-toolkit2.js` v2), their urls lists, and the `seo-*.svg` assets. They produced content too far from the originals. When those pages are re-created, build a fresh parser per `marker-driven-import` rather than resurrecting the toolkit shape-detection approach.
 
 **Known limitation:** app-shell SPA pages (`/advertising/`, `/analytics/traffic/`, `/ai-seo/overview/`, `/features/`) render too sparsely or too slowly for the headless importer (deep obfuscated nesting / networkidle timeouts) — they import thin. Need a tailored approach or longer render wait.
 
@@ -174,7 +163,7 @@ These items cannot be reliably auto-imported and require manual content edits af
 - **Testimonials author role** — `testimonials.js` extracts the role from any descendant `<p>` without strong/picture, robust to `wrapTextNodes` flattening. No manual add needed.
 - **Enterprise CTA** — both promo CTAs are authored `<em>` (secondary); `teaser-dark` recolors them. Parsers emit `<em><a>`. No manual adjust.
 - **`/one/` testimonial quote cell** — `testimonialsParser` queried the Coalition `logoImg` but never appended it, leaving the quote cell holding only the blockquote (and earlier imports dropped the quote entirely when the scroll-lazy DOM hadn't rendered). Fixed: the parser now prepends the brand logo (`.icons__testimonial--testimonial-logo img`) before the blockquote in the quote cell. The block JS reads logo (`picture img`) + `blockquote` from quote row 0. Logo lives on `cdn.semrush.com` (absolute URL, passes through `absUrl`).
-- **Heavy SVGs → repo-hosted `/svg/` references, not embedded images.** DA/html2md rejects oversized images on preview/publish with a (409) "Images N… failed validation" (threshold ~40–89KB). The big graph/feature SVGs live in the repo under `/svg/` and content references them with a plain link (`<a href="/svg/<name>.svg">alt</a>`); `scripts.js` `decorateSvgReferences` expands the link to an `<img>` at render. Parsers reproduce this via a `svgRef(src, alt)` helper (`import-semrush-one.js` graphs → `/svg/graph-N.svg`; `import-toolkit.js` features → `/svg/seo-<name>.svg`). Full mechanism: skill `repo-hosted-svg-references`. NB: never run an SVG through `createOptimizedPicture` (can't rasterize to WebP — `cards-icon.js` skips `.svg`).
+- **Heavy SVGs → repo-hosted `/svg/` references, not embedded images.** DA/html2md rejects oversized images on preview/publish with a (409) "Images N… failed validation" (threshold ~40–89KB). The big graph/feature SVGs live in the repo under `/svg/` and content references them with a plain link (`<a href="/svg/<name>.svg">alt</a>`); `scripts.js` `decorateSvgReferences` expands the link to an `<img>` at render. Parsers reproduce this via a `svgRef(src, alt)` helper (`import-semrush-one.js` graphs → `/svg/graph-N.svg`). Full mechanism: skill `repo-hosted-svg-references`. NB: never run an SVG through `createOptimizedPicture` (can't rasterize to WebP — `cards-icon.js` skips `.svg`).
 - **Tab panels are media-LEFT** — the original tabs (one reused layout) put the illustration on the left for every panel. `tabsParser` emits the media row BEFORE the text row so `teaser.js` adds `teaser-media-left`. Emitting text-first flips them all to the wrong side.
 - **Marquee = all logos in ONE cell, not one row each.** `marquee.js` reads only the FIRST cell of the block and moves its pictures into the scroll track (then clones it for the seamless loop). Emitting one row per logo (`rows.push([pic])`) leaves the track with a single logo and no animation — the rest render as raw un-decorated rows. Correct: `createTable([['Marquee'], [cell]])` where `cell` holds every `<picture>`. (Was the enterprise marquee bug — homepage was already single-cell.) Inversion on dark templates is just `filter: brightness(0) invert(1)` on the imgs — that part was always fine.
 - **Teaser 2-row format** — every teaser table is TWO rows, one cell each: a content row + a media row. Never emit `[textCell, imgCell]` as a single row — the block JS reads only the first cell per row and silently drops the media (this was the enterprise-platform image bug, now fixed). Row ORDER sets the media side: content-row-first → media right (default); media-row-first → media left (block adds `teaser-media-left`). `featureCardsParser` (import-semrush-one) emits media-row-first when the source `.cards__item` has `.reverse`, reproducing the original's alternation.

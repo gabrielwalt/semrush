@@ -25,33 +25,17 @@ The homepage (`content/index.plain.html`) is the **validated reference** and the
 
 ---
 
-## ✅ Batch complete — 10 pages imported (autonomous run, 2026-06-16)
+## Scope reset — pared back to 5 validated/keeper pages (2026-06-17)
 
-Imported & rendering with structured augmented-styles content: **index** (validated), **one**, **enterprise**, **seo**, **content**, **pricing**, **local-business**, **social-media**, **pr-toolkit**, **company**. Built `accordion` block, two toolkit parsers (v1 class-marker for `/seo/`, v2 content-shape for newer pages), `template-toolkit` styling. Details in `PROJECT-IMPORT.md`.
+On user direction, the project was reset to a clean core: only **index** (validated), **one**, **enterprise/index**, plus the **nav** and **footer** fragments are kept. The other 11 imported pages (seo, content, pricing, local-business, social-media, pr-toolkit, company, advertising, ai-seo, analytics/traffic, features) were **deleted** — they were far from the originals and not worth polishing. They'll be re-created later from a stronger foundation.
 
-## Phase A — Polish the imported batch (next)
+Removed along with them: the `accordion` + `testimonials-carousel` blocks (used only by deleted pages), the two toolkit parsers (`import-toolkit.js`/`import-toolkit2.js`) + their urls lists, the orphaned `seo-*.svg` files, and the `template-toolkit` CSS. The 5 keepers render byte-identical after the cleanup.
 
-### A01 — 🔲 Open — Per-page visual compare vs original
+Obsolete tasks removed in this reset: A01 (per-page visual compare of the batch), A02–A03 (toolkit-parser fixes, were done but the parsers are gone), A04–A09 (toolkit content-recovery), B01 (app-shell SPA pages). Re-create as needed when those pages are rebuilt.
 
-**Why:** Content is structured and renders cleanly, but not yet pixel-compared to the original on each page.
-**Action:** For each of the 10 pages, load `/content/<page>` at 1440px + 375px, compare to the original with `block-visual-iteration` + `measure-then-implement`. Fix spacing/typography/color gaps. No regressions on index.
-**Acceptance:** Each page visually matches the original at desktop + mobile.
+## Phase A — Re-create pages from the foundation (when ready)
 
-### A02 — ✅ Done — Fix v2 testimonials extraction
-
-Testimonials were collapsing into one run-on paragraph. Fixed `classify` (detect `h2 === "Testimonials"`, straight + curly quotes, quote-paragraph fallback) and `buildTestimonials` (quote→name→role rhythm splitting, slide-marker skip, outermost-wrapper dedup). Re-imported content (5 cards), pricing (7), social-media, company — all render as separate quote cards with photo + name + role.
-
-### A03 — ✅ Done — De-duplicate v2 feature-card sub-bullets
-
-`findCardItems` was emitting a card's own sub-bullets as separate cards. Fixed by excluding `<li>`s nested inside another `<li>`/`<article>`. `/content/` now shows 5 clean feature cards (was over-extracting bullet items).
-
-## Phase B — App-shell pages (deferred)
-
-### B01 — 🔲 Open — Handle SPA/app-shell toolkit pages
-
-**Why:** `/advertising/`, `/analytics/traffic/`, `/ai-seo/overview/`, `/features/` are client-rendered SPAs with deep obfuscated nesting; they import thin or time out under the headless importer.
-**Action:** Either add a longer render-wait/scroll step before capture, or build a tailored parser per page. Validate structure before adding to the set.
-**Acceptance:** Each renders with its full content.
+No open page tasks right now. When re-creating a page, follow `eds-migration-process` (orient → foundation → content → gates) and reuse the keepers' blocks/variants/section-styles first (`styling-additively`). Re-introduce a toolkit parser only when a new page needs it.
 
 ---
 

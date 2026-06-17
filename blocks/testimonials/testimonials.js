@@ -35,11 +35,9 @@ export default async function decorate(block) {
   if (logoImg) {
     const logoWrap = document.createElement('div');
     logoWrap.className = 'quote-logo';
-    const img = document.createElement('img');
-    img.src = logoImg.getAttribute('src') || logoImg.src;
-    img.alt = logoImg.alt || '';
-    img.loading = 'lazy';
-    logoWrap.appendChild(img);
+    // Reuse the authored <picture> (preserves srcset) instead of rebuilding a bare <img>.
+    logoImg.loading = 'lazy';
+    logoWrap.appendChild(logoImg.closest('picture') || logoImg);
     quoteCard.appendChild(logoWrap);
   }
 

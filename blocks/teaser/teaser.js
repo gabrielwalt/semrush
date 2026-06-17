@@ -1,4 +1,4 @@
-import getVideoSources from '../../scripts/video-utils.js';
+import getVideoSources, { createVideo } from '../../scripts/video-utils.js';
 
 export default async function decorate(block) {
   const rows = [...block.children];
@@ -55,22 +55,7 @@ export default async function decorate(block) {
     }
 
     const buildVideo = () => {
-      const video = document.createElement('video');
-      video.setAttribute('playsinline', '');
-      video.muted = true;
-      video.loop = true;
-      video.preload = 'auto';
-      video.className = 'teaser-media-el';
-      if (img) {
-        video.poster = img.src;
-        if (img.alt) video.setAttribute('aria-label', img.alt);
-      }
-      mediaPart.sources.forEach(({ src, type }) => {
-        const source = document.createElement('source');
-        source.src = src;
-        source.type = type;
-        video.appendChild(source);
-      });
+      const video = createVideo(mediaPart.sources, img, 'teaser-media-el');
 
       const poster = glassFrame.querySelector('.teaser-media-el');
       if (poster) poster.replaceWith(video);

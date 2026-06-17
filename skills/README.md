@@ -39,6 +39,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | [styling-additively](styling-additively/SKILL.md) | Styling any page after the first; matching a new page to its original; tempted to edit an existing block/variant/section-style CSS (add new ones instead) |
 | [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
 | [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content; or a block renders differently across environments ("works on prod but not local") |
+| [project-cleanup](project-cleanup/SKILL.md) | "Clean up the project", remove unused blocks/CSS/JS/assets, tidy the repo, simplify, or reconcile after a scope change — safe multi-pass cleanup that never moves a validated page |
 
 ---
 

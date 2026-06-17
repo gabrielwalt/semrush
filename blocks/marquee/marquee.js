@@ -8,14 +8,9 @@ export default async function decorate(block) {
   const cell = row.querySelector(':scope > div');
   if (!cell) return;
 
-  const items = [];
-  cell.querySelectorAll('img, picture').forEach((el) => {
-    if (el.tagName === 'PICTURE') {
-      items.push(el);
-    } else if (!el.closest('picture')) {
-      items.push(el);
-    }
-  });
+  // Pictures plus any loose <img> not already wrapped in a <picture> (avoids
+  // double-counting an img inside its picture).
+  const items = [...cell.querySelectorAll('picture, img:not(picture img)')];
 
   if (!items.length) return;
 

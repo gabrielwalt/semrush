@@ -42,9 +42,7 @@
   --font-size-label: 12px;
 
   /* line heights */
-  --line-height-tight: 1.0;
   --line-height-snug: 1.1;
-  --line-height-normal: 1.2;
   --line-height-relaxed: 1.5;
 
   /* letter spacing */
@@ -68,7 +66,6 @@
 
   /* layout */
   --container-max-width: 1440px;
-  --content-max-width: 1200px;
   --nav-height: 84px;
 
   /* CTA */
@@ -752,44 +749,6 @@ body.template-one main .default-content-wrapper h4 + p + h2 {
 }
 /* stylelint-enable no-descending-specificity */
 
-/* =============================================================================
-   Toolkit page template (body.template-toolkit) — product/toolkit overview
-   pages (/seo/, /content/, /pricing/, etc). Reuses cards-icon, accordion,
-   teaser, columns-stats; this adds page-level rhythm + section headings.
-   ============================================================================= */
-body.template-toolkit main .section > .default-content-wrapper > h2 {
-  font-size: var(--font-size-heading-l);
-  line-height: 1.05;
-  letter-spacing: var(--tracking-tight);
-  margin-bottom: var(--space-m);
-  max-width: 16em;
-}
-
-/* feature-card sections: heading sits above the grid, full width */
-body.template-toolkit main .cards-icon-container > .default-content-wrapper {
-  margin-bottom: var(--space-l);
-}
-
-/* the stats CTA section centers its heading + widget + stat columns */
-body.template-toolkit main .columns-stats-container > .default-content-wrapper {
-  text-align: center;
-}
-
-body.template-toolkit main .columns-stats-container > .default-content-wrapper h2 {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* accordion (FAQ) constrained to a readable column, centered */
-body.template-toolkit main .accordion-container > .default-content-wrapper,
-body.template-toolkit main .accordion-container .accordion {
-  max-width: 820px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-
 /* glass surface utility */
 .glass-surface {
   position: relative;
@@ -816,8 +775,7 @@ body.template-toolkit main .accordion-container .accordion {
 
 /* Semrush One — the "The only tool…" intro (heading + paragraph above the icon cards) is
    constrained to ~2/3 of the content width on desktop, as on the original, so the copy wraps
-   earlier. Full-width on mobile. Placed last so its id+:has specificity doesn't trip
-   no-descending-specificity against the template-toolkit wrapper rules above. */
+   earlier. Full-width on mobile. */
 @media (width >= 768px) {
   body.template-one main .default-content-wrapper:has(h2#the-only-tool-you-need-to-win-in-modern-search) {
     max-width: 66.6%;

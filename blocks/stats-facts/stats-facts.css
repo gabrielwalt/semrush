@@ -9,7 +9,6 @@
 
 /* Stats Facts block */
 .stats-facts {
-  --stats-bg: rgb(255 255 255);
   --stats-text: var(--dark-color);
   --stats-active-bg: var(--dark-color);
   --stats-active-text: rgb(255 255 255);
