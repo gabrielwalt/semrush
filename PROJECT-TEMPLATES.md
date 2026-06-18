@@ -27,6 +27,36 @@ Bucketed **empirically** from each page's rendered framing class signature — A
 
 ---
 
+## Nav & Footer strategy — ONE shared fragment of each, adapted by CSS
+
+**Decision: every template uses the SAME single `nav.plain.html` and `footer.plain.html` fragment. Authors maintain exactly one of each — never multiple versions.** All appearance differences are driven by the page's `body.template-*` class in CSS (and one code-injected element), not by duplicate content. This is the author-friendliest model and it's already proven in this project: the enterprise dark chrome re-skins the *same* header today via four `body.template-dark header …` rules.
+
+**Why one fragment is safe (the enabling facts):**
+- The nav and footer are **content fragments referenced by every page** via `nav` / `footer` metadata — a single source of truth already.
+- Per-chrome look is **pure CSS scoped to the body class** — `body.template-dark header` already inverts the header (dark `.nav-wrapper`, white logo via `filter`, inverted CTAs) without a second nav fragment.
+- The **SEMRUSH footer reveal is injected by `footer.js`** (`createElement('div').className='footer-reveal'`), NOT authored content. So showing/hiding it per chrome is a CSS/JS toggle — zero author burden.
+
+### The rule: adapt, don't duplicate
+1. **Header** — one fragment. Marketing & careers: default (white/light). App-shell & enterprise-dark: scoped CSS inverts/re-skins it via the body class. The header structure (logo, nav links, Log In / Sign Up) is identical everywhere.
+2. **Footer** — one fragment (the full link columns + legal + social). The **SEMRUSH reveal** is the only piece that varies, and it's code-injected, so:
+   - **Show the reveal only on marketing chrome.** Scope it `body.template-default .footer-reveal { display: … }` and hide elsewhere (or guard the `footer.js` append behind the marketing body class). Either way the *fragment* is unchanged.
+   - App-shell & careers footers show the same link columns without the reveal — quieter, fitting their R1/utility register.
+
+### Per-template nav/footer behaviour (all from ONE fragment each)
+
+| Chrome → templates | Header | Footer | Reveal (`footer.js`-injected) |
+|--------------------|--------|--------|-------------------------------|
+| **Marketing** (`marketing-landing`, `comparison`, `tool-detail`, `article`, `case-study-detail`, `resource-detail`) | Default light header on the brand gradient | Full footer | **SHOWN** — the brand signature (B5) |
+| **Marketing : dark** (`marketing-landing:dark` = enterprise pages) | Same header, inverted via `body.template-dark header` | Full footer (dark-adapted via body class) | SHOWN |
+| **App-shell** (`app-detail`, `app-listing`) | Same header; app-shell may sit it above the product rail (light, quiet) | Full footer, no reveal | **HIDDEN** — utility register, no marketing theatrics |
+| **Careers** (`careers-landing`, `careers-content`, `careers-office-detail`, `careers-text`) | Same header | Full footer, no reveal | **HIDDEN** |
+
+**Net:** 1 nav fragment + 1 footer fragment for the whole site. The only template-driven differences are (a) header color inversion on dark chrome (existing CSS) and (b) the reveal shown only on marketing chrome (one scoped rule). No author ever maintains a second header or footer.
+
+> **Implementation note (not yet built):** scope the reveal to marketing chrome — either `body:not(.template-default) .footer-reveal { display: none }` or guard the append in `footer.js` with `document.body.classList.contains('template-default')`. Prefer the CSS scope (keeps `footer.js` chrome-agnostic). This is a small, additive change; the frozen homepage/enterprise already get the reveal and must keep it.
+
+---
+
 ## Canonical templates by chrome (12 templates + 2 deferred)
 
 ### Marketing chrome — 6 templates (67 pages)
