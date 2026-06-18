@@ -75,6 +75,7 @@
 
   /* layout */
   --container-max-width: 1440px;
+  --measure: 60ch; /* reading-column cap for long-form text (article / text-page / case-study body) — recurs as 60ch in styles.css */
   --nav-height: 84px;
 
   /* Responsive breakpoints — the ONLY two sanctioned widths site-wide:

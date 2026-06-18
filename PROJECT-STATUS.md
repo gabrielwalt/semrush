@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-06-18  
 **Branch:** `main`  
-**Active task:** New page — `/features/keyword-research-toolkit/` imported + styled, **awaiting GATE 2 (style validation)**. Content complete (all 17 CTAs / 6 tool + 3 related cards match source, GATE 1 passed: card titles + both grids on `cards-icon`). Styled additively at Refined fidelity — new `template-feature` + `cards-icon-tools`/`cards-icon-related` variants, all scoped so the LOCKED index/enterprise + /one are verified unchanged. Lint + detector clean (5 accepted brand warns); desktop+mobile no overflow.  
-**Last completed:** the feature page above (parser `import-feature.js`, reusable for other `/features/` siblings).  
-**Next up:** user validates the feature page look (GATE 2); then replicate the parser to sibling `/features/` pages. Open: **F01** (Lazzer font decision).  
-**Blocker:** none. (Tool-card glyphs are remote `cdn.semrush.com` SVGs — load in preview, will become DA hashes on upload; same pattern as other pages.)
+**Active task:** Site scope analysis expanded to include `enterprise.semrush.com` (23 marketing pages — was missed because it's a separate host from the `www` sitemap). Catalog re-run over **169 marketing pages → 47 raw templates, 198 block variants**. Next: consolidate the 47 raw templates into a handful of canonical templates (see PROJECT-PLAN entropy-reduction task) before bulk import.  
+**Last completed:** enterprise subdomain folded into catalog (6 new enterprise templates); `import-content-scoping` skill generalized; feature page `/features/keyword-research-toolkit/` imported + styled (awaiting GATE 2).  
+**Next up:** canonical template hierarchy locked in `PROJECT-TEMPLATES.md` (3 chromes → 12 templates → sub-categories, all 47 raw mapped, routing resolved — no open confirmations); begin building templates reference-page-first (T01). Then GATE 2 on the feature page. Open: **F01** (Lazzer font decision).  
+**Blocker:** none.
 
 ---
 
@@ -29,6 +29,8 @@
 | Semrush One — block styling | 🔲 In progress (look not yet validated) |
 | Enterprise — content imported | ✅ Done |
 | Enterprise — block styling | ✅ Done (verify on preview once published) |
+| Site scope analysis (www + enterprise) | ✅ Done — 169 marketing pages, 47 raw templates, 198 block variants (catalog in `catalog/`) |
+| Template consolidation (47 → 12 canonical, 3 chromes) | 🔲 Hierarchy locked in PROJECT-TEMPLATES.md; build not started (T01) |
 | Bulk import | 🔲 Not started |
 | PageSpeed 100 | 🔲 Not started |
 | Accessibility (WCAG 2.1 AA) | 🔲 Not started |

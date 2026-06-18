@@ -29,6 +29,41 @@ The homepage (`content/index.plain.html`) is the **validated reference** and the
 
 ## Open tasks
 
+### T01 — 🔲 Open — Consolidate the 47 raw catalog templates into the canonical hierarchy (3 chromes → 12 templates → sub-categories)
+
+**Priority:** P1
+**Type:** Enhancement (scope/entropy reduction — do BEFORE bulk import)
+**Affected files:** `PROJECT-TEMPLATES.md` (authoritative map — already drafted), `catalog/template-catalog.json` (read), `PROJECT-BLOCKS.md`, parsers under `tools/importer/`, future `.plain.html` content
+**Skill:** Load `import-template-consolidation` and `eds-content-modeling` first.
+
+**What's wrong:** Catalog discovery produced **47 raw templates** from 169 pages. Most of the multiplicity is **drift, not genuine page types** — Semrush expanded over years and near-identical pages diverged. We must NOT reproduce 47 page templates; that imports the source's accumulated entropy. The canonical set, the full 47→canonical map, per-template purpose, and per-template branding rules are documented in **`PROJECT-TEMPLATES.md`** — that file is authoritative; this task is to confirm it and apply it at import.
+
+**Merge test (per `import-template-consolidation`): SAME APPEARANCE + SAME PURPOSE → one template.** Block count/order is NOT a distinguishing axis. The model is a **three-level hierarchy: chrome → template → sub-category.** Bucket by **rendered chrome first** (empirically, from the screenshot/class signature — never the URL path); a template never spans chromes; recurring author-meaningful variation within a template is a **sub-category** (a variant, not a new template+parser).
+
+**Three chromes, all KEPT distinct (user-confirmed), 67/71/31 = 169 pages:**
+- **Marketing** (brand nav/footer/gradient) — `www` + `enterprise.semrush.com`. **67 pages.**
+- **App-shell** (App Center product application: left product rail) — all `/apps/*`. **71 pages.** Built natively in this chrome — NOT folded to marketing.
+- **Careers** (`careers.semrush.com` sub-nav) — **31 pages.** Sub-brand chrome, kept.
+
+**Canonical hierarchy (12 templates + sub-categories + 2 DEFER) — authoritative in `PROJECT-TEMPLATES.md`:**
+- Marketing (6): `marketing-landing` (`:light`/`:dark`; ref homepage LOCKED), `comparison` (incl. `/content-hub/vs-*`), `tool-detail` (`:hub`/`:single`; reconcile onto `template-feature`), `article` (`:standard`/`:with-video`/`:index`), `case-study-detail` (`:detail`/`:index`), `resource-detail` (`:gated`/`:ungated`). No marketing `text-page` (the only prose pages are careers-hosted).
+- App-shell (2): `app-detail` (collapses `-b/-c/-d/-e` drift), `app-listing` (`:storefront-home`/`:category`).
+- Careers (4): `careers-landing`, `careers-content`, `careers-office-detail`, `careers-text`.
+
+**Fix approach:** (template-routing fully resolved in `PROJECT-TEMPLATES.md` — no open confirmations remain)
+1. For each template pick the **reference page** (prefer LOCKED: homepage → `marketing-landing`) and reconcile onto existing blocks/variants (`styling-additively`, Toolbox-First). Sub-categories are variants/section-styles of the parent.
+2. At import, route each page to its chrome → template → sub-category and **normalize drift** — reproduce the canonical structure, not incidental extra/missing sections.
+3. Keep `PROJECT-TEMPLATES.md` authoritative; the 47 raw names exist only in `catalog/`.
+
+**Verification:**
+1. Final template count = 12 across 3 chromes (Marketing 6 · App-shell 2 · Careers 4), each with a named reference page; sub-categories are variants, not separate parsers.
+2. Every one of the 47 raw templates maps to exactly one template (or DEFER). No raw template silently dropped. (Verified in `PROJECT-TEMPLATES.md`.)
+3. Every page assigned to a chrome by its RENDERED chrome, not its URL path. No template spans chromes.
+
+**Acceptance criteria:** A user-approved chrome → template → sub-category hierarchy mapping all 47 raw templates, bucketed by rendered chrome, with a reference page per template, recorded in `PROJECT-TEMPLATES.md` before any bulk import begins.
+
+---
+
 ### F01 — 🔲 Open — Lazzer heading font is never loaded (headings fall back to Inter)
 
 **Priority:** P1

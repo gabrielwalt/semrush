@@ -81,6 +81,84 @@
       "description": "Single-column informational text page"
     },
     {
+      "name": "enterprise-homepage",
+      "representativePages": [
+        "https://enterprise.semrush.com/"
+      ],
+      "urls": [
+        "https://enterprise.semrush.com/"
+      ],
+      "description": "Enterprise subdomain homepage with hero, solution highlights and CTA sections"
+    },
+    {
+      "name": "enterprise-customer-stories-index",
+      "representativePages": [
+        "https://enterprise.semrush.com/customer-stories/"
+      ],
+      "urls": [
+        "https://enterprise.semrush.com/customer-stories/"
+      ],
+      "description": "Enterprise customer stories index/listing page"
+    },
+    {
+      "name": "enterprise-solution-page",
+      "representativePages": [
+        "https://enterprise.semrush.com/demo",
+        "https://enterprise.semrush.com/solutions/site-intelligence"
+      ],
+      "urls": [
+        "https://enterprise.semrush.com/demo",
+        "https://enterprise.semrush.com/solutions/adobe-brand-visibility",
+        "https://enterprise.semrush.com/solutions/seo",
+        "https://enterprise.semrush.com/solutions/site-intelligence",
+        "https://enterprise.semrush.com/use-cases/search/content-optimization",
+        "https://enterprise.semrush.com/use-cases/search/market-and-competitive-intelligence",
+        "https://enterprise.semrush.com/use-cases/search/performance-and-forecasting"
+      ],
+      "description": "Enterprise solution/demo landing page with hero, feature blocks and CTA"
+    },
+    {
+      "name": "enterprise-marketing-page",
+      "representativePages": [
+        "https://enterprise.semrush.com/discover-enterprise"
+      ],
+      "urls": [
+        "https://enterprise.semrush.com/discover-enterprise",
+        "https://enterprise.semrush.com/partner-program",
+        "https://enterprise.semrush.com/search-overview",
+        "https://enterprise.semrush.com/solutions/ai-optimization",
+        "https://enterprise.semrush.com/solutions/datos",
+        "https://enterprise.semrush.com/solutions/insights24",
+        "https://enterprise.semrush.com/solutions/mfour",
+        "https://enterprise.semrush.com/success",
+        "https://enterprise.semrush.com/teams/search/content",
+        "https://enterprise.semrush.com/teams/search/engineering",
+        "https://enterprise.semrush.com/teams/search/leadership",
+        "https://enterprise.semrush.com/teams/search/seo"
+      ],
+      "description": "Enterprise marketing page (solutions, partner, search overview) with hero and content sections"
+    },
+    {
+      "name": "enterprise-demo-ungated",
+      "representativePages": [
+        "https://enterprise.semrush.com/on-demand-demo-ungated"
+      ],
+      "urls": [
+        "https://enterprise.semrush.com/on-demand-demo-ungated"
+      ],
+      "description": "Enterprise ungated on-demand demo page with embedded video and form"
+    },
+    {
+      "name": "enterprise-resources-index",
+      "representativePages": [
+        "https://enterprise.semrush.com/resources/"
+      ],
+      "urls": [
+        "https://enterprise.semrush.com/resources/"
+      ],
+      "description": "Enterprise resources index/listing page"
+    },
+    {
       "name": "comparison-landing",
       "representativePages": [
         "https://semrush.com/vs/",

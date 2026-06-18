@@ -15,7 +15,7 @@ Once a page's **style** is validated, every block/variant/section-style/template
 
 ## Flow
 0. **Orient the migration** (new site, before anything) — run `migration-orientation`: settle scope, content source, design source, **fidelity** (Faithful / Refined / Reimagined), reuse strategy, per-page overrides, and constraints. Record them in `PROJECT-DESIGN.md`'s `## Migration Strategy`. **Gate: no import until this exists.**
-1. **Scope the site** — discover URLs and group pages into templates so you know the full scope and which pages are representative. See EMA skills below.
+1. **Scope the site** — discover URLs and group pages into templates so you know the full scope and which pages are representative. See EMA skills below. Two scope gates apply here: (a) **what to import** — triage marketing vs database-backed vs documentation (`import-content-scoping`); (b) **how few templates** — collapse the raw discovered templates into a handful of canonical ones before any bulk import (`import-template-consolidation`, **The Entropy-Reduction Rule**). Catalog discovery over-splits; do not mint one EDS template per raw template.
 2. **Build the global design foundation** (the *workbench*, once per site) — run `global-style-foundation`: capture the visual gist across ≥3 representative pages and formalize brand tokens, type scale, spacing system, and default-content styling, at the recorded fidelity. **Blocks are not styled until the workbench is level.**
 3. **Pick a representative page** — prefer one that introduces new blocks.
 4. **Phase 1 — Content** (two ordered steps — see below).
