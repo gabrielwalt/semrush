@@ -145,6 +145,19 @@
   color: var(--stats-text);
 }
 
+/* Reduced-motion: the JS skips the scroll-scrub pin (block renders static with the first row
+   active). Make the active-state size/color transitions instant too, so nothing animates. */
+@media (prefers-reduced-motion: reduce) {
+  .stats-facts > .stat-row,
+  .stats-facts > .stat-row .stat-number,
+  .stats-facts > .stat-row .stat-arrow,
+  .stats-facts > .stat-row .stat-count,
+  .stats-facts > .stat-row .stat-title,
+  .stats-facts > .stat-row .stat-description {
+    transition: none;
+  }
+}
+
 @media (width >= 1024px) {
   .section.stats-facts-container {
     position: relative;

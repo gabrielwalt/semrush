@@ -52,12 +52,16 @@ function onFirstView(el, fn, rootMargin = '0px 0px -10% 0px') {
   io.observe(el);
 }
 
-/** Stagger-reveal the direct children (or matched items) of a container on first view. */
+/** Stagger-reveal the direct children (or matched items) of a container on first view.
+ * The stagger index is CAPPED at MAX_STAGGER_STEPS so long lists (7–9 cards) read as one
+ * cohesive entrance rather than an erratic ripple — beyond the cap, items share the last
+ * delay and arrive together. Total spread stays ~MAX_STAGGER_STEPS × --reveal-stagger. */
+const MAX_STAGGER_STEPS = 4;
 function setupReveal(container, items) {
   if (!items.length) return;
   items.forEach((item, i) => {
     item.classList.add('reveal-ready');
-    item.style.setProperty('--reveal-i', i);
+    item.style.setProperty('--reveal-i', Math.min(i, MAX_STAGGER_STEPS));
   });
   onFirstView(container, () => {
     items.forEach((item) => item.classList.add('reveal-in'));

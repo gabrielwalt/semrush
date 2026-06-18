@@ -62,29 +62,68 @@ export default async function decorate(block) {
     });
   });
 
-  function onScroll() {
-    const rect = block.getBoundingClientRect();
+  // Reduced-motion: skip the scroll-scrub entirely. The block renders in its resting
+  // layout with the first row active (the static, accessible fallback).
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // How much scroll each row holds for, as a fraction of the viewport height. Pinning the
+  // block over a viewport-scaled runway is what makes the pacing feel deliberate (and tunable)
+  // instead of flicking to the next row on a few pixels of scroll. 0.7 → a row advances roughly
+  // every 70% of a screen-height of scrolling, so taller viewports require proportionally more.
+  const PER_ROW_VH = 0.7;
+  const wrapper = block.parentElement;
+  let runway = 0;
+
+  // Pin the block centered in the viewport and stretch its wrapper to create the scroll runway.
+  // While the wrapper scrolls through `runway` px, the sticky block stays put and the active
+  // row advances. Recomputed on resize so the distance always tracks the visitor's viewport.
+  function layout() {
+    if (reduceMotion.matches) {
+      block.style.position = '';
+      block.style.top = '';
+      wrapper.style.minHeight = '';
+      runway = 0;
+      activateStat(0);
+      return;
+    }
     const viewportH = window.innerHeight;
-    const triggerTop = viewportH * 0.3;
-    const sectionVisible = rect.top < triggerTop && rect.bottom > 0;
+    const blockH = block.offsetHeight;
+    runway = viewportH * PER_ROW_VH * statRows.length;
+    block.style.position = 'sticky';
+    block.style.top = `${Math.max(0, (viewportH - blockH) / 2)}px`;
+    wrapper.style.minHeight = `${blockH + runway}px`;
+  }
 
-    if (!sectionVisible) return;
-
-    const scrolled = triggerTop - rect.top;
-    const scrollableHeight = rect.height - viewportH * 0.5;
-    const progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
+  function onScroll() {
+    if (runway <= 0) return;
+    const viewportH = window.innerHeight;
+    const blockH = block.offsetHeight;
+    const pinTop = Math.max(0, (viewportH - blockH) / 2);
+    // Distance the wrapper's top has travelled past the pin point (0 → runway).
+    const scrolled = pinTop - wrapper.getBoundingClientRect().top;
+    const progress = Math.max(0, Math.min(1, scrolled / runway));
     const index = Math.min(statRows.length - 1, Math.floor(progress * statRows.length));
-
     activateStat(index);
   }
 
+  let ticking = false;
+  function onScrollRaf() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { onScroll(); ticking = false; });
+  }
+
+  layout();
+  window.addEventListener('resize', () => { layout(); onScroll(); }, { passive: true });
+  reduceMotion.addEventListener('change', () => { layout(); onScroll(); });
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        window.addEventListener('scroll', onScroll, { passive: true });
+      if (entry.isIntersecting && !reduceMotion.matches) {
+        window.addEventListener('scroll', onScrollRaf, { passive: true });
         onScroll();
       } else {
-        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('scroll', onScrollRaf);
       }
     });
   }, { threshold: 0, rootMargin: '200px 0px 200px 0px' });
