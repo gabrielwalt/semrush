@@ -1,6 +1,109 @@
 {
   "templates": [
     {
+      "name": "careers-landing",
+      "representativePages": [
+        "https://careers.semrush.com/",
+        "https://careers.semrush.com/dei/"
+      ],
+      "urls": [
+        "https://careers.semrush.com/",
+        "https://careers.semrush.com/dei/"
+      ],
+      "description": "Careers home/landing with hero and section blocks"
+    },
+    {
+      "name": "careers-content-page",
+      "representativePages": [
+        "https://careers.semrush.com/core-values/",
+        "https://careers.semrush.com/women-tech/",
+        "https://careers.semrush.com/team/"
+      ],
+      "urls": [
+        "https://careers.semrush.com/core-values/",
+        "https://careers.semrush.com/offices/",
+        "https://careers.semrush.com/team/",
+        "https://careers.semrush.com/women-tech/"
+      ],
+      "description": "Careers content page with heading, rich text and supporting blocks (core-values, offices index, team)"
+    },
+    {
+      "name": "careers-office-detail",
+      "representativePages": [
+        "https://careers.semrush.com/offices/amsterdam/?location=NL",
+        "https://careers.semrush.com/team/customer-success/?team=Customer+Success"
+      ],
+      "urls": [
+        "https://careers.semrush.com/offices/amsterdam/?location=NL",
+        "https://careers.semrush.com/offices/austin/?location=TX%2CUS",
+        "https://careers.semrush.com/offices/barcelona/?location=ES",
+        "https://careers.semrush.com/offices/belgrade/?location=RS",
+        "https://careers.semrush.com/offices/berlin/?location=DE",
+        "https://careers.semrush.com/offices/boston/?location=MA%2CUS",
+        "https://careers.semrush.com/offices/dallas/?location=TX%2CUS",
+        "https://careers.semrush.com/offices/limassol/?location=CY",
+        "https://careers.semrush.com/offices/munich/",
+        "https://careers.semrush.com/offices/prague/?location=CZ",
+        "https://careers.semrush.com/offices/remote/",
+        "https://careers.semrush.com/offices/warsaw/?location=PL",
+        "https://careers.semrush.com/team/analytics/?team=Analytics",
+        "https://careers.semrush.com/team/customer-success/?team=Customer+Success",
+        "https://careers.semrush.com/team/design/?team=Design",
+        "https://careers.semrush.com/team/finance/?team=Finance",
+        "https://careers.semrush.com/team/hr/?team=HR",
+        "https://careers.semrush.com/team/it-systems/",
+        "https://careers.semrush.com/team/marketing/?team=Marketing",
+        "https://careers.semrush.com/team/other/?team=Other+vacancies",
+        "https://careers.semrush.com/team/product-tech/",
+        "https://careers.semrush.com/team/sales/?team=Sales",
+        "https://careers.semrush.com/team/security/?team=Security"
+      ],
+      "description": "Single office detail page with location hero and info blocks"
+    },
+    {
+      "name": "legal-text-page",
+      "representativePages": [
+        "https://careers.semrush.com/privacy-policy/"
+      ],
+      "urls": [
+        "https://careers.semrush.com/privacy-policy/"
+      ],
+      "description": "Long-form legal/policy text page"
+    },
+    {
+      "name": "info-text-page",
+      "representativePages": [
+        "https://careers.semrush.com/sustainability/"
+      ],
+      "urls": [
+        "https://careers.semrush.com/sustainability/"
+      ],
+      "description": "Single-column informational text page"
+    },
+    {
+      "name": "comparison-landing",
+      "representativePages": [
+        "https://semrush.com/vs/",
+        "https://www.semrush.com/free-tools/plagiarism-checker/"
+      ],
+      "urls": [
+        "https://semrush.com/vs/",
+        "https://semrush.com/vs/semrush-vs-moz/",
+        "https://www.semrush.com/free-tools/plagiarism-checker/"
+      ],
+      "description": "Competitor comparison landing with hero and feature comparison blocks"
+    },
+    {
+      "name": "comparison-detail",
+      "representativePages": [
+        "https://semrush.com/vs/semrush-vs-ahrefs/"
+      ],
+      "urls": [
+        "https://semrush.com/vs/semrush-vs-ahrefs/"
+      ],
+      "description": "Head-to-head comparison detail page"
+    },
+    {
       "name": "homepage",
       "representativePages": [
         "https://www.semrush.com/"
@@ -8,258 +111,423 @@
       "urls": [
         "https://www.semrush.com/"
       ],
-      "description": "Marketing homepage: dark hero with search form, dual promo heroes, multiple card grids, expandable solutions carousel, stats facts, AI index table, and customer quote."
+      "description": "Primary site homepage with hero, feature grid and CTA sections"
     },
     {
-      "name": "product-toolkit-overview",
-      "representativePages": [
-        "https://www.semrush.com/advertising/"
-      ],
-      "urls": [
-        "https://www.semrush.com/advertising/"
-      ],
-      "description": "Product/toolkit landing page: hero, alternating feature card grids, tabbed feature sections, and a feature comparison block."
-    },
-    {
-      "name": "ai-toolkit-overview",
-      "representativePages": [
-        "https://www.semrush.com/ai-seo/overview/"
-      ],
-      "urls": [
-        "https://www.semrush.com/ai-seo/overview/"
-      ],
-      "description": "AI Visibility toolkit overview landing page (client-rendered hero + feature sections)."
-    },
-    {
-      "name": "traffic-toolkit-overview",
-      "representativePages": [
-        "https://www.semrush.com/analytics/traffic/"
-      ],
-      "urls": [
-        "https://www.semrush.com/analytics/traffic/"
-      ],
-      "description": "Traffic & Market toolkit overview landing page (client-rendered feature sections)."
-    },
-    {
-      "name": "app-center-listing",
+      "name": "apps-marketplace-home",
       "representativePages": [
         "https://www.semrush.com/apps/"
       ],
       "urls": [
         "https://www.semrush.com/apps/"
       ],
-      "description": "App Center directory: repeating app card grids listing available apps."
+      "description": "Apps marketplace landing with app grid and category navigation"
     },
     {
       "name": "app-detail",
       "representativePages": [
+        "https://www.semrush.com/apps/accessibility-scan-and-monitor/",
+        "https://www.semrush.com/apps/callrail/",
+        "https://www.semrush.com/apps/koala-inspector-online-shopspy/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/accessibility-scan-and-monitor/",
+        "https://www.semrush.com/apps/adcreative-ai/",
+        "https://www.semrush.com/apps/ai-accessibility-widget/",
+        "https://www.semrush.com/apps/ai-backlink-builder/",
+        "https://www.semrush.com/apps/ai-keyword-inspector-for-aso/",
+        "https://www.semrush.com/apps/ai-marketing-agent/",
+        "https://www.semrush.com/apps/ai-social-assistant/",
+        "https://www.semrush.com/apps/ai-social-content-generator/",
+        "https://www.semrush.com/apps/ai-strategic-market-insights/",
+        "https://www.semrush.com/apps/ai-video-marketing-automator/",
+        "https://www.semrush.com/apps/ai-website-testing/",
+        "https://www.semrush.com/apps/audience-intelligence/",
+        "https://www.semrush.com/apps/brand-monitoring/",
+        "https://www.semrush.com/apps/callrail/",
+        "https://www.semrush.com/apps/ecommerce-keywords-analytics/",
+        "https://www.semrush.com/apps/findthatlead-domain-searcher/",
+        "https://www.semrush.com/apps/influencer-marketing-platform/",
+        "https://www.semrush.com/apps/keyword-analytics-for-youtube/",
+        "https://www.semrush.com/apps/koala-inspector-online-shopspy/",
+        "https://www.semrush.com/apps/lead-generation-forms/",
+        "https://www.semrush.com/apps/media-monitoring/",
+        "https://www.semrush.com/apps/mentioned-outreach-wizard/",
+        "https://www.semrush.com/apps/mobile-app-insights/",
+        "https://www.semrush.com/apps/mobile-app-tester/",
+        "https://www.semrush.com/apps/otterly-ai-search-monitoring/",
+        "https://www.semrush.com/apps/ppc-lead-intelligence/",
+        "https://www.semrush.com/apps/product-research-pulse/",
+        "https://www.semrush.com/apps/rank-tracker-for-youtube/",
+        "https://www.semrush.com/apps/serp-gap-analyzer/",
+        "https://www.semrush.com/apps/shopify-finder/",
+        "https://www.semrush.com/apps/trendfeed/",
+        "https://www.semrush.com/apps/video-collector/",
+        "https://www.semrush.com/apps/video-seo/",
+        "https://www.semrush.com/apps/voiceassist/",
+        "https://www.semrush.com/apps/website-visitor-id-x-ray-pixel/",
+        "https://www.semrush.com/apps/youtube-gap-analyzer/"
+      ],
+      "description": "Single app/integration detail page with hero, features and pricing"
+    },
+    {
+      "name": "app-detail-b",
+      "representativePages": [
         "https://www.semrush.com/apps/adclarity-advertising-intelligence/"
       ],
       "urls": [
-        "https://www.semrush.com/apps/adclarity-advertising-intelligence/"
+        "https://www.semrush.com/apps/adclarity-advertising-intelligence/",
+        "https://www.semrush.com/apps/exploding-topics/"
       ],
-      "description": "Individual app detail page: hero, column feature rows, and a carousel of related screenshots."
+      "description": "App detail page structural variant"
+    },
+    {
+      "name": "app-detail-c",
+      "representativePages": [
+        "https://www.semrush.com/apps/agency-finder/",
+        "https://www.semrush.com/apps/local-listings-check/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/agency-finder/",
+        "https://www.semrush.com/apps/agency-partners/",
+        "https://www.semrush.com/apps/google-business-profile-boost/",
+        "https://www.semrush.com/apps/local-listings-check/"
+      ],
+      "description": "App detail page structural variant with partner/agency blocks"
+    },
+    {
+      "name": "app-detail-d",
+      "representativePages": [
+        "https://www.semrush.com/apps/ai-toolkit/",
+        "https://www.semrush.com/apps/local-seo/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/ai-toolkit/",
+        "https://www.semrush.com/apps/local-seo/",
+        "https://www.semrush.com/apps/map-rank-tracker/",
+        "https://www.semrush.com/apps/review-management/",
+        "https://www.semrush.com/apps/semrush-traffic-and-market/"
+      ],
+      "description": "App detail page structural variant"
+    },
+    {
+      "name": "app-detail-e",
+      "representativePages": [
+        "https://www.semrush.com/apps/automated-data-connector/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/automated-data-connector/",
+        "https://www.semrush.com/apps/llm-gap-analyzer/",
+        "https://www.semrush.com/apps/trend-analytics-for-reddit/"
+      ],
+      "description": "App detail page structural variant"
+    },
+    {
+      "name": "app-collection-category",
+      "representativePages": [
+        "https://www.semrush.com/apps/collection/advertising/",
+        "https://www.semrush.com/apps/collection/competitor-analysis/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/collection/advertising/",
+        "https://www.semrush.com/apps/collection/ai-apps/",
+        "https://www.semrush.com/apps/collection/analytics-and-reports/",
+        "https://www.semrush.com/apps/collection/by-partner/",
+        "https://www.semrush.com/apps/collection/competitor-analysis/",
+        "https://www.semrush.com/apps/collection/content-creation/",
+        "https://www.semrush.com/apps/collection/for-agencies/",
+        "https://www.semrush.com/apps/collection/for-small-business/",
+        "https://www.semrush.com/apps/collection/media-monitoring/",
+        "https://www.semrush.com/apps/collection/mobile-aso-apps/",
+        "https://www.semrush.com/apps/collection/seo/",
+        "https://www.semrush.com/apps/collection/video-marketing/",
+        "https://www.semrush.com/apps/collection/web-design/"
+      ],
+      "description": "Apps collection category listing page"
+    },
+    {
+      "name": "app-collection-b",
+      "representativePages": [
+        "https://www.semrush.com/apps/collection/by-semrush/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/collection/by-semrush/"
+      ],
+      "description": "Apps collection listing structural variant"
+    },
+    {
+      "name": "app-collection-category-b",
+      "representativePages": [
+        "https://www.semrush.com/apps/collection/for-ecommerce/",
+        "https://www.semrush.com/apps/collection/new/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/collection/for-ecommerce/",
+        "https://www.semrush.com/apps/collection/keyword-research/",
+        "https://www.semrush.com/apps/collection/new/",
+        "https://www.semrush.com/apps/collection/social-media/"
+      ],
+      "description": "Apps collection category listing structural variant"
+    },
+    {
+      "name": "app-collection-c",
+      "representativePages": [
+        "https://www.semrush.com/apps/collection/free-apps/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/collection/free-apps/"
+      ],
+      "description": "Apps collection listing structural variant"
+    },
+    {
+      "name": "app-collection-d",
+      "representativePages": [
+        "https://www.semrush.com/apps/collection/most-popular/"
+      ],
+      "urls": [
+        "https://www.semrush.com/apps/collection/most-popular/"
+      ],
+      "description": "Apps collection listing structural variant"
+    },
+    {
+      "name": "content-hub-home",
+      "representativePages": [
+        "https://www.semrush.com/content-hub/"
+      ],
+      "urls": [
+        "https://www.semrush.com/content-hub/"
+      ],
+      "description": "Content hub landing with resource grid and featured content"
+    },
+    {
+      "name": "content-hub-resource",
+      "representativePages": [
+        "https://www.semrush.com/content-hub/ai-content-marketing-report/",
+        "https://www.semrush.com/content-hub/ebooks-templates/content-marketing-starter-kit/"
+      ],
+      "urls": [
+        "https://www.semrush.com/content-hub/ai-content-marketing-report/",
+        "https://www.semrush.com/content-hub/ebooks-templates/content-marketing-starter-kit/"
+      ],
+      "description": "Content hub resource/report page with download blocks"
+    },
+    {
+      "name": "content-hub-resource-b",
+      "representativePages": [
+        "https://www.semrush.com/content-hub/ai-prompt-library/"
+      ],
+      "urls": [
+        "https://www.semrush.com/content-hub/ai-prompt-library/"
+      ],
+      "description": "Content hub resource page structural variant"
+    },
+    {
+      "name": "content-hub-article",
+      "representativePages": [
+        "https://www.semrush.com/content-hub/can-ai-content-rank-on-google/"
+      ],
+      "urls": [
+        "https://www.semrush.com/content-hub/can-ai-content-rank-on-google/"
+      ],
+      "description": "Content hub long-form article page"
     },
     {
       "name": "blog-index",
       "representativePages": [
-        "https://www.semrush.com/blog/"
+        "https://www.semrush.com/content-hub/content-marketing-blog/"
       ],
       "urls": [
-        "https://www.semrush.com/blog/"
+        "https://www.semrush.com/content-hub/content-marketing-blog/"
       ],
-      "description": "Blog landing/index: featured card grids and carousels of article cards."
+      "description": "Blog index/listing page with post cards"
     },
     {
-      "name": "company-about",
+      "name": "blog-article",
       "representativePages": [
-        "https://www.semrush.com/company/"
+        "https://www.semrush.com/content-hub/content-marketing-blog/how-to-use-chatgpt/"
       ],
       "urls": [
-        "https://www.semrush.com/company/"
+        "https://www.semrush.com/content-hub/content-marketing-blog/how-to-use-chatgpt/"
       ],
-      "description": "About/company page: hero plus a long stack of column rows (values, team, milestones) and card groups."
+      "description": "Blog article page with body content and related posts"
     },
     {
-      "name": "contact-page",
+      "name": "blog-article-b",
       "representativePages": [
-        "https://www.semrush.com/company/contacts/"
+        "https://www.semrush.com/content-hub/content-marketing-blog/small-business-content-ideas/"
       ],
       "urls": [
-        "https://www.semrush.com/company/contacts/"
+        "https://www.semrush.com/content-hub/content-marketing-blog/small-business-content-ideas/"
       ],
-      "description": "Company contacts page (client-rendered contact details and form)."
+      "description": "Blog article page structural variant"
     },
     {
-      "name": "legal-document",
+      "name": "case-study-index",
       "representativePages": [
-        "https://www.semrush.com/company/legal/privacy-policy/"
+        "https://www.semrush.com/content-hub/success-spotlights/"
       ],
       "urls": [
-        "https://www.semrush.com/company/legal/privacy-policy/"
+        "https://www.semrush.com/content-hub/success-spotlights/"
       ],
-      "description": "Legal/policy long-form text page (privacy policy)."
+      "description": "Success spotlights index/listing page"
     },
     {
-      "name": "success-stories-index",
+      "name": "case-study-detail",
       "representativePages": [
-        "https://www.semrush.com/company/stories/"
+        "https://www.semrush.com/content-hub/success-spotlights/barbara-ferrigno/",
+        "https://www.semrush.com/content-hub/success-spotlights/lottiefiles/"
       ],
       "urls": [
-        "https://www.semrush.com/company/stories/"
+        "https://www.semrush.com/content-hub/success-spotlights/barbara-ferrigno/",
+        "https://www.semrush.com/content-hub/success-spotlights/lottiefiles/",
+        "https://www.semrush.com/content-hub/success-spotlights/sleepme/"
       ],
-      "description": "Customer success stories index: carousel and column/card rows of case-study entries."
+      "description": "Success spotlight / case study detail page"
     },
     {
-      "name": "content-toolkit-overview",
+      "name": "case-study-detail-b",
       "representativePages": [
-        "https://www.semrush.com/content/"
+        "https://www.semrush.com/content-hub/success-spotlights/exemplifi/"
       ],
       "urls": [
-        "https://www.semrush.com/content/"
+        "https://www.semrush.com/content-hub/success-spotlights/exemplifi/",
+        "https://www.semrush.com/content-hub/vs-chatgpt/",
+        "https://www.semrush.com/content-hub/vs-copy-ai/",
+        "https://www.semrush.com/content-hub/vs-jasper-ai/",
+        "https://www.semrush.com/content-hub/vs-surferseo/"
       ],
-      "description": "Content toolkit overview landing page (client-rendered feature sections)."
+      "description": "Case study / comparison detail structural variant"
     },
     {
-      "name": "features-overview",
+      "name": "product-landing",
       "representativePages": [
-        "https://www.semrush.com/features/"
+        "https://www.semrush.com/eyeon"
       ],
       "urls": [
-        "https://www.semrush.com/features/"
+        "https://www.semrush.com/eyeon"
       ],
-      "description": "All-features overview: hero, tabbed sections, and a large repeating feature card grid."
+      "description": "Standalone product landing page (EyeOn)"
     },
     {
-      "name": "conversion-landing",
+      "name": "product-sample-page",
+      "representativePages": [
+        "https://www.semrush.com/eyeon/sample"
+      ],
+      "urls": [
+        "https://www.semrush.com/eyeon/sample"
+      ],
+      "description": "Product sample/demo page"
+    },
+    {
+      "name": "free-tools-home",
       "representativePages": [
         "https://www.semrush.com/free-tools/"
       ],
       "urls": [
-        "https://www.semrush.com/free-tools/",
-        "https://www.semrush.com/semrush-free-trial/"
+        "https://www.semrush.com/free-tools/"
       ],
-      "description": "Conversion-focused landing pages (free tools hub, free-trial signup) that render their content client-side with a minimal shell."
+      "description": "Free tools landing with tool grid"
+    },
+    {
+      "name": "free-tool-checker",
+      "representativePages": [
+        "https://www.semrush.com/free-tools/ai-overviews-visibility-checker/",
+        "https://www.semrush.com/free-tools/keyword-rank-checker/"
+      ],
+      "urls": [
+        "https://www.semrush.com/free-tools/ai-overviews-visibility-checker/",
+        "https://www.semrush.com/free-tools/ai-search-visibility-checker/",
+        "https://www.semrush.com/free-tools/keyword-rank-checker/",
+        "https://www.semrush.com/free-tools/serp-simulator/"
+      ],
+      "description": "Free tool checker page with input form and results"
+    },
+    {
+      "name": "free-tool-generator",
+      "representativePages": [
+        "https://www.semrush.com/free-tools/ai-text-generator/"
+      ],
+      "urls": [
+        "https://www.semrush.com/free-tools/ai-text-generator/"
+      ],
+      "description": "Free tool generator page with input form and output"
     },
     {
       "name": "free-tool-detail",
       "representativePages": [
-        "https://www.semrush.com/free-tools/ai-search-visibility-checker/"
+        "https://www.semrush.com/free-tools/ai-writing-tools/"
       ],
       "urls": [
-        "https://www.semrush.com/free-tools/ai-search-visibility-checker/"
+        "https://www.semrush.com/free-tools/ai-writing-tools/",
+        "https://www.semrush.com/free-tools/competitor-finder/",
+        "https://www.semrush.com/free-tools/keyword-search-volume-checker/",
+        "https://www.semrush.com/free-tools/local-seo/",
+        "https://www.semrush.com/free-tools/seo/",
+        "https://www.semrush.com/free-tools/serp-checker/",
+        "https://www.semrush.com/free-tools/sitemap-generator/",
+        "https://www.semrush.com/free-tools/website-authority-checker/"
       ],
-      "description": "Individual free-tool page: hero, feature cards, and alternating column explainer rows."
+      "description": "Free tool detail page with hero, form and supporting content"
     },
     {
-      "name": "local-toolkit-overview",
+      "name": "free-tool-rewriter",
       "representativePages": [
-        "https://www.semrush.com/local-business/start/"
+        "https://www.semrush.com/free-tools/paragraph-rewriter/"
       ],
       "urls": [
-        "https://www.semrush.com/local-business/start/"
+        "https://www.semrush.com/free-tools/paragraph-rewriter/"
       ],
-      "description": "Local toolkit overview landing page (client-rendered feature sections)."
+      "description": "Free rewriter tool page with text input/output"
     },
     {
-      "name": "news-index",
+      "name": "free-tool-rewriter-b",
       "representativePages": [
-        "https://www.semrush.com/news/"
+        "https://www.semrush.com/free-tools/paraphrasing-tool/"
       ],
       "urls": [
-        "https://www.semrush.com/news/"
+        "https://www.semrush.com/free-tools/paraphrasing-tool/"
       ],
-      "description": "News/press release index page (hero plus client-rendered article list)."
+      "description": "Free rewriter tool structural variant"
     },
     {
-      "name": "semrush-one-product",
+      "name": "free-tool-rewriter-c",
       "representativePages": [
-        "https://www.semrush.com/one/"
+        "https://www.semrush.com/free-tools/sentence-rewriter/"
       ],
       "urls": [
-        "https://www.semrush.com/one/"
+        "https://www.semrush.com/free-tools/sentence-rewriter/"
       ],
-      "description": "Semrush One flagship product page (video-led, mostly client-rendered)."
+      "description": "Free rewriter tool structural variant"
     },
     {
-      "name": "pr-toolkit-overview",
+      "name": "free-tool-generator-b",
       "representativePages": [
-        "https://www.semrush.com/pr-toolkit/"
+        "https://www.semrush.com/free-tools/summary-generator/"
       ],
       "urls": [
-        "https://www.semrush.com/pr-toolkit/"
+        "https://www.semrush.com/free-tools/summary-generator/"
       ],
-      "description": "PR toolkit overview: hero plus stacked column feature rows."
+      "description": "Free generator tool structural variant"
     },
     {
-      "name": "pricing-page",
+      "name": "free-tool-generator-c",
       "representativePages": [
-        "https://www.semrush.com/pricing/"
+        "https://www.semrush.com/free-tools/title-generator/"
       ],
       "urls": [
-        "https://www.semrush.com/pricing/"
+        "https://www.semrush.com/free-tools/title-generator/"
       ],
-      "description": "Pricing page with plan/tier comparison (client-rendered pricing tables)."
+      "description": "Free generator tool structural variant"
     },
     {
-      "name": "seo-toolkit-overview",
+      "name": "free-tool-counter",
       "representativePages": [
-        "https://www.semrush.com/seo/"
+        "https://www.semrush.com/free-tools/word-counter/"
       ],
       "urls": [
-        "https://www.semrush.com/seo/"
+        "https://www.semrush.com/free-tools/word-counter/"
       ],
-      "description": "SEO toolkit overview: dual heroes, column rows, multiple feature carousels, and an FAQ accordion."
-    },
-    {
-      "name": "social-toolkit-overview",
-      "representativePages": [
-        "https://www.semrush.com/social-media/"
-      ],
-      "urls": [
-        "https://www.semrush.com/social-media/"
-      ],
-      "description": "Social toolkit overview landing page (client-rendered feature sections)."
-    },
-    {
-      "name": "stats-facts-page",
-      "representativePages": [
-        "https://www.semrush.com/stats/"
-      ],
-      "urls": [
-        "https://www.semrush.com/stats/"
-      ],
-      "description": "Stats & facts page: hero, stat cards, column rows, and data tables."
-    },
-    {
-      "name": "comparison-index",
-      "representativePages": [
-        "https://www.semrush.com/vs/"
-      ],
-      "urls": [
-        "https://www.semrush.com/vs/"
-      ],
-      "description": "Compare-Semrush hub listing competitor comparison links (client-rendered)."
-    },
-    {
-      "name": "comparison-detail",
-      "representativePages": [
-        "https://www.semrush.com/vs/semrush-vs-ahrefs/"
-      ],
-      "urls": [
-        "https://www.semrush.com/vs/semrush-vs-ahrefs/"
-      ],
-      "description": "Head-to-head competitor comparison page (Semrush vs Ahrefs)."
-    },
-    {
-      "name": "top-websites-ranking",
-      "representativePages": [
-        "https://www.semrush.com/website/top/"
-      ],
-      "urls": [
-        "https://www.semrush.com/website/top/"
-      ],
-      "description": "Top websites ranking page: filter form, ranked data columns, and an FAQ accordion."
+      "description": "Free counter/analysis tool page with text input and metrics"
     }
   ]
 }
