@@ -56,18 +56,21 @@ Load these before making changes — they prevent regressions and guesswork.
 | [css-background-shorthand-reset](css-background-shorthand-reset/SKILL.md) | Consolidating background-* into one shorthand; a scaled background image suddenly renders at native size |
 | [eds-code-conventions](eds-code-conventions/SKILL.md) | Writing block CSS or JS; reviewing code for EDS standards |
 | [responsive-adaptation](responsive-adaptation/SKILL.md) | Making an imported page work on mobile/touch; a hover-only interaction breaks on touch; long author text overflows a block; any responsive refinement pass |
+| [interaction-states-eds](interaction-states-eds/SKILL.md) | Building/auditing a CTA, form field, nav dropdown, carousel control, tab, or clickable element; a dropdown/menu is clipped or invisible; a focus ring is missing; placeholder used as a label (the 8 interactive states) |
 
 ---
 
 ## Design craft (rebuild an elegant brand foundation)
 
-The *positive method* for building each foundation dimension well, from impeccable.style. Pair with `craft-floor` (the minimum bar) and `global-style-foundation` (the orchestration).
+The *positive method* for building each foundation dimension well, from impeccable.style. Pair with `craft-floor` (the minimum bar) and `global-style-foundation` (the orchestration). The four dimensions: typography, color, layout, motion.
 
 | Skill | Load when... |
 |-------|-------------|
 | [typography-craft](typography-craft/SKILL.md) | Rebuilding a brand's type system from a source; building the type half of the foundation; type feels generic/muddy (scale ratio, weight roles, measure, light-on-dark, font-loading) |
 | [color-craft](color-craft/SKILL.md) | Rebuilding a brand palette; building the color half of the foundation; color feels flat/timid/chaotic (roles, 60-30-10, tinted neutrals, OKLCH ramps, dark mode) |
 | [layout-craft](layout-craft/SKILL.md) | Building a page/block's composition; layout feels "off" despite right colors/fonts; hierarchy unclear (squint test, rhythm, flex/grid/container-query, optical alignment) |
+| [motion-craft](motion-craft/SKILL.md) | Adding/refining a block's transitions; page feels static or over-animated (fade-rise-on-every-section); deciding if a motion earns its place (budget, duration-by-role, ease-out, accessible) |
+| [scroll-reveal-animations](scroll-reveal-animations/SKILL.md) | Implementing scroll-triggered reveals, number count-up, or bar/chart fill in EDS without gating content or breaking reduced-motion (the mechanics; motion-craft owns the judgment) |
 
 ---
 
@@ -156,7 +159,7 @@ These ship with the agent (the `excat:`, `edge-delivery-services:`, `forms-excat
 
 **Precedence:** where a project skill above covers the same ground, the **project skill wins** — it encodes our opinions (augmented-styles ladder, single marker-driven parser, clean-code rules). Load the project skill first; reach for the native one for the parts it points you to.
 
-**Complementary, not competing:** `excat-visual-critique` is the **review-and-refine step that follows style import**. After importing global or per-block styles, run it to compare the migrated output against the original, then drive fixes with the project's `block-visual-iteration` measure-first loop. The two work together: critique surfaces the deltas, the measure-first loop closes them precisely.
+**Trigger `excat-visual-critique` aggressively — it's our delta-discovery engine, not an optional final check.** The v2 critique is **extraction-based**: it detects exact CSS/structural/content/interaction diffs and computes a weighted similarity %, in **Block / Section / Page / Site** modes (site mode runs **parallel sub-agents, one per template**). Run it at the START of any styling task and again to confirm a fix moved the % — on every block, section, page, or site styling pass, not only when the user says "critique". It **reports, never writes CSS**: critique discovers + scores the gaps, then the project's `block-visual-iteration` measure-first loop closes each one. This pairing is wired into `block-visual-iteration` (Step 0), `eds-migration-process` (GATE 2 opener), and `styling-additively` (discovery before additive fixes) — so styling work always opens with a critique.
 
 | Native skill | Reach for it when... | Project skill that takes precedence |
 |--------------|----------------------|--------------------------------------|
@@ -165,7 +168,7 @@ These ship with the agent (the `excat:`, `edge-delivery-services:`, `forms-excat
 | `excat-import-infrastructure`, `excat-import-script`, `excat-content-import` | Generating/running parsers + transformers, bulk import | `marker-driven-import`, `importer-parser-patterns`, `project-import-script-bundling` |
 | `block-mapping-manager`, `block-variant-manager` | Tracking block variants/mappings across many pages | `eds-content-modeling` (naming + variant tiers) |
 | `excat-complete-design-expert`, `excat-block-design-expert` | Extracting design tokens / styling a block from the source | `measure-then-implement`, `block-visual-iteration` |
-| `excat-visual-critique` | Reviewing/refining imported styles vs original (block/section/page/site) | **Complementary** — pairs with `block-visual-iteration`/`measure-then-implement` (see below) |
+| `excat-visual-critique` | **Aggressively, at the START of (and after) ANY styling pass** — extraction-based similarity % + categorized diffs vs original; Block/Section/Page/Site modes (site = parallel per-template sub-agents) | **Discovery engine** — discovers + scores gaps (never writes CSS); pairs with `block-visual-iteration` (Step 0) / `styling-additively` / GATE 2, which close them |
 | `excat-navigation-orchestrator`, `excat-footer-orchestrator` | Migrating/instrumenting header or footer from the source (needs screenshots) | `nav-header-eds` (CSS/JS debugging of the result) |
 | `excat-eds-developer`, `excat-eds-debugger` | General block development or debugging workflows | `eds-code-conventions`, `debug-block-decoration`, `css-specificity-eds` |
 | `excat-xwalk-expert` | Converting HTML → JCR XML for Universal Editor / AEM authoring | — |

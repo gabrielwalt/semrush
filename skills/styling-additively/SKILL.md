@@ -26,8 +26,11 @@ Sometimes a lean addition *to a base block's CSS* is correct rather than a new v
 - Only do this when the new rule is **additive** (targets elements/shapes the validated pages don't contain). A `.teaser h3` rule is safe if no validated teaser has an `h3`.
 - If you must change an *existing* declaration, **measure the validated instances before and after** and confirm they didn't move (`regression-guard`).
 
+## Lead with `excat-visual-critique` (discovery), then style additively (fix)
+Before deciding what the new page is missing, **run the native `excat-visual-critique` skill against it** (Page mode, or Site mode when styling several pages — site mode runs parallel per-template sub-agents). Its extraction-based similarity % + categorized diffs tell you *exactly* which deltas are content/structural (→ fix the parser) vs styling/layout (→ a new variant/section-style here). That keeps Step 1 honest: you reuse-first against a real diff list, and you can name in one sentence what the toolbox can't express (the threshold to forge a new tool) because critique already itemized it. Reach for it aggressively on every page-styling task — it's the discovery engine; this skill is the additive-fix discipline.
+
 ## Verify the freeze held
-After styling the new page, if there's any doubt the change was purely additive, re-check each already-validated page that shares a touched block: load it, measure the key values (grid, sizes, colors) on the shared block, confirm unchanged. Cheap insurance against a silent regression.
+After styling the new page, if there's any doubt the change was purely additive, re-check each already-validated page that shares a touched block: load it, measure the key values (grid, sizes, colors) on the shared block, confirm unchanged. Cheap insurance against a silent regression. **Re-run `excat-visual-critique` on the validated pages that share a touched block** — its per-block % is a fast regression signal (if a frozen page's block dropped below its prior %, the change wasn't additive).
 
 ## Pitfalls
 - Editing a shared variant/section-style/`styles.css` rule "just a little" to fix the new page — the classic validated-page breaker.
@@ -35,4 +38,4 @@ After styling the new page, if there's any doubt the change was purely additive,
 - Inventing a new block/variant before checking the existing blocks/variants/section-styles can already express the look (Step 1 skipped).
 - Assuming additive = safe without checking: an additive selector can still match a validated page if that page has the same element. Confirm it doesn't.
 
-See also: `eds-content-modeling` (the block/variant/section/template ladder + naming), `context-adaptive-blocks` (before adding a `*-dark`/`*-inverse` variant — make the block adapt to its dark container instead), `regression-guard` (measure-before/after when touching shared CSS), `eds-migration-process` (per-page content/style validation gates), `measure-then-implement` (measure the original, don't guess)
+See also: `excat-visual-critique` (run it first to itemize the deltas — Page/Site mode, parallel per-template sub-agents in site mode; discovers, doesn't fix), `block-visual-iteration` (the measure-first loop that closes each delta critique surfaced), `eds-content-modeling` (the block/variant/section/template ladder + naming), `context-adaptive-blocks` (before adding a `*-dark`/`*-inverse` variant — make the block adapt to its dark container instead), `regression-guard` (measure-before/after when touching shared CSS), `eds-migration-process` (per-page content/style validation gates), `measure-then-implement` (measure the original, don't guess)

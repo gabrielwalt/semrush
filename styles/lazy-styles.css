@@ -86,3 +86,30 @@ main > .section > .default-content-wrapper > p:first-child:has(+ h2) {
 .section.section-tabs [role='tabpanel'][hidden] {
   display: none;
 }
+
+/* ── Scroll & data animations (set up by scripts/scroll-animations.js) ──────────────
+   Motion-only enhancement: the `.reveal-ready` / `.bar-ready` states are added by JS
+   ONLY when motion is allowed, so no-JS and reduced-motion users see the final state
+   immediately (content is never gated on a class — motion-craft). The global
+   prefers-reduced-motion guard in styles.css also near-instantly settles these. */
+
+/* Sibling-stagger reveal for genuine card grids/lists */
+.reveal-ready {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+}
+
+.reveal-ready.reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--reveal-duration) var(--ease-out-quart),
+    transform var(--reveal-duration) var(--ease-out-quart);
+  transition-delay: calc(var(--reveal-i, 0) * var(--reveal-stagger));
+}
+
+/* AI Visibility bar-fill: animate width from 0 to its set value on scroll-in */
+.stats-visibility .bar-fill.bar-ready {
+  transition: width 0.9s var(--ease-out-expo);
+}

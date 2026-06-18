@@ -47,10 +47,10 @@ Ask the user to roughly validate, and wait for confirmation:
 - **Reuse/refactor** — use an existing set of blocks instead, or a different structure? Take a step back here even for a content-validated page: can the original look be reached with just basic changes to existing block names/variants/section-styles, before inventing anything new? (`styling-additively`)
 
 ## 🚦 GATE 2 — design (after global styles, and after each block's styling)
-Ask the user to compare against the source site in the Console preview:
-- Is the global look (tokens, type, spacing) right?
-- Does each styled block match — what needs further visual improvement?
-Use `excat-visual-critique` to compare migrated output against the original (block, section, full-page, or full-site) and surface the deltas, then close each one with the `block-visual-iteration` measure-first loop. Iterate on the user's feedback before moving on.
+**Open the gate by running `excat-visual-critique` — don't wait to be asked.** Before presenting a page/block as styled, run the extraction-based v2 critique against the original (Block / Section / Page / **Site** mode — site mode parallelizes a sub-agent per template) to get the deterministic similarity % + categorized diffs. This is the authoritative "how close are we?" signal at every fidelity above Faithful; reach for it aggressively, not only when the user says "critique". Then:
+- Close each surfaced delta with the `block-visual-iteration` measure-first loop (critique discovers + scores; that loop fixes).
+- Ask the user to confirm against the source site in the Console preview: is the global look (tokens, type, spacing) right? Does each block match the critique's reported %?
+- Iterate on the user's feedback (and re-run critique to confirm the % moved) before moving on.
 
 ## EMA skills by stage
 Reach for these native EMA skills — suggest them to the user when they fit. **Where a project skill covers the same step (content modeling, parser strategy, visual QA), the project skill takes precedence** — see `skills/README.md` "Native EMA & EDS skills" for the full precedence map.

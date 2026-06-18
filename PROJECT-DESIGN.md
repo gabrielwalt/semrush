@@ -131,7 +131,7 @@ Exactly **two** sanctioned breakpoints site-wide — no others:
 - Tablet: 768–1023px (`@media (width >= 768px)`)
 - Desktop: >= 1024px (`@media (width >= 1024px)` — full nav, multi-column)
 
-Write mobile-first. **These breakpoints cannot be CSS tokens** — `@media` conditions can't read `var()`, and EDS has no build step to preprocess them; so `768`/`1024` stay literal in every `@media`. Consistency is enforced instead of tokenized: the foundation (`styles/styles.css`) owns the breakpoint set, `detect.mjs` harvests it live, and `craft-breakpoint-stray` flags any block `@media` width outside it. The header JS reads the desktop breakpoint via `matchMedia('(min-width: 1024px)')` — keep it in sync if the desktop breakpoint ever changes.
+Write mobile-first. The foundation (`styles/styles.css`) owns the breakpoint set, `detect.mjs` harvests it live, and `craft-breakpoint-stray` flags any block `@media` width outside it. The header JS reads the desktop breakpoint via `matchMedia('(min-width: 1024px)')` — keep it in sync if the desktop breakpoint ever changes.
 
 ---
 

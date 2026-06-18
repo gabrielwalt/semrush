@@ -26,6 +26,12 @@ See `full-width-escape-hatch` skill for the complete pattern. Key point: add `.f
 - **Code must be self-explanatory.** Add comments only to explain WHY, not WHAT. If something is unclear, it's probably technical debt — add it to the plan to be cleaned up.
 - **Be proactive about code smells.** When touching any file, look for unnecessary complexity, dead code, or patterns that could be simpler. Add cleanup tasks to `PROJECT-PLAN.md` rather than ignoring them.
 
+## Performance (EDS handles the rest — these few still bite)
+EDS already delivers fast loads (no bundler, lazy blocks, optimized images) — don't add a perf pass or CWV tooling. But three things a block author can still break, so guard them:
+- **Don't lazy-load above-the-fold media.** The hero/LCP image must load eagerly; `loading="lazy"` on it delays LCP. EDS eager-loads the first section — don't fight it.
+- **Reserve space to avoid layout shift (CLS).** Give images/video/embeds explicit dimensions or `aspect-ratio` so content doesn't jump as they load.
+- **Animate only `transform`/`opacity`** (bounded `filter`/`clip-path` ok) — never casually animate `width`/`height`/`top`/`left`/margins. See `motion-craft`.
+
 ## Quality
 - `npm run lint` after every code change
 - Verify visually at `localhost:3000`

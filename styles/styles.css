@@ -98,6 +98,14 @@
   --transition-duration: 0.42s;
   --transition-easing: ease-in-out;
   --transition-fast: 0.2s;
+
+  /* motion — ease-out curves (motion-craft: confident deceleration, never bounce/elastic)
+     and scroll-reveal timing. --reveal-duration drives the on-scroll entrance; the stagger
+     step is applied per-item via --reveal-i in JS. */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-duration: 0.6s;
+  --reveal-stagger: 70ms;
 }
 
 /* EDS button container */
@@ -297,7 +305,25 @@ button.button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: background-color var(--transition-fast) ease-in-out, border-color var(--transition-fast) ease-in-out, color var(--transition-fast) ease-in-out;
+  transition:
+    background-color var(--transition-fast) ease-in-out,
+    border-color var(--transition-fast) ease-in-out,
+    color var(--transition-fast) ease-in-out,
+    transform var(--transition-fast) var(--ease-out-quart);
+}
+
+/* Press feedback: a quick scale-down on active gives every CTA a tactile response
+   (interaction-states-eds — the Active state). Hover lift is gated to hover devices. */
+@media (hover: hover) {
+  a.button:any-link:hover,
+  button.button:hover {
+    transform: translateY(-2px);
+  }
+}
+
+a.button:any-link:active,
+button.button:active {
+  transform: translateY(0) scale(0.97);
 }
 
 a.button[aria-disabled="true"],

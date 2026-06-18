@@ -240,6 +240,15 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // Scroll & data animations (dynamic-brand layer). Loaded after sections so every block is
+  // decorated; self-guards on prefers-reduced-motion and never gates content visibility.
+  try {
+    const { default: initScrollAnimations } = await import('./scroll-animations.js');
+    initScrollAnimations(main);
+  } catch (e) {
+    // animations are enhancement-only; never block the page on them
+  }
 }
 
 /**
