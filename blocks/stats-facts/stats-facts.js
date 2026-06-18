@@ -62,48 +62,23 @@ export default async function decorate(block) {
     });
   });
 
-  // Reduced-motion: skip the scroll-scrub entirely. The block renders in its resting
-  // layout with the first row active (the static, accessible fallback).
+  // Reduced-motion: don't track scroll — the block renders normally with the first row
+  // active (static, accessible fallback).
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  // How much scroll each row holds for, as a fraction of the viewport height. Pinning the
-  // block over a viewport-scaled runway is what makes the pacing feel deliberate (and tunable)
-  // instead of flicking to the next row on a few pixels of scroll. 0.7 → a row advances roughly
-  // every 70% of a screen-height of scrolling, so taller viewports require proportionally more.
-  const PER_ROW_VH = 0.7;
-  const wrapper = block.parentElement;
-  let runway = 0;
-
-  // Pin the block centered in the viewport and stretch its wrapper to create the scroll runway.
-  // While the wrapper scrolls through `runway` px, the sticky block stays put and the active
-  // row advances. Recomputed on resize so the distance always tracks the visitor's viewport.
-  function layout() {
-    if (reduceMotion.matches) {
-      block.style.position = '';
-      block.style.top = '';
-      wrapper.style.minHeight = '';
-      runway = 0;
-      activateStat(0);
-      return;
-    }
-    const viewportH = window.innerHeight;
-    const blockH = block.offsetHeight;
-    runway = viewportH * PER_ROW_VH * statRows.length;
-    block.style.position = 'sticky';
-    block.style.top = `${Math.max(0, (viewportH - blockH) / 2)}px`;
-    wrapper.style.minHeight = `${blockH + runway}px`;
-  }
-
+  // The block scrolls with the page like any content — NOTHING is pinned. As the rows scroll
+  // past, whichever row's center is closest to a focal line (the viewport's vertical middle)
+  // becomes the active/enlarged one — a vertical "dock magnification" that follows the scroll.
   function onScroll() {
-    if (runway <= 0) return;
-    const viewportH = window.innerHeight;
-    const blockH = block.offsetHeight;
-    const pinTop = Math.max(0, (viewportH - blockH) / 2);
-    // Distance the wrapper's top has travelled past the pin point (0 → runway).
-    const scrolled = pinTop - wrapper.getBoundingClientRect().top;
-    const progress = Math.max(0, Math.min(1, scrolled / runway));
-    const index = Math.min(statRows.length - 1, Math.floor(progress * statRows.length));
-    activateStat(index);
+    const focalY = window.innerHeight / 2;
+    let bestIdx = 0;
+    let bestDist = Infinity;
+    statRows.forEach((row, i) => {
+      const r = row.getBoundingClientRect();
+      const dist = Math.abs((r.top + r.bottom) / 2 - focalY);
+      if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+    });
+    activateStat(bestIdx);
   }
 
   let ticking = false;
@@ -112,10 +87,6 @@ export default async function decorate(block) {
     ticking = true;
     requestAnimationFrame(() => { onScroll(); ticking = false; });
   }
-
-  layout();
-  window.addEventListener('resize', () => { layout(); onScroll(); }, { passive: true });
-  reduceMotion.addEventListener('change', () => { layout(); onScroll(); });
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
