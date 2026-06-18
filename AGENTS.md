@@ -92,11 +92,3 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 | Migration progress | `PROJECT-STATUS.md` |
 | Implementation gap tasks | `PROJECT-PLAN.md` |
 | Prior solutions | `skills/README.md` |
-
----
-
-## Quality tooling (deterministic checkers — `quality-tooling` skill)
-
-Per **The Executable-Rule Rule**, run these instead of eyeballing craft rules or guessing project state:
-- `node tools/quality/detect.mjs <files> [--json] [--all]` — craft-floor linter (exit 0 clean / 2 findings). Allow-list loads live from `PROJECT-DESIGN.md` + `styles/*.css`.
-- `node tools/quality/project-state.mjs [--scan]` — structured project-state JSON (`frozen` pages, per-page gate, changed files, scan targets). Read-only git.
