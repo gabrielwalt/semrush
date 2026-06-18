@@ -99,6 +99,8 @@ const allow = loadAllowList(ROOT);
 const findings = [];
 // project-wide token-dup: aggregate definitions across all scanned css
 const tokenDefs = new Map(); // name -> [{file,line}]
+// project-wide unused-token: every var(--x) reference seen anywhere
+const tokenUses = new Set(); // name
 
 for (const file of targets) {
   if (!existsSync(file)) {
@@ -115,6 +117,8 @@ for (const file of targets) {
   // @media / other selectors are legitimate responsive/scoped overrides, NOT
   // the "two :root owners" defect the One-Token-One-Home rule targets.
   if (appliesAs === 'css') {
+    // every var(--token) reference — feeds the unused-token check below
+    for (const u of cssNoComments.matchAll(/var\(\s*(--[a-z0-9-]+)/gi)) tokenUses.add(u[1]);
     // Count a token as a "home" definition only when it sits in a BASE :root
     // block — a :root NOT nested inside an at-rule (@media/@supports/@container).
     // Responsive :root overrides inside @media are legitimate, not the
@@ -163,6 +167,27 @@ for (const [name, defs] of tokenDefs) {
         severity: 'error',
         snippet: `${name}`,
         detail: `${name} also defined at ${relative(ROOT, defs[0].file)}:${defs[0].line}`,
+      });
+    }
+  }
+}
+
+// project-wide unused token (craft-token-unused) — a token defined but never
+// referenced via var() anywhere is dead weight / a typo'd consumer. ONLY reliable
+// on a full scan (--all): a partial file set can't see every consumer, so we'd
+// false-positive on tokens used by files outside the set.
+if (all && files.length === 0) {
+  for (const [name, defs] of tokenDefs) {
+    if (!tokenUses.has(name)) {
+      const d = defs[0];
+      findings.push({
+        file: relative(ROOT, d.file),
+        line: d.line,
+        ruleId: 'craft-token-unused',
+        name: 'Token defined but never referenced',
+        severity: 'warn',
+        snippet: name,
+        detail: `${name} is defined but never used via var() — remove it or wire up the intended consumer`,
       });
     }
   }

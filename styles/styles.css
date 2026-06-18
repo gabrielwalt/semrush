@@ -45,6 +45,7 @@
   --font-size-body-s: 14px;
   --font-size-caption: 14px;
   --font-size-label: 12px;
+  --font-size-quote: 26px; /* pull-quote / blockquote role (NOT a heading) — responsive: 20px <768 */
 
   /* line heights */
   --line-height-snug: 1.1;
@@ -76,6 +77,13 @@
   --container-max-width: 1440px;
   --nav-height: 84px;
 
+  /* Responsive breakpoints — the ONLY two sanctioned widths site-wide:
+     tablet 768px, desktop 1024px. CSS @media conditions cannot read var(),
+     so these stay literal in every `@media (width <|>= 768px|1024px)`.
+     Mobile-first: base = mobile, then (width >= 768px), then (width >= 1024px).
+     The header JS reads the desktop bp via matchMedia('(min-width: 1024px)').
+     detect.mjs craft-breakpoint-stray flags any other @media px width. */
+
   /* CTA */
   --cta-height: 60px;
   --accent-hover: #b072ff;
@@ -106,6 +114,7 @@ main .button-container { display: inline; }
 @media (width < 768px) {
   :root {
     --font-size-heading-m: 18px;
+    --font-size-quote: 20px;
     --section-padding: 30px;
     --block-padding: 30px;
     --container-padding: 16px;

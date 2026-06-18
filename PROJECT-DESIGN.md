@@ -88,12 +88,13 @@ All other pages (One, Enterprise, SEO, Content, Pricing, Local, Social, PR, Comp
 | `--font-size-heading-ml` | 40px | fixed | feature-card + tab-panel headlines |
 | `--font-size-heading-m` | 24px | 18px <768 | h4 / subheads |
 | `--font-size-heading-s` | 21px | fixed | card titles, lead/emphasis body |
+| `--font-size-quote` | 26px | 20px <768 | pull-quote / blockquote (NOT a heading — its own voice) |
 | `--font-size-body-l` | 18px | fixed | body / lead paragraph |
 | `--font-size-body-m` | 16px | fixed | body |
 | `--font-size-body-s` | 14px | fixed | small / captions (`--font-size-caption` is an alias) |
 | `--font-size-label` | 12px | fixed | labels, eyebrows |
 
-**⚠️ Responsive-token hazard:** `display`/`heading-xl`/`heading-l`/`heading-m` SHRINK under `@media`. Only tokenize a `font-size` literal with one of these if the element *should* shrink on mobile AND the literal isn't a fixed display value (stat number, icon glyph) or inside a `@media` block. The `ml`/`s`/`body-*`/`label` tokens are fixed → always safe. (See `typography-craft`.) Bespoke big stat numbers (180/137/110/96/80px) stay literals — they're a per-block display treatment, not a reusable title role.
+**⚠️ Responsive-token hazard:** `display`/`heading-xl`/`heading-l`/`heading-m`/`quote` SHRINK under `@media`. Only tokenize a `font-size` literal with one of these if the element *should* shrink on mobile AND the literal isn't a fixed display value (stat number, icon glyph) or inside a `@media` block. The `ml`/`s`/`body-*`/`label` tokens are fixed → always safe. (See `typography-craft`.) **Responsive-aware tokens are the right tool when a role genuinely changes per breakpoint** — define once in base `:root`, override in the `@media :root` block, consumer keeps one `var()`. Bespoke big stat numbers (180/137/110/96/80px) stay literals — they're a per-block display treatment, not a reusable title role.
 
 Heading letter-spacing: H1/H2/H3 use `--tracking-tight` (-0.04em), H4 uses `--tracking-snug` (-0.02em). H4 line-height is 1.2 (not 1.1 like other headings).
 
@@ -124,11 +125,13 @@ Tablet breakpoint (< 1024px) reduces `--font-size-display` to 56px and `--font-s
 
 ## Breakpoints
 
-- Mobile: < 768px (single-column, hamburger)
-- Tablet: 768–1023px
-- Desktop: >= 1024px (full nav, multi-column)
+Exactly **two** sanctioned breakpoints site-wide — no others:
 
-Write mobile-first.
+- Mobile: < 768px (single-column, hamburger)
+- Tablet: 768–1023px (`@media (width >= 768px)`)
+- Desktop: >= 1024px (`@media (width >= 1024px)` — full nav, multi-column)
+
+Write mobile-first. **These breakpoints cannot be CSS tokens** — `@media` conditions can't read `var()`, and EDS has no build step to preprocess them; so `768`/`1024` stay literal in every `@media`. Consistency is enforced instead of tokenized: the foundation (`styles/styles.css`) owns the breakpoint set, `detect.mjs` harvests it live, and `craft-breakpoint-stray` flags any block `@media` width outside it. The header JS reads the desktop breakpoint via `matchMedia('(min-width: 1024px)')` — keep it in sync if the desktop breakpoint ever changes.
 
 ---
 

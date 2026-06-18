@@ -43,7 +43,7 @@
 }
 
 .quote-card blockquote {
-  font-size: 26px;
+  font-size: var(--font-size-quote);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: var(--tracking-snug);
@@ -186,10 +186,6 @@
 
   .stats-card {
     min-height: 200px;
-  }
-
-  .quote-card blockquote {
-    font-size: 20px;
   }
 
   .testimonials-oneoff-one .testimonials-layout {

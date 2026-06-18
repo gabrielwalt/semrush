@@ -99,11 +99,16 @@ export function loadAllowList(root = process.cwd()) {
   const colors = [];
   const radii = new Set();
   const tokenNames = new Set();
+  // Sanctioned responsive breakpoints — harvested LIVE from the global stylesheets'
+  // @media conditions (the foundation owns the breakpoint system). CSS @media can't
+  // read var(), so breakpoints can't be tokens; the global file's set IS the contract.
+  const breakpoints = new Set();
   // px-value → token-name maps for FIXED (non-responsive) tokens only. A token
   // redefined under @media with a different value is "responsive" and must NOT be
   // suggested for a fixed literal (it would shrink on mobile — the documented hazard).
   const fontByPx = {}; // e.g. {'21':'--font-size-heading-s'}
   const spaceByPx = {}; // e.g. {'12':'--space-xxs'}
+  const radiusByPx = {}; // e.g. {'8':'--radius-m'} (fixed radii only)
   const tokenDefs = {}; // name → Set of distinct values (to detect responsive tokens)
 
   const harvestColors = (str) => {
@@ -122,6 +127,10 @@ export function loadAllowList(root = process.cwd()) {
     if (!existsSync(p)) continue;
     const css = readFileSync(p, 'utf8').replace(/\/\*[\s\S]*?\*\//g, ' ');
     harvestColors(css);
+    // harvest the global breakpoints from this foundation file's @media widths
+    for (const bp of css.matchAll(/\(\s*(?:min-width|max-width|width)\s*[:<>=\s]*(\d+)px/gi)) {
+      breakpoints.add(bp[1]);
+    }
     for (const m of css.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/gi)) {
       const name = m[1];
       const val = m[2].trim();
@@ -143,13 +152,16 @@ export function loadAllowList(root = process.cwd()) {
     if (!px) continue;
     if (/--font-size-/.test(name) && !(px[1] in fontByPx)) fontByPx[px[1]] = name;
     if (/--space-/.test(name) && !(px[1] in spaceByPx)) spaceByPx[px[1]] = name;
+    if (/--radius-/.test(name) && !/pill/.test(name) && !(px[1] in radiusByPx)) radiusByPx[px[1]] = name;
   }
 
   // PROJECT-DESIGN.md: any hex/rgb named in the design doc is an allowed brand color
   const designPath = join(root, 'PROJECT-DESIGN.md');
   if (existsSync(designPath)) harvestColors(readFileSync(designPath, 'utf8'));
 
-  return { colors, radii, tokenNames, fontByPx, spaceByPx };
+  return {
+    colors, radii, tokenNames, fontByPx, spaceByPx, radiusByPx, breakpoints,
+  };
 }
 
 /* ----------------------------------------------------------------------------
@@ -168,6 +180,24 @@ function* eachLine(text) {
 
 // Contexts where a raw white/literal is legitimately NOT "inverse ink"
 const INVERSE_ALLOW_CTX = /gradient|mask|glass|box-shadow|background:\s*#fff|background-color:\s*#fff|background:\s*linear|outline/i;
+
+// Near-match tolerance for the discrepancy checker: a literal within this fraction
+// of a token's value (but not equal) is a "snap candidate" — almost certainly the
+// same design intent expressed as a slightly-off one-off. 6% catches 20↔21, 46↔48,
+// 60↔64, 11↔12 while leaving real adjacent scale steps (16 vs 18 = 12.5%) alone.
+const NEAR_MATCH_TOLERANCE = 0.06;
+
+/** Nearest token in a {px:name} map to `px`, excluding exact, within tolerance. */
+function nearestToken(px, map, tol = NEAR_MATCH_TOLERANCE) {
+  let best = null;
+  for (const [tpx, name] of Object.entries(map)) {
+    const t = Number(tpx);
+    if (t === px) return null; // exact → not a near-match (craft-token-literal owns it)
+    const diff = Math.abs(t - px) / t;
+    if (diff <= tol && (!best || diff < best.diff)) best = { name, t, diff };
+  }
+  return best;
+}
 
 /* ----------------------------------------------------------------------------
  * The registry. Each rule: { id, area, name, severity, appliesTo, run(ctx) }
@@ -332,6 +362,69 @@ export const RULES = [
           const px = m[2].trim().match(/^(\d+)px$/); // single value only
           if (px && allow.spaceByPx[px[1]]) {
             out.push({ line: n, snippet: line.trim(), detail: `${m[1]} ${px[1]}px equals ${allow.spaceByPx[px[1]]} — use the token` });
+          }
+        }
+      }
+      return out;
+    },
+  },
+  {
+    id: 'craft-token-near',
+    area: 'tokens',
+    name: 'Single-value literal within 6% of a FIXED token (snap to it)',
+    severity: 'warn',
+    appliesTo: 'css',
+    run({ cssNoComments, allow }) {
+      // The discrepancy finder: a literal that is CLOSE to a fixed token value but
+      // not equal is almost always the same design intent expressed as a one-off
+      // (20px where the card-title token is 21px). Snap it. CATEGORY-BOUND — a
+      // font-size only matches font tokens, spacing only spacing tokens, radius only
+      // radius tokens — so we never suggest a radius for a font-size. Skips exact
+      // matches (craft-token-literal owns those) and only-fixed tokens are in the
+      // maps (no responsive-shrink hazard). Single-value only; favors false-negatives.
+      const out = [];
+      for (const { n, line } of eachLine(cssNoComments)) {
+        if (/^\s*--[a-z0-9-]+\s*:/.test(line)) continue; // skip token definitions
+        let m = line.match(/(?:^|[\s;{])font-size\s*:\s*([^;]+);?/i);
+        if (m && !/var\(--/.test(m[1])) {
+          const px = m[1].trim().match(/^(\d+)px$/);
+          const near = px && nearestToken(Number(px[1]), allow.fontByPx);
+          if (near) out.push({ line: n, snippet: line.trim(), detail: `font-size ${px[1]}px is ${(near.diff * 100).toFixed(1)}% off ${near.name} (${near.t}px) — snap to the token unless intentionally distinct` });
+        }
+        m = line.match(/(?:^|[\s;{])(padding|margin|gap|row-gap|column-gap)\s*:\s*([^;]+);?/i);
+        if (m && !/var\(--/.test(m[2])) {
+          const px = m[2].trim().match(/^(\d+)px$/);
+          const near = px && nearestToken(Number(px[1]), allow.spaceByPx);
+          if (near) out.push({ line: n, snippet: line.trim(), detail: `${m[1]} ${px[1]}px is ${(near.diff * 100).toFixed(1)}% off ${near.name} (${near.t}px) — snap to the token unless intentionally distinct` });
+        }
+        m = line.match(/border-radius\s*:\s*([^;]+);?/i);
+        if (m && !/var\(--/.test(m[1])) {
+          const px = m[1].trim().match(/^(\d+)px$/);
+          const near = px && px[1] !== '0' && nearestToken(Number(px[1]), allow.radiusByPx);
+          if (near) out.push({ line: n, snippet: line.trim(), detail: `border-radius ${px[1]}px is ${(near.diff * 100).toFixed(1)}% off ${near.name} (${near.t}px) — snap to the token unless intentionally distinct` });
+        }
+      }
+      return out;
+    },
+  },
+  {
+    id: 'craft-breakpoint-stray',
+    area: 'tokens',
+    name: 'Stray @media breakpoint not in the sanctioned set',
+    severity: 'warn',
+    appliesTo: 'css',
+    run({ cssNoComments, allow }) {
+      // The foundation defines the site's responsive breakpoints (e.g. 768/1024).
+      // CSS @media can't read var(), so we enforce CONSISTENCY instead of tokens:
+      // any block @media width outside the harvested set is drift — snap it to the
+      // nearest sanctioned breakpoint or, if genuinely new, add it to the foundation.
+      if (!allow.breakpoints || allow.breakpoints.size === 0) return [];
+      const out = [];
+      for (const { n, line } of eachLine(cssNoComments)) {
+        if (!/@media/.test(line)) continue;
+        for (const m of line.matchAll(/\(\s*(?:min-width|max-width|width)\s*[:<>=\s]*(\d+)px/gi)) {
+          if (!allow.breakpoints.has(m[1])) {
+            out.push({ line: n, snippet: line.trim(), detail: `@media ${m[1]}px is not a sanctioned breakpoint (${[...allow.breakpoints].sort((a, b) => a - b).join('/')}) — snap to one or add it to the foundation` });
           }
         }
       }
