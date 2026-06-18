@@ -55,6 +55,7 @@ Last verified against validated content: 2026-06-16 — block/variant/section-st
 | `tools/importer/import-nav.js` | Nav fragment import (parses `srf-header` structure) |
 | `tools/importer/import-footer.js` | Footer fragment import (parses `srf-footer` structure) |
 | `tools/importer/import-semrush-one.js` | Semrush One page import (teaser feature-cards, columns-stats, cards-icon, cards-awards parsers) |
+| `tools/importer/import-feature.js` | Feature landing page import (`/features/<tool>/` → `content/features/<tool>.plain.html`). SERVER-RENDERED source (no Builder.io lazy-load), so a reliable straight parse. Maps the page onto the EXISTING toolbox (Toolbox-First, zero new block): hero → default content + primary CTA (`section-centered`); 6 tool cards → `Cards Icon (cards-icon-tools)` with dual CTA per card; mid band → default content + CTA (`section-dark`); related features → default content + `Cards Icon (cards-icon-related)`. Emits `template-feature` as its own last section. CTAs use `<strong><a>`/`<em><a>` (primary/secondary) so decorateButtons buttonizes them; CTA queries are scoped to the card button row so inline body links aren't mistaken for CTAs. Re-usable for any `/features/<tool>/` sibling (same template). |
 | `tools/importer/import-enterprise.js` | Enterprise page import → `/enterprise/index`. Builds a FRESH output container (parsers RETURN wrappers; main appends each + `<hr>`/Section Metadata in order — do NOT mutate in place, that collapses all into one section). `findRegion(label, headingText, {minDescendants})` locates Builder.io client-rendered regions by aria-label then heading-text fallback, climbing to an ancestor big enough to hold the body. Hero/resources/CTA carry published-copy fallbacks (those regions are client-rendered/lazy). The hero also emits a `Media` block for the autoplay/loop/muted product video between the CTA and the marquee (URL in `HERO_FALLBACK.videoSrc` — a Builder.io CDN asset with no file extension). Emits `template-enterprise` + `section-hero`/`section-dark` |
 | `tools/importer/parsers/*.js` | Standalone parsers (11 total) |
 | `tools/importer/transformers/cleanup.js` | DOM cleanup transformer |
@@ -62,6 +63,7 @@ Last verified against validated content: 2026-06-16 — block/variant/section-st
 | `tools/importer/urls-homepage.txt` | Homepage URL |
 | `tools/importer/urls-semrush-one.txt` | Semrush One page URLs |
 | `tools/importer/urls-enterprise.txt` | Enterprise page URLs |
+| `tools/importer/urls-feature.txt` | Feature landing page URL(s) (currently `/features/keyword-research-toolkit/`) |
 
 ---
 

@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-06-18  
 **Branch:** `main`  
-**Active task:** none in progress.  
-**Last completed:** ran enriched detectors on One + Enterprise (clean; only the 5 accepted brand-gradient warns) and extended the scroll-animation layer to both pages (Enterprise case-study count-up + grid reveal); reduced-motion + mobile verified; lint + detector clean.  
-**Next up:** One + Enterprise await per-page **style validation** — run a Page-mode `excat-visual-critique` to baseline similarity %, then close gaps. Open plan task: **F01** (Lazzer heading font — user decision needed).  
-**Blocker:** none.
+**Active task:** New page — `/features/keyword-research-toolkit/` imported + styled, **awaiting GATE 2 (style validation)**. Content complete (all 17 CTAs / 6 tool + 3 related cards match source, GATE 1 passed: card titles + both grids on `cards-icon`). Styled additively at Refined fidelity — new `template-feature` + `cards-icon-tools`/`cards-icon-related` variants, all scoped so the LOCKED index/enterprise + /one are verified unchanged. Lint + detector clean (5 accepted brand warns); desktop+mobile no overflow.  
+**Last completed:** the feature page above (parser `import-feature.js`, reusable for other `/features/` siblings).  
+**Next up:** user validates the feature page look (GATE 2); then replicate the parser to sibling `/features/` pages. Open: **F01** (Lazzer font decision).  
+**Blocker:** none. (Tool-card glyphs are remote `cdn.semrush.com` SVGs — load in preview, will become DA hashes on upload; same pattern as other pages.)
 
 ---
 
@@ -40,17 +40,20 @@
 Two independent validation flags per page (see `eds-migration-process` + `styling-additively`):
 - **Content validated** = the default-content/block/section split and block names are user-approved (GATE 1).
 - **Style validated** = the page's *look* is user-approved against the original (GATE 2). **Once style-validated, every block/variant/section-style the page uses is normally FROZEN** — style later pages additively so these can't move.
-- **🔓 Unfrozen (design-open)** = a previously style-validated page the user has explicitly reopened for design improvement. Marked `✅ 🔓` in the Style column. The Frozen-Tools Rule is **suspended** for these. `tools/quality/project-state.mjs` excludes `🔓` pages from its `frozen` list. **2026-06-17: user unfroze index, nav, footer.**
+- **🔓 Unfrozen (design-open)** = a previously style-validated page the user has explicitly reopened for design improvement. Marked `✅ 🔓` in the Style column. The Frozen-Tools Rule is **suspended** for these. `tools/quality/project-state.mjs` excludes `🔓` pages from its `frozen` list.
 
-**Scope:** 5 keepers below (scope reset 2026-06-17 — the 11 other imported pages were deleted, too far from the originals; to be re-created later from a stronger foundation).
+**🔒 2026-06-18: user LOCKED index + enterprise/index (content AND design validated — re-froze index after its design-improvement pass).** Their blocks/variants/section-styles are now frozen: style any new page **additively** (`styling-additively`) so a shared block never shifts under them. (`seo` was named in the lock instruction but does not exist in the project — deleted in the 2026-06-17 scope reset; when re-created it is to be treated as locked too.)
+
+**Scope:** 5 keepers below.
 
 | Page | URL | Content validated | Style validated | Notes |
 |------|-----|:---:|:---:|-------|
-| Homepage | https://www.semrush.com/ | ✅ | ✅ 🔓 | **Unfrozen 2026-06-17** for design improvement. Changes to its shared blocks still ripple to other pages — verify there too |
+| Homepage | https://www.semrush.com/ | ✅ | ✅ 🔒 | **LOCKED 2026-06-18** (content + design validated). Frozen — changes to its shared blocks ripple to other pages; do not move its look |
 | Semrush One | https://www.semrush.com/one/ | ✅ | 🔲 | 8 blocks; feature teasers use the violet-gradient default `.teaser`; `testimonials-oneoff-one` added. Style work in progress |
-| Enterprise | https://enterprise.semrush.com/ | ✅ | 🔲 | Content imported + block styling done; look not yet user-validated |
-| Nav (fragment) | — | ✅ | ✅ 🔓 | **Unfrozen 2026-06-17.** `content/nav.plain.html` — shared header content |
-| Footer (fragment) | — | ✅ | ✅ 🔓 | **Unfrozen 2026-06-17.** `content/footer.plain.html` — shared footer content |
+| Enterprise | https://enterprise.semrush.com/ | ✅ | ✅ 🔒 | **LOCKED 2026-06-18** (content + design validated). Frozen — style new pages additively around its blocks |
+| Keyword Research (feature) | https://www.semrush.com/features/keyword-research-toolkit/ | ✅ (content complete, GATE 1 passed) | 🔲 | NEW 2026-06-18. Server-rendered `/features/` sibling of the homepage/one template. Modeled Toolbox-First onto existing blocks (no new block): hero default-content + `cards-icon-tools` (6 dual-CTA product cards) + `section-dark` CTA band + `cards-icon-related` (3 cards). New `template-feature` + 2 `cards-icon` variants, all additive/scoped (frozen index+enterprise + /one verified unchanged). Awaiting user style validation (GATE 2). Parser reusable for other `/features/` pages |
+| Nav (fragment) | — | ✅ | ✅ 🔓 | Design-open. `content/nav.plain.html` — shared header content |
+| Footer (fragment) | — | ✅ | ✅ 🔓 | Design-open. `content/footer.plain.html` — shared footer content |
 
 ---
 

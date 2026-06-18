@@ -77,3 +77,145 @@
   border-radius: var(--radius-m);
   object-fit: cover;
 }
+
+/* stylelint-disable no-descending-specificity */
+
+/* ==========================================================================
+   TOOLS VARIANT (cards-icon-tools) — /features/ product cards.
+   Bordered white card with a large product glyph, title, description, and a
+   dual CTA (primary "Try It Free" + secondary "Learn more"). Reproduces the
+   source's bordered-card grid at Refined fidelity using foundation tokens.
+   New class → matches nothing on the frozen pages or /one (additive-safe).
+   ========================================================================== */
+.cards-icon.cards-icon-tools > ul > li {
+  background: var(--background-color);
+  border: 1px solid var(--color-border, rgb(209 212 219));
+  border-radius: var(--radius-l);
+  padding: var(--space-m);
+  transition: box-shadow var(--transition-duration) var(--ease-out-quart),
+    transform var(--transition-duration) var(--ease-out-quart);
+}
+
+@media (hover: hover) {
+  .cards-icon.cards-icon-tools > ul > li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+  }
+}
+
+/* The card body fills the card so the dual CTAs sit at the bottom edge, aligned
+   across cards regardless of description length. */
+.cards-icon.cards-icon-tools .cards-icon-card-body {
+  height: 100%;
+  gap: var(--space-xs);
+}
+
+/* Large product glyph (source uses 172px). */
+.cards-icon.cards-icon-tools .cards-icon-card-body picture {
+  margin-bottom: var(--space-xs);
+}
+
+.cards-icon.cards-icon-tools .cards-icon-card-body picture img {
+  width: 96px;
+  height: 96px;
+}
+
+/* Push the CTA pair to the bottom: the first CTA paragraph gets auto top-margin. */
+.cards-icon.cards-icon-tools .cards-icon-card-body p:has(.button) {
+  margin: 0;
+}
+
+.cards-icon.cards-icon-tools .cards-icon-card-body p:has(.button.primary) {
+  margin-top: auto;
+  padding-top: var(--space-s);
+}
+
+/* Card CTAs are compact (not the 60px page CTA): primary = soft neutral fill,
+   secondary = quiet text link — matching the source's restrained card actions. */
+.cards-icon.cards-icon-tools .cards-icon-card-body a.button.primary {
+  height: auto;
+  padding: 10px var(--space-m);
+  border-radius: var(--radius-s);
+  background: rgb(0 0 0 / 5%);
+  border-color: rgb(0 0 0 / 12%);
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.cards-icon.cards-icon-tools .cards-icon-card-body a.button.primary:hover,
+.cards-icon.cards-icon-tools .cards-icon-card-body a.button.primary:focus-visible {
+  background: rgb(0 0 0 / 9%);
+  border-color: rgb(0 0 0 / 20%);
+}
+
+.cards-icon.cards-icon-tools .cards-icon-card-body a.button.secondary {
+  height: auto;
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font-weight: 500;
+  justify-content: flex-start;
+}
+
+.cards-icon.cards-icon-tools .cards-icon-card-body a.button.secondary:hover,
+.cards-icon.cards-icon-tools .cards-icon-card-body a.button.secondary:focus-visible {
+  background: none;
+  color: var(--text-color);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   RELATED VARIANT (cards-icon-related) — bordered link cards: title, text,
+   "N tools" count, and a "Learn more" link. Hairline border, no icon.
+   ========================================================================== */
+.cards-icon.cards-icon-related > ul > li {
+  background: var(--background-color);
+  border: 1px solid var(--color-border, rgb(209 212 219));
+  border-radius: var(--radius-l);
+  padding: var(--space-m) var(--space-l);
+  transition: box-shadow var(--transition-duration) var(--ease-out-quart),
+    transform var(--transition-duration) var(--ease-out-quart);
+}
+
+@media (hover: hover) {
+  .cards-icon.cards-icon-related > ul > li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+  }
+}
+
+.cards-icon.cards-icon-related .cards-icon-card-body {
+  height: 100%;
+  gap: var(--space-xs);
+}
+
+/* Smaller card title than the tool cards (source ~22px → heading-s 21px token). */
+.cards-icon.cards-icon-related .cards-icon-card-body p strong {
+  font-size: var(--font-size-heading-s);
+}
+
+/* "N tools" count = quiet caption; sits just above the Learn-more link at the bottom. */
+.cards-icon.cards-icon-related .cards-icon-card-body p:nth-of-type(2) {
+  margin-top: auto;
+  font-size: var(--font-size-body-s);
+  color: var(--color-muted);
+}
+
+.cards-icon.cards-icon-related .cards-icon-card-body a.button.secondary {
+  height: auto;
+  padding: var(--space-xs) 0 0;
+  border: 0;
+  background: none;
+  color: var(--accent-color);
+  font-weight: 600;
+  justify-content: flex-start;
+}
+
+.cards-icon.cards-icon-related .cards-icon-card-body a.button.secondary:hover,
+.cards-icon.cards-icon-related .cards-icon-card-body a.button.secondary:focus-visible {
+  background: none;
+  text-decoration: underline;
+}
+
+/* stylelint-enable no-descending-specificity */

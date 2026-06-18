@@ -196,6 +196,11 @@ async function loadEager(doc) {
   if (doc.querySelector('.teaser-oneoff-enterprise-platform')) {
     document.body.classList.add('template-dark', 'template-enterprise');
   }
+  // Feature landing pages (/features/<tool>/). Fallback when metadata is absent: the
+  // cards-icon-tools variant is unique to this template.
+  if (doc.querySelector('.cards-icon-tools')) {
+    document.body.classList.add('template-feature');
+  }
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);

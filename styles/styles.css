@@ -1203,6 +1203,72 @@ body.template-enterprise main .section.carousel-container:not(:has(.carousel-tes
 
 /* stylelint-enable no-descending-specificity */
 
+/* =============================================================================
+   Feature landing page template (body.template-feature) — /features/<tool>/.
+   A product-marketing sibling of the homepage/one template: left-aligned hero,
+   a bordered product-card grid (cards-icon-tools), a dark mid-page CTA band, and
+   a related-features card grid (cards-icon-related). All scoped to template-feature
+   so the locked index/enterprise pages and /one are untouched (styling-additively).
+   Card looks live in blocks/cards-icon/cards-icon.css (the two variant classes).
+   ============================================================================= */
+
+/* stylelint-disable no-descending-specificity */
+
+/* Hero: left-aligned, measure-capped intro at the source's display size (heading-l 48px,
+   not the 84px homepage display). The section-centered base centers via the inner > div
+   (flex align-items:center + text-align:center) — override the inner div, not the section. */
+body.template-feature main .section.section-centered > div {
+  align-items: flex-start;
+  text-align: left;
+}
+
+body.template-feature main .section.section-centered h1 {
+  font-size: var(--font-size-heading-l);
+  max-width: 18ch;
+}
+
+/* Subtitle: lead-paragraph size with generous space before the CTA (source rhythm —
+   the intro breathes, then the CTA stands apart). */
+body.template-feature main .section.section-centered p:not(.button-container) {
+  max-width: 60ch;
+  font-size: var(--font-size-body-l);
+  margin-top: var(--space-s);
+  margin-bottom: var(--space-xl);
+}
+
+/* Dark mid-page CTA band: centered, generous, a single confident headline + CTA.
+   The generic section-dark already inverts colors; this centers + sizes it for the band. */
+body.template-feature main .section.section-dark {
+  text-align: center;
+}
+
+body.template-feature main .section.section-dark .default-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+/* Cap the headline's own measure (not the wrapper) so a 64px line wraps to ~2 generous
+   lines rather than a narrow column. ch is sized against the heading's own font here. */
+body.template-feature main .section.section-dark h2 {
+  margin: 0;
+  max-width: 16ch;
+}
+
+/* Related-features section header centered above its card grid, with a little space
+   below it before the cards. */
+body.template-feature main .section.cards-icon-container:last-of-type .default-content-wrapper {
+  text-align: center;
+  max-width: 60ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-l);
+}
+
+/* stylelint-enable no-descending-specificity */
+
 /* Reduced-motion baseline — honor the user's OS setting (craft-floor Reduced-Motion-Baseline
    Rule). Several blocks animate without their own guard (the marquee's 25s infinite scroll,
    the insights-widget cursor blink, carousel/stats transitions). This global fallback near-
