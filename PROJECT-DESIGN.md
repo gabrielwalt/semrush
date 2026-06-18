@@ -164,13 +164,7 @@ The de-facto global system, **measured across the style-validated/keeper pages (
 | **Body-contrast floor** | **≥ 4.5:1**, currently **17:1** everywhere | index, one, enterprise — light AND dark sections | Ink `rgb(24 30 21)` on white and white on `--dark-color` both measure 17:1. Any new surface color must keep body text ≥ 4.5:1. |
 | **Section-spacing rhythm** | **60px** desktop / **30px** mobile, applied symmetrically (`padding: var(--section-padding) 0`) + block `margin-top: var(--block-padding)` via `* + *` | index, one, enterprise | One rhythm value drives both section padding and block gap. See `vertical-spacing-system`. |
 | **Button system** | pill (`--radius-pill` 100px), **60px** height, `padding: 0 32px`, **16px / 600** | index, one, enterprise | Primary (purple), secondary (outline), accent (dark fill); all hover → `--accent-hover`. |
-| **Heading font** | Lazzer, with `Inter` fallback | declared in `:root` on all pages | ⚠️ **No `@font-face` for Lazzer is loaded** (only Inter 400/500/600/700 in `fonts.css`) — headings currently render in the Inter fallback. Flagged as a proposed additive fix below; not part of the validated look until resolved. |
-
-## Proposed additive fixes (await approval — do NOT apply)
-
-Discovered during the 2026-06-17 foundation audit. Each is non-destructive and would be applied additively per the Frozen-Tools Rule. **Not applied** — listed for review (craft/a11y items are also being filed as PROJECT-PLAN tasks under Task C).
-
-1. **Lazzer is never loaded.** `--heading-font-family` is `"Lazzer", "Inter", sans-serif` but `styles/fonts.css` declares no `@font-face` for Lazzer, so every heading on every page falls back to Inter. Either add the Lazzer `@font-face` (restores the intended brand heading voice) or formally drop Lazzer from the token and standardize on Inter for headings. Decision needed — this changes the look of the frozen pages, so it needs explicit sign-off.
+| **Heading font** | Lazzer, with `Inter` fallback | declared in `:root` on all pages | ⚠️ **No `@font-face` for Lazzer is loaded** (only Inter 400/500/600/700 in `fonts.css`) — headings currently render in the Inter fallback. Tracked as open task **F01** in `PROJECT-PLAN.md` (decision needed: add the Lazzer `@font-face` vs. formally standardize headings on Inter); not part of the validated look until resolved. |
 
 ## Adding a Token
 

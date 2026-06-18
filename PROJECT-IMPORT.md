@@ -95,39 +95,16 @@ Header JS aggregates H2s for the top bar, builds mega panels from H3/UL/P conten
 
 ---
 
-## Key Parser Requirements
+## Parser requirements
 
-### Hero Parser
+Generic parser mechanics + output conventions live in the skills, not here:
+- **Table/DOM mechanics, output structure conventions** (section header → default content above the block; CTA as `<strong>`/`<em>`; `getAttribute` not `.src`; wrap imgs in `<picture>`; video as link not `<video>`; Section Metadata last) → `importer-parser-patterns`.
+- **Marker-detection strategy + validation loop** → `marker-driven-import`.
+- **Heavy SVGs (≥80KB) → `/svg/` link references** → `repo-hosted-svg-references`.
 
-- Output ordered structure: default content (`h1` + subtitle `<p>`) → `insights-widget` block (empty) → `media` block (link + poster format) → Section Metadata (`Style: section-centered`, last in section).
-- Emits the `Media` block (renamed from `Video`) — a generic image-or-video block.
+Per-parser output shapes are **encoded in the parser code itself** (`tools/importer/parsers/*.js`) — read it as the source of truth (AGENTS.md *Code-is-truth*). Non-obvious, project-specific parser facts that the code alone doesn't explain are captured in **Resolved** below.
 
-### Stats Facts Parser
-
-- Extract eyebrow/title/CTA to **default content above the block** (not inside the block table).
-- Block table rows: each row = stat number + stat label.
-- "Learn more" CTA must be emitted as `<strong><a>` or `<em><a>` (a button), not a plain link.
-
-### Stats Visibility Parser
-
-- Extract eyebrow/title/CTA to **default content above the block**.
-- Auto-detect dark background from source DOM → emit `section-dark` in Section Metadata.
-- Emit `section-oneoff-ai-visibility` alongside `section-dark` (one-off: striped pattern + logo).
-- Block table rows: each row = bar label + bar value (e.g., pipe-separated `Google | 7.9`).
-
-### Testimonials Parser
-
-- Content must follow the 5-row model: Row 1: section heading; Row 2: company logo; Row 3: quote text; Row 4: author photo + name + role; Row 5+: stats cards.
-- Do NOT wrap content in a `.testimonials-layout` intermediate element.
-
-### Core Rules (all parsers)
-
-- Use `getAttribute('src')` / `getAttribute('poster')` — never `.src` / `.poster` (property resolves to `about:error` on failed loads).
-- Resolve relative paths to absolute — prefix `/` paths with the source origin.
-- Skip images with empty `src` or `src="about:error"`.
-- Wrap every `<img>` in `<picture>`.
-- Emit video as link + poster URL — DA does not support `<video>` elements.
-- Builder.io video assets have NO file extension (`cdn.builder.io/o/...?alt=media`). `scripts/video-utils.js` has a Builder.io-specific detector (matches `/o/` + `alt=media`) on top of the `.mp4|webm|ogg` extension check, defaulting the type to `video/mp4`.
+**Project-specific source quirk — Builder.io video assets have NO file extension** (`cdn.builder.io/o/...?alt=media`). `scripts/video-utils.js` detects them (matches `/o/` + `alt=media`) on top of the `.mp4|webm|ogg` extension check, defaulting the type to `video/mp4`. (Generic "extensionless CMS video URL" guidance: `video-in-eds`.)
 
 ---
 

@@ -24,6 +24,8 @@ cell.querySelectorAll('a').forEach((link) => {
 });
 ```
 
+**Extensionless CMS video URLs.** Some CMSs/CDNs serve video from an asset endpoint with **no file extension** (e.g. a `cdn.../o/<id>?alt=media` form), so the `.mp4|webm|ogg` test misses them. Add a URL-shape detector alongside the extension check and default the type to `video/mp4`. Keep the concrete per-CMS matcher in project code (e.g. a `video-utils.js`), not here — see `PROJECT-IMPORT.md` for this project's detector.
+
 ## Autoplay
 - Defer `<video>` creation to `window.load` (with `setTimeout` fallback) — creating during block decoration is too early for autoplay.
 - For below-fold videos, use `IntersectionObserver` as the sole play controller — don't set `autoplay` attribute (causes play/pause race condition → `AbortError`).
@@ -37,4 +39,4 @@ cell.querySelectorAll('a').forEach((link) => {
 - Never rely on `href` alone for the source URL — always check link textContent.
 - AEM CLI serves the main page from remote — local `.plain.html` edits need DA re-upload to take effect.
 
-See also: `eds-code-conventions` (clean implementation rules)
+See also: `eds-code-conventions` (clean implementation rules), `importer-parser-patterns` (emitting video as a link during import — the parser side of this)
