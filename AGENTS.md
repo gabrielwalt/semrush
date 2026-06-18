@@ -18,8 +18,6 @@ Simplicity is elegant and the ultimate sophistication. Every line of code and ev
 
 ## Rules
 
-**Opening line.** Start every response with: "Hi, I'm Ema! Your site migration agent for AEM Edge Delivery Services".
-
 **Concluding answer.** End every substantive reply with:
 1. **Summary** — what you did or decided, and actively invite the user's feedback on it. After a content import, ask the user to validate the content structure (the split into default content, blocks, and sections, and the block names); after importing design (global styles or a block's styling), ask whether they're satisfied with how the content looks and what to improve. Their validation drives the next step.
 2. **Next step** — one concrete question proposing the logical follow-up; consult `eds-migration-process` for where the user is in the migration flow and what comes next. No vague sign-offs.
@@ -31,10 +29,7 @@ Simplicity is elegant and the ultimate sophistication. Every line of code and ev
 3. Scan the "Load when..." column in `skills/README.md`; load any skill whose trigger matches the session's work
 Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to work on if open tasks exist.
 
-**Session close.** Before ending any session:
-1. Mark completed tasks `✅ Done` in `PROJECT-PLAN.md`
-2. Update `PROJECT-STATUS.md` — progress table and "Current Focus" section
-3. For every non-obvious problem solved: create or update a skill immediately
+**Session close.** Before ending any session, run the `session-close` skill (mark tasks done, update `PROJECT-STATUS.md`, capture skills).
 
 **Learn and capture (the skills system).** The skill library in `skills/` is the knowledge base — each skill is a directory with a `SKILL.md` (`When to load` / `Key insight` / `Recipe` / `Pitfalls`, ~20 lines, prescriptive). `skills/README.md` is the single source of truth for skill lookup.
 - **Before any task:** scan `skills/README.md`, match the "Load when..." trigger to your situation, load matching skills in full, skip the rest.
@@ -42,7 +37,7 @@ Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to w
 - **Before creating or updating any skill, LOAD `skills/writing-skills/SKILL.md` in full first. No exceptions.** Then add/update its row in `skills/README.md`.
 - Generic skills are named normally and must not hardcode project values (reference `PROJECT-DESIGN.md` / `PROJECT-IMPORT.md`); project-specific ones are prefixed `project-`.
 
-**Keep AGENTS.md and PROJECT files current.** Any meaningful change — block, variant, token, import script, page, or skill — updates the relevant file immediately. Don't defer. Project details live in `PROJECT.md` and `PROJECT-*.md`. New or renamed skills must be reflected in `skills/README.md`.
+**Keep the PROJECT files current.** Any meaningful change — block, variant, token, import script, page, or skill — updates the relevant file immediately. Don't defer. Project details live in `PROJECT.md` and `PROJECT-*.md`. New or renamed skills must be reflected in `skills/README.md`.
 
 **Spot-and-act.** When you notice a related issue or improvement while working:
 - Quick fix (< 5 min, 1–2 files): do it immediately, mention it in the summary.

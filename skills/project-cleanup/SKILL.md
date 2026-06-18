@@ -46,7 +46,6 @@ Order matters: docs first (so you're working from truth), then content-driven re
 - **`lazy-styles.css` vs `styles.css` split** — below-the-fold/section CSS belongs in lazy; eager CSS should stay minimal (perf).
 - **Unreferenced icons** in `/icons/` (EDS `decorateIcons` only pulls `:icon-name:` tokens that appear in content).
 - **Dead skills** in `skills/` — skills describing removed patterns; reconcile `skills/README.md`.
-- **`conversations/` and other historical logs** — leave them; they're an archive, not live code (don't waste the gate on them).
 
 ## Verify before claiming done (Bookend-Verification)
 - [ ] All validated pages byte-identical to baseline (the gate).
