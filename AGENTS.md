@@ -36,14 +36,11 @@ Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to w
 2. Update `PROJECT-STATUS.md` — progress table and "Current Focus" section
 3. For every non-obvious problem solved: create or update a skill immediately
 
-**Learn and capture.** Skills are the knowledge base — scan `skills/README.md` before solving any problem from scratch. Match the "Load when..." trigger phrase to your current situation. Load matching skills in full; skip non-matching ones.
-- If you encounter the same problem or workaround twice, it's a skill gap — propose capturing it before moving on.
-- After solving a non-obvious problem or being corrected → propose a new skill or an update to an existing one.
-- After multi-step tasks → review surprises and propose distilling them into skills.
-- Skills live in `skills/` — each is a directory with a `SKILL.md` file. **Before creating or updating any skill, LOAD `skills/writing-skills/SKILL.md` in full first. No exceptions.**
-- Generic skills (reusable across migrations) are named normally; project-specific ones are prefixed `project-`.
-- Generic skills must not hardcode project-specific values — reference `PROJECT-DESIGN.md` or `PROJECT-IMPORT.md`.
-- When creating or updating a skill, add or update its row in `skills/README.md`.
+**Learn and capture (the skills system).** The skill library in `skills/` is the knowledge base — each skill is a directory with a `SKILL.md` (`When to load` / `Key insight` / `Recipe` / `Pitfalls`, ~20 lines, prescriptive). `skills/README.md` is the single source of truth for skill lookup.
+- **Before any task:** scan `skills/README.md`, match the "Load when..." trigger to your situation, load matching skills in full, skip the rest.
+- **Capture immediately** when: you hit the same problem/workaround twice (a skill gap), solve something non-obvious, are corrected, or finish a multi-step task with surprises. Propose a new skill or an update before moving on.
+- **Before creating or updating any skill, LOAD `skills/writing-skills/SKILL.md` in full first. No exceptions.** Then add/update its row in `skills/README.md`.
+- Generic skills are named normally and must not hardcode project values (reference `PROJECT-DESIGN.md` / `PROJECT-IMPORT.md`); project-specific ones are prefixed `project-`.
 
 **Keep AGENTS.md and PROJECT files current.** Any meaningful change — block, variant, token, import script, page, or skill — updates the relevant file immediately. Don't defer. Project details live in `PROJECT.md` and `PROJECT-*.md`. New or renamed skills must be reflected in `skills/README.md`.
 
@@ -70,11 +67,7 @@ Do not propose a new plan if one exists in PROJECT-PLAN.md. Do not ask what to w
 
 **Never run the import script without backing up content first.** `run-bulk-import.js` writes directly to `content/*.plain.html` with no `--output-dir` flag — it silently overwrites curated content that has DA media hashes, spacing classes, and section boundaries. The import's markdown pipeline flattens section dividers, so the output is structurally different from the served content. Always `cp` the content file before running, or restore from the remote AEM endpoint after: `curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o content/<path>.plain.html`.
 
-**No Git, no AEM pushes.** Never run `git` commands or push content yourself. Never offer to commit, push, or publish — not even as a suggestion or closing question. Both happen through the Console UI:
-- **Push code:** Code mode → "Git Changes" → stage with "+" → GitHub menu → Push.
-- **Upload content:** Content mode → "Upload content" → select files → Upload → "View in AEM" → Publish.
-
-When code or content needs to go live, tell the user they can use the Console UI — never suggest you'll do it, and never frame git/push operations as a "next step".
+**No Git, no AEM pushes.** Never run `git`, and never commit, push, publish, or upload content yourself — not even as a suggestion or "next step". When code/content needs to go live, tell the user to do it via the Console UI.
 
 ---
 
@@ -93,18 +86,6 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 
 ---
 
-## Skills System
-
-Maintain a skill library in `skills/`. Skills prevent re-solving problems. Each skill is a directory with a `SKILL.md` file. The full index and trigger phrases are in `skills/README.md` — that is the single source of truth for skill lookup.
-
-- **Before any task:** scan `skills/README.md`. Match the "Load when..." phrase to your situation. Load matching skills in full; skip non-matching ones.
-- **After solving something non-obvious or being corrected:** create/update a skill immediately.
-- **End of multi-step tasks:** review surprises → skill.
-
-**Skill format:** `When to load` / `Key insight` / `Recipe` / `Pitfalls`. ~20 lines max, prescriptive, concrete. See `skills/_template.md` and `skills/writing-skills/SKILL.md`.
-
----
-
 ## Project Reference
 
 | Task | Read |
@@ -118,11 +99,6 @@ Maintain a skill library in `skills/`. Skills prevent re-solving problems. Each 
 | Prior solutions | `skills/README.md` |
 
 ---
-
-## Troubleshooting
-
-- EDS docs: `site:www.aem.live`
-- Full-text search: `curl -s https://www.aem.live/docpages-index.json | jq -r '.data[] | select(.content | test("KEYWORD"; "i")) | "\(.path): \(.title)"'`
 
 ## Quality tooling (deterministic checkers — `quality-tooling` skill)
 

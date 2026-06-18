@@ -234,13 +234,17 @@
   overflow: clip;
   cursor: pointer;
   scroll-snap-align: start;
-  transition: width 0.4s ease;
+
+  /* Close timing (transitioning TO the collapsed base state): quicker than open,
+     ~75% of the open duration — motion-craft's faster-exit rule. */
+  transition: width 0.38s var(--ease-out-quart);
 }
 
-/* Card expanded */
+/* Card expanded — open timing (transitioning TO this state): decisive ease-out-expo. */
 .carousel-card-expanded {
   width: 798px;
   cursor: default;
+  transition: width 0.5s var(--ease-out-expo);
 }
 
 /* Header — eyebrow + title, fixed width so text doesn't reflow on expand */
@@ -287,7 +291,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--transition-fast), transform 0.3s;
+  transition: background-color var(--transition-fast), transform 0.45s var(--ease-out-expo);
 }
 
 .carousel-expand:hover {
@@ -295,7 +299,8 @@
 }
 
 .carousel-card-expanded .carousel-expand {
-  transform: rotate(45deg);
+  /* +→× : rotate to a close glyph, scaled slightly so the morph reads as intentional */
+  transform: rotate(135deg) scale(1.05);
 }
 
 /* Glass frame */
@@ -322,7 +327,7 @@
   place-self: end center;
   max-width: 260px;
   margin-bottom: 36px;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 0.28s var(--ease-out-quart), transform 0.28s var(--ease-out-quart), visibility 0.28s;
 }
 
 .carousel-card-expanded .carousel-poster {
@@ -330,6 +335,7 @@
   visibility: hidden;
   position: absolute;
   pointer-events: none;
+  transform: scale(0.94) translateY(12px);
 }
 
 /* Content (visible when expanded) — flex column with absolute-positioned image */
@@ -345,7 +351,7 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.4s ease, visibility 0.4s;
+  transition: opacity 0.2s var(--ease-out-quart), visibility 0.2s;
 }
 
 .carousel-card-expanded .carousel-content {
@@ -354,20 +360,44 @@
   pointer-events: auto;
 }
 
-/* Large image — absolutely positioned glass frame, hangs off card right edge (clipped) */
+/* Revealed children stagger IN on open (after the card has widened): description then
+   CTA rise + fade in sequence. Collapsed base = down/transparent; the snappy 0.2s on the
+   collapsed state means they clear quickly on close. */
+.carousel-content > .carousel-description,
+.carousel-content > .button-wrapper {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.2s var(--ease-out-quart), transform 0.2s var(--ease-out-quart);
+}
+
+.carousel-card-expanded .carousel-content > .carousel-description {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.45s var(--ease-out-quart) 0.18s, transform 0.45s var(--ease-out-quart) 0.18s;
+}
+
+.carousel-card-expanded .carousel-content > .button-wrapper {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.45s var(--ease-out-quart) 0.28s, transform 0.45s var(--ease-out-quart) 0.28s;
+}
+
+/* Large image — absolutely positioned glass frame, hangs off card right edge (clipped).
+   Slides in from the right + scales up as the headline act of the open. */
 .carousel-large-img {
   position: absolute;
   top: -10px;
   right: -88px;
   width: 388px;
-  transform: translateX(80px);
+  transform: translateX(80px) scale(0.96);
   opacity: 0;
-  transition: transform 0.4s ease 0.1s, opacity 0.3s ease 0.1s;
+  transition: transform 0.3s var(--ease-out-quart), opacity 0.2s var(--ease-out-quart);
 }
 
 .carousel-card-expanded .carousel-large-img {
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
   opacity: 1;
+  transition: transform 0.55s var(--ease-out-expo) 0.12s, opacity 0.4s var(--ease-out-quart) 0.12s;
 }
 
 .carousel.carousel-expansible .carousel-large-img img {

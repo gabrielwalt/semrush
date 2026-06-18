@@ -42,7 +42,7 @@ For a single-row block with N cells: `.block > div > div:nth-child(1..N)`. The s
 - Making a section `display: flex` for side-by-side blocks: the `[class$="-wrapper"] + [class$="-wrapper"]` spacing rule will misalign — override `margin-top: 0` on wrappers in that section
 
 ## EDS docs lookup
-When stuck on a platform feature, full-text search the official docs (also in AGENTS.md):
+When stuck on a platform feature, full-text search the official docs:
 ```bash
 curl -s https://www.aem.live/docpages-index.json | jq -r '.data[] | select(.content | test("KEYWORD"; "i")) | "\(.path): \(.title)"'
 ```

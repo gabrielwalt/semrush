@@ -80,10 +80,15 @@ export default function initScrollAnimations(main) {
   main.querySelectorAll('.cards-icon, .cards-awards').forEach((grid) => {
     setupReveal(grid, [...grid.children]);
   });
+  // Enterprise case-study proof-point stats — a genuine 3-up list.
+  main.querySelectorAll('.case-study-stats-grid').forEach((grid) => {
+    setupReveal(grid, [...grid.children]);
+  });
 
-  // 2. COUNT-UP — the big stat figures only (stats-facts numbers, /one/ columns-stats headings).
+  // 2. COUNT-UP — the big stat figures only. stats-facts numbers, /one/ columns-stats headings,
+  //    and Enterprise case-study proof points (124% / 20% / 4hrs).
   //    Narrow to figures that START with a digit so we never count-up a worded heading.
-  main.querySelectorAll('.stats-facts .stat-count, .columns-stats h3').forEach((el) => {
+  main.querySelectorAll('.stats-facts .stat-count, .columns-stats h3, .case-study-stat-number').forEach((el) => {
     if (!/^[\d]/.test(el.textContent.trim())) return;
     onFirstView(el, countUp);
   });
