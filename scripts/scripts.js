@@ -178,28 +178,34 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
-  // Homepage styling is driven by the authored `template: template-homepage` metadata
-  // (applied as body.template-homepage by decorateTemplateAndTheme). Fallback: if a page
-  // carries the insights-widget but lacks the metadata, apply the class anyway.
+  // `template-default` is the marketing-chrome base class: it carries the marketing page
+  // gradient and any future marketing-wide styling. EVERY marketing-chrome page gets it
+  // (homepage, /one/, feature, comparison, …) so app-shell + careers chromes can opt out
+  // by simply not having it. The page's specific template class stacks on top.
+  // Homepage styling is driven by the authored `template: template-default,
+  // template-oneoff-homepage` metadata (applied by decorateTemplateAndTheme). Fallback: if a
+  // page carries the insights-widget but lacks the metadata, apply the classes anyway.
   if (doc.querySelector('.insights-widget, main .insights-widget')) {
-    document.body.classList.add('template-homepage');
+    document.body.classList.add('template-default', 'template-oneoff-homepage');
   }
   // Semrush One styling: the page-wide gradient (fading to white past the hero) lives on the
-  // template, so the hero teaser shows no box of its own. Fallback when metadata is absent:
-  // the testimonials-oneoff-one block is unique to /one/.
+  // template, so the hero teaser shows no box of its own. /one/ overrides the marketing
+  // gradient with its own but is still a marketing page → carries template-default too.
+  // Fallback when metadata is absent: the testimonials-oneoff-one block is unique to /one/.
   if (doc.querySelector('.testimonials-oneoff-one')) {
-    document.body.classList.add('template-one');
+    document.body.classList.add('template-default', 'template-one');
   }
   // Enterprise (enterprise.semrush.com root) styling lives on its stacked template
-  // (template-dark + template-enterprise). Fallback when the metadata is absent: the
-  // enterprise-platform teaser variant is unique to that page.
+  // (template-dark + template-enterprise). It overrides main's background to dark, so it
+  // does NOT carry template-default (its surface is not the marketing gradient). Fallback
+  // when the metadata is absent: the enterprise-platform teaser variant is unique to that page.
   if (doc.querySelector('.teaser-oneoff-enterprise-platform')) {
     document.body.classList.add('template-dark', 'template-enterprise');
   }
-  // Feature landing pages (/features/<tool>/). Fallback when metadata is absent: the
-  // cards-icon-tools variant is unique to this template.
+  // Feature landing pages (/features/<tool>/) — marketing chrome, inherit the gradient.
+  // Fallback when metadata is absent: the cards-icon-tools variant is unique to this template.
   if (doc.querySelector('.cards-icon-tools')) {
-    document.body.classList.add('template-feature');
+    document.body.classList.add('template-default', 'template-feature');
   }
   const main = doc.querySelector('main');
   if (main) {

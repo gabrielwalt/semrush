@@ -247,7 +247,8 @@ function afterTransformer(hookName, element, payload) {
   // page metadata when it's section-isolated, so break before it with an <hr> (the pipeline
   // turns <hr> into a section divider). Without the break it merges into the related-features
   // section and renders as visible text.
-  //   - template: applies body.template-feature.
+  //   - template: applies body.template-default (marketing-chrome base: gradient + marketing
+  //     globals) + body.template-feature (the feature-page refinements).
   //   - nav/footer: this page lives a directory deep (/features/<tool>/), but the shared nav
   //     and footer fragments live at the content root. header.js/footer.js default to
   //     `${getContentRoot()}/nav` which (stripping the last segment) would look in
@@ -255,7 +256,7 @@ function afterTransformer(hookName, element, payload) {
   //     — `/content/nav` locally and `/nav` on the published site — via new URL(meta, location).
   element.appendChild(document.createElement('hr'));
   var pageMeta = WebImporter.DOMUtils.createTable(
-    [['Metadata'], ['template', 'template-feature'], ['nav', '../nav'], ['footer', '../footer']],
+    [['Metadata'], ['template', 'template-default, template-feature'], ['nav', '../nav'], ['footer', '../footer']],
     document,
   );
   element.appendChild(pageMeta);

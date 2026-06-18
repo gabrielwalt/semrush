@@ -122,13 +122,15 @@ All templates inherit the **global foundation** (`PROJECT-DESIGN.md`: Inter/Lazz
 
 ### Marketing chrome
 
-**`marketing-landing` — `body.template-default` / `-one` / `-enterprise`**
-- **Register: R4 Flagship.** **Gist:** B1 display · B2 gradient+purple · B3 product imagery · B4 dark closing moment · B5 reveal · B6 motion — the full kit.
-- Surface: brand page gradient (`--color-teal`→lavender→white). `:dark` sub-category inverts via `section-dark` + `body.template-dark` header inversion (enterprise).
-- Type: display 84/56, full scale. Eyebrow (`--tracking-wide`) + uppercase section heading (`project-section-heading-pattern`).
-- Section styles: `section-dark` (closing CTA), tab panels (enterprise glass cards), carousels/marquee.
-- **Liberties:** re-sequence/curate the source's section order for a stronger narrative arc; we need not reproduce every band. Free to choose `:light` vs `:dark` per page's mood. One signature entrance motion is welcome. The closing dark CTA + `SEMRUSH` reveal are *required* anchors — don't drop them.
-- Differs: the only template using the full alternating-band gradient composition + dark closing CTA. Highest visual variety.
+**`marketing-landing` — body class `template-default` (marketing-chrome base, all marketing pages) + page-specific `template-oneoff-homepage` (www home) / `template-one` / `template-enterprise`**
+- **Register: R4 Flagship.** **Gist:** B1 display · B2 gradient+purple · B3 product imagery · B4 dark closing moment · B5 reveal · B6 motion — the full kit. *Verified against the LOCKED homepage 2026-06-18 — it embodies every R4 concept.*
+- Surface: the **global page gradient** (`--color-teal`→lavender→white, `100% 2814px`, on `main`) is shared by ALL pages, not a marketing-landing-only treatment; the homepage layers `pattern-hero.svg` over it. `:dark` sub-category inverts via `section-dark` + (enterprise) `body.template-dark` header inversion.
+- Type: display **84 desktop → 56 <1024** (`--font-size-display`), weight 600, tracking −0.04em (`--tracking-tight`). `text-wrap: balance` on the two-line hero. Eyebrow (`--tracking-wide`) + uppercase section heading (`project-section-heading-pattern`).
+- Block toolbox (homepage, verified): `announcement-bar`, `insights-widget` (hero tool), `media`, `marquee` (logo strip), `carousel` + `carousel-expansible` (the 9-solution accordion), `stats-facts`, `stats-visibility` (AI Visibility Index), `testimonials`, `teaser` (`teaser-oneoff-semrush-one`, `teaser-oneoff-enterprise`).
+- Section styles in use: `section-centered`, `section-flush`, `section-dark` (closing CTA), `section-oneoff-ai-visibility`.
+- **Liberties:** re-sequence/curate the section order for a stronger narrative arc; we need not reproduce every band. Free to choose `:light` vs `:dark` per page's mood. One signature entrance motion is welcome. The closing dark CTA + footer `SEMRUSH` reveal are *required* anchors — don't drop them.
+- ⚠️ **Frozen:** the homepage is style-validated. Reuse these blocks/variants/section-styles **additively** for other marketing-landing pages (`styling-additively`); never edit the homepage's tools to suit a new page.
+- Differs: the highest-variety template — full gradient composition, the 9-solution expansible carousel, dual stat blocks, and the dark closing CTA. The R4 exemplar.
 
 **`comparison` — `body.template-comparison`**
 - **Register: R3 Campaign.** **Gist:** B1 hero · B2 purple as the *highlighted own-column* · B3 tool showcase · B5 reveal.

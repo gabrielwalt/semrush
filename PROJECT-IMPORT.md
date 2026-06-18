@@ -29,7 +29,7 @@ The homepage import resolves each level from these source-DOM markers (registry 
 
 | Level | Target | Marker (source DOM) |
 |-------|--------|---------------------|
-| 1 template | `template-homepage` (body class via Metadata) | page has `.mp-hero` (emitted unconditionally for this script) |
+| 1 template | `template-default, template-oneoff-homepage` (body classes via Metadata) | page has `.mp-hero` (emitted unconditionally for this script) |
 | 4 block | `announcement-bar` | `.srf_announcement_banner`, `.srf_top_banner` |
 | 4 block | `insights-widget` + `media` (in hero) | `.mp-hero` → `hero.js` splits into widget + media |
 | 3 section style | `section-centered` | hero section (emitted by `hero.js`) |
@@ -138,7 +138,7 @@ These items cannot be reliably auto-imported and require manual content edits af
 ## Resolved (no longer manual)
 
 - **Marquee dropped** — root cause was NOT lazy-load: the marquee (`.mp-logo-marquee`) is nested **inside** `.mp-hero`, and the hero parser's `replaceWith()` destroyed it before `marquee.js` ran. Fixed in the cleanup transformer: it now moves the marquee out to be a sibling after `.mp-hero` before parsers run. `marquee.js` also now emits the `section-flush` Section Metadata. Marquee + logos + flush section now import correctly.
-- **`template-homepage` metadata** — auto-emitted by `import-homepage.js` (cascade level 1) as a page `Metadata` block.
+- **`template-default, template-oneoff-homepage` metadata** — auto-emitted by `import-homepage.js` (cascade level 1) as a page `Metadata` block. `template-default` is the marketing-chrome base (gradient); `template-oneoff-homepage` adds the homepage-only hero pattern.
 - **Testimonials author role** — `testimonials.js` extracts the role from any descendant `<p>` without strong/picture, robust to `wrapTextNodes` flattening. No manual add needed.
 - **Enterprise CTA** — both promo CTAs are authored `<em>` (secondary); `teaser-dark` recolors them. Parsers emit `<em><a>`. No manual adjust.
 - **`/one/` testimonial quote cell** — `testimonialsParser` queried the Coalition `logoImg` but never appended it, leaving the quote cell holding only the blockquote (and earlier imports dropped the quote entirely when the scroll-lazy DOM hadn't rendered). Fixed: the parser now prepends the brand logo (`.icons__testimonial--testimonial-logo img`) before the blockquote in the quote cell. The block JS reads logo (`picture img`) + `blockquote` from quote row 0. Logo lives on `cdn.semrush.com` (absolute URL, passes through `absUrl`).

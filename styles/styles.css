@@ -401,20 +401,24 @@ main img {
   width: 100%;
 }
 
-/* page gradient background (all pages) */
-main {
+/* Marketing-chrome page gradient. NOT truly global — app-shell and careers chromes
+   do not use it. Scoped to template-default (the marketing-chrome base class every
+   marketing page carries). /one/ and enterprise override main's background entirely
+   with their own; the homepage + feature pages consume this. */
+body.template-default main {
   background: linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
 }
 
-/* homepage hero pattern — only on pages with insights-widget (homepage) */
-body.template-homepage main {
+/* homepage hero pattern — a homepage-only one-off layered over the marketing gradient.
+   Applied via body.template-oneoff-homepage (homepage carries template-default + this). */
+body.template-oneoff-homepage main {
   background:
     url('/icons/pattern-hero.svg') 2px 500px / auto repeat-x,
     linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
 }
 
 @media (width >= 1024px) {
-  body.template-homepage main {
+  body.template-oneoff-homepage main {
     background:
       url('/icons/pattern-hero.svg') 2px 550px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;
@@ -422,7 +426,7 @@ body.template-homepage main {
 }
 
 @media (width < 768px) {
-  body.template-homepage main {
+  body.template-oneoff-homepage main {
     background:
       url('/icons/pattern-hero.svg') -2px 600px / auto repeat-x,
       linear-gradient(rgb(220 238 235) 0%, rgb(232 225 255) 75%, rgb(255 255 255) 100%) top / 100% 2814px no-repeat;

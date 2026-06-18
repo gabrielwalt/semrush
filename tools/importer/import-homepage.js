@@ -116,10 +116,12 @@ export default {
       }
     });
 
-    // Cascade level 1 — page template: emit the template metadata so the imported
-    // page carries body.template-homepage (matches the validated content).
+    // Cascade level 1 — page template: emit the template metadata so the imported page
+    // carries body.template-default (the marketing-chrome base class: gradient + marketing
+    // globals) PLUS body.template-oneoff-homepage (the homepage-only hero pattern overlay).
+    // decorateTemplateAndTheme splits this comma list into both classes.
     const templateMeta = WebImporter.DOMUtils.createTable(
-      [['Metadata'], ['template', `template-${PAGE_TEMPLATE.name}`]],
+      [['Metadata'], ['template', 'template-default, template-oneoff-homepage']],
       document,
     );
     main.append(templateMeta);

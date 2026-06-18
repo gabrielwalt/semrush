@@ -382,11 +382,12 @@ function afterTransformer(hookName, element, payload) {
     element.appendChild(sectionMeta);
   }
 
-  // Apply the page template (body.template-one). Authored as a Metadata block so EDS's
-  // decorateTemplateAndTheme sets the body class — primary mechanism; scripts.js only
-  // carries a fallback. Emit it as the last section, mirroring template-homepage.
+  // Apply the page template: body.template-default (marketing-chrome base) + body.template-one
+  // (the /one/ gradient + block refinements). /one/ overrides the marketing gradient with its
+  // own but is still a marketing-chrome page, so it carries template-default too.
+  // decorateTemplateAndTheme splits this comma list into both classes; scripts.js carries a fallback.
   var templateMeta = WebImporter.DOMUtils.createTable(
-    [['Metadata'], ['template', 'template-one']],
+    [['Metadata'], ['template', 'template-default, template-one']],
     document
   );
   element.appendChild(templateMeta);
