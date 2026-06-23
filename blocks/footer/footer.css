@@ -206,8 +206,19 @@ footer .footer p {
   }
 }
 
-/* Footer reveal — large SEMRUSH text behind footer */
+/* Footer reveal — large SEMRUSH text behind footer.
+   MARKETING CHROME ONLY (the brand signature, gist B5). footer.js injects .footer-reveal on
+   every page, but it shows only on the marketing chrome — i.e. when the body carries
+   `template-default` (www marketing pages) OR `template-enterprise` (enterprise pages, which
+   are marketing chrome but do NOT carry template-default). App-shell and careers chromes get
+   the same footer fragment WITHOUT the reveal (quieter, utility register). Hidden by default;
+   the marketing body classes opt it back in — additive, so the frozen homepage/enterprise keep it. */
 footer > .footer-reveal {
+  display: none;
+}
+
+body.template-default footer > .footer-reveal,
+body.template-enterprise footer > .footer-reveal {
   position: sticky;
   bottom: 0;
   z-index: 0;

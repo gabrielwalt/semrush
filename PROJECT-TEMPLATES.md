@@ -53,7 +53,7 @@ Bucketed **empirically** from each page's rendered framing class signature — A
 
 **Net:** 1 nav fragment + 1 footer fragment for the whole site. The only template-driven differences are (a) header color inversion on dark chrome (existing CSS) and (b) the reveal shown only on marketing chrome (one scoped rule). No author ever maintains a second header or footer.
 
-> **Implementation note (not yet built):** scope the reveal to marketing chrome — either `body:not(.template-default) .footer-reveal { display: none }` or guard the append in `footer.js` with `document.body.classList.contains('template-default')`. Prefer the CSS scope (keeps `footer.js` chrome-agnostic). This is a small, additive change; the frozen homepage/enterprise already get the reveal and must keep it.
+> **Implemented (2026-06-18):** the reveal is scoped to marketing chrome in `blocks/footer/footer.css` — `.footer-reveal` is `display: none` by default, restored only under `body.template-default` OR `body.template-enterprise`. ⚠️ Enterprise is marketing chrome but does NOT carry `template-default` (its classes are `template-dark template-enterprise`), so a naive `:not(.template-default)` selector would wrongly hide the reveal on the frozen enterprise page — both marketing body classes must be listed. `footer.js` stays chrome-agnostic (it injects the element on every page; CSS decides visibility). Verified: shown on homepage + enterprise (582px), hidden on app-shell + careers.
 
 ---
 

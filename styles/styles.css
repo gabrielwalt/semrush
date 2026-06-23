@@ -26,6 +26,7 @@
   --color-muted: rgb(108 110 121);
   --color-border: rgb(230 230 230);
   --color-teal: rgb(220 238 235);
+  --color-critical: rgb(255 84 84); /* negative/error state — e.g. the comparison "no" (✗) glyph */
 
   /* fonts */
   --body-font-family: "Inter", sans-serif;
@@ -538,6 +539,44 @@ main .section.section-dark a.button:any-link:hover,
 main .section.section-dark a.button:any-link:focus-visible {
   background-color: var(--color-inverse);
   color: var(--dark-color);
+}
+
+/* violet section variant — brand-violet background band (the one-purple signal, gist B2),
+   dark ink, centered. Used for closing CTA bands. The accent violet is a LIGHT surface, so
+   text stays dark-ink and the button inverts to dark for contrast. */
+main .section.section-violet {
+  background-color: var(--accent-color);
+  color: var(--dark-color);
+}
+
+main .section.section-violet > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+main .section.section-violet h1,
+main .section.section-violet h2,
+main .section.section-violet h3 {
+  color: var(--dark-color);
+}
+
+main .section.section-violet p {
+  max-width: 540px;
+}
+
+main .section.section-violet a.button.primary:any-link {
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
+  color: var(--color-inverse);
+}
+
+main .section.section-violet a.button.primary:any-link:hover,
+main .section.section-violet a.button.primary:any-link:focus-visible {
+  border-color: rgb(24 30 21 / 85%);
+  background-color: rgb(24 30 21 / 85%);
+  color: var(--color-inverse);
 }
 
 /* centered section variant */
@@ -1270,6 +1309,174 @@ body.template-feature main .section.cards-icon-container:last-of-type .default-c
   max-width: 60ch;
   margin-inline: auto;
   margin-bottom: var(--space-l);
+}
+
+/* --- Case-study / long-form editorial template -------------------------------------------
+   The success-spotlight pages (success-spotlights/{lottiefiles,barbara-ferrigno,exemplifi,
+   sleepme}) are modeled as one big default-content article body — the right model for prose
+   (eds-content-modeling: prefer default content over blocks). Without a reading-column cap the
+   body runs the full 1440px container, which is unreadable for long copy. Constrain the
+   default-content reading measure to --measure (~60ch, the token whose own comment names
+   "case-study body" as its consumer) while leaving images and the section-dark CTA close
+   full-width. Scoped to body.template-case-study → additive, touches only these 4 pages (none
+   style-validated/frozen), so no validated page can move. Lives inside this stylelint-disable
+   region with the other template-scoped .default-content-wrapper rules: the scopes are mutually
+   exclusive so they never actually collide (the documented no-descending-specificity false
+   positive — stylelint-no-descending-specificity skill). */
+body.template-case-study main > .section > .default-content-wrapper {
+  max-width: var(--measure);
+}
+
+body.template-case-study main > .section.section-dark > div,
+body.template-case-study main > .section > .default-content-wrapper :where(picture, img) {
+  max-width: none;
+}
+
+body.template-case-study main > .section > .default-content-wrapper :where(picture, img) {
+  width: 100%;
+  height: auto;
+}
+
+/* stylelint-enable no-descending-specificity */
+
+/* ==========================================================================
+   Content-hub card-grid landings (body.template-content-hub) — the hub home +
+   the content-marketing-blog index. Stacked on template-default so these layout
+   rules never touch the frozen homepage (which is template-default only). The
+   page is a sequence of: centered section header (title + intro + CTA) → a wide
+   blog-cover card grid → a free-tools card grid → a 3-up stat band → a closing
+   CTA. The goal is editorial rhythm: centered, breathing headers; image-led
+   framed cards; a clear research callout; a confident closing band.
+   ========================================================================== */
+
+/* These rules share trailing selectors (.default-content-wrapper, h3, a) with other mutually-
+   exclusive template-* scopes earlier in the file; a page is content-hub OR feature OR enterprise,
+   never two, so they never actually collide. Wrapped in a stylelint-disable region — the
+   documented project pattern for template-scoped rules (stylelint-no-descending-specificity). */
+
+/* stylelint-disable no-descending-specificity */
+
+/* Section headers (title + intro + the section's "View Resources/Read" CTA) read as
+   centered editorial intros above each grid. */
+body.template-content-hub main > .section > .default-content-wrapper {
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+body.template-content-hub main > .section > .default-content-wrapper > h2 {
+  font-size: var(--font-size-heading-l);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-s);
+}
+
+body.template-content-hub main > .section > .default-content-wrapper > p {
+  color: var(--color-muted);
+  margin: 0 auto var(--space-m);
+}
+
+/* The section-intro CTA (e.g. "View Resources") → a quiet pill-less accent link, centered. */
+body.template-content-hub main > .section > .default-content-wrapper > p:last-child a {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Blog-cover card grid: image-led cards in a tidy 3-up grid with a hairline frame, the cover
+   filling the top edge-to-edge and the text padded below. cards-icon-feature already sizes the
+   cover full-width at natural ratio; here we frame the card and pad the body. */
+body.template-content-hub main .cards-icon.cards-icon-feature > ul > li {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-l);
+  overflow: clip;
+  background: var(--background-color);
+  transition: box-shadow var(--transition-duration) var(--ease-out-quart),
+    transform var(--transition-duration) var(--ease-out-quart);
+}
+
+@media (hover: hover) {
+  body.template-content-hub main .cards-icon.cards-icon-feature > ul > li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 10%);
+  }
+}
+
+/* Cover sits flush to the card's top/side edges (cancel the card-body gap + the picture's
+   radius/margin so it meets the frame), text gets comfortable padding below. */
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body {
+  gap: 0;
+}
+
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body picture {
+  margin: 0;
+}
+
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body picture img {
+  border-radius: 0;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body > p {
+  padding-inline: var(--space-m);
+}
+
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body > p:first-of-type {
+  /* the title paragraph — first text under the cover */
+  padding-top: var(--space-m);
+}
+
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body > p:last-child {
+  padding-bottom: var(--space-m);
+  margin-top: var(--space-s);
+}
+
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body p strong {
+  font-size: var(--font-size-heading-s);
+  line-height: 1.25;
+}
+
+/* The card description: clamp to keep card heights even across the grid. The description is the
+   2nd <p> (after the title); title (strong) and CTA (em a) are excluded by :has(). */
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body p:not(:has(strong, a)) {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: var(--font-size-body-m);
+}
+
+/* The card's "Read now" link → accent text link at the card foot. */
+body.template-content-hub main .cards-icon.cards-icon-feature .cards-icon-card-body p em a {
+  color: var(--accent-color);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Research callout (the lone h3 + intro + "Check out the NEW research" between the two grids)
+   → a tinted full-width panel so it reads as a featured break, not stray text. */
+body.template-content-hub main > .section:has(> .default-content-wrapper > h3:only-of-type) > .default-content-wrapper {
+  max-width: var(--container-max-width);
+  background: linear-gradient(120deg, var(--color-teal), rgb(232 225 255));
+  border-radius: var(--radius-l);
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+body.template-content-hub main > .section > .default-content-wrapper > h3 {
+  font-size: var(--font-size-heading-l);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-s);
+}
+
+/* Closing CTA band ("Click, publish, thrive…") → centered, confident, with the primary CTA
+   as the page's pill button. It's the LAST default-content section. */
+body.template-content-hub main > .section:last-of-type > .default-content-wrapper {
+  max-width: 720px;
+}
+
+body.template-content-hub main > .section:last-of-type > .default-content-wrapper > h2 {
+  font-size: var(--font-size-heading-xl);
 }
 
 /* stylelint-enable no-descending-specificity */

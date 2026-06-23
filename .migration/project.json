@@ -1,6 +1,10 @@
 {
-  "previewOrg": "gabrielwalt",
-  "previewSite": "semrush",
   "type": "da",
-  "contentHostUrl": "https://content.da.live/gabrielwalt/semrush/"
+  "sites": {
+    "semrush": {
+      "previewOrg": "gabrielwalt",
+      "previewSite": "semrush",
+      "contentHostUrl": "https://content.da.live/gabrielwalt/semrush/"
+    }
+  }
 }

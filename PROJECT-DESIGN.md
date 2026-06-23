@@ -92,6 +92,7 @@ Each template is assigned a **register** — how loudly it expresses the brand g
 | `--accent-hover` | Darker lavender — universal CTA hover |
 | `--color-inverse` | White text/borders on dark or drenched-purple surfaces (use the token, never ad-hoc `#fff`) |
 | `--color-teal` | Brand teal — the top stop of the page gradient |
+| `--color-critical` | Negative/error state `rgb(255 84 84)` — e.g. the comparison-table "no" (✗) glyph. The only red in the palette; data-only, never a CTA. |
 
 **Brand color roles (60-30-10, per `color-craft`).** The structured system behind the tokens, confirmed across the canonical templates:
 - **Primary** — brand purple (`--accent-color` `rgb(193 144 255)`), hover `--accent-hover`. CTAs, focus, current selection, and the *one* place it goes dominant: the `resource-detail` purple-drench hero (a deliberate "Committed" exception to 60-30-10).
@@ -155,7 +156,7 @@ Tablet breakpoint (< 1024px) reduces `--font-size-display` to 56px and `--font-s
 | `--block-padding` | 60px | 30px | Block-to-block rhythm (applied as `margin-top` via the `* + *` rule) |
 | `--container-padding` | 32px | 16px | Page edge |
 | `--container-max-width` | 1440px | — | Outermost cap |
-| `--measure` | 60ch | — | Reading-column cap for long-form text (`article`, `careers-text`, `case-study-detail` body). Promoted from the recurring `60ch` literal so the new text-heavy templates share one reading measure. |
+| `--measure` | 60ch | — | Reading-column cap for long-form text. **Wired up 2026-06-18** via `body.template-case-study main > .section > .default-content-wrapper` (the success-spotlight articles), the first consumer; `article`/`careers-text` will reuse it. Images + the section-dark close opt out (stay full-width). |
 | `--nav-height` | 84px | — | Fixed nav bar |
 | `--cta-height` | 60px | — | Standard button height |
 
@@ -215,6 +216,7 @@ The de-facto global system, **measured across the style-validated/keeper pages (
 | **Hero-size-by-purpose** | display **84** (campaign: marketing-landing, tool-detail, careers-landing) · xl **64** (browse/compare: comparison, app-listing, careers-office) · l **48** (catalog/utility: app-detail, careers-text) · brand-color band (editorial: article, case-study, resource) | across the 47 templates' representative pages | Hero weight signals page intent; pick the step by the template's purpose, not by copy length. |
 | **Reading measure** | **`--measure` 60ch** on long-form body | recurs as `60ch` in `styles.css`; needed by article/text/case-study | One reading-column width across all text-heavy templates. |
 | **Accent-2 is data-only** | `--accent-cyan` for stats/data-viz, never a 2nd CTA | foundation + case-study stat bands | Keeps brand purple's 10% rare (60-30-10, `color-craft`). |
+| **Title alignment follows content** | A section's heading/eyebrow takes the **same horizontal alignment as the content that follows it**: centered content → centered title; left-aligned content → left title | index, one, enterprise, comparison | Never center a title over left-aligned content (or vice versa) — the mismatch reads as a mistake. Decide the title's alignment FROM the block beneath it, not by habit. See `layout-craft`. |
 
 > **Evidence note (2026-06-18):** the rules above the divider were measured on index/one/enterprise (the style-validated keepers). The four rules below the Heading-font row were derived from the **full 47-template cross-site analysis** (169 pages, `catalog/`) when distilling the 12 canonical templates across 3 chromes — they describe the *whole site's* gist, which is exactly what a foundation rule should be (`global-style-foundation`: capture the gist across pages, not one page). They are direction for the unbuilt templates, not yet style-validated in code.
 

@@ -1,0 +1,63 @@
+/* ratings — review-platform scores on /vs/<competitor>/ pages.
+   Three centered columns (G2 / Capterra / Gartner), each: brand logo, star-rating image,
+   and a "X,Y out of 5" score line. Measured against the original: columns space-between,
+   gap 40px; logo ~35px tall, stars ~37px (38px above), score ~38px above, grey, centered. */
+
+/* The score columns are centered, so the section title is centered too (title alignment
+   follows the content that follows it — see PROJECT-DESIGN "Title alignment"). */
+.ratings-container > .default-content-wrapper {
+  text-align: center;
+}
+
+.ratings {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: var(--space-xl);
+}
+
+.ratings .ratings-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ratings .ratings-item > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ratings .ratings-item p {
+  margin: 0;
+}
+
+.ratings .ratings-logo img {
+  height: 35px;
+  width: auto;
+}
+
+.ratings .ratings-stars {
+  margin-top: var(--space-2xl);
+}
+
+.ratings .ratings-stars img {
+  height: 37px;
+  width: auto;
+}
+
+.ratings .ratings-item p.ratings-score {
+  margin-top: var(--space-l);
+  font-size: var(--font-size-body-m);
+  color: var(--color-muted);
+}
+
+@media (width < 1024px) {
+  .ratings {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+}

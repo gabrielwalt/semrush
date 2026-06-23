@@ -61,21 +61,25 @@
   }
 }
 
-/* Feature variant: the leading image is a full product SCREENSHOT, not a small icon.
-   Show it full-width at the top of the card (rounded), with the text below. */
+/* Feature variant: the leading image is a full COVER/SCREENSHOT, not a small icon.
+   Show it full-width at the top of the card (rounded), with the text below. The image
+   must stretch to the card's full width — the picture is a block spanning the column, and
+   the img fills it. Used by both the social-media screenshot grid (~3:2) and the content-hub
+   blog-cover grid (~16:9), so DON'T force one aspect ratio: let each image keep its natural
+   proportions at full width (object-fit: cover on a 16/9 box would crop the covers). */
 .cards-icon.cards-icon-feature .cards-icon-card-body picture {
+  display: block;
+  width: 100%;
   margin-bottom: var(--space-m);
 }
 
-/* Reserve a stable 3:2 box (the screenshots are ~430x280) so the card keeps its height
-   even before the remote image loads or if it fails — otherwise height:auto collapses
-   to 0 on a not-yet-loaded SVG. */
 .cards-icon.cards-icon-feature .cards-icon-card-body picture img {
+  display: block;
   width: 100%;
-  aspect-ratio: 3 / 2;
   height: auto;
+  aspect-ratio: auto;
   border-radius: var(--radius-m);
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* stylelint-disable no-descending-specificity */

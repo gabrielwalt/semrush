@@ -1,0 +1,180 @@
+/* comparison-table — the spec matrix on /vs/<competitor>/ pages.
+   Values measured against the original semrush-vs-moz table (Refined fidelity):
+   cells 14px / padding 16px 12px / 1px bottom border; feature col muted+left; the Semrush
+   ("own") column is highlighted full-height in brand purple (gist B2 — the one purple column);
+   competitor col transparent; group bands bold ink, left; ✓ = ink, ✗ = critical red. */
+
+.comparison-table {
+  font-size: var(--font-size-body-s); /* 14px */
+  line-height: 1.4;
+
+  /* Black, translucent row rule — stays visible over the page's bg gradient (a solid light
+     --color-border washes out where the gradient darkens). */
+  --comparison-rule: rgb(0 0 0 / 12%);
+
+  /* Rounded frame around the whole matrix. */
+  border: 1px solid var(--comparison-rule);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+}
+
+/* Each authored row is a 3-column grid (feature | Semrush | competitor). Group + header rows
+   reuse the same track so columns stay aligned. */
+.comparison-table .comparison-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: stretch;
+}
+
+/* Group-band label + column-header row: bold ink. (Base first, so the higher-specificity
+   .comparison-group .comparison-group-label override below stays in ascending order.) */
+.comparison-table .comparison-group-label {
+  padding: var(--space-xxs);
+  border-bottom: 1px solid var(--comparison-rule);
+  font-weight: 600;
+  color: var(--dark-color);
+  text-align: left;
+}
+
+/* The importer wraps each cell's text in a default-content <p> whose asymmetric top/bottom
+   margins (an inherited body style) break the cells' vertical centering — zero them so the
+   flex `align-items: center` actually centers the content. */
+.comparison-table .comparison-cell p,
+.comparison-table .comparison-group-label p {
+  margin: 0;
+}
+
+/* Group band: label spans the feature + competitor columns; a purple spacer keeps the
+   Semrush highlight column continuous behind it (col 2 = the own column position). */
+.comparison-table .comparison-group {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.comparison-table .comparison-group .comparison-group-label {
+  grid-column: 1;
+}
+
+.comparison-table .comparison-group .comparison-group-spacer {
+  grid-column: 2;
+}
+
+.comparison-table .comparison-cell {
+  padding: var(--space-xxs); /* 12px — compact vertical rhythm */
+  border-bottom: 1px solid var(--comparison-rule);
+  display: flex;
+  align-items: center;
+}
+
+/* Feature name column — muted, left. */
+.comparison-table .comparison-feature {
+  color: var(--color-muted);
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* Value columns — centered. */
+.comparison-table .comparison-own,
+.comparison-table .comparison-other {
+  justify-content: center;
+  text-align: center;
+  color: var(--dark-color);
+}
+
+/* Value cell with a per-row description caption (legacy /vs/* pages carry an explanatory
+   sentence under the glyph). Stack glyph above the caption; default (no-caption) cells are
+   untouched, so the validated moz/ahrefs pages render exactly as before. */
+.comparison-table .comparison-has-caption {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xxs);
+  justify-content: flex-start;
+}
+
+.comparison-table .comparison-caption {
+  margin: 0;
+  font-size: var(--font-size-body-s);
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+
+/* The Semrush column is highlighted full-height in brand purple — the page's signature move. */
+.comparison-table .comparison-own {
+  background: var(--accent-color);
+}
+
+/* Column-header row: bold ink. */
+.comparison-table .comparison-head .comparison-cell {
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+/* ✓ / ✗ glyphs — drawn in CSS (the source used inline SVGs html2md strips). */
+.comparison-table .comparison-glyph {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+
+.comparison-table .is-yes .comparison-glyph::before {
+  /* checkmark */
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--dark-color);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.comparison-table .is-no .comparison-glyph::before,
+.comparison-table .is-no .comparison-glyph::after {
+  /* cross */
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 1px;
+  width: 2px;
+  height: 14px;
+  background: var(--color-critical);
+}
+
+.comparison-table .is-no .comparison-glyph::before { transform: rotate(45deg); }
+.comparison-table .is-no .comparison-glyph::after { transform: rotate(-45deg); }
+
+/* Partial-support / count / price text in a value cell — keep readable, not glyph-sized. */
+.comparison-table .comparison-text {
+  font-size: var(--font-size-body-s);
+}
+
+/* Round the highlighted column's top + bottom corners so the purple band reads as one unit.
+   The purple column starts at the header row (the group band above it has no own column) and
+   ends at the last row. */
+.comparison-table .comparison-head .comparison-own {
+  border-top-left-radius: var(--radius-s);
+  border-top-right-radius: var(--radius-s);
+}
+
+.comparison-table .comparison-row:last-child .comparison-own {
+  border-bottom-left-radius: var(--radius-s);
+  border-bottom-right-radius: var(--radius-s);
+}
+
+/* The frame draws the table's outer bottom edge — drop the last row's own rule so it
+   doesn't double up against the frame border. */
+.comparison-table .comparison-row:last-child .comparison-cell {
+  border-bottom: none;
+}
+
+@media (width < 768px) {
+  .comparison-table .comparison-row,
+  .comparison-table .comparison-row:has(.comparison-own) {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+
+  .comparison-table .comparison-cell {
+    padding: var(--space-xs);
+  }
+}

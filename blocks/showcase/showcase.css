@@ -1,0 +1,68 @@
+/* showcase — "See What You Can Do with Semrush": large frameless screenshots alongside
+   text, rows alternating image side. Measured against the original: image ~460px wide,
+   radius 8px (--radius-m), no frame; row gap 72px between image and text; rows stack ~96px
+   apart. On odd rows the image sits right; on even rows it flips to the left. */
+
+.showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+
+.showcase .showcase-item > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.showcase .showcase-item-flip .showcase-media {
+  order: 2;
+}
+
+.showcase .showcase-media img,
+.showcase .showcase-media picture {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-m);
+}
+
+.showcase .showcase-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase .showcase-text h3 {
+  font-size: var(--font-size-heading-m);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-m);
+}
+
+.showcase .showcase-text p {
+  font-size: var(--font-size-body-m);
+  line-height: var(--line-height-relaxed);
+  margin: 0 0 var(--space-s);
+}
+
+main .showcase .showcase-text .button-wrapper {
+  margin-top: var(--space-s);
+}
+
+@media (width < 768px) {
+  .showcase {
+    gap: var(--space-2xl);
+  }
+
+  .showcase .showcase-item > div {
+    grid-template-columns: 1fr;
+    gap: var(--space-l);
+  }
+
+  /* Stacked on mobile: image always above text, even on flipped rows. */
+  .showcase .showcase-item-flip .showcase-media {
+    order: 0;
+  }
+}

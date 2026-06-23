@@ -41,6 +41,10 @@ Equal padding everywhere = no rhythm (and the AI tell). Vary it:
 ## Cards are the lazy answer
 Use a card only when content is genuinely distinct and actionable; spacing + alignment group things naturally without a box. **Never nest cards.** Don't repeat identical icon+heading+text card grids endlessly — vary sizes, span columns, or mix card with non-card content. (craft-floor's `craft-layout-cards-lazy` owns the rule.)
 
+## The Title-Follows-Content Rule
+A section's heading/eyebrow MUST take the **same horizontal alignment as the content block beneath it**: centered content (a centered card, a centered testimonial, a 3-up centered column row) → centered title; left-aligned content (a left grid, a table, a prose column) → left title. Decide the title's alignment FROM the content that follows, never by habit or by copying another section. A centered title over left-aligned content (or the reverse) reads as a mistake, not a choice. <!-- rule:craft-layout-title-alignment -->
+- **Match-and-refuse:** if you're about to leave a heading `text-align: start` while the block under it is centered (or vice versa) — stop, set the heading's alignment to match the content.
+
 ## Optical adjustments
 - **44×44px touch target minimum** even when the visual element is smaller — expand the hit area with a pseudo-element, don't inflate the visual:
   ```css
@@ -56,6 +60,7 @@ Use a card only when content is genuinely distinct and actionable; spacing + ali
 - [ ] Rhythm: tight groupings + generous section separations, not uniform padding.
 - [ ] Right tool (flex 1D / grid 2D / container query for components).
 - [ ] Touch targets ≥44px via hit-area expansion; optical alignment where needed.
+- [ ] Every section title's alignment matches the content beneath it (Title-Follows-Content).
 - [ ] `craft-floor` scale + radius clear; EDS section/block rhythm per `vertical-spacing-system`.
 
 ## Pitfalls
