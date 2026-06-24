@@ -39,6 +39,15 @@ Timing matters more than easing for "feels right". Pick by what's moving, then t
 - Durations come from the project transition tokens (`PROJECT-DESIGN.md`), not magic numbers.
 - Don't add page-load choreography to a migrated marketing page; the content is the point, and lazy-loaded blocks make orchestrated entrances unreliable.
 
+## Recipe
+1. Button / interactive element hover: `transition: background-color 150ms ease-out, box-shadow 150ms ease-out` — never transition `all`.
+2. Overlay / dropdown open: `transition: opacity 200ms ease-out, transform 200ms ease-out, visibility 200ms` with `visibility: hidden → visible` (not `display: none`).
+3. Section entry (scroll-reveal): delegate to `scroll-reveal-animations` for the IntersectionObserver mechanics; keep duration ≤400ms.
+4. Never animate `height` or `width` — use `max-height` or `transform: scaleY()` to avoid layout recalc.
+5. Wrap the entire motion block in reduced-motion guard:
+   `@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }`
+6. Verify: toggle `prefers-reduced-motion: reduce` in DevTools — all motion must stop; functional state changes (dropdown open/close) must still work via `visibility`, not motion.
+
 ## Verify
 - [ ] Every motion has a named reason (feedback / state-change / the one entrance) — the rest cut.
 - [ ] No fade-rise-on-every-section; scroll motion is a capped sibling stagger over a real list, default already visible.

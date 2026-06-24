@@ -38,6 +38,14 @@ Only when fidelity is **Reimagined** and you're choosing a *new* font (not repro
 3. Pair on a contrast axis (serif+sans, geometric+humanist) — or one family in multiple weights (often stronger than a timid pair). Never pair two similar-but-not-identical sans.
 4. **NEVER apply this to reproduce a source brand** — identity-preservation always wins over the reject list.
 
+## Recipe
+1. Measure the type scale from ≥3 source pages (`measure-then-implement`); confirm each size recurs before tokenizing.
+2. Write tokens into the file named in `PROJECT-DESIGN.md` Token Files:
+   `--font-heading`, `--font-body`, `--font-size-display` → `--font-size-s`, `--font-weight-bold`, `--font-weight-regular`, `--line-height-heading`, `--line-height-body`.
+3. Put `@font-face` declarations in `styles/fonts.css`; always include `font-display: swap`.
+4. Wire into default-content styles: `h1 { font-family: var(--font-heading); font-size: var(--font-size-h1); line-height: var(--line-height-heading); }` — repeat for h2–h4, p, and the display size.
+5. Verify: above-fold heading loads without layout shift (`aem up`, throttle to Slow 3G, watch for CLS); body contrast ≥4.5:1 against its background.
+
 ## Verify
 - [ ] Source type measured first; committed identity reproduced (not "upgraded").
 - [ ] One ratio, 5 roles, semantic tokens, ≤4 weights with defined roles.

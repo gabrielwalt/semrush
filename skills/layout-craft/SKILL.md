@@ -53,6 +53,13 @@ A section's heading/eyebrow MUST take the **same horizontal alignment as the con
 - Text at `margin-left: 0` looks slightly indented (letterform whitespace) — a negative `-0.05em` margin optically aligns a heading to the column edge.
 - Geometrically-centered glyphs often look off-center (play icons shift right, arrows toward their direction) — nudge only when it actually looks wrong, never speculatively.
 
+## Recipe
+1. Set the global container in the file named in `PROJECT-DESIGN.md` Token Files: `--container-max-width` and `--container-padding`. Wire them via `full-width-escape-hatch`.
+2. For block-level grids: `display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-m)` — adjust minmax to the design's card width.
+3. For two-column content+media: `display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-l)` — flip order with `order` or `direction` for the reverse variant, never duplicate the block.
+4. Establish rhythm with `vertical-spacing-system` tokens — don't invent new spacing values; map the design's spacing to the nearest token.
+5. Verify: squint test at 20% opacity on each layout — one dominant focal region should be obvious; if two regions compete equally, increase the size or weight contrast of the intended primary.
+
 ## Verify
 - [ ] Squint test passes: primary / secondary / groupings readable when blurred.
 - [ ] Hierarchy uses 2–3 combined dimensions where it matters; matches the source's emphasis.

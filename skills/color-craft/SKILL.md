@@ -45,6 +45,14 @@ Heavy `rgba`/`hsla` usually means an incomplete palette — it creates unpredict
 ## Reimagined-only: color strategy
 Only when fidelity is **Reimagined** and inventing: pick a strategy — Restrained (tinted neutrals + one accent ≤10%) / Committed (one saturated color 30–60%) / Full palette (3–4 roles) / Drenched (surface IS the color) — and **name it against a real reference** ("Stripe purple-on-white restraint", "Klim #ff4500 drench"). Unnamed ambition becomes beige. Faithful/Refined reproduce the source's strategy instead.
 
+## Recipe
+1. Measure system colors from ≥3 source pages — only colors that recur across pages earn a token (`measure-then-implement`).
+2. Write tokens into the file named in `PROJECT-DESIGN.md` Token Files:
+   `--color-brand-primary`, `--color-brand-accent`, `--color-bg`, `--color-text`, `--color-text-muted`, `--color-border`, plus any dark-surface inversion set.
+3. For computed ramps use OKLCH (browser-native): `oklch(60% 0.15 240)` — not hsl. Tweak L for accessible contrast.
+4. Apply roles in default-content styles: `body { background: var(--color-bg); color: var(--color-text); }`, links `var(--color-brand-primary)`, borders `var(--color-border)`.
+5. Verify: run `node tools/quality/detect.mjs --all` — confirm no off-palette colors; check body-text contrast ≥4.5:1 and link contrast ≥3:1.
+
 ## Verify
 - [ ] Source palette measured first; committed brand colors reproduced (not swapped).
 - [ ] Roles assigned (primary/neutral/surface, semantic if needed); no rainbow.
