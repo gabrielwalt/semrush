@@ -1,6 +1,6 @@
 ---
 name: css-pitfalls-eds
-description: Common EDS CSS gotchas with fixes. Load when: fixing a stylelint no-descending-specificity error; consolidating background-* into one shorthand and a background image suddenly renders at native size.
+description: Common EDS CSS gotchas with fixes. Load when: fixing a stylelint no-descending-specificity error; a background image suddenly renders at native size after shorthand consolidation; `position: sticky` breaks due to an ancestor `overflow: hidden`; a `backdrop-filter` glass effect is invisible or corners bleed.
 ---
 
 ## Descending specificity (stylelint no-descending-specificity)
@@ -47,6 +47,28 @@ The `background` shorthand resets every sub-property it doesn't name. Folding `b
 - Shorthand without `/ size` → `background-size: auto` → native-resolution tile, often a magnified sliver. The image looks "broken" or "too large".
 - The `/` size must come immediately after position in the shorthand — `0 100% / 21px 100%`, not size before position.
 - Don't add a separate `background-size:` line after the shorthand to "fix" it — fold it in, or a future shorthand edit reintroduces the bug.
+
+---
+
+## `overflow-x: clip` vs `overflow: hidden` with sticky elements
+
+`overflow: hidden` on any ancestor (`<html>`, `<body>`, a section wrapper) **creates a scroll container and breaks `position: sticky`** on descendants — the sticky element scrolls with the page instead of holding its position.
+
+**Fix:** Use `overflow-x: clip` instead. It hides horizontal overflow without creating a scroll container, so sticky positioning works.
+
+- **Problem:** `html { overflow-x: hidden }` → an element with `position: sticky; bottom: 0` scrolls away.
+- **Fix:** `html { overflow-x: clip }` → sticky holds.
+- **Verify:** `getComputedStyle(document.documentElement).overflowX` must be `clip`, not `hidden`.
+
+---
+
+## `backdrop-filter` and glass-effect pitfalls
+
+Three non-obvious requirements for `backdrop-filter: blur()` to render correctly:
+
+1. **Non-opaque background required.** A fully opaque `background-color` prevents the blur from showing through — the glass effect is invisible. Use a semi-transparent color (e.g. `rgb(255 255 255 / 10%)` or `oklch(100% 0 0 / 0.1)`).
+2. **Border on light backgrounds.** Without a border, a glass frame blends into a light background and the effect disappears. A subtle semi-transparent white border (e.g. `border: 1px solid rgb(255 255 255 / 60%)`) makes the frame visible.
+3. **Inner border-radius must account for padding.** If the frame has `border-radius: R` and `padding: P`, the inner element needs `border-radius: calc(R - P)` — otherwise its corners bleed outside the frame's rounded edge.
 
 ---
 

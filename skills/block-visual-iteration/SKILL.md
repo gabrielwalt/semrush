@@ -1,6 +1,6 @@
 ---
 name: block-visual-iteration
-description: Systematic visual comparison workflow for iterating a block toward pixel-match with the original site. Use PROACTIVELY when asked to improve, iterate, critique, or visually compare any block. Extends EXCAT `excat-visual-critique`.
+description: Systematic visual comparison workflow for closing pixel-match deltas on a content-validated block. Use AFTER a block's content has been validated (GATE 1), when the task is precise delta-closure against the original — not for ad-hoc styling or iteration. Extends EXCAT `excat-visual-critique`.
 ---
 
 When asked to visually improve a block, follow this recipe instead of ad-hoc screenshot comparisons.

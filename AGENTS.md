@@ -92,3 +92,25 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 | Migration progress | `PROJECT-STATUS.md` |
 | Implementation gap tasks | `PROJECT-PLAN.md` |
 | Prior solutions | `skills/README.md` |
+
+---
+
+## Project Files
+
+`PROJECT-*.md` files are the shared memory of a migration — structured documents the agent reads every session and updates as the project evolves. The agent is the primary consumer (tools parse them, skills read them), but they are human-readable too.
+
+**Required before quality tools work:**
+- `PROJECT-DESIGN.md` — `tools/quality/detect.mjs` loads the palette and token allow-list from this file. Must have at least a `## Design Tokens` section with the project's CSS `:root` tokens before the checker can run meaningfully.
+- `PROJECT-STATUS.md` — `tools/quality/project-state.mjs` reads the `## Pages` table. Pre-fill the column headers (`| Page | File | Content ✓ | Style ✓ |`) exactly so the parser works on day one.
+
+| File | Purpose | When to create / update |
+|------|---------|------------------------|
+| `PROJECT.md` | Site URL, target EDS repo, authoring model, team contacts | Create at project start; update if scope changes |
+| `PROJECT-DESIGN.md` | Migration strategy, design tokens, type scale, color, spacing, breakpoints, block inventory | Create stub at start; fill `## Migration Strategy` after `migration-orientation`; fill tokens after `global-style-foundation` |
+| `PROJECT-STATUS.md` | Per-page validation state — content gate (GATE 1) and style gate (GATE 2) | Create stub at start; update each page row as gates pass |
+| `PROJECT-PLAN.md` | Executable task list (gaps and enhancements) | Create when the first task is written; update in real time — mark done immediately |
+| `PROJECT-BLOCKS.md` | Block + variant + section-style inventory; one-off registry | Update each time a new block, variant, or section style is validated |
+| `PROJECT-IMPORT.md` | Import strategy, URL sets, parser strategy, template-to-parser mapping | Fill after site scope and template consolidation |
+| `PROJECT-TEMPLATES.md` | Page template inventory (chrome → template → sub-category hierarchy) | Fill during site catalog phase |
+
+Template stubs ship with section headings pre-filled and an italicized instruction under each heading — `*[Agent: record X here after running Y.]*` — so the agent knows what to write and when. Do not fill a section with invented values; leave the instruction in place until the real data exists.

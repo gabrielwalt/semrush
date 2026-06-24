@@ -30,7 +30,7 @@ Tracks which files from the Semrush project should be carried into a future fork
 
 | File | Decision | Notes |
 |------|----------|-------|
-| `AGENTS.md` | ✏️ Keep (needs work) | Core EMA identity and rules. Strip Semrush-specific Named Rules. Keep: governing principles, session rules, skill-capture discipline, code-is-truth, no-git rule. **Add: a `## Project Files` section** listing every `PROJECT-*.md` file, its purpose, and when the agent should create/update it — so a fresh boilerplate agent knows how to initialize the project. |
+| `AGENTS.md` | ✏️ Keep (needs work) | Core EMA identity and rules. **✅ `## Project Files` section added** — lists every `PROJECT-*.md` file, its purpose, and create/update trigger; notes `PROJECT-DESIGN.md`/`PROJECT-STATUS.md` are required before `detect.mjs`/`project-state.mjs` work. Remaining: strip Semrush-specific Named Rules. Keep: governing principles, session rules, skill-capture discipline, code-is-truth, no-git rule. |
 | `CLAUDE.md` | ✏️ Keep (needs work) | Has `aem up` commands, lint scripts. Update for boilerplate context (remove Semrush-specific paths). |
 | `PROJECT.md` | 📄 Template | Basic project identity: site URL, target EDS repo, authoring model, team contacts. Agent fills after `migration-orientation`. |
 | `PROJECT-DESIGN.md` | 📄 Template | **Critical** — quality tools (`detect.mjs`) load their palette and token allow-list from this file. Sections: `## Migration Strategy`, `## Design Tokens`, `## Typography`, `## Color`, `## Spacing`, `## Breakpoints`, `## Block Inventory`. Agent fills progressively: strategy after orientation, tokens after global-style-foundation. |
@@ -138,9 +138,9 @@ The runner and static importer are generalizable infrastructure. The import scri
 
 | Skill | What to change |
 |-------|---------------|
-| `eds-content-modeling` | References to Semrush-specific template names or token values in examples; check and genericize. |
+| `eds-content-modeling` | ~~References to Semrush-specific template names or token values in examples; check and genericize.~~ **✅ Verified 2026-06-24 — no Semrush-specific content found. No edit needed. Move to Always keep.** |
 | `project-cleanup` | Strip references to Semrush-specific file paths and block names. Generalize the cleanup pass structure. |
-| `project-import-script-bundling` | Strip Semrush-specific script names (`aem-import-bundle.sh`, `run-bulk-import.js` paths). Extract the generic "back up before bulk import" discipline into `marker-driven-import` or a new short skill. Then exclude this skill. |
+| `project-import-script-bundling` | **✅ Backup rule extracted** — the generic "back up before bulk import" discipline (`cp` backup + `curl` restore) now lives self-contained in `marker-driven-import`, which no longer defers to this skill. Remaining: strip Semrush-specific script names (`aem-import-bundle.sh`, `run-bulk-import.js` paths) if any reusable bundling guidance is worth keeping, otherwise exclude. |
 
 ### Exclude (Semrush-specific, belong only in this project)
 
@@ -148,19 +148,21 @@ The runner and static importer are generalizable infrastructure. The import scri
 |-------|-------------|
 | `project-background-layering` | Semrush gradient system and `body.homepage main` pattern. |
 | `project-clip-path-bar-charts` | Semrush AI Visibility Index feature. |
-| `project-footer-reveal-pattern` | Semrush footer interaction. (Extract the `overflow-x: clip` vs `overflow: hidden` insight into `css-pitfalls-eds` before excluding.) |
-| `project-glass-surface-pattern` | Semrush visual identity. |
+| `project-footer-reveal-pattern` | Semrush footer interaction. **✅ Reusable insight extracted** — the `overflow-x: clip` vs `overflow: hidden` sticky-positioning rule now lives in `css-pitfalls-eds`. Safe to exclude. |
+| `project-glass-surface-pattern` | Semrush visual identity. **✅ Reusable insights extracted** — the three backdrop-filter pitfalls (non-opaque bg, light-bg border, inner radius = `calc(R − P)`) now live in `css-pitfalls-eds`. Safe to exclude. |
 | `project-mega-menu-content-model` | Semrush nav content structure. |
 | `project-section-heading-pattern` | Semrush eyebrow+uppercase heading pattern. |
 
 ### Skills still to write (missing from the current library — needed before the boilerplate ships)
 
+All four are planned as `draft-` prefixed skills (see `writing-skills/SKILL.md` for the draft lifecycle).
+
 | Skill | Why needed |
 |-------|-----------|
-| `project-setup` | New project start: initialize PROJECT-*.md templates, install quality tools, set up stylelint, verify `aem up` works. Without this, agents on a fresh boilerplate hit broken `detect.mjs` calls on day one. |
-| `unfreeze-page` | Protocol for unfreezing a style-validated page when the client requests a revision: identify all pages sharing its tools, run critique on each, get explicit re-validation before re-freezing. |
-| `importer-diff-workflow` | How to compare a newly generated `.plain.html` against its reference (the bash tooling — `curl` + `diff` or `wdiff`). Closes the loop in `marker-driven-import`. |
-| `source-change-handling` | What to do when the source site changes mid-migration: triage which pages/blocks are affected, decide re-import vs manual update, preserve curated content. |
+| `draft-project-setup` | New project start: initialize PROJECT-*.md templates, install quality tools, set up stylelint, verify `aem up` works. Without this, agents on a fresh boilerplate hit broken `detect.mjs` calls on day one. **Blocking — write this first.** |
+| `draft-unfreeze-page` | Protocol for unfreezing a style-validated page when the client requests a revision: identify all pages sharing its tools, run critique on each, get explicit re-validation before re-freezing. |
+| `draft-importer-diff-workflow` | How to compare a newly generated `.plain.html` against its reference (the bash tooling — `curl` + `diff` or `wdiff`). Closes the loop in `marker-driven-import`. |
+| `draft-source-change-handling` | What to do when the source site changes mid-migration: triage which pages/blocks are affected, decide re-import vs manual update, preserve curated content. |
 
 ---
 

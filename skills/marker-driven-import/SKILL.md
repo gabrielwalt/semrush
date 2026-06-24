@@ -23,7 +23,7 @@ Rules are **contextual**: inside a given page template, levels 2–6 may apply d
 
 ## Validation loop (never overwrite the reference)
 The validated `content/*.plain.html` is the reference — **never let the import overwrite it.**
-1. Import the validated page's URL to a **temporary location** (e.g. `/tmp/import-check/`), never `content/`. `run-bulk-import.js` writes to `content/` directly and has no `--output-dir` — so back up or redirect (see `project-import-script-bundling`).
+1. Import the validated page's URL to a **temporary location** (e.g. `/tmp/import-check/`), never `content/`. `run-bulk-import.js` writes to `content/` directly and has no `--output-dir` — so always back up first: `cp content/<path>.plain.html content/<path>.plain.html.bak` — or restore from the AEM endpoint: `curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o content/<path>.plain.html`.
 2. Diff the temp output against the validated `content/<page>.plain.html`.
 3. Iterate on the parser until the diff is empty (output === validated content).
 4. **Re-run this diff after every parser change** — a change that fixes page A often regresses page B. The parser is correct only when every validated page still reproduces exactly.
@@ -41,4 +41,4 @@ The validated `content/*.plain.html` is the reference — **never let the import
 - A feature-grid `<li>` containing a nested `<h3>` label + description renders GLUED (`LabelDescription`) if emitted as `li.textContent`. Emit the nested heading + its description as separate `h3`+`p`, not one bullet.
 - **Headless importer can't see client-hydrated grids.** Tool-grid/hub landing pages whose central card grid is injected by client JS import thin (hero only) even with networkidle + scroll — the grid isn't in the DOM at parse time. This is the documented SPA-hydration limit; don't burn cycles re-running. Defer those pages or import them by a different route, and note them as a known limitation.
 
-See also: `importer-parser-patterns` (table/DOM mechanics), `project-import-script-bundling` (bundle + run + the overwrite warning), `eds-content-modeling` (what the markers should map TO — the augmented-styles ladder), `eds-migration-process` (where this fits in the per-page workflow). Native `excat-import-script` / `excat-content-import` cover the same ground at a generic level — this skill adds the single-parser, marker-driven discipline and the validated-reference loop that prevent per-page script sprawl; use the native skills for boilerplate scaffolding, then consolidate here.
+See also: `importer-parser-patterns` (table/DOM mechanics), `eds-content-modeling` (what the markers should map TO — the augmented-styles ladder), `eds-migration-process` (where this fits in the per-page workflow).

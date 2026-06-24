@@ -38,7 +38,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | [regression-guard](regression-guard/SKILL.md) | About to edit CSS in `styles.css`, block wrappers, or any shared selector |
 | [quality-tooling](quality-tooling/SKILL.md) | Verifying a CSS/style change, guarding a frozen page, or starting a session — run the deterministic checkers (`tools/quality/detect.mjs`, `project-state.mjs`) instead of eyeballing rules or guessing state |
 | [styling-additively](styling-additively/SKILL.md) | Styling any page after the first; matching a new page to its original; tempted to edit an existing block/variant/section-style CSS (add new ones instead) |
-| [block-visual-iteration](block-visual-iteration/SKILL.md) | Asked to improve, iterate, critique, or visually compare any block |
+| [block-visual-iteration](block-visual-iteration/SKILL.md) | Block is content-validated (GATE 1 passed) and the task is precise pixel-match delta closure against the original site — not for ad-hoc styling, iteration, or critique |
 | [debug-block-decoration](debug-block-decoration/SKILL.md) | Block renders incorrectly (missing/partial content, images not showing) despite correct authored content; or a block renders differently across environments ("works on prod but not local") |
 | [project-cleanup](project-cleanup/SKILL.md) | "Clean up the project", remove unused blocks/CSS/JS/assets, tidy the repo, simplify, or reconcile after a scope change — safe multi-pass cleanup that never moves a validated page |
 
@@ -52,7 +52,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | [eds-dom-structure](eds-dom-structure/SKILL.md) | Selector doesn't match; need to know where EDS puts blocks in the DOM |
 | [vertical-spacing-system](vertical-spacing-system/SKILL.md) | Foundation spacing + universal block-spacing variants; blocks touching with no gap; sections too far apart; page rhythm wrong |
 | [full-width-escape-hatch](full-width-escape-hatch/SKILL.md) | Setting up the max-width container; block needs to escape it; tempted to write `!important` on wrapper |
-| [css-pitfalls-eds](css-pitfalls-eds/SKILL.md) | Fixing stylelint `no-descending-specificity` errors; a background image suddenly renders at native size after shorthand consolidation |
+| [css-pitfalls-eds](css-pitfalls-eds/SKILL.md) | Fixing stylelint `no-descending-specificity` errors; a background image suddenly renders at native size after shorthand consolidation; `position: sticky` breaks on an element whose ancestor has `overflow: hidden`; a `backdrop-filter` glass effect is invisible or inner corners bleed |
 | [eds-code-conventions](eds-code-conventions/SKILL.md) | Writing block CSS or JS; reviewing code for EDS standards |
 | [responsive-adaptation](responsive-adaptation/SKILL.md) | Making an imported page work on mobile/touch; a hover-only interaction breaks on touch; long author text overflows a block; any responsive refinement pass |
 | [interaction-states-eds](interaction-states-eds/SKILL.md) | Building/auditing a CTA, form field, nav dropdown, carousel control, tab, or clickable element; a dropdown/menu is clipped or invisible; a focus ring is missing; placeholder used as a label (the 8 interactive states) |
