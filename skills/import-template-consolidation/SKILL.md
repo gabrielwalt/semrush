@@ -1,6 +1,6 @@
 ---
 name: import-template-consolidation
-description: Collapse the many raw page templates that site-catalog discovery produces into a handful of canonical templates BEFORE bulk import — so the migration reduces the source's accumulated entropy instead of reproducing it. Use after site scope/catalog analysis returns more than ~10 templates, when raw templates carry drift-suffix names (foo, foo-b, foo-c), when planning bulk import, or whenever deciding if a "new" page type is really new.
+description: Collapse the many raw page templates that site-catalog discovery produces into a handful of canonical templates BEFORE bulk import — so the migration reduces the source's accumulated entropy instead of reproducing it. Use after site scope/catalog analysis returns more than ~10 templates, when raw templates carry drift-suffix names (foo, foo-b, foo-c), when planning bulk import, or whenever deciding if a "new" page type is really new. Extends EXCAT `excat-site-analysis`.
 ---
 
 Catalog discovery clusters by *structure*, so a site that drifted over years yields far more templates than it has real page types (e.g. `app-detail`, `app-detail-b…-e` are one type that diverged in incidental block count). **A migration is a chance to reduce entropy, not a mandate to reproduce it.** Map every raw template onto a small canonical set and normalize the drift at import time.
@@ -64,16 +64,16 @@ A sub-category is implemented as a **variant or section-style of the parent temp
 8. At import, route each page to its template (+ sub-category variant) and **normalize drift** — reproduce the canonical structure, not the page's incidental extra/missing sections.
 
 ## Anti-patterns (match-and-refuse)
-- About to generate an EDS template/parser per discovered template (`template-foo`, `template-foo-b`, …)? **Stop** — that imports the source's entropy. Map to a canonical template first.
-- Treating a suffix variant (`-b/-c/-d`) as a distinct type because its block *count* differs? **Stop** — count/order difference is drift; same appearance + purpose = one template.
-- Assigning a page to a chrome bucket by its URL path (`/apps/* → app shell`, `everything else → marketing`)? **Stop** — chrome is a rendered property, not a path property. A product-app shell can serve pages on any path. Read the actual chrome from the screenshot or the page's framing class signature, then bucket.
-- Merging two same-purpose templates that live in **different chromes** into one canonical template? **Stop** — chrome always splits; make them two templates (e.g. a marketing-chrome index and an app-shell index are different templates with the same purpose).
-- Inventing sub-categories speculatively, or minting a separate template + parser for a variation that shares chrome+dominant-element+skeleton? **Stop** — if the difference is recurring and author-meaningful it's a sub-category (a variant of the parent), and if it's a one-page quirk or a block-count difference it's drift. Neither is a new template.
-- Keeping a one-off page (single URL, no siblings) as its own canonical template "for completeness"? **Stop** — import it as a default-content one-off or DEFER it; don't mint a template + parser for one page.
-- Faithfully reproducing every section of every drifted page? **Stop** — fidelity is to the brand and the canonical model, not to historical inconsistency. Normalize toward the reference page.
+- About to generate one EDS template/parser per discovered template? **Stop** — map to canonical templates first; one raw template per EDS template imports the source's entropy.
+- Treating a suffix variant (`-b/-c/-d`) as distinct because block *count* differs? **Stop** — count/order is drift; same appearance + purpose = one template.
+- Assigning chrome bucket by URL path? **Stop** — chrome is rendered, not a path property. Read the actual frame from the screenshot or class signature.
+- Merging same-purpose templates from **different chromes**? **Stop** — chrome always splits.
+- Minting a separate template + parser for a variation that shares chrome+dominant-element+skeleton? **Stop** — recurring author-meaningful difference = sub-category (a variant); one-page quirk or block-count difference = drift. Neither is a new template.
+- Keeping a single-URL page as its own canonical template? **Stop** — import as a default-content one-off or DEFER.
+- Reproducing every section of every drifted page faithfully? **Stop** — normalize toward the reference page; fidelity is to the canonical model, not historical inconsistency.
 
 ## Pitfalls
-- Catalog "templates" are structural clusters, not editorial page types — always re-read them through the purpose lens before trusting the count.
-- A high page-count raw template (e.g. a programmatic-looking 36-pager) may still be one clean canonical type — count says "important", not "distinct".
+- Catalog "templates" are structural clusters, not editorial page types — re-read through the purpose lens before trusting the count.
+- A high page-count raw template may still be one canonical type — count says "important", not "distinct".
 
-See also: `import-content-scoping` (runs first — picks WHICH pages; this picks how FEW templates), `eds-content-modeling` (augmented-styles ladder: variant vs section-style vs template), `styling-additively` (reconcile onto existing/LOCKED blocks), `eds-migration-process` (where this sits before bulk import).
+See also: `import-content-scoping` (picks WHICH pages; this picks how FEW templates), `eds-content-modeling` (variant vs section-style vs template), `styling-additively` (reconcile onto existing/LOCKED blocks), `eds-migration-process` (where this sits before bulk import). Native `excat-site-analysis` covers the same ground at a generic level — this skill adds the Entropy-Reduction Rule, chrome-first bucketing, and the three-level hierarchy.

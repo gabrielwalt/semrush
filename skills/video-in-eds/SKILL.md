@@ -1,6 +1,6 @@
 ---
 name: video-in-eds
-description: Video playback in EDS blocks. Use when implementing video, since EDS rewrites external media URLs in link hrefs.
+description: Video playback in EDS blocks. Use when implementing video, since EDS rewrites external media URLs in link hrefs. Extends helix `generate-import-html`.
 ---
 
 EDS rewrites media URLs — the href becomes a local path without extension, but the link **textContent** preserves the original URL.
@@ -39,4 +39,4 @@ cell.querySelectorAll('a').forEach((link) => {
 - Never rely on `href` alone for the source URL — always check link textContent.
 - AEM CLI serves the main page from remote — local `.plain.html` edits need DA re-upload to take effect.
 
-See also: `eds-code-conventions` (clean implementation rules), `importer-parser-patterns` (emitting video as a link during import — the parser side of this)
+See also: `eds-code-conventions` (clean implementation rules), `importer-parser-patterns` (emitting video as a link during import — the parser side of this). Native `generate-import-html` covers the same ground at a generic level — this skill adds the relative-href requirement, extensionless-URL detection pattern, and autoplay/IntersectionObserver race-condition rules.

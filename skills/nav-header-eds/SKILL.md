@@ -1,6 +1,6 @@
 ---
 name: nav-header-eds
-description: EDS nav/header patterns. Use when header is broken, nav is invisible, mega menu won't animate, sticky isn't working, or mobile/desktop state conflicts.
+description: EDS nav/header patterns. Use when header is broken, nav is invisible, mega menu won't animate, sticky isn't working, or mobile/desktop state conflicts. Extends EXCAT `excat-navigation-orchestrator`.
 ---
 
 Nav uses `aria-expanded='true'` on desktop (set by `toggleMenu` on init). Mobile CSS (`nav[aria-expanded='true'] .nav-sections { display: block }`) applies on desktop too unless you match that specificity in media queries.
@@ -62,10 +62,9 @@ Use the project's desktop breakpoint (see `PROJECT-DESIGN.md`) for the media que
 
 ## Pitfalls
 - The nav fragment loads as an ordered list of sections (typically brand / nav-sections / tools) and the decorate code maps classes by index — if the authored content reorders sections, the classes map to the wrong region. Check the project's nav block for the expected order.
-- `position: sticky` silently fails if ANY ancestor has `overflow: hidden` — use `fixed` instead
+- `position: sticky` silently fails if ANY ancestor has `overflow: hidden` — use `fixed` instead, or `overflow-x: clip` on the ancestor (see `vertical-spacing-system`)
 - Pages without announcement bar need `--nav-top-offset` to default to `0` (CSS fallback handles this)
 - Mobile: `closeOnFocusLost` fires with `e.relatedTarget === null` on tap — `nav.contains(null)` returns false, incorrectly closing menu. Fix: `if (!isDesktop.matches) return;` at top of `closeOnFocusLost`
 - Mobile click delegation: nav item click handlers must guard against mega-panel clicks with `if (e.target.closest('.nav-mega-panel')) return;` — otherwise clicking headings, text, or list items inside panels bubbles up and closes the menu
-- Sticky fails if an ancestor has `overflow: hidden` — see `vertical-spacing-system` for the `overflow-x: clip` fix
 
-See also: `project-mega-menu-content-model` (nav content structure), `vertical-spacing-system` (sticky/overflow rule), `interaction-states-eds` (the dropdown/mega-menu overflow-clipping fix + hover-vs-touch + focus states). To migrate/instrument header or footer from the source site (needs screenshots) use native `excat-navigation-orchestrator` / `excat-footer-orchestrator` — **this skill takes precedence** for debugging the CSS/JS of the resulting nav.
+See also: `project-mega-menu-content-model` (nav content structure), `vertical-spacing-system` (sticky/overflow rule), `interaction-states-eds` (dropdown overflow-clipping + hover-vs-touch + focus states)

@@ -9,20 +9,49 @@ A skill answers: "What do I wish I'd known 30 minutes ago?"
 ## Non-negotiable rules
 
 1. **Project-specific skills MUST be prefixed with `project-`** in both the directory name and the `name` frontmatter field. "Would this help on a completely different brand migration?" — if no, it gets the prefix. No exceptions.
-2. **Skills are recipes, not state descriptions.** A skill teaches how to do something — a sequence of steps, a pattern to apply, a problem to solve. If it merely describes how something currently looks or works (layout dimensions, current color values, component behavior), it belongs in `PROJECT-BLOCKS.md` or another `PROJECT-*.md` file, not a skill. Ask: "Does this tell me *how to build or fix* something, or *what currently exists*?" — only the former is a skill.
-3. **The skill index in `AGENTS.md` MUST be updated with every skill change** — creation, rename, deletion, or key insight change. The index is the authoritative listing that loads every session. A skill not listed there may as well not exist.
-4. **Generic skills MUST NOT hardcode project-specific values** — no pixel breakpoints, no token values, no brand font names, no specific file names. Reference `PROJECT-DESIGN.md` for breakpoints/tokens, `PROJECT-IMPORT.md` for import file names, or use generic placeholders.
-5. **Never modify the Rules section of AGENTS.md when adding skills** — skills extend the rules, they don't override them. The Rules section is the core contract.
+2. **Unvalidated skills MUST be prefixed with `draft-`** in both the directory name and the `name` frontmatter field. See **Draft skills** below. No exceptions.
+3. **Skills are recipes, not state descriptions.** A skill teaches how to do something — a sequence of steps, a pattern to apply, a problem to solve. If it merely describes how something currently looks or works (layout dimensions, current color values, component behavior), it belongs in `PROJECT-BLOCKS.md` or another `PROJECT-*.md` file, not a skill. Ask: "Does this tell me *how to build or fix* something, or *what currently exists*?" — only the former is a skill.
+4. **The skill index in `README.md` MUST be updated with every skill change** — creation, rename, deletion, or key insight change. A skill not listed there may as well not exist.
+5. **Generic skills MUST NOT hardcode project-specific values** — no pixel breakpoints, no token values, no brand font names, no specific file names. Reference `PROJECT-DESIGN.md` for breakpoints/tokens, `PROJECT-IMPORT.md` for import file names, or use generic placeholders.
+6. **Never modify the Rules section of AGENTS.md when adding skills** — skills extend the rules, they don't override them. The Rules section is the core contract.
 
 ## Creating a new skill
 
 1. Create `skills/{problem-domain}/SKILL.md` at the project root
 2. **Scope**: "Would this help on a different brand migration?" If no → prefix with `project-`
-3. Add YAML frontmatter — see format below
-4. Write the body: key insight first, then recipe, then pitfalls
-5. Keep under 500 lines. Aim for ~20-30 lines for reference skills
-6. **Add a row to the skill index in `AGENTS.md`** — in the correct table (generic or project-specific) with "When to use" and "Key insight" columns
-7. Verify the `name` field matches the directory name exactly
+3. **Validated?**: "Have I used this in at least one real session and confirmed it works?" If no → prefix with `draft-` (see **Draft skills** below)
+4. Add YAML frontmatter — see format below
+5. Write the body: key insight first, then recipe, then pitfalls
+6. Keep under 500 lines. Aim for ~20-30 lines for reference skills
+7. **Add a row to `skills/README.md`** — production skills in the correct section; draft skills in the `## Draft skills` section
+8. Verify the `name` field matches the directory name exactly
+
+## Draft skills
+
+A draft skill documents intent before it has been validated by use. The recipe may have gaps; the trigger may be too broad or too narrow; the pitfalls are guesses. **Load draft skills critically** — follow the recipe, but expect to patch it mid-task and capture corrections immediately.
+
+### Lifecycle
+
+| State | Prefix | README section | When |
+|-------|--------|----------------|------|
+| Draft | `draft-` | `## Draft skills` | Newly written, not yet used in a real session |
+| Production | *(none)* | Permanent section by topic | Passed the graduation test |
+
+### Graduation test
+
+A draft graduates when you can answer **yes** to all three:
+1. I followed this skill's recipe in a real session without pausing to patch a step.
+2. The trigger fired at the right moment (not too early, not too late).
+3. The outcome matched what the skill promised.
+
+**How to graduate:** rename the directory (drop `draft-`), update `name` in frontmatter, move its README.md row to the correct production section.
+
+### Draft skill rules
+
+- **The `draft-` prefix is mandatory** — in the directory name AND the `name` frontmatter field. A skill written from theory with no real-session validation always starts as a draft, even if you're confident in it. The prefix signals to the reader "exercise judgment here."
+- **Never promote a draft by just renaming it.** You must have at least one real session where you loaded it and it worked as written.
+- **Capture every patch.** If you edit a draft's recipe mid-task because a step was wrong or missing, that edit is the draft improving. That's expected and good.
+- **Draft ≠ incomplete.** A draft can be well-written. It's unvalidated, not unfinished. Write it as if it's production-ready; the prefix is an honesty marker, not a placeholder.
 
 ## Context budget
 

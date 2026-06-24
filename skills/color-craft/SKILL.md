@@ -57,7 +57,6 @@ Only when fidelity is **Reimagined** and inventing: pick a strategy — Restrain
 - Collecting every hex the source uses into a flat token list instead of structuring into roles — reproduce the *system*, not the soup.
 - Reflex-tinting neutrals warm/cool — the cream/sand monoculture tell. Tint toward the brand's own hue or stay neutral.
 - "Inverting" light mode for dark — rebuild depth via surface lightness, not by flipping values.
-- Restating craft-floor's contrast/side-stripe numbers here — craft-floor owns the thresholds; this skill owns construction.
 - Applying the strategy/named-reference step to a Faithful/Refined import — that re-skins the brand. Reimagined only.
 
-See also: `craft-floor` (the color prohibitions + contrast thresholds this method must clear), `global-style-foundation` (routes here for the color dimension), `measure-then-implement` (measure the source palette first), `context-adaptive-blocks` (dark-surface inversion), `project-background-layering` (gradient/surface layering), `typography-craft` (light-on-dark weight compensation pairs with dark-mode color)
+See also: `craft-floor` (color prohibitions + contrast thresholds), `global-style-foundation` (routes here for the color dimension), `measure-then-implement` (measure the source palette first), `context-adaptive-blocks` (dark-surface inversion), `typography-craft` (light-on-dark weight compensation pairs with dark-mode color)

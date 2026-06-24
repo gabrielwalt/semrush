@@ -3,7 +3,7 @@ name: eds-content-modeling
 description: The authoritative decision framework for "augmented styles" — how to model authored content in EDS using a small set of baseline blocks expanded by variants, section styles, and page templates. Use when planning a block's authoring structure, deciding block vs variant vs section style vs template, or naming any of them. Not for debugging how EDS renders content (see eds-content-patterns).
 ---
 
-Augmented styles: keep a **small set of baseline blocks** and expand them with layered styling. Always escalate up this ladder only when a pattern genuinely needs the wider scope. Lower rungs are cheaper to author and test — exhaust them first. The goal is to minimize the combinatorial test matrix (variants × section styles × templates).
+Keep a **small set of baseline blocks**; expand with variants, section styles, and templates. Escalate only when a lower rung can't express it — lower rungs are cheaper to author and test. Goal: minimize the variant × section-style × template test matrix.
 
 ## The ladder (escalate only when the lower rung can't express it)
 
@@ -52,7 +52,7 @@ Rules:
 ## Blocks vs variants
 - Prefer reuse + variants over new blocks. New block only when structure is fundamentally different or a variant needs >50% new JS/CSS.
 - A variant is a CSS/JS toggle (class name) over the **same content structure** — not a different content model. Different row/cell layout = different block.
-- **Reuse before inventing.** Before inventing any new block/variant/section-style, try to reproduce the target look with what already exists — rename, switch variant, add a section style, combine them. Only add a new item for what the existing blocks/variants/section-styles genuinely can't express. See `styling-additively`.
+- **Reuse before inventing.** Before inventing any new block/variant/section-style, try to reproduce the target look with what already exists — rename, switch variant, add a section style, combine them. Only add a new item for what the existing blocks/variants/section-styles genuinely can't express.
 
 ## Variant vs. extending base styles — a key distinction
 A **variant** is for a different *look* of the same content. A **new content shape** (the same block fed a combination it hasn't handled before — e.g. a `teaser` with image-only, or title+video, or an extra heading level) is NOT a variant: handle it by **adding additive rules to the base block's CSS/JS**, not by minting a variant. Litmus test: "Is the difference *how it looks* (→ variant) or *what content it contains* (→ extend base styles)?" Keep such base additions additive so blocks on already-validated pages don't move (`styling-additively`, `regression-guard`).
@@ -71,11 +71,6 @@ Some blocks are **placeholders for an interactive feature** whose substance is *
 - These hold **little authored content** — typically just the CTA label and any on-page placeholder/helper text the author should control. Everything else (results, fetched data) is pulled from backend systems at runtime and is NOT content.
 - Still follow content ownership: the few author-facing strings (CTA text, placeholder copy) live in the content; the dynamic data does not.
 - Name them semantically by what they let the visitor do, like any block. Document clearly that the block is a placeholder and what data it pulls.
-
-## Block variant tiers
-- **Universal** — applies to many or all blocks (e.g. sibling spacing). Bare descriptive name, no prefix (e.g. `spacing-top-small`, `compact`). Define once, reuse everywhere. See the Naming convention section.
-- **Block-specific** — a visual/functional materialization of one block (or a set sharing a baseline), e.g. different carousel kinds that share common parts. Name for the materialization, applied as the block's variant class.
-- **Throw-away** — a one-off tweak for one/few instances. Prefix `oneoff-`, document scope. See "Throw-away discipline".
 
 ## Section styles
 - For styling that spans **multiple blocks** and where **default content should also be able to get it** (e.g. background color, an arbitrary multi-column layout the author fills freely). That "default content wants it too" test is the key signal for a section style over a block variant. Prefix `section-`, set via Section Metadata.
@@ -104,6 +99,6 @@ Some blocks are **placeholders for an interactive feature** whose substance is *
 - A variant that needs a different content model is a different block.
 - Section Metadata must be the LAST element inside its section div.
 - Missing source content at import time → leave empty, don't invent.
-- Reaching for a template/variant when default content + an auto-style would do — climb the ladder from the bottom.
+- Reaching for a template/variant when default content + an auto-style would do.
 
-See also: `container-block-vs-section-style` (deciding if a tabs/accordion/carousel container should be a block or a section style — a block can't hold other decorated blocks), `styling-additively` (add new blocks/variants/section-styles, don't edit existing ones — protects validated pages), `eds-content-patterns` (auto-styles: CTA + eyebrow decoration), `vertical-spacing-system` (foundation + universal spacing variants), `page-template-metadata` (template mechanism + conservative-creation rule), `importer-parser-patterns` (parser implementation), `PROJECT-BLOCKS.md` (block inventory + one-off registry). Native `edge-delivery-services:content-modeling` and `block-mapping-manager`/`block-variant-manager` cover generic modeling and cross-page variant tracking — **this augmented-styles ladder and naming convention take precedence** on this project.
+See also: `container-block-vs-section-style` (tabs/accordion that must hold other decorated blocks), `styling-additively` (add new items, don't edit existing ones), `eds-content-patterns` (CTA + eyebrow auto-styles), `vertical-spacing-system` (foundation + universal spacing variants), `page-template-metadata` (template mechanism + conservative-creation rule), `importer-parser-patterns` (parser implementation), `PROJECT-BLOCKS.md` (block inventory + one-off registry). Native `edge-delivery-services:content-modeling` and `block-mapping-manager`/`block-variant-manager` cover generic modeling — **this augmented-styles ladder and naming convention take precedence** on this project.

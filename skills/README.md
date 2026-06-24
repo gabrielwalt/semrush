@@ -52,8 +52,7 @@ Load these before making changes — they prevent regressions and guesswork.
 | [eds-dom-structure](eds-dom-structure/SKILL.md) | Selector doesn't match; need to know where EDS puts blocks in the DOM |
 | [vertical-spacing-system](vertical-spacing-system/SKILL.md) | Foundation spacing + universal block-spacing variants; blocks touching with no gap; sections too far apart; page rhythm wrong |
 | [full-width-escape-hatch](full-width-escape-hatch/SKILL.md) | Setting up the max-width container; block needs to escape it; tempted to write `!important` on wrapper |
-| [stylelint-no-descending-specificity](stylelint-no-descending-specificity/SKILL.md) | Fixing stylelint `no-descending-specificity` errors |
-| [css-background-shorthand-reset](css-background-shorthand-reset/SKILL.md) | Consolidating background-* into one shorthand; a scaled background image suddenly renders at native size |
+| [css-pitfalls-eds](css-pitfalls-eds/SKILL.md) | Fixing stylelint `no-descending-specificity` errors; a background image suddenly renders at native size after shorthand consolidation |
 | [eds-code-conventions](eds-code-conventions/SKILL.md) | Writing block CSS or JS; reviewing code for EDS standards |
 | [responsive-adaptation](responsive-adaptation/SKILL.md) | Making an imported page work on mobile/touch; a hover-only interaction breaks on touch; long author text overflows a block; any responsive refinement pass |
 | [interaction-states-eds](interaction-states-eds/SKILL.md) | Building/auditing a CTA, form field, nav dropdown, carousel control, tab, or clickable element; a dropdown/menu is clipped or invisible; a focus ring is missing; placeholder used as a label (the 8 interactive states) |
@@ -90,7 +89,6 @@ The *positive method* for building each foundation dimension well, from impeccab
 | [eds-content-modeling](eds-content-modeling/SKILL.md) | **Augmented-styles hub** — block vs variant vs section style vs page template; naming; cell/column conventions; one-off discipline |
 | [container-block-vs-section-style](container-block-vs-section-style/SKILL.md) | A container (tabs/accordion/carousel) must hold a variety of content or reuse existing blocks; inner block content renders unstyled; "block or section style?" |
 | [context-adaptive-blocks](context-adaptive-blocks/SKILL.md) | A block needs a dark/inverted look only because its CONTAINER (section style / page template) is dark; deciding whether to add a `*-dark`/`*-inverse` variant; "do authors really need the dark variant", "template already inverts colors" |
-| [plain-html-format](plain-html-format/SKILL.md) | Creating/editing `.plain.html`; sections not rendering; blocks unstyled |
 | [page-template-metadata](page-template-metadata/SKILL.md) | Applying page-level styles via metadata template classes; deciding whether a page template is warranted (be conservative) |
 | [eds-section-style-icons](eds-section-style-icons/SKILL.md) | Section needs a decorative icon or badge injected via CSS (not authored content) |
 
@@ -111,14 +109,14 @@ The *positive method* for building each foundation dimension well, from impeccab
 
 | Skill | Load when... |
 |-------|-------------|
-| [migration-orientation](migration-orientation/SKILL.md) | Starting a NEW migration before any import; user says "let's migrate X" / "start a new site"; `PROJECT-DESIGN.md` has no `## Migration Strategy` section. Establishes scope, content/design source, fidelity, reuse, constraints |
+| [migration-orientation](migration-orientation/SKILL.md) | **First thing on any new project** — user says "let's migrate X / start a new site / start a migration"; `PROJECT-DESIGN.md` has no `## Migration Strategy` section. Runs the setup conversation (authoring model, scope, analysis approach, starting page, sources, fidelity, resources, overrides, constraints) and records the strategy before anything else happens |
 | [import-content-scoping](import-content-scoping/SKILL.md) | Scoping which pages to import; site discovery returns tens of thousands of URLs; one URL group dwarfs all others; deciding marketing vs database-backed vs documentation content |
 | [import-template-consolidation](import-template-consolidation/SKILL.md) | Catalog discovery returns >~10 templates or drift-suffix names (foo, foo-b, foo-c); planning bulk import; deciding if a "new" page type is really new — collapse raw templates into a handful of canonical ones, normalizing drift |
 | [global-style-foundation](global-style-foundation/SKILL.md) | Right after orientation, before any block styling; building the global *workbench* (brand tokens, type scale, spacing, default-content styling) from the visual gist of ≥3 representative pages; global foundation missing or weak |
-| [craft-floor](craft-floor/SKILL.md) | Import is NOT pixel-perfect (Refined/Reimagined fidelity); building or auditing the foundation; regularizing a weak source design; reviewing a style system for "AI slop". Concrete type/color/spacing/state thresholds from impeccable.style |
+| [craft-floor](craft-floor/SKILL.md) | Building or auditing the global foundation at Refined/Reimagined fidelity; something looks like AI output (flat color, twin font sizes, arbitrary spacing, no focus rings). NOT for Faithful — mirror the source. Pair with `quality-tooling` to run the `[auto]` checks |
 | [marker-driven-import](marker-driven-import/SKILL.md) | User validated a page's content; designing ONE generic marker-driven parser; adding detection for a new block/variant/section-style/template; import doesn't reproduce validated content |
 | [importer-parser-patterns](importer-parser-patterns/SKILL.md) | Writing a block parser; parser validation failing; content structure questions (low-level table/DOM mechanics) |
-| [eds-migration-process](eds-migration-process/SKILL.md) | Starting a migration; deciding what to import next; checking progress; guiding the user through content/design validation gates |
+| [eds-migration-process](eds-migration-process/SKILL.md) | Migration already oriented (strategy exists in `PROJECT-DESIGN.md`) — deciding what phase or page comes next, running content/design validation gates, checking progress. **Not for new projects** — load `migration-orientation` first |
 
 ---
 
@@ -135,7 +133,14 @@ The *positive method* for building each foundation dimension well, from impeccab
 | Skill | Load when... |
 |-------|-------------|
 | [writing-skills](writing-skills/SKILL.md) | Creating a new skill; improving existing skill; auditing the skill library |
-| [commit-message](commit-message/SKILL.md) | About to write a commit message; unsure how to describe a change concisely |
+
+---
+
+## Draft skills
+
+These skills are written but not yet validated in a real session. Follow the recipe, but load critically — steps may be incomplete or triggers imprecise. Patch and capture corrections immediately. See `writing-skills` for the graduation criteria.
+
+*(No draft skills yet — new ones appear here.)*
 
 ---
 
@@ -165,8 +170,8 @@ These ship with the agent (the `excat:`, `edge-delivery-services:`, `forms-excat
 
 | Native skill | Reach for it when... | Project skill that takes precedence |
 |--------------|----------------------|--------------------------------------|
-| `excat-site-scope`, `excat-site-catalog`, `excat-url-discovery`, `excat-site-analysis`, `excat-page-analysis` | Scoping a new site: discover URLs, group pages into templates, analyze one page's structure | — (no project equivalent) |
-| `excat-site-migration` | Orchestrating a full multi-page migration | `eds-migration-process` (our 2-gate flow) |
+| `excat-site-scope`, `excat-site-catalog`, `excat-url-discovery`, `excat-site-analysis`, `excat-page-analysis` | Scoping a new site: discover URLs, group pages into templates, analyze one page's structure | `import-content-scoping` (triage marketing vs programmatic vs docs), `import-template-consolidation` (collapse raw templates before bulk import) |
+| `excat-site-migration` | Orchestrating a full multi-page migration | `migration-orientation` (runs first — authoring model, scope, sources, fidelity); then `eds-migration-process` (the 2-gate per-page flow) |
 | `excat-import-infrastructure`, `excat-import-script`, `excat-content-import` | Generating/running parsers + transformers, bulk import | `marker-driven-import`, `importer-parser-patterns`, `project-import-script-bundling` |
 | `block-mapping-manager`, `block-variant-manager` | Tracking block variants/mappings across many pages | `eds-content-modeling` (naming + variant tiers) |
 | `excat-complete-design-expert`, `excat-block-design-expert` | Extracting design tokens / styling a block from the source | `measure-then-implement`, `block-visual-iteration` |

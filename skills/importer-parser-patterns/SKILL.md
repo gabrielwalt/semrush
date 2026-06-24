@@ -1,6 +1,6 @@
 ---
 name: importer-parser-patterns
-description: Low-level mechanics of an EDS import parser — createTable() block tables, replaceWith(), img/src attribute handling, picture wrapping, Section Metadata placement. Use when writing or fixing a block parser's table output. For the overall single-parser strategy, see marker-driven-import.
+description: Low-level mechanics of an EDS import parser — createTable() block tables, replaceWith(), img/src attribute handling, picture wrapping, Section Metadata placement. Use when writing or fixing a block parser's table output. For the overall single-parser strategy, see marker-driven-import. Extends helix `generate-import-html`, EXCAT `excat-import-script`.
 ---
 
 Parser receives a source DOM element and outputs EDS block tables via `createTable()`. First row = block name. Use `element.replaceWith()` to swap in the result.
@@ -46,4 +46,4 @@ These shape what the parser emits, independent of any one block:
 - Use `innerHTML` (not `textContent`) for headings that may contain inline markup
 - Section boundaries (`<hr>`) go in `beforeTransform`, not parsers
 
-See also: `marker-driven-import` (the overall single-parser, marker-driven strategy + validation loop — read this first when designing a parser), `repo-hosted-svg-references` (**The Heavy-SVG-In-Code Rule** — when a parser pulls a large image/illustration ≥80KB, emit a `/svg/` link reference, not an embedded picture, or preview/publish 409s), `eds-content-patterns` (the auto-styles the output conventions above rely on — eyebrow, CTA buttonization), `video-in-eds` (emitting video links + source-CMS URL quirks), `project-import-script-bundling` (bundling and running), `plain-html-format` (output section structure), `eds-content-modeling` (content decisions)
+See also: `marker-driven-import` (the overall single-parser, marker-driven strategy + validation loop — read this first when designing a parser), `repo-hosted-svg-references` (**The Heavy-SVG-In-Code Rule** — when a parser pulls a large image/illustration ≥80KB, emit a `/svg/` link reference, not an embedded picture, or preview/publish 409s), `eds-content-patterns` (the auto-styles the output conventions above rely on — eyebrow, CTA buttonization), `video-in-eds` (emitting video links + source-CMS URL quirks), `project-import-script-bundling` (bundling and running), `eds-dom-structure` (output section structure), `eds-content-modeling` (content decisions).

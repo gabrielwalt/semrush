@@ -1,6 +1,6 @@
 ---
 name: craft-floor
-description: The anti-slop craft floor — concrete, checkable typography/color/spacing/state thresholds to apply when an import does NOT need to be pixel-perfect (Refined or Reimagined fidelity). Distilled from impeccable.style's Typeset/Colorize/Layout/Distill/Polish skills. Use when building or auditing the global foundation, regularizing a weak source design, or reviewing a style system for "AI slop". NOT for Faithful pixel-match imports (mirror the source instead).
+description: Concrete, checkable thresholds (type · color · spacing · motion) that every Refined or Reimagined foundation must clear. Load when building or auditing the global foundation, regularizing a weak source design, or a style system looks like AI output. NOT for Faithful imports — mirror the source instead. Run `quality-tooling` for the [auto] rules.
 ---
 
 When fidelity is **Refined or Reimagined** (not Faithful — read it from `PROJECT-DESIGN.md` → Migration Strategy, first-match-wins per-page → site default), you have license to *regularize toward craft* rather than mirror the source. This is the floor every such foundation must clear. At **Faithful**, skip this — reproduce the measured source and fix only outright defects.

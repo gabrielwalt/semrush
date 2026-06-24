@@ -1,6 +1,6 @@
 ---
 name: interaction-states-eds
-description: Make every interactive element in a migrated EDS site complete and accessible across its states — design all eight interactive states (not just hover), use :focus-visible never bare outline:none, never use a placeholder as the only label, and avoid the overflow-clipping bug that hides absolutely-positioned dropdowns/mega-menus. Use when building or auditing a CTA, form field, nav dropdown, carousel control, tab, or any clickable element; when a dropdown/menu is clipped or invisible; or when a focus ring is missing. Adapted from impeccable.style's interaction-design, framed for EDS vanilla JS/CSS.
+description: Make every interactive element in a migrated EDS site complete and accessible across its states — design all eight interactive states (not just hover), use :focus-visible never bare outline:none, never use a placeholder as the only label, and avoid the overflow-clipping bug that hides absolutely-positioned dropdowns/mega-menus. Use when building or auditing a CTA, form field, nav dropdown, carousel control, tab, or any clickable element; when a dropdown/menu is clipped or invisible; or when a focus ring is missing. Adapted from impeccable.style's interaction-design, framed for EDS vanilla JS/CSS. Extends helix `building-blocks`.
 ---
 
 A migrated element that only has a default + hover look is incomplete — keyboard users never see hover, and authored forms/menus break in states the source sample never exercised. Design the **full state set**, and avoid the two bugs that hide interactive content entirely (no focus ring, clipped overlay).
@@ -54,4 +54,4 @@ A placeholder disappears on input and fails contrast as a label. **Always give a
 - Placeholder as the only label → disappears on input, fails contrast, unnamed for AT.
 - Absolute dropdown clipped by an ancestor's `overflow` → "the menu doesn't show" — fix the overflow chain or lift to fixed/popover, don't just bump z-index.
 
-See also: `nav-header-eds` (mega-menu hover/touch + clipping in practice), `responsive-adaptation` (hover-vs-touch gating, 44px targets), `craft-floor` (craft-state-focus + reduced-motion floors), `motion-craft` (the feedback motion these states use), `layout-craft` (44px hit-area expansion)
+See also: `nav-header-eds` (mega-menu hover/touch + clipping in practice), `responsive-adaptation` (hover-vs-touch gating, 44px targets), `craft-floor` (craft-state-focus + reduced-motion floors), `motion-craft` (the feedback motion these states use), `layout-craft` (44px hit-area expansion). Native `building-blocks` covers the same ground at a generic level — this skill adds the eight-state framework, the overflow-clipping dropdown fix, and WCAG-grounded placeholder/focus-ring rules.

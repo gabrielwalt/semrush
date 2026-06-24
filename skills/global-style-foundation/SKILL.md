@@ -1,9 +1,9 @@
 ---
 name: global-style-foundation
-description: The capture-the-essence pass that builds the site's global design foundation (the workbench) BEFORE any block is styled. Analyzes several representative source pages, extracts the visual gist common to all of them, and formalizes it into brand tokens, type scale, spacing system, and default-content styling. Use right after migration-orientation and before per-block styling, or whenever the global foundation is missing/weak. NOT for styling an individual block (that's block-visual-iteration / styling-additively).
+description: The capture-the-essence pass that builds the site's global design foundation (the workbench) BEFORE any block is styled. Analyzes several representative source pages, extracts the visual gist common to all of them, and formalizes it into brand tokens, type scale, spacing system, and default-content styling. Use right after migration-orientation and before per-block styling, or whenever the global foundation is missing/weak. NOT for styling an individual block (that's block-visual-iteration / styling-additively). Extends EXCAT `excat-complete-design-expert`.
 ---
 
-Before forging any tool, level the workbench. This is **The Workbench-Before-Tools Rule** (AGENTS.md): the global foundation — brand tokens, type scale, spacing system, and the look of default content (titles, text, links, lists, images, buttons) — is what every block later sits on. Build it once, from the *whole site's* visual gist, not from one page.
+Before forging any tool, level the workbench. This is **The Workbench-Before-Tools Rule** (AGENTS.md): the global foundation — brand tokens, type scale, spacing system, and the look of default content — is what every block later sits on. Build it once, from the *whole site's* visual gist, not from one page.
 
 ## When to run
 - Right after `migration-orientation`, before the first page's per-block styling.
@@ -61,4 +61,4 @@ Success criteria, all checkable:
 - Styling blocks before the workbench exists — blocks then fight the foundation you add later. Foundation first.
 - Eyeballing values instead of measuring — load `measure-then-implement`.
 
-See also: `craft-floor` (the anti-slop thresholds to clear at Refined/Reimagined fidelity), `migration-orientation` (sets the fidelity this skill reads), `eds-migration-process` (Phase: foundation before blocks), `vertical-spacing-system` (the spacing half of the foundation), `eds-content-patterns` (default-content auto-styles), `measure-then-implement` (measure the source, don't guess), `styling-additively` (Toolbox-First per-block styling, which comes after this)
+See also: `craft-floor` (thresholds to clear at Refined/Reimagined fidelity), `migration-orientation` (sets the fidelity this skill reads), `eds-migration-process` (foundation before blocks), `vertical-spacing-system` (spacing half of the foundation), `eds-content-patterns` (default-content auto-styles), `measure-then-implement` (measure the source, don't guess), `styling-additively` (per-block styling after this). Native `excat-complete-design-expert` — this skill adds the Workbench-Before-Tools gate, fidelity-conditional craft floor, and cross-page gist extraction.

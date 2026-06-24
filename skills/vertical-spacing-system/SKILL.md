@@ -1,6 +1,6 @@
 ---
 name: vertical-spacing-system
-description: EDS vertical spacing system — section padding plus the `* + *` block-margin rule, and the section/block spacing variants. Use when blocks touch with no gap, sections are too far apart, page rhythm is off, or position:sticky fails because an ancestor has overflow:hidden.
+description: EDS vertical spacing system — section padding plus the `* + *` block-margin rule, and the section/block spacing variants. Use when blocks touch with no gap, sections are too far apart, page rhythm is off, or position:sticky fails because an ancestor has overflow:hidden. Extends helix `building-blocks`.
 ---
 
 This is the **foundation** of augmented styles (rung 1 in `eds-content-modeling`): the default vertical-margin system that makes any page typographically harmonious with zero authoring. Get it solid before reaching for variants. Sections use padding for vertical rhythm. Blocks/elements are spaced via `margin-top` on the universal `* + *` sibling selector. First/last child margins are zeroed so section padding handles the edges.
@@ -28,4 +28,4 @@ These are the canonical **universal variants** — they apply to ANY block (the 
 - Block CSS must NOT set `padding-top/bottom` on the section container — the global rule handles it
 - `overflow: hidden` on `html/body` breaks `position: sticky` — use `overflow-x: clip` instead
 
-See also: `eds-content-modeling` (where this fits in the augmented-styles ladder), `eds-dom-structure`, `full-width-escape-hatch`, `carousel-pattern-eds`
+See also: `eds-content-modeling` (where this fits in the augmented-styles ladder), `eds-dom-structure`, `full-width-escape-hatch`, `carousel-pattern-eds`. Native `building-blocks` covers the same ground at a generic level — this skill adds the two-token `* + *` pattern, the universal spacing variants, and the `overflow-x: clip` sticky fix.

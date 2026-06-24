@@ -1,6 +1,6 @@
 ---
 name: eds-code-conventions
-description: CSS and JavaScript coding conventions for EDS blocks. Use when writing block CSS, block JS, or reviewing code for EDS standards.
+description: CSS and JavaScript coding conventions for EDS blocks. Use when writing block CSS, block JS, or reviewing code for EDS standards. Extends EXCAT `excat-eds-developer`.
 ---
 
 ## CSS
@@ -37,4 +37,4 @@ EDS already delivers fast loads (no bundler, lazy blocks, optimized images) — 
 - Verify visually at `localhost:3000`
 - Screenshots under `/tmp/` only
 
-See also: `full-width-escape-hatch` (detailed recipe), `css-specificity-eds` (when rules don't apply). Native `excat-eds-developer` covers generic block development — **these conventions take precedence** for this project's clean-and-lean and no-`!important` rules.
+See also: `full-width-escape-hatch` (detailed recipe), `css-specificity-eds` (when rules don't apply). Native `excat-eds-developer` covers the same ground at a generic level — this skill adds the no-`!important` rule, systematic tokenization requirement, clean-and-lean discipline, and the performance guards specific to this project.

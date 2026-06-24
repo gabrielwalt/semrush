@@ -76,10 +76,10 @@ Numbered steps the implementing agent MUST do. Each step names an element, prope
 ```
 
 ## Pitfalls
-- Not labeling Gap vs. Enhancement → implementing agent doesn't know whether to compare against original site or not, wastes time inspecting the wrong thing.
+- Not labeling Gap vs. Enhancement → implementing agent inspects the wrong thing.
 - Writing a Gap task without seeing the gap → wrong problem described, wrong fix applied.
-- Writing an Enhancement task without checking current state → user asks for something that already exists, agent changes it to something else.
-- Verification steps that say "confirm it looks right" → subjective. Say "confirm `margin-bottom` computes to `12px`" or "confirm element has class `.foo`".
+- Writing an Enhancement task without checking current state → agent changes something that already matches.
+- Verification steps that say "confirm it looks right" → say "confirm `margin-bottom` computes to `12px`".
 - Huge tasks with 6+ sub-problems → split. Each task = one verifiable change.
 
 See also: `executing-plan-tasks` (how the implementing agent should work), `verify-before-claiming` (verifying before saying "done"), `measure-then-implement` (measuring before guessing), `regression-guard` (checking for side-effects)

@@ -1,6 +1,6 @@
 ---
 name: block-visual-iteration
-description: Systematic visual comparison workflow for iterating a block toward pixel-match with the original site. Use PROACTIVELY when asked to improve, iterate, critique, or visually compare any block.
+description: Systematic visual comparison workflow for iterating a block toward pixel-match with the original site. Use PROACTIVELY when asked to improve, iterate, critique, or visually compare any block. Extends EXCAT `excat-visual-critique`.
 ---
 
 When asked to visually improve a block, follow this recipe instead of ad-hoc screenshot comparisons.
@@ -20,7 +20,7 @@ Critique **detects and reports** (it never writes CSS itself) — its similarity
 ## Recipe (close each delta critique surfaced)
 
 ### 1. Measure original (programmatic, not screenshot)
-Use `evaluate` to extract computed styles from every element in the original block:
+Follow `measure-then-implement` for all values before implementing any fix — never guess a px value or color. Use `evaluate` to extract computed styles from every element in the original block:
 ```js
 // For each element: fontSize, fontWeight, lineHeight, letterSpacing, textTransform,
 // color, backgroundColor, padding, margin, gap, borderRadius, width, height, position
@@ -45,4 +45,4 @@ Run step 2 again. Confirm all values match. Only THEN take a screenshot for fina
 - Body-level inherited properties (font-weight, letter-spacing) affect all blocks — check global styles too
 - When fixing one element, verify you didn't regress adjacent elements (load `regression-guard`)
 
-See also: `excat-visual-critique` (**run it first, Step 0** — the extraction-based v2 critique is the delta-discovery engine; block/section/page/site modes, site mode runs parallel per-template sub-agents, reports a weighted similarity % + categorized diffs but never writes CSS), `measure-then-implement` (how to extract values + responsive verification), `regression-guard` (full regression protocol), `executing-plan-tasks` (Gap vs Enhancement verification). Division of labor: **critique discovers + scores the gaps; this loop closes them precisely.**
+See also: `excat-visual-critique` (**run it first, Step 0** — the extraction-based v2 critique is the delta-discovery engine; block/section/page/site modes, site mode runs parallel per-template sub-agents, reports a weighted similarity % + categorized diffs but never writes CSS), `measure-then-implement` (how to extract values + responsive verification), `regression-guard` (full regression protocol), `executing-plan-tasks` (Gap vs Enhancement verification). Division of labor: **critique discovers + scores the gaps; this loop closes them precisely.** Native `excat-visual-critique` covers the same ground at a generic level — this skill adds the `evaluate`-based measure-then-diff-table loop and the Step 0 / Step 1–5 fix discipline that closes each gap critique surfaces.

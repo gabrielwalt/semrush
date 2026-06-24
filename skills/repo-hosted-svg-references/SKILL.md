@@ -1,6 +1,6 @@
 ---
 name: repo-hosted-svg-references
-description: Host heavy SVGs in the code repo and reference them from content with a plain link that a global script expands into an <img>. Use when DA/html2md rejects images during preview/publish with a (409) "Images N… have failed validation" error, when an SVG is too large to live in the document, or when you need an author-friendly way to place a code-hosted image anywhere.
+description: Host heavy SVGs in the code repo and reference them from content with a plain link that a global script expands into an <img>. Use when DA/html2md rejects images during preview/publish with a (409) "Images N… have failed validation" error, when an SVG is too large to live in the document, or when you need an author-friendly way to place a code-hosted image anywhere. Extends helix `generate-import-html`.
 ---
 
 DA/html2md validates every image embedded in a document and rejects oversized ones with a **(409) "Images N, M… have failed validation"** on preview/publish. The fix: host the heavy SVG in the **code repo** (served by EDS from the codeBasePath, never validated) and reference it from content with a **plain link**; a global script swaps the link for an `<img>` at render time.
@@ -41,4 +41,4 @@ A normal link whose href is a `.svg` path under `/svg/`. The link **text becomes
 - It must run **before** `decorateBlocks` or blocks that read `picture/img` (teaser, marquee, cards-icon) won't see the image.
 - Verify the dev server serves `/svg/<name>.svg` (HTTP 200, `image/svg+xml`) — files added after the server starts are still served, but confirm with the rendered `img.naturalWidth > 0`.
 
-See also: `video-in-eds` (same idea for video: reference a URL, script builds the element), `eds-code-conventions` (clean block JS), `marker-driven-import` (parser reproduces validated content)
+See also: `video-in-eds` (same idea for video: reference a URL, script builds the element), `eds-code-conventions` (clean block JS), `marker-driven-import` (parser reproduces validated content). Native `generate-import-html` covers the same ground at a generic level — this skill adds the 80KB threshold rule, the `decorateSvgReferences()` global-script pattern, and the `createOptimizedPicture` SVG pitfall.

@@ -1,6 +1,6 @@
 ---
 name: carousel-pattern-eds
-description: Build a horizontal scroll-snap carousel/slider in EDS that bleeds past the right viewport edge with a left edge aligned to the content column. Use when building a card slider or carousel, or when scroll-snap cards won't offset/peek correctly. Covers the max() left-margin formula and section overflow clipping.
+description: Build a horizontal scroll-snap carousel/slider in EDS that bleeds past the right viewport edge with a left edge aligned to the content column. Use when building a card slider or carousel, or when scroll-snap cards won't offset/peek correctly. Covers the max() left-margin formula and section overflow clipping. Extends helix `building-blocks`.
 ---
 
 Carousels use section-level overflow clipping, margin-based left alignment, and last-child margin for right spacing. The wrapper escapes the global max-width container.
@@ -22,4 +22,4 @@ Carousels use section-level overflow clipping, margin-based left alignment, and 
 ## How the original site works
 The original site uses Swiper.js with `overflow: visible` on the swiper container and `overflow: hidden` on the parent `<section>`. The EDS implementation achieves the same effect with native scroll-snap + section overflow clipping.
 
-See also: `full-width-escape-hatch` (container constraint + full-width escape hatch), `eds-dom-structure` (wrapper chain)
+See also: `full-width-escape-hatch` (container constraint + full-width escape hatch), `eds-dom-structure` (wrapper chain). Native `building-blocks` covers the same ground at a generic level — this skill adds the `max()` left-margin formula and native scroll-snap approach for this project's Swiper-to-EDS migration.

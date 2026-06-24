@@ -14,7 +14,23 @@ node tools/quality/detect.mjs <files...> --json    # machine output
 node tools/quality/detect.mjs --all                 # scan styles/ + blocks/
 ```
 - **Exit codes:** `0` clean · `2` findings · `1` usage error.
-- **Covers (the `[auto]` rules in `craft-floor`):** `craft-color-raw-inverse` (literal `#fff` as text → use `--color-inverse`), `craft-color-off-palette` (color not in the DESIGN.md/token set, ±6/channel; structural near-grays skipped), `craft-color-side-stripe` (`border-left`/`border-right` ≥2px solid in a brand/non-gray color — impeccable's #1 ban; 1px or gray side borders are fine), `craft-color-token-dup` (a token defined in >1 base `:root` — ignores legit `@media :root` overrides), `craft-radius-raw` (raw px `border-radius` that EQUALS an existing `--radius-*` token value — the zero-visual swap; off-scale radii with no matching token are intentional component values, not flagged), `craft-token-literal` (single-value `font-size`/`padding`/`margin`/`gap` literal that EQUALS a **fixed** (non-responsive) token value → use the token; skips responsive tokens that would shrink on mobile, multi-value shorthands, off-scale values, and `:root` token definitions), `craft-token-near` (single-value `font-size`/`padding`/`margin`/`gap`/`border-radius` literal **within ~6%** of a FIXED token, **category-bound** — font→font, spacing→spacing, radius→radius, never cross-category; the discrepancy finder that catches values which drifted off the system; skips exact matches (those are `craft-token-literal`) and only suggests fixed tokens), `craft-token-unused` (a token defined but never referenced via `var()` anywhere — dead weight; **only emitted on a full `--all` scan**, since a partial file set can't see every consumer), `craft-breakpoint-stray` (a block `@media` width not in the foundation's sanctioned breakpoint set — harvested LIVE from `styles/*.css` `@media` conditions, since `@media` can't read `var()`; snap to the nearest sanctioned bp or add the new one to the foundation), `craft-motion-reduced` (animation with no `prefers-reduced-motion` guard — satisfied site-wide by the global `*` guard in styles.css), `craft-cruft-placeholder` (lorem/TODO/FIXME).
+- **Covers (the `[auto]` rules in `craft-floor` — full definitions there):**
+
+  | Rule ID | What it flags |
+  |---------|---------------|
+  | `craft-color-raw-inverse` | Literal `#fff` used as text color — use `--color-inverse` |
+  | `craft-color-off-palette` | Color not in the DESIGN.md/token set (±6/channel; structural near-grays skipped) |
+  | `craft-color-side-stripe` | `border-left`/`border-right` ≥2px solid in a brand color |
+  | `craft-color-token-dup` | Token defined in >1 base `:root` block |
+  | `craft-radius-raw` | `border-radius` literal that equals an existing `--radius-*` token value |
+  | `craft-token-literal` | Single-value size/space/gap literal that equals a fixed token value |
+  | `craft-token-near` | Single-value literal within ~6% of a fixed token (same category) |
+  | `craft-token-unused` | Token defined but never consumed via `var()` — `--all` only |
+  | `craft-breakpoint-stray` | `@media` width not in the foundation's sanctioned breakpoint set |
+  | `craft-motion-reduced` | Animation with no `prefers-reduced-motion` guard |
+  | `craft-cruft-placeholder` | `lorem` / `TODO` / `FIXME` in shipped CSS/content |
+
+  Full threshold definitions and context for each rule live in `craft-floor`.
 - **JSON shape:** `[{ file, line, ruleId, name, severity, snippet, detail }]`.
 - **Triage, don't blindly fix:** a finding on a FROZEN page is either a real issue or an allow-list gap — never force a change onto a frozen page (`styling-additively`, `regression-guard`). Block-level warnings on non-foundation CSS are the known backlog (F06/F07 deferred), not regressions.
 

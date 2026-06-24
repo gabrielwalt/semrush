@@ -1,59 +1,108 @@
 ---
 name: migration-orientation
-description: The mandatory setup conversation that runs BEFORE any import on a new migration. Establishes scope, content source, design source, fidelity level, reuse strategy, and constraints, then records the migration strategy. Use when starting a new migration, when the user says "let's migrate X" / "start a new site", or whenever PROJECT-DESIGN.md has no Migration Strategy section yet.
+description: The mandatory setup conversation that runs BEFORE any import on a new migration. Fire when PROJECT-DESIGN.md has no Migration Strategy section, or the user says "let's migrate X" / "start a new project / site". Do NOT fire when a strategy is already recorded — load `eds-migration-process` instead. Extends EXCAT `excat-site-migration`.
 ---
 
-A migration never starts by importing a page. It starts by understanding *what kind of design the source has, how the imported design should be conceptualized, and what global foundation to build*. This skill is the gate for **The Brand-Foundation-First Rule** (AGENTS.md): no content import, no styling, until the strategy below is decided and recorded.
+A migration never starts with an import. It starts with a conversation. This skill is the gate for **The Brand-Foundation-First Rule** (AGENTS.md): no content import, no styling, until every decision below is settled and recorded.
 
-## When this is required
-Run this **once per new migration**, before the first import. You are in this gate if **any** of these is true:
-- `PROJECT-DESIGN.md` has no `## Migration Strategy` section, OR
-- the user asks to migrate a site/page and no strategy is on record, OR
-- the user explicitly asks to (re)set migration direction.
-If a strategy is already recorded, **do not re-run** — read it and proceed. Tell the user it exists and offer to revise.
+If a strategy is already recorded in `PROJECT-DESIGN.md` — **stop, do not re-run**. Read it and say: "I found an existing strategy in `PROJECT-DESIGN.md` — [brief summary]. Want to continue from there, or revise something?"
 
-## The conversation — assert-then-confirm, 2–3 questions per round
-Do **not** dump all questions at once, and do **not** synthesize a full strategy from a one-line prompt for blanket sign-off. Where the source site or the user's prompt makes an answer obvious, **assert it and ask to confirm** ("This reads as *Refined* — confirm?") rather than offering an open menu. Inspect the source site first (its look, structure, page types) so your assertions are grounded, not guesses.
+## Before asking anything — inspect and assert
 
-Cover these eight inputs across the rounds:
+Before Round 1, do this silently:
+1. **Visit the source URL** (if provided) with Playwright — note the visual language, nav page types, and whether the design feels strong or dated.
+2. **Read `PROJECT-DESIGN.md`** and `PROJECT-STATUS.md` if they exist — some answers may already be recorded.
+3. **Look at `PROJECT.md`** or `AGENTS.md` for any project-level guidance.
 
-| # | Input | What to settle |
-|---|-------|----------------|
-| 1 | **Scope** | Which pages/templates are in scope, and roughly how many. One page, a template, or the whole site? |
-| 2 | **Content source** | Where the content comes from — the live source site, an export, another URL set, or author-supplied. |
-| 3 | **Design source** | Where the *look* comes from: **same site** (most common), **another site**, or a **Figma file**. May differ from the content source. |
-| 4 | **Fidelity** | The site-wide default on the **Faithful / Refined / Reimagined** scale (defined below). |
-| 5 | **Copy / improve / inspire** | How literally to treat the design source — restated by the fidelity choice; confirm it explicitly. |
-| 6 | **Reuse** | Is there an existing block library, design system, or prior EDS blocks to reuse? Reuse-first beats building new (**The Toolbox-First Rule**). |
-| 7 | **Per-page overrides** | Any page/template that needs a *different* fidelity than the site default (e.g. a weak legacy template to treat as Reimagined while the rest is Faithful). |
-| 8 | **Constraints** | Strict brand rules, templates to avoid copying, pages flagged as redesign candidates, accessibility bar, anything off-limits. |
+Derive as many answers as you can from inspection. Assert those; only ask about the rest. A well-inspected source site should resolve 4–5 of the 12 inputs before the first question lands.
 
-Round 1: scope, content source, design source. Round 2: fidelity + copy/improve/inspire + reuse. Round 3 (only if gaps remain): per-page overrides + constraints. Skip any question the source inspection or prompt already answers.
+## The conversation — assert-then-confirm, one round at a time
+
+Do not dump all questions at once. Assert what inspection makes obvious, ask only what remains open. **Offer a concrete default for every open question.** Cover the 12 inputs across up to 3 rounds. Skip any the inspection already answers.
+
+---
+
+### Round 1 — Foundations (ask these first, everything else depends on them)
+
+| # | Input | Default if not stated |
+|---|-------|-----------------------|
+| **1** | **Authoring model** — Document Authoring (DA / da.live, content in Word/Google Docs) or CrossWalk (Universal Editor / XWalk, content in AEM)? | **DA** — assume DA unless the user or project files say XWalk |
+| **2** | **Scope** — single page, a set of pages/templates, or the full site? Roughly how many pages? | **Full site** unless the prompt says otherwise |
+| **3** | **Site analysis first?** — should the agent catalog all URLs and group them into templates before touching any page, or go straight to a starting page? | **Yes for full-site scope**; no for single-page |
+| **4** | **Starting page** — which page to migrate first after orientation and the global foundation? | **Homepage**, or the page the user mentions; otherwise the most visually representative page found during inspection |
+
+Assert the authoring model immediately. For scope, if the user mentioned a URL or said "the whole site", assert that.
+
+---
+
+### Round 2 — Sources, fidelity, and resources
+
+| # | Input | Default if not stated |
+|---|-------|-----------------------|
+| **5** | **Content source** — live source site, an export/crawl, another URL, or author-supplied content? | **Live source site** at the URL provided |
+| **6** | **Design source** — same site (most common), a different site, or a Figma file? | **Same as content source** |
+| **7** | **Additional resources** — Figma links, brand guidelines, style guides, reference EDS implementations, fonts, icon sets, existing token files? | None — ask explicitly: "Do you have a Figma file, brand guidelines, or any reference to share before we build the foundation?" |
+| **8** | **Fidelity** — site-wide default on the Faithful / Refined / Reimagined scale (defined below) | **Faithful** for a strong, modern-looking source; **Refined** if the source looks dated or uneven; assert based on inspection |
+| **9** | **Templates or content to improve** — are any pages/templates meant to be enhanced or redesigned in the process, rather than just copied? | None — pure migration, unless the user signals otherwise |
+
+For fidelity: inspect the source first, then assert — don't offer a menu.
+
+---
+
+### Round 3 — Overrides and constraints (only if gaps remain after Round 2)
+
+| # | Input | Default if not stated |
+|---|-------|-----------------------|
+| **10** | **Reuse** — existing EDS block library, design system, or prior project blocks to reuse? | None |
+| **11** | **Per-page fidelity overrides** — any page/template with a different fidelity than the site default? | None |
+| **12** | **Constraints** — strict brand rules, pages flagged as off-limits, accessibility bar, templates to avoid copying, anything the agent must not touch or change? | None |
+
+---
+
+## Authoring model implications
+
+Settle in Round 1 — shapes everything downstream.
+
+| | Document Authoring (DA) | CrossWalk / XWalk |
+|---|---|---|
+| **Content lives in** | Word / Google Docs via da.live | AEM repository (JCR XML) |
+| **Block authoring** | Tables in docs → `.plain.html` | Component definitions + models JSON |
+| **Import target** | `.plain.html` files in `content/` | JCR XML via `excat-xwalk-expert` |
+| **Key skill** | `marker-driven-import`, `importer-parser-patterns` | `excat-xwalk-expert` |
+| **Default** | ✓ yes | Only if explicitly confirmed |
+
+If the user says XWalk, load `excat-xwalk-expert`. If unclear, assert DA — cost of being wrong is low.
 
 ## Fidelity scale (site default; per-page overridable)
-The dial that conditions every later styling decision. **First-match-wins** when signals conflict: (1) explicit per-page override; (2) site default recorded here; (3) Faithful, if nothing is recorded.
+
+**First-match-wins:** (1) explicit per-page override; (2) site default; (3) Faithful.
 
 | Level | Treat the design source as… | License to deviate | Use when |
 |-------|------------------------------|--------------------|----------|
-| **Faithful** | **The spec.** Match it closely — layout, spacing, color, type. | Only to fix outright bugs (broken contrast, overflow). Measure, don't invent. | Strong existing brand; stakeholder expects "the same site, on EDS". |
-| **Refined** | **A strong reference.** Keep the brand essence and structure; fix weak spots and uplevel craft to serve the foundation. | Moderate — improve rhythm, hierarchy, states; never change the brand's identity. | The site is solid but dated or uneven; the goal is "the same brand, done better". |
-| **Reimagined** | **Inspiration.** Capture the essence and the strongest concepts; rebuild on a rock-solid foundation. | High — real liberties, as long as the foundation stays graphically excellent and on-brand. | Weak/legacy source design, or an explicit redesign mandate. |
+| **Faithful** | **The spec.** Match closely — layout, spacing, color, type. | Only to fix outright bugs. Measure, don't invent. | Strong brand; stakeholder expects "the same site, on EDS". |
+| **Refined** | **A strong reference.** Keep brand essence; fix weak spots and uplevel craft. | Moderate — improve rhythm, hierarchy, states; never change brand identity. | Solid but dated; the goal is "the same brand, done better". |
+| **Reimagined** | **Inspiration.** Capture essence; rebuild for excellence. | High — real creative liberties, on-brand and graphically excellent. | Weak/legacy source, or explicit redesign mandate. |
 
 At **every** fidelity level the global foundation must be graphically rock-solid — fidelity governs *how close to the original*, never *how much craft*.
 
 ## Record the strategy (then the gate is passed)
-Write the decisions into `PROJECT-DESIGN.md` under a `## Migration Strategy` section (create it if absent — it belongs at the top, above the token inventory). Record: scope, content source, design source, **site-default fidelity**, copy/improve/inspire stance, reuse inventory, **per-page fidelity overrides** (a small table), and constraints/anti-references. This is the doc later styling work consults to know how literally to match each page.
 
-Verify before claiming the gate passed (**The Bookend-Verification Rule**): the section exists, all eight inputs are recorded, and the user has confirmed the fidelity default. Only then move on.
+Write all 12 inputs into `PROJECT-DESIGN.md` under `## Migration Strategy` (create it if absent — it belongs at the top, before the token inventory). All round-table inputs go here.
 
-## Next, not now
-Once recorded, the path is: **global design foundation** (the *workbench* — `global-style-foundation`, **The Workbench-Before-Tools Rule**) → first representative page content → gates → per-block styling. Orientation sets direction; it does not import anything itself.
+Verify before claiming done (**Bookend-Verification**): section exists, all inputs recorded, user confirmed fidelity and authoring model.
+
+## What comes next
+
+- **Full-site scope + catalog first** → run `excat-site-scope` / `excat-site-catalog` / `excat-url-discovery` to inventory pages and group into templates, then `import-content-scoping` to triage. Report back before touching any page.
+- **Single-page or skip catalog** → go directly to `global-style-foundation` (the workbench) → first page content → gates → per-block styling.
+
+Orientation sets direction. It does not import, style, or commit anything itself.
 
 ## Pitfalls
-- Jumping to "let's import the homepage" before the strategy is recorded — that's the exact failure **Brand-Foundation-First** exists to prevent.
-- Offering a four-option menu when source inspection already makes the fidelity obvious — assert and confirm instead.
-- Treating fidelity as a quality dial — Reimagined is *not* "lower quality", it's "freer of the original". Craft is non-negotiable at all three levels.
-- Recording a single fidelity and forgetting per-page overrides — a weak legacy template copied Faithfully drags the whole migration down.
-- Re-running orientation on a migration that already has a strategy — read it, don't redo it.
+- Importing before the strategy is recorded — that's what **Brand-Foundation-First** prevents.
+- Skipping the authoring model — DA vs XWalk can't be retrofitted.
+- Treating Reimagined as lower quality — it is *freer of the original*, not lower craft.
+- Recording a single fidelity and forgetting per-page overrides — a weak legacy template copied Faithfully drags the whole migration.
+- Assuming no additional resources without asking — a Figma file found in Round 2 can save days.
 
-See also: `global-style-foundation` (the very next step — build the workbench at the fidelity set here), `eds-migration-process` (the flow this gates — foundation, then pages), `styling-additively` (Toolbox-First reuse once tools exist), `eds-content-modeling` (the block/variant/section/template ladder), `measure-then-implement` (Faithful means measure, don't guess), `PROJECT-DESIGN.md` (where the strategy is recorded)
+See also: `global-style-foundation` (next step), `eds-migration-process` (full workflow this gates), `import-content-scoping` (URL triage for full-site scope), `excat-xwalk-expert` (if XWalk), `measure-then-implement` (Faithful means measure).

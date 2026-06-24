@@ -26,25 +26,13 @@ Check the **Type** label (`Gap` or `Enhancement`); if absent, infer it. See `wri
 
 ## Step 4 — Verify the fix (AFTER coding)
 
-### For Gap tasks
+Run the full verification protocol from `verify-before-claiming` before marking done. Task-specific checkpoints:
 
-1. Reload localhost. Navigate to the element.
-2. Inspect the specific property/value that was wrong. **Confirm it now matches the original site.**
-3. Visually compare both sites at the same viewport width.
-4. Check adjacent elements for regressions (load `regression-guard` if touching shared CSS).
-
-### For Enhancement tasks
-
-1. Reload localhost. Navigate to the element.
-2. **Confirm the element now has the requested state/value.**
-3. Check adjacent elements for regressions.
-
-### For both types
-
-- If the fix doesn't work: **do NOT iterate blindly.** Re-read the task. Re-inspect. Try one more approach.
-- **After 2 failed attempts: STOP.** Update the task with what you tried and why it failed. Ask the user for guidance. Blind iteration wastes time and causes regressions.
-- If the fix works but introduces a regression: undo, find a more targeted selector/approach, try again. Load `regression-guard`.
-- If no clean fix exists: document what you tried in the task. Suggest alternative approaches (maybe the problem needs to be solved at a different level — content instead of CSS, JS instead of CSS, etc.). Ask the user.
+- **Gap tasks:** confirm the specific property now matches the original site; visually compare at the same viewport width.
+- **Enhancement tasks:** confirm the element now has the requested state/value.
+- **If the fix doesn't work: do NOT iterate blindly.** Re-read the task. Re-inspect. Try one more approach.
+- **After 2 failed attempts: STOP.** Update the task with what you tried and why it failed. Ask the user.
+- If no clean fix exists: document what you tried, suggest alternative approaches (content vs CSS vs JS level), ask the user.
 
 ## Step 5 — Mark done
 

@@ -51,6 +51,5 @@ Timing matters more than easing for "feels right". Pick by what's moving, then t
 - Fade-rise on every section (the tell) instead of one earned entrance + real feedback.
 - Animating `height`/`width` for expand/collapse → jank; use `grid-template-rows` or FLIP.
 - Gating content visibility on a scroll/hover class → blank section on hidden tabs and headless renders.
-- Restating craft-floor's easing/duration/reduced-motion thresholds here — defer to it.
 
-See also: `craft-floor` (the motion thresholds this method must clear — reduced-motion, intentional, duration-token), `typography-craft` + `color-craft` + `layout-craft` (the other foundation-craft dimensions), `interaction-states-eds` (the state set that motion gives feedback for), `responsive-adaptation` (motion on touch — `@media (hover: none)`), `global-style-foundation` (foundation pass this sits under)
+See also: `craft-floor` (the motion thresholds this method must clear — reduced-motion, intentional, duration-token), `interaction-states-eds` (the state set that motion gives feedback for), `responsive-adaptation` (motion on touch — `@media (hover: none)`), `global-style-foundation` (foundation pass this sits under)

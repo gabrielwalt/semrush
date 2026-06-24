@@ -24,9 +24,8 @@ Equal padding everywhere = no rhythm (and the AI tell). Vary it:
 - **Tight grouping** between related siblings (8–12px).
 - **Generous separation** between distinct sections (48–96px).
 - **Vary within sections** — not every row needs the same gap.
-- Spacing comes from a coherent scale (`craft-floor` One-Spacing-Scale owns the rule); on our EDS sections the section/block rhythm is mechanized — see `vertical-spacing-system`.
-- **Every spacing/radius value is a token (craft-floor Systematic-Tokenization Rule).** Single-value `gap`/`padding`/`margin` and `border-radius` use a `--space-*`/`--radius-*` token; snap exact matches and **near-matches within ~6%** (60px gap→`--space-2xl` 64, 6px→`--radius-s` 5), add a token for a recurring off-scale gap (12px→`--space-xxs`), leave true one-offs literal with a `/* why */`. **Recurring layout widths tokenize too** — a container cap reused across blocks is `--container-max-width`, not a repeated `1440px`. **Responsive spacing** that changes per breakpoint (section-padding 60→30) lives ON the token via an `@media :root` override, so blocks keep one `var()`. Enforced by `craft-token-literal` (exact) + `craft-token-near` (≤6%) + `craft-radius-raw` + `craft-token-unused` (dead tokens) in `detect.mjs`; don't over-mint single-use tokens (craft-floor Don't-Over-Tokenize Rule).
-- **EDS caveat (field-tested):** "vary the spacing" does NOT mean hand-tuning each section's outer padding. On EDS the **uniform `--section-padding` IS the foundation rhythm** — varying it per-section breaks the system and any validated page. Get rhythm from *within-section* variation (block gaps, card spacing) and the **section-style spacing variants** (`section-flush`, `spacing-*`), not from bespoke per-section padding.
+- Spacing values come from the project's token scale — exact and near-matches (≤6%) snap to tokens; see `craft-floor` Systematic-Tokenization Rule and `detect.mjs` for enforcement.
+- **EDS caveat (field-tested):** "vary the spacing" does NOT mean hand-tuning each section's outer padding. On EDS the **uniform `--section-padding` IS the foundation rhythm** — varying it per-section breaks validated pages. Get rhythm from *within-section* variation (block gaps, card spacing) and the **section-style spacing variants** (`section-flush`, `spacing-*`).
 
 ## Choose the right layout tool
 - **Flexbox for 1D** (rows/columns of items: navs, button groups, card internals). Don't reach for Grid when `flex-wrap` is simpler.
@@ -67,6 +66,5 @@ A section's heading/eyebrow MUST take the **same horizontal alignment as the con
 - Reproducing the source's spacing as arbitrary one-off values instead of snapping to a coherent scale.
 - Defaulting everything to cards / a grid when flex-wrap or plain spacing would read better.
 - Inflating an icon's visual size to hit 44px instead of expanding only the hit area.
-- Restating `vertical-spacing-system`'s EDS mechanics or `craft-floor`'s scale rule here — defer to them.
 
-See also: `vertical-spacing-system` (EDS section padding + `* + *` block-margin mechanics this composition sits on), `craft-floor` (One-Spacing-Scale + One-Radius thresholds), `global-style-foundation` (routes here for the spacing/layout dimension), `measure-then-implement` (measure the source's spacing rhythm first), `carousel-pattern-eds` + `full-width-escape-hatch` (specific layout patterns), `typography-craft` + `color-craft` (the other foundation dimensions)
+See also: `vertical-spacing-system` (EDS section padding + block-margin mechanics), `craft-floor` (One-Spacing-Scale + One-Radius thresholds), `global-style-foundation` (routes here for the spacing/layout dimension), `measure-then-implement` (measure the source's spacing rhythm first)

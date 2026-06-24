@@ -25,9 +25,6 @@ A decorative element (e.g., large brand wordmark) stays pinned to the viewport b
 - **`overflow: hidden` on `<html>` or `<body>` will break sticky** — it creates a scroll container that prevents `position: sticky; bottom: 0` from working. Use `overflow-x: clip` instead — `clip` hides horizontal overflow without creating a scroll container. This was the root cause of the reveal scrolling with the page instead of sticking.
 - **`overflow: hidden` on the reveal element itself** also breaks sticky — the element needs `overflow: visible` (the default).
 
-## How it works
-As the user scrolls past the footer, the white `.footer` block (z-index: 1) scrolls up out of view. The `.footer-reveal` (z-index: 0, sticky bottom: 0) stays pinned to the viewport bottom. Since the reveal is behind the footer in z-order, it's hidden while the footer is in view and progressively revealed as the footer exits.
-
 ## Footer bottom bar pattern
 The footer bottom bar (social icons + copyright + legal links) follows this layout:
 - **Social icons**: `display: flex; gap: 0` with 40×40px click targets, 24×24px SVG icons. Use **outline-style** SVGs (stroke, not fill) except for brand marks like X/Twitter.
@@ -38,4 +35,4 @@ The footer bottom bar (social icons + copyright + legal links) follows this layo
 ## Footer content structure
 All footer blocks (footer-cta, footer-links, footer-bottom) must be in a **single section** (single outer `<div>`) in the `.plain.html` content file. If they are in separate sections, EDS renders `<hr>` dividers between them. The import script must NOT emit `<hr>` between footer blocks.
 
-See also: `vertical-spacing-system` (section spacing), `eds-dom-structure` (EDS wrapper chain), `plain-html-format` (section boundaries)
+See also: `vertical-spacing-system` (section spacing), `eds-dom-structure` (EDS wrapper chain + section structure)

@@ -1,6 +1,6 @@
 ---
 name: eds-content-patterns
-description: How EDS's runtime decoration turns authored HTML into auto-styles — content combinations that decorate predictably without a block (strong/em-link → CTA button, small-text-before-heading → eyebrow). Use when a CTA link isn't becoming a button, the button variant is wrong, an eyebrow isn't styling, or decorateButtons() isn't firing. For choosing which style to author, see eds-content-modeling.
+description: How EDS's runtime decoration turns authored HTML into auto-styles — content combinations that decorate predictably without a block (strong/em-link → CTA button, small-text-before-heading → eyebrow). Use when a CTA link isn't becoming a button, the button variant is wrong, an eyebrow isn't styling, or decorateButtons() isn't firing. For choosing which style to author, see eds-content-modeling. Extends helix `authoring-analysis`.
 ---
 
 EDS transforms authored HTML patterns into decorated elements at runtime — these are **auto-styles** (rung 2 of the augmented-styles ladder in `eds-content-modeling`): specific combinations of *default content* that decorate predictably with no block needed. The principle: an auto-style must feel logical to authors and never surprise them — keep the trigger conditions tight so it never fires when unintended. The most common auto-style: links wrapped in `<strong>` or `<em>` become styled CTA buttons.
@@ -50,4 +50,4 @@ Project-specific eyebrow + heading treatment: `project-section-heading-pattern`.
 - Block JS must not strip button formatting — style `.button` elements within the block's CSS scope
 - EDS runs `decorateButtons()` globally during page load — blocks decorated later must call it explicitly if they inject new content
 
-See also: `eds-content-modeling` (CTA type decisions), `css-specificity-eds` (specificity issues)
+See also: `eds-content-modeling` (CTA type decisions), `css-specificity-eds` (specificity issues).

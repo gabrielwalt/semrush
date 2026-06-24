@@ -49,6 +49,5 @@ Only when fidelity is **Reimagined** and you're choosing a *new* font (not repro
 - Copying the source's arbitrary sizes verbatim instead of rebuilding a coherent scale — reproduce the *intent*, regularize the *system*.
 - Applying the reflex-reject list to a Faithful/Refined import — that "corrects" the brand away from its identity. It's Reimagined-only.
 - Fixing light-on-dark on one axis (just lighter weight) — fix all three or it still reads off.
-- Restating craft-floor's numbers here — let craft-floor own the thresholds; this skill owns the method.
 
-See also: `craft-floor` (the type thresholds this method must clear), `global-style-foundation` (the foundation pass that routes here for the type dimension), `measure-then-implement` (measure the source before rebuilding), `vertical-spacing-system` (line-height as the base unit for vertical rhythm), `color-craft` + `layout-craft` (the other foundation dimensions), `context-adaptive-blocks` (dark surfaces where light-on-dark compensation applies)
+See also: `craft-floor` (the type thresholds this method must clear), `global-style-foundation` (the foundation pass that routes here for the type dimension), `measure-then-implement` (measure the source before rebuilding), `vertical-spacing-system` (line-height as the base unit for vertical rhythm), `context-adaptive-blocks` (dark surfaces where light-on-dark compensation applies)

@@ -1,6 +1,6 @@
 ---
 name: eds-dom-structure
-description: EDS section and block DOM structure — the wrapper/container/block chain and how authored table rows become nested cell divs. Use when a CSS selector doesn't match, you need to know where EDS places blocks in the DOM tree, or you need to look up an EDS platform feature in the official aem.live docs.
+description: EDS section and block DOM structure — the wrapper/container/block chain and how authored table rows become nested cell divs. Use when a CSS selector doesn't match, you need to know where EDS places blocks in the DOM tree, or you need to look up an EDS platform feature in the official aem.live docs. Extends helix `authoring-analysis`, EXCAT `excat-eds-developer`.
 ---
 
 Blocks are NOT children of the section's inner `<div>`. They're **siblings** at the section level, each in their own `-wrapper > -container > .block` chain.
@@ -51,4 +51,8 @@ Or Google `site:www.aem.live <query>`.
 ## Pitfall: local vs remote serving
 AEM CLI serves the main page from the remote origin — local `.plain.html` edits don't change `localhost:3000/path`. Only `localhost:3000/path.plain.html` serves the local file.
 
-See also: `css-specificity-eds` (why selectors don't apply), `vertical-spacing-system` (block spacing rules)
+## DA content limitations
+- `<video>` not supported in DA — use link + poster `<picture>`. Block JS builds the player.
+- SVGs stripped by `html2md` — inject manually or use external URLs.
+
+See also: `css-specificity-eds` (why selectors don't apply), `vertical-spacing-system` (block spacing rules).

@@ -1,6 +1,6 @@
 ---
 name: page-template-metadata
-description: Apply page-wide styles in EDS via a template metadata class on <body>. Use when one page type needs different styling from another and you need a body-level class (e.g. body.homepage) to scope CSS — instead of :has() or per-block overrides.
+description: Apply page-wide styles in EDS via a template metadata class on <body>. Use when one page type needs different styling from another and you need a body-level class (e.g. body.homepage) to scope CSS — instead of :has() or per-block overrides. Extends helix `content-modeling`.
 ---
 
 EDS reads `<meta name="template">` and applies it as a class on `document.body`. A page template is the top rung of the augmented-styles ladder (see `eds-content-modeling`) — the mechanism is below; the *when-to-create* decision is the important part.
@@ -45,4 +45,4 @@ Naming: new templates use a `template-<page-type>` metadata value → `body.temp
 ## Stacked templates (comma-split metadata)
 `decorateTemplateAndTheme()` splits the metadata value on commas and applies each as a body class. So `template: template-dark, template-enterprise` → `body.template-dark.template-enterprise`. Use this to layer a **generic single-concern template** (e.g. `template-dark` that ONLY inverts colors, reusable by any page) under a **thin page-specific template** (type/spacing/bespoke looks). A dark template means contained blocks auto-adapt with no per-block dark variant (see `context-adaptive-blocks`). Wire the importer to emit the full comma value, and the scripts.js fallback to add BOTH classes.
 
-See also: `eds-content-modeling` (the full augmented-styles ladder + section-style-vs-template decision), `context-adaptive-blocks` (a dark template makes contained blocks auto-invert — no per-block variant)
+See also: `eds-content-modeling` (the full augmented-styles ladder + section-style-vs-template decision), `context-adaptive-blocks` (a dark template makes contained blocks auto-invert — no per-block variant).

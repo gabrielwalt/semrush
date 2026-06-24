@@ -1,6 +1,6 @@
 ---
 name: import-content-scoping
-description: Decide WHICH pages of a source site to import — separate hand-authored marketing/brand content (the default scope) from database-backed/programmatic content (excluded) and documentation (deferred, opt-in). Use when scoping a new site, when site discovery returns far more URLs than a team could hand-author, when one URL group dwarfs all others, or whenever choosing what to analyze/import.
+description: Decide WHICH pages of a source site to import — separate hand-authored marketing/brand content (the default scope) from database-backed/programmatic content (excluded) and documentation (deferred, opt-in). Use when scoping a new site, when site discovery returns far more URLs than a team could hand-author, when one URL group dwarfs all others, or whenever choosing what to analyze/import. Extends EXCAT `excat-site-scope`, `excat-url-discovery`.
 ---
 
 Import only **hand-authored brand/marketing pages** by default. Programmatic (database-backed) and documentation content are out of the default scope. Triage every site's URL groups into three buckets before analyzing or importing — classify by *how a page is produced and maintained*, not by its path name.
@@ -31,4 +31,4 @@ When a group's bucket is genuinely ambiguous, decide by first match: (1) explici
 - Treating documentation as marketing → docs carry their own templates and fidelity bar; keep them a separate phase.
 - Importing one example of a programmatic template "to be safe" → still out of scope unless the user asks; it pollutes the block/template catalog with a pattern we won't maintain.
 
-See also: `eds-migration-process` (where scoping sits in the 2-gate flow), `migration-orientation` (establishes scope at kickoff).
+See also: `eds-migration-process` (where scoping sits in the 2-gate flow), `migration-orientation` (establishes scope at kickoff). Native `excat-site-scope` / `excat-url-discovery` cover the same ground at a generic level — this skill adds the Content-Triage Rule (programmatic/docs/marketing buckets) and the assert-then-confirm scoping conversation.
