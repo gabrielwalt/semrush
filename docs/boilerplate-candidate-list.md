@@ -189,7 +189,7 @@ Exception: `styles/` structure is worth studying for the boilerplate's starter C
 |------|----------|-------|
 | `skills/README.md` | ✏️ Keep (needs work) | Remove `project-*` skill rows. Remove the Semrush-specific "Native EMA & EDS skills" precedence mappings that reference excluded project skills. Keep the structure, Always-load section, and skill discovery instructions. |
 | `skills/_template.md` | ✅ Keep | Generic skill template. |
-| `skills/craft-skills-field-notes.md` | 🔬 Review | Check if this is a project journal or generalizable craft notes. |
+| `skills/craft-skills-field-notes.md` | ❌ Exclude | Semrush project journal — session logs (I1–I6), page/font/gradient references specific to this migration. No generalizable content not already absorbed into the craft skills it references. |
 
 ---
 

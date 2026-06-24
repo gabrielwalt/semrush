@@ -10,7 +10,7 @@ A cleanup deletes shared code (blocks, CSS, JS, assets). The danger is silently 
 ```bash
 # Baseline the validated pages (adjust paths to the project's validated set + dev server)
 mkdir -p /tmp/cleanup-baseline
-for p in "" "content/one" "content/enterprise/"; do
+for p in "" "content/about" "content/products/"; do
   n=$(echo "$p" | tr '/' '_'); [ -z "$n" ] && n=index
   curl -sS "http://localhost:3000/$p" -o "/tmp/cleanup-baseline/$n.html"
 done
