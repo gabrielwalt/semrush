@@ -1,16 +1,14 @@
 ---
 name: draft-importer-diff-workflow
-description: The mechanical bash recipe for diffing a re-imported page against its reference — the loop marker-driven-import references but doesn't define. Use after running an import/parser change to confirm no content was lost. Goal is spotting unintended content loss, NOT byte-identical output (DA media hashes and spacing classes legitimately differ).
+description: The mechanical bash recipe for diffing a re-imported page against its reference — the loop marker-driven-import references but doesn't define. Use after running an import/parser change on projects using the marker-driven bulk runner (run-bulk-import.js) — to confirm no content was lost. Goal is spotting unintended content loss, NOT byte-identical output (DA media hashes and spacing classes legitimately differ).
 ---
 
 After any parser change, diff each re-imported page against its remote reference to catch silent content loss. The remote AEM endpoint is the reference truth; the local `content/` file is what you just generated.
 
 ```bash
 curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o /tmp/ref.html
-diff /tmp/ref.html content/<path>.plain.html                          # structural: dropped sections/blocks, reorders
-wdiff /tmp/ref.html content/<path>.plain.html | grep -E '\[-|\{\+'    # word-level: text drift inside a paragraph
+diff -u /tmp/ref.html content/<path>.plain.html   # unified diff — context lines expose text drift too
 ```
-`diff` catches structural loss (a missing block, a dropped section); `wdiff` catches text drift `diff` hides inside one big line change (lost sentences, mangled headings, dropped list items).
 
 ## Triage (the only question: was content lost?)
 The goal is **no content loss**, not byte-identity. Classify every diff:
