@@ -3,6 +3,9 @@ name: session-startup
 description: What to do at the start of every new session. Load at session start before responding to any request.
 ---
 
+## Precondition gate — uninitialized project
+If `PROJECT-STATUS.md` or `PROJECT-PLAN.md` does not exist, the project is uninitialized. Stop here — load `draft-project-setup` instead of running the sequence below.
+
 At the start of every session, before doing any work:
 
 ## Startup sequence

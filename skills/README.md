@@ -140,7 +140,9 @@ The *positive method* for building each foundation dimension well, from impeccab
 
 These skills are written but not yet validated in a real session. Follow the recipe, but load critically — steps may be incomplete or triggers imprecise. Patch and capture corrections immediately. See `writing-skills` for the graduation criteria.
 
-*(No draft skills yet — new ones appear here.)*
+| Skill | Load when... |
+|-------|-------------|
+| [draft-project-setup](draft-project-setup/SKILL.md) | PROJECT-STATUS.md or PROJECT-PLAN.md does not exist; or user says "set up / initialize the project / boilerplate" |
 
 ---
 
