@@ -34,12 +34,11 @@ Never call `detect.mjs`, `project-state.mjs`, or start `migration-orientation` u
 Never invent: site URL, EDS repo, authoring model, brand colors/tokens. Write `*[Agent: fill after …]*` under each heading. A fake token in `:root` poisons `detect.mjs`'s allow-list.
 
 ## Verify toolchain (read-only checks)
-- `nvm use` → `node -v` matches `.nvmrc`
-- `npm ci` succeeds
-- `aem up` serves `localhost:3000`
-- `npx stylelint` runs (config present)
-- `node tools/quality/detect.mjs --all` → exits cleanly against the empty `:root` (no crash)
-- `node tools/quality/project-state.mjs` → valid JSON, zero pages, no crash
+- `node tools/quality/detect.mjs --all` exits cleanly against the empty `:root`
+- `node tools/quality/project-state.mjs` emits valid JSON, zero pages, no crash
+- `npx stylelint` runs without config errors
+
+*`aem up`, `npm ci`, and Node version setup are the user's responsibility on their local machine — the agent cannot run them in the hosted environment.*
 
 ## Seed plan + status
 - `PROJECT-STATUS.md` Current Focus: "Project initialized; migration-orientation pending."
