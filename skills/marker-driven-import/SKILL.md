@@ -31,6 +31,7 @@ The validated `content/*.plain.html` is the reference — **never let the import
 ## Pitfalls
 - Writing a second parser/script per page instead of adding marker branches to the one parser — defeats the goal; only fork for fundamentally incompatible DOM.
 - Importing onto `content/` and destroying the reference — always go to a temp dir and diff.
+- `run-bulk-import.js` writes directly to `content/*.plain.html` with no `--output-dir` flag — it silently overwrites curated content (DA media hashes, spacing classes, section boundaries). Always back up before running: `cp content/<path>.plain.html /tmp/ref.html`. To restore after an accidental overwrite: `curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o content/<path>.plain.html`.
 - Marker too specific (a build-hashed class) → breaks on the next source deploy. Prefer structural/semantic markers.
 - Reaching for a context exception before exhausting generic markers — exceptions are the last mile, not the first.
 - Changing a parser and not re-diffing ALL validated pages — silent cross-page regressions.

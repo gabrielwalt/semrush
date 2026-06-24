@@ -22,8 +22,7 @@ At the start of every session, before doing any work:
 
 ## State recovery (when context has been compressed)
 1. Check `PROJECT-PLAN.md` — find the last completed task and the next open one
-2. Check `PROJECT-STATUS.md` — the "Current Focus" note
-3. Check recent git log for the last commit message
+2. Check `PROJECT-STATUS.md` — the "Current Focus" note (authoritative; don't use git log)
 
 ## Pitfalls
 - Starting work without reading `PROJECT-PLAN.md` — you'll duplicate or skip tasks

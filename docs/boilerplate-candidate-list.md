@@ -148,8 +148,8 @@ The runner and static importer are generalizable infrastructure. The import scri
 |-------|-------------|
 | `project-background-layering` | Semrush gradient system and `body.homepage main` pattern. |
 | `project-clip-path-bar-charts` | Semrush AI Visibility Index feature. |
-| `project-footer-reveal-pattern` | Semrush footer interaction. **✅ Reusable insight extracted** — the `overflow-x: clip` vs `overflow: hidden` sticky-positioning rule now lives in `css-pitfalls-eds`. Safe to exclude. |
-| `project-glass-surface-pattern` | Semrush visual identity. **✅ Reusable insights extracted** — the three backdrop-filter pitfalls (non-opaque bg, light-bg border, inner radius = `calc(R − P)`) now live in `css-pitfalls-eds`. Safe to exclude. |
+| `project-footer-reveal-pattern` | Semrush footer interaction. Kept as project skill. Reusable insight (`overflow-x: clip` sticky fix) extracted to `css-pitfalls-eds`. |
+| `project-glass-surface-pattern` | Semrush visual identity. Kept as project skill. Reusable insights (backdrop-filter pitfalls) extracted to `css-pitfalls-eds`. |
 | `project-mega-menu-content-model` | Semrush nav content structure. |
 | `project-section-heading-pattern` | Semrush eyebrow+uppercase heading pattern. |
 
