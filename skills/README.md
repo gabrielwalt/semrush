@@ -145,6 +145,7 @@ These skills are written but not yet validated in a real session. Follow the rec
 | [draft-project-setup](draft-project-setup/SKILL.md) | PROJECT-STATUS.md or PROJECT-PLAN.md does not exist; or user says "set up / initialize the project / boilerplate" |
 | [draft-validation-gates](draft-validation-gates/SKILL.md) | A page reaches content or style completion; deciding whether a page is "done"; marking GATE 1 / GATE 2 in PROJECT-STATUS.md; a regression forces unfreezing a validated page |
 | [draft-importer-diff-workflow](draft-importer-diff-workflow/SKILL.md) | After a parser/import change — diffing a re-imported page against its remote reference to catch content loss; `marker-driven-import` says "diff against reference" and you need the bash tooling |
+| [draft-unfreeze-page](draft-unfreeze-page/SKILL.md) | About to edit CSS/JS a frozen (style-validated) page uses, or the user requests a change on a frozen page — detect impact, ask before unfreezing (`✅ 🔓`), re-freeze after re-validation |
 
 ---
 
