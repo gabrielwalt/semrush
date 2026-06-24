@@ -10,6 +10,15 @@ curl -s 'https://<branch>--<repo>--<owner>.aem.page/<path>.plain.html' -o /tmp/r
 diff -u /tmp/ref.html content/<path>.plain.html   # unified diff — context lines expose text drift too
 ```
 
+To check **all** validated pages after a parser change (edits ripple — a fix for page A often regresses page B):
+```bash
+for f in content/*.plain.html; do
+  path="${f#content/}"; path="${path%.plain.html}"
+  curl -s "https://<branch>--<repo>--<owner>.aem.page/${path}.plain.html" -o /tmp/ref.html
+  echo "=== $path ==="; diff -u /tmp/ref.html "$f"
+done
+```
+
 ## Triage (the only question: was content lost?)
 The goal is **no content loss**, not byte-identity. Classify every diff:
 

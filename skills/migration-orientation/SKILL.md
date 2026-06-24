@@ -77,13 +77,11 @@ If the user says XWalk, load `excat-xwalk-expert`. If unclear, assert DA — cos
 
 **First-match-wins:** (1) explicit per-page override; (2) site default; (3) Faithful.
 
-| Level | Treat the design source as… | License to deviate | Use when |
-|-------|------------------------------|--------------------|----------|
-| **Faithful** | **The spec.** Match closely — layout, spacing, color, type. | Only to fix outright bugs. Measure, don't invent. | Strong brand; stakeholder expects "the same site, on EDS". |
-| **Refined** | **A strong reference.** Keep brand essence; fix weak spots and uplevel craft. | Moderate — improve rhythm, hierarchy, states; never change brand identity. | Solid but dated; the goal is "the same brand, done better". |
-| **Reimagined** | **Inspiration.** Capture essence; rebuild for excellence. | High — real creative liberties, on-brand and graphically excellent. | Weak/legacy source, or explicit redesign mandate. |
+- **Faithful** — match the source closely; deviate only to fix outright bugs.
+- **Refined** — keep the brand identity; regularize weak spots and uplevel craft.
+- **Reimagined** — keep the essence; rebuild for graphical excellence.
 
-At **every** fidelity level the global foundation must be graphically rock-solid — fidelity governs *how close to the original*, never *how much craft*.
+Fidelity governs *how close to the original*, never *how much craft* — the foundation is rock-solid at every level. Full definitions and how each level shapes the foundation build live in `global-style-foundation`. Orientation's job is only to **capture the user's chosen level**, not to re-explain the framework.
 
 ## Record the strategy (then the gate is passed)
 

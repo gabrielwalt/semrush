@@ -50,3 +50,5 @@ On dark backgrounds: `border: 1px solid rgb(255 255 255 / 8%); background: rgb(2
 - White border is essential — without it the glass effect is invisible on light backgrounds
 - Inner border-radius should be `padding - 4px` smaller than the frame's
 - `backdrop-filter: blur()` requires a non-opaque background to be visible
+
+See also: `css-pitfalls-eds` (the generalized `backdrop-filter` glass pitfalls — non-opaque bg, light-bg border, inner-radius formula — extracted from this pattern now live there)

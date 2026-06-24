@@ -13,7 +13,7 @@ Run `node tools/quality/project-state.mjs` for the `frozen[]` list (frozen conte
 - **Certain impact** (the change definitively affects a frozen page's rendering):
   → **Stop.** Tell the user which frozen pages are affected and ask: proceed (unfreezing them) or stop? Touch nothing until the user confirms.
 - **Grey zone** (might affect frozen pages depending on selector scope):
-  → First try to **scope** the change so it can't reach frozen pages — add a variant class, section style, or template class to narrow the selector to only the pages being worked on.
+  → First try to **scope** the change so it can't reach frozen pages — add a variant class, section style, or template class to narrow the selector to only the pages being worked on. Example: instead of editing shared `.hero h2`, add `body.template-X .hero h2 { … }` (or a new `.hero-newvariant` class) so the change lands only on the page in progress and the frozen pages' selectors stay untouched.
   → If scoping is optimal: apply it, note it in the summary, continue.
   → If scoping would be a worse solution than the change itself: stop and ask the user, explaining the tradeoff.
 - **No frozen pages affected:** proceed normally (`styling-additively` discipline still applies).

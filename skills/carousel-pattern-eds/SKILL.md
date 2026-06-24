@@ -18,6 +18,7 @@ Carousels use section-level overflow clipping, margin-based left alignment, and 
 - **Never use `padding` on the scrollable container for first/last card offset** — `padding` on an `overflow-x: auto` flex container doesn't work reliably with `scroll-snap-type: x mandatory`. The first card snaps to position 0 of the scroll area, overlapping the padding. Use `margin-left` on the container and `margin-right` on the last child instead.
 - **Section `overflow: hidden` is required** — without it, the cards extend past the viewport and there's no peek/clip effect.
 - **Don't put nav buttons inside the scrollable area** — they'll scroll with the cards. Place them in the section header area outside the block.
+- **On touch devices a horizontal swipe can trigger browser back/forward navigation** — set `overscroll-behavior-x: contain` on the scroll track to keep the gesture inside the carousel.
 
 ## How the original site works
 The original site uses Swiper.js with `overflow: visible` on the swiper container and `overflow: hidden` on the parent `<section>`. The EDS implementation achieves the same effect with native scroll-snap + section overflow clipping.

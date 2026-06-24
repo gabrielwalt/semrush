@@ -35,4 +35,4 @@ The footer bottom bar (social icons + copyright + legal links) follows this layo
 ## Footer content structure
 All footer blocks (footer-cta, footer-links, footer-bottom) must be in a **single section** (single outer `<div>`) in the `.plain.html` content file. If they are in separate sections, EDS renders `<hr>` dividers between them. The import script must NOT emit `<hr>` between footer blocks.
 
-See also: `vertical-spacing-system` (section spacing), `eds-dom-structure` (EDS wrapper chain + section structure)
+See also: `vertical-spacing-system` (section spacing), `eds-dom-structure` (EDS wrapper chain + section structure), `css-pitfalls-eds` (the generalized `overflow-x: clip` vs `overflow: hidden` sticky rule extracted from this pattern now lives there)

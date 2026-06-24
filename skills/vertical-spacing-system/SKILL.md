@@ -26,6 +26,6 @@ These are the canonical **universal variants** — they apply to ANY block (the 
 ## Pitfalls
 - `main > .section > div { margin: auto }` overrides `* + *` because `div` has higher specificity — use `margin-left: auto; margin-right: auto` instead
 - Block CSS must NOT set `padding-top/bottom` on the section container — the global rule handles it
-- `overflow: hidden` on `html/body` breaks `position: sticky` — use `overflow-x: clip` instead
+- `overflow: hidden` on `html/body` breaks `position: sticky` — use `overflow-x: clip` instead. `overflow-x: clip` is the canonical fix when a section needs clipping AND has sticky children — full rule in `css-pitfalls-eds`.
 
 See also: `eds-content-modeling` (where this fits in the augmented-styles ladder), `eds-dom-structure`, `full-width-escape-hatch`, `carousel-pattern-eds`. Native `building-blocks` covers the same ground at a generic level — this skill adds the two-token `* + *` pattern, the universal spacing variants, and the `overflow-x: clip` sticky fix.

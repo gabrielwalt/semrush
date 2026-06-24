@@ -32,7 +32,7 @@ The test that you've found the *foundation* and not a page quirk: **a value earn
 Then **clear the floor**: run `craft-floor` (+ its `tools/quality/detect.mjs` checker) over the result. Foundation = build it well (craft skills) AND clear the bar (craft-floor).
 
 ## Apply fidelity — how much to uplevel
-Read the **site-default fidelity** from `PROJECT-DESIGN.md` (**first-match-wins**: per-page override → site default → Faithful). It governs how much license you have while building the foundation:
+Read the **site-default fidelity** from `PROJECT-DESIGN.md` (**first-match-wins**: per-page override → site default → Faithful). It governs how much license you have while building the foundation. **Guard:** if no fidelity is recorded in `PROJECT-DESIGN.md` at all, do NOT silently default to Faithful — stop and ask `migration-orientation` to establish it first. The Faithful fallback applies only once orientation has run and explicitly chose to leave it Faithful.
 
 - **Faithful** — reproduce the measured system as-is. Tokens mirror the source values. Fix only outright defects (a contrast failure, a broken scale step).
 - **Refined** — keep the brand's identity (its colors, its type voice, its spatial feel) but **regularize** it: snap an uneven type scale to a clean ratio, unify near-duplicate spacings into one system, raise body contrast to ≥4.5:1, give links/buttons consistent states. The source is a strong reference; the foundation is the source *done right*.
