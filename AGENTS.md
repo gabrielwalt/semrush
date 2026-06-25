@@ -22,6 +22,7 @@ Simplicity is elegant and the ultimate sophistication. Every line of code and ev
 1. **Summary** — what you did or decided, and actively invite the user's feedback on it. After a content import, ask the user to validate the content structure (the split into default content, blocks, and sections, and the block names); after importing design (global styles or a block's styling), ask whether they're satisfied with how the content looks and what to improve. Their validation drives the next step.
 2. **Next step** — one concrete question proposing the logical follow-up; consult `eds-migration-process` for where the user is in the migration flow and what comes next. No vague sign-offs.
 3. **Skill check** — if the solution involved non-obvious knowledge, propose capturing it: *"Should we distill [X] into a skill to prevent this friction in the future?"*
+4. **Knowledge capture** — if the user's message held a durable piece of knowledge (decision, constraint, fact, preference, correction), integrate it per `curating-project-knowledge` (route → consolidate → reflect), and surface any bigger-picture conclusion it implies — propose planning it, or flag the ambiguity. Skip silently only when nothing durable surfaced and no larger conclusion follows.
 
 **Session startup.** At the start of every new conversation — before responding to any request:
 1. Read `PROJECT-STATUS.md` — current state, active task, known blockers
@@ -78,6 +79,7 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 - **The Anti-Pattern-Capture Rule.** When the user corrects something you built that was *clearly* a bad idea — obvious in hindsight, not merely a taste preference — name it as an anti-pattern and capture it match-and-refuse (what it looks like → the rewrite) in the relevant skill. Not every correction qualifies; only the ones where the wrongness is self-evident. → `writing-skills`
 - **The Executable-Rule Rule.** A rule the agent must *remember* is weaker than one a script *enforces*. Any rule that's mechanically checkable (a contrast threshold, an off-palette color, a dead token, a frozen-page regression) should be enforced by a deterministic checker under `tools/quality/`, not left to recall. Likewise read project state (frozen pages, per-page gate, working-tree scope) from a structured signals script, not by parsing prose. Scripts own the *mechanics*; the agent owns the *judgment*. → `writing-skills`, `quality-tooling`
 - **The Heavy-SVG-In-Code Rule.** Any image asset ≥ 80KB (graphs, screenshots, full illustrations) must be hosted in the code repo under `/svg/` and referenced from content with a plain link — never embedded in the document. DA/html2md rejects oversized embedded images with a (409) validation error on preview/publish. Parsers must emit the `/svg/` reference, not an embedded picture, so re-import never reintroduces it. → `repo-hosted-svg-references`
+- **The Puzzle-Piece Rule.** The user reveals load-bearing knowledge in passing — decisions, constraints, environment facts, preferences, corrections. Capture each durable piece the moment it surfaces, but never by appending: route it to the right home (context wiki / skill / checker / structured PROJECT file), consolidate it with what's already there, then re-read the whole picture — each piece matters only for the picture the pieces paint together. When that picture implies work, add it to `PROJECT-PLAN.md` and surface the conclusion to the user (propose action, or flag the ambiguity). Apply the durable-vs-session test first; session-scoped directives stay in working context. → `curating-project-knowledge`, `PROJECT-CONTEXT.md`
 
 ---
 
@@ -91,6 +93,7 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 | Import scripts | `PROJECT-IMPORT.md` |
 | Migration progress | `PROJECT-STATUS.md` |
 | Implementation gap tasks | `PROJECT-PLAN.md` |
+| Cross-cutting decisions, constraints, environment facts | `PROJECT-CONTEXT.md` |
 | Prior solutions | `skills/README.md` |
 
 ---
@@ -112,5 +115,6 @@ The migration's load-bearing doctrine, named so you can **cite them by name** in
 | `PROJECT-BLOCKS.md` | Block + variant + section-style inventory; one-off registry | Update each time a new block, variant, or section style is validated |
 | `PROJECT-IMPORT.md` | Import strategy, URL sets, parser strategy, template-to-parser mapping | Fill after site scope and template consolidation |
 | `PROJECT-TEMPLATES.md` | Page template inventory (chrome → template → sub-category hierarchy) | Fill during site catalog phase |
+| `PROJECT-CONTEXT.md` | The project's wiki — durable, cross-cutting knowledge (environment, constraints, brand, stakeholders, decisions) that fits no other PROJECT-* file and isn't a procedure | Create stub at start; read every session (`session-startup`); curate continuously (`curating-project-knowledge`) |
 
 Template stubs ship with section headings pre-filled and an italicized instruction under each heading — `*[Agent: record X here after running Y.]*` — so the agent knows what to write and when. Do not fill a section with invented values; leave the instruction in place until the real data exists.

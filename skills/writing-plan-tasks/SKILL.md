@@ -82,4 +82,4 @@ Numbered steps the implementing agent MUST do. Each step names an element, prope
 - Verification steps that say "confirm it looks right" → say "confirm `margin-bottom` computes to `12px`".
 - Huge tasks with 6+ sub-problems → split. Each task = one verifiable change.
 
-See also: `executing-plan-tasks` (how the implementing agent should work), `verify-before-claiming` (verifying before saying "done"), `measure-then-implement` (measuring before guessing), `regression-guard` (checking for side-effects)
+See also: `executing-plan-tasks` (how the implementing agent should work), `verify-before-claiming` (verifying before saying "done"), `measure-then-implement` (measuring before guessing), `regression-guard` (checking for side-effects), `curating-project-knowledge` (the loop that routes a reflected consequence here as a task)

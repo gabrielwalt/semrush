@@ -18,7 +18,8 @@ A fresh boilerplate has no `PROJECT-*.md` files — `session-startup` crashes an
 | 2 | `PROJECT-STATUS.md` | `## Current Focus` (one-line placeholder) · `## Pages` table with EXACTLY this header + divider (5 columns — the parser is positional; this exact shape is required), no data rows: |
 | 3 | `PROJECT-PLAN.md` | Task table + one `🔲 Open` seed task: "Run migration-orientation" |
 | 4 | `PROJECT.md` | `## Project Identity` with blank agent-fill fields for: site URL, target EDS repo, authoring model, team contacts |
-| 5–7 | `PROJECT-BLOCKS.md`, `PROJECT-IMPORT.md`, `PROJECT-TEMPLATES.md` | Empty section headings per AGENTS.md § Project Files |
+| 5 | `PROJECT-CONTEXT.md` | Topical headings `## Environment` · `## Constraints` · `## Brand` · `## Stakeholders` · `## Decisions`, each with the standard `*[Agent: record … here as it surfaces.]*` placeholder. Curated continuously per `curating-project-knowledge`. |
+| 6–8 | `PROJECT-BLOCKS.md`, `PROJECT-IMPORT.md`, `PROJECT-TEMPLATES.md` | Empty section headings per AGENTS.md § Project Files |
 
 `PROJECT-STATUS.md` `## Pages` header + divider — exact shape, no data rows:
 

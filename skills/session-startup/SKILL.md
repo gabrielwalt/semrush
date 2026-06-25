@@ -10,10 +10,11 @@ At the start of every session, before doing any work:
 
 ## Startup sequence
 1. Read `PROJECT-STATUS.md` — what's done, what's in progress, known blockers
-2. **Run `node tools/quality/project-state.mjs`** (`quality-tooling`) — ground-truth JSON for which pages are `frozen` vs `unfrozen`/in-progress, the content files present, and the working-tree changes. Prefer this over inferring state from prose; the prose can drift, the probe reads the filesystem + status table.
-3. Read `PROJECT-PLAN.md` — find the first `🔲 Open` task; that's your starting point
-4. Scan `skills/README.md` — prime trigger matching for the session's tasks
-5. If the user's message names a specific task or block, also load matching skills
+2. Read `PROJECT-CONTEXT.md` — the project's accumulated wiki knowledge (environment, constraints, decisions). Skip if it doesn't exist yet.
+3. **Run `node tools/quality/project-state.mjs`** (`quality-tooling`) — ground-truth JSON for which pages are `frozen` vs `unfrozen`/in-progress, the content files present, and the working-tree changes. Prefer this over inferring state from prose; the prose can drift, the probe reads the filesystem + status table.
+4. Read `PROJECT-PLAN.md` — find the first `🔲 Open` task; that's your starting point
+5. Scan `skills/README.md` — prime trigger matching for the session's tasks
+6. If the user's message names a specific task or block, also load matching skills
 
 ## What NOT to do at startup
 - Don't re-read files you just read in the same session

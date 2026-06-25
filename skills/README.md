@@ -133,6 +133,7 @@ The *positive method* for building each foundation dimension well, from impeccab
 | Skill | Load when... |
 |-------|-------------|
 | [writing-skills](writing-skills/SKILL.md) | Creating a new skill; improving existing skill; auditing the skill library |
+| [curating-project-knowledge](curating-project-knowledge/SKILL.md) | The user reveals a durable decision, constraint, fact, preference, or correction; integrating any learning into a project MD file; deciding whether it belongs in context, a skill, a checker, or a structured PROJECT file |
 
 ---
 

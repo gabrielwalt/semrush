@@ -52,6 +52,9 @@ A draft graduates when you can answer **yes** to all three:
 - **Never promote a draft by just renaming it.** You must have at least one real session where you loaded it and it worked as written.
 - **Capture every patch.** If you edit a draft's recipe mid-task because a step was wrong or missing, that edit is the draft improving. That's expected and good.
 - **Draft ≠ incomplete.** A draft can be well-written. It's unvalidated, not unfinished. Write it as if it's production-ready; the prefix is an honesty marker, not a placeholder.
+- **Carve-out — `curating-project-knowledge`.** This skill is authored production-ready and is NOT subject to the draft lifecycle: it's the core learning-curation discipline, and the act of capturing a learning *is* its validation. Narrow carve-out; every ordinary new skill still starts as a draft.
+
+When capturing a procedural learning into a skill, follow `curating-project-knowledge`'s route→consolidate→reflect loop — don't append a new skill if an existing one should absorb it.
 
 ## Context budget
 

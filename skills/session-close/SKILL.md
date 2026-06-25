@@ -29,3 +29,5 @@ If the answer is anything actionable, write it as a skill.
 - Updating `PROJECT-STATUS.md` with "done" when the task hasn't been verified visually
 - Forgetting to add new skills to `skills/README.md` — the skill exists but is never found
 - Leaving `PROJECT-PLAN.md` with ambiguous task states — next session won't know where to start
+
+See also: `curating-project-knowledge` (run the capture+curate pass at close — route any durable learning to its home, consolidate, reflect, surface consequences)
